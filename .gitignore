@@ -41,3 +41,12 @@ tsconfig.tsbuildinfo
 /.wrangler/
 /outputs/
 /work/
+/video/research-factory-tutorial/.venv/
+/video/research-factory-tutorial/node_modules/
+/video/research-factory-tutorial/auditions/
+/video/research-factory-tutorial/capture/
+/video/research-factory-tutorial/captures/
+/video/research-factory-tutorial/snapshots/
+/video/research-factory-tutorial/renders/
+/video/research-factory-tutorial/drafts/
+/video/research-factory-tutorial/narration.wav

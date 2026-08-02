@@ -57,6 +57,7 @@ SHA-256 9b37a47c265e916cbf460f4dd0120b02b01fa800b104017b117ba2fc40644cd5
 /runners            Non-promotion runner registry
 /history            Searchable append-only activity
 /architecture       Trust boundaries and future handoff
+/tutorial           Guided synthetic workflow tutorial and transcript
 ```
 
 ## Development

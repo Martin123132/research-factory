@@ -1,0 +1,940 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Research Factory Hangar — Workflow Tutorial</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Geist";
+        src: url("assets/fonts/geist-latin.woff2") format("woff2");
+        font-style: normal;
+        font-weight: 100 900;
+        font-display: block;
+      }
+
+      @font-face {
+        font-family: "Geist Mono";
+        src: url("assets/fonts/geist-mono-latin.woff2") format("woff2");
+        font-style: normal;
+        font-weight: 100 900;
+        font-display: block;
+      }
+
+      :root {
+        --ink: #171a18;
+        --ink-soft: #4f544f;
+        --paper: #f2efe6;
+        --paper-deep: #e8e3d7;
+        --panel: #fffdf7;
+        --line: #c9c3b6;
+        --line-dark: #77786f;
+        --orange: #e95c2b;
+        --orange-dark: #a83e1c;
+        --green: #23755b;
+        --red: #a6392b;
+        --cream: #f7f2e8;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 1920px;
+        height: 1080px;
+        margin: 0;
+        overflow: hidden;
+        background: var(--ink);
+        color: var(--ink);
+        font-family: "Geist", Arial, sans-serif;
+      }
+
+      body {
+        position: relative;
+      }
+
+      .mono {
+        font-family: "Geist Mono", Consolas, monospace;
+        font-variant-numeric: tabular-nums;
+      }
+
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: var(--ink);
+      }
+
+      .tutorial-ribbon {
+        position: absolute;
+        inset: 0 0 auto;
+        z-index: 100;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 78px;
+        background: var(--orange);
+        color: var(--ink);
+        font-family: "Geist Mono", Consolas, monospace;
+        font-size: 15px;
+        font-weight: 760;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .tutorial-progress {
+        position: absolute;
+        inset: 38px 0 auto;
+        z-index: 101;
+        height: 5px;
+        background: rgba(255, 255, 255, 0.14);
+      }
+
+      .tutorial-progress > i {
+        width: 100%;
+        height: 100%;
+        display: block;
+        background: #ffffff;
+        transform-origin: left center;
+      }
+
+      .scene {
+        position: absolute;
+        inset: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+      }
+
+      .scene-light {
+        background-color: var(--paper);
+      }
+
+      .scene-dark {
+        background-color: var(--ink);
+        color: var(--cream);
+      }
+
+      .paper-grid,
+      .dark-haze {
+        position: absolute;
+        inset: 43px 0 0;
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      .paper-grid {
+        background:
+          linear-gradient(rgba(68, 68, 57, 0.055) 1px, rgba(242, 239, 230, 0) 1px),
+          linear-gradient(90deg, rgba(68, 68, 57, 0.055) 1px, rgba(242, 239, 230, 0) 1px),
+          var(--paper);
+        background-size: 32px 32px;
+      }
+
+      .dark-haze {
+        background:
+          radial-gradient(circle at 75% 42%, rgba(233, 92, 43, 0.16), rgba(23, 26, 24, 0) 38%),
+          radial-gradient(circle at 18% 76%, rgba(35, 117, 91, 0.1), rgba(23, 26, 24, 0) 30%),
+          var(--ink);
+      }
+
+      .scene-content {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        padding: 80px 78px 52px;
+        gap: 20px;
+      }
+
+      .chapter-bar {
+        min-height: 58px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 30px;
+        padding-bottom: 18px;
+        border-bottom: 1px solid currentColor;
+        color: var(--orange-dark);
+        font-family: "Geist Mono", Consolas, monospace;
+        font-size: 17px;
+        font-weight: 720;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .scene-dark .chapter-bar {
+        color: #ff8e67;
+        border-bottom-color: rgba(247, 242, 232, 0.22);
+      }
+
+      .chapter-bar .chapter-number {
+        color: var(--ink-soft);
+      }
+
+      .scene-dark .chapter-bar .chapter-number {
+        color: #aeb1aa;
+      }
+
+      .media-plane {
+        position: absolute;
+        z-index: 1;
+        overflow: hidden;
+        border: 1px solid var(--line-dark);
+        background: var(--panel);
+        box-shadow: 0 28px 68px rgba(31, 32, 27, 0.16);
+        perspective: 1200px;
+      }
+
+      .media-plane img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        will-change: transform;
+      }
+
+      .media-full {
+        left: 77px;
+        top: 156px;
+        width: 1766px;
+        height: 868px;
+      }
+
+      .media-right {
+        left: 368px;
+        top: 154px;
+        width: 1474px;
+        height: 830px;
+      }
+
+      .media-left {
+        left: 78px;
+        top: 154px;
+        width: 1480px;
+        height: 832px;
+      }
+
+      .media-dim::after {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        background: rgba(23, 26, 24, 0.34);
+        content: "";
+        pointer-events: none;
+      }
+
+      .callout {
+        position: absolute;
+        z-index: 8;
+        width: 430px;
+        padding: 25px 28px 27px;
+        border: 1px solid var(--line-dark);
+        background: rgba(255, 253, 247, 0.97);
+        color: var(--ink);
+        box-shadow: 0 20px 50px rgba(31, 32, 27, 0.16);
+      }
+
+      .callout-dark {
+        border-color: #5d615a;
+        background: rgba(23, 26, 24, 0.97);
+        color: var(--cream);
+      }
+
+      .callout-green {
+        border-color: #8fb4a3;
+        background: rgba(229, 239, 232, 0.98);
+      }
+
+      .callout-warning {
+        border-color: var(--orange);
+        background: rgba(255, 240, 232, 0.98);
+        color: #5c2514;
+      }
+
+      .callout .kicker {
+        display: block;
+        margin-bottom: 13px;
+        color: var(--orange-dark);
+        font-family: "Geist Mono", Consolas, monospace;
+        font-size: 16px;
+        font-weight: 740;
+        letter-spacing: 0.11em;
+        text-transform: uppercase;
+      }
+
+      .callout-dark .kicker {
+        color: #ff8e67;
+      }
+
+      .callout strong {
+        display: block;
+        font-size: 38px;
+        font-weight: 760;
+        letter-spacing: -0.045em;
+        line-height: 1.03;
+      }
+
+      .callout p {
+        margin: 14px 0 0;
+        color: var(--ink-soft);
+        font-size: 24px;
+        line-height: 1.38;
+      }
+
+      .callout-dark p {
+        color: #b9bcb5;
+      }
+
+      .connector {
+        position: absolute;
+        z-index: 7;
+        height: 4px;
+        background: var(--orange);
+        transform-origin: left center;
+      }
+
+      .connector::after {
+        position: absolute;
+        right: -8px;
+        top: -6px;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background: var(--orange);
+        content: "";
+      }
+
+      .metric-row,
+      .trust-stack,
+      .workflow-list {
+        position: absolute;
+        z-index: 9;
+        display: flex;
+        gap: 11px;
+      }
+
+      .metric-chip,
+      .trust-chip,
+      .workflow-chip {
+        min-height: 52px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 17px;
+        border: 1px solid var(--line-dark);
+        background: var(--panel);
+        color: var(--ink);
+        font-family: "Geist Mono", Consolas, monospace;
+        font-size: 17px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        box-shadow: 0 10px 24px rgba(31, 32, 27, 0.12);
+      }
+
+      .metric-chip i,
+      .trust-chip i,
+      .workflow-chip i {
+        width: 9px;
+        height: 9px;
+        display: block;
+        border-radius: 50%;
+        background: var(--orange);
+      }
+
+      .counter-card {
+        position: absolute;
+        z-index: 9;
+        width: 220px;
+        min-height: 154px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 22px;
+        border: 1px solid var(--line-dark);
+        background: var(--ink);
+        color: var(--cream);
+        box-shadow: 0 18px 42px rgba(31, 32, 27, 0.2);
+      }
+
+      .counter-card span {
+        color: #aeb1aa;
+        font-family: "Geist Mono", Consolas, monospace;
+        font-size: 14px;
+        letter-spacing: 0.11em;
+        text-transform: uppercase;
+      }
+
+      .counter-card strong {
+        font-family: "Geist Mono", Consolas, monospace;
+        font-size: 72px;
+        font-weight: 620;
+        letter-spacing: -0.08em;
+        line-height: 0.9;
+      }
+
+      .state-rail {
+        position: absolute;
+        z-index: 10;
+        left: 390px;
+        right: 90px;
+        bottom: 76px;
+        min-height: 154px;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 12px;
+        padding: 30px 26px;
+        border: 1px solid var(--line-dark);
+        background: rgba(23, 26, 24, 0.96);
+        color: var(--cream);
+        box-shadow: 0 20px 52px rgba(31, 32, 27, 0.2);
+      }
+
+      .state-step {
+        position: relative;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 10px;
+        padding-left: 28px;
+        border-left: 3px solid #5c6059;
+      }
+
+      .state-step::before {
+        position: absolute;
+        left: -8px;
+        top: 18px;
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        background: var(--orange);
+        content: "";
+      }
+
+      .state-step span {
+        color: #aeb1aa;
+        font-family: "Geist Mono", Consolas, monospace;
+        font-size: 14px;
+      }
+
+      .state-step strong {
+        overflow-wrap: anywhere;
+        font-family: "Geist Mono", Consolas, monospace;
+        font-size: 19px;
+        letter-spacing: 0.04em;
+      }
+
+      .blocked-branch {
+        position: absolute;
+        z-index: 11;
+        left: 690px;
+        bottom: 42px;
+        padding: 10px 15px;
+        border: 1px solid #cf8374;
+        background: #fff0ec;
+        color: var(--red);
+        font-family: "Geist Mono", Consolas, monospace;
+        font-size: 15px;
+        font-weight: 720;
+      }
+
+      .stamp-stack {
+        position: absolute;
+        z-index: 10;
+        right: 80px;
+        bottom: 88px;
+        width: 540px;
+        display: grid;
+        gap: 10px;
+      }
+
+      .stamp {
+        padding: 14px 18px;
+        border: 2px solid var(--red);
+        background: rgba(255, 253, 247, 0.97);
+        color: var(--red);
+        font-family: "Geist Mono", Consolas, monospace;
+        font-size: 20px;
+        font-weight: 760;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .invariant-lock {
+        position: absolute;
+        z-index: 10;
+        left: 95px;
+        bottom: 80px;
+        width: 650px;
+        padding: 20px 24px;
+        border: 1px solid #8fb4a3;
+        background: #e5efe8;
+        color: var(--green);
+        font-family: "Geist Mono", Consolas, monospace;
+        font-size: 19px;
+        font-weight: 760;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        box-shadow: 0 18px 42px rgba(31, 32, 27, 0.14);
+      }
+
+      .bulkhead {
+        position: absolute;
+        z-index: 12;
+        left: 1218px;
+        top: 315px;
+        width: 22px;
+        height: 560px;
+        border: 2px solid #ff8e67;
+        background: repeating-linear-gradient(
+          180deg,
+          var(--orange) 0,
+          var(--orange) 22px,
+          var(--ink) 22px,
+          var(--ink) 44px
+        );
+      }
+
+      .bulkhead-label {
+        position: absolute;
+        z-index: 13;
+        left: 1130px;
+        top: 270px;
+        width: 230px;
+        padding: 9px 12px;
+        text-align: center;
+        border: 1px solid #ff8e67;
+        background: var(--ink);
+        color: #ffffff;
+        font-family: "Geist Mono", Consolas, monospace;
+        font-size: 15px;
+        font-weight: 760;
+        letter-spacing: 0.11em;
+        text-transform: uppercase;
+      }
+
+      .zero-stack {
+        position: absolute;
+        z-index: 14;
+        right: 88px;
+        top: 334px;
+        width: 500px;
+        display: grid;
+        gap: 13px;
+      }
+
+      .zero-row {
+        min-height: 118px;
+        display: grid;
+        grid-template-columns: 100px 1fr;
+        align-items: center;
+        gap: 22px;
+        padding: 17px 22px;
+        border: 1px solid #4f514b;
+        background: rgba(23, 26, 24, 0.97);
+      }
+
+      .zero-row strong {
+        color: #ffffff;
+        font-family: "Geist Mono", Consolas, monospace;
+        font-size: 70px;
+        font-weight: 600;
+        text-align: center;
+      }
+
+      .zero-row span {
+        color: #b9bcb5;
+        font-family: "Geist Mono", Consolas, monospace;
+        font-size: 17px;
+        line-height: 1.35;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .people-pair {
+        position: absolute;
+        z-index: 15;
+        right: 125px;
+        bottom: 78px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        color: #b9bcb5;
+        font-family: "Geist Mono", Consolas, monospace;
+        font-size: 15px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .person-token {
+        width: 62px;
+        height: 62px;
+        display: grid;
+        place-items: center;
+        border: 1px solid #77786f;
+        border-radius: 50%;
+        background: #262925;
+        color: #ff8e67;
+        font-size: 25px;
+        font-weight: 760;
+      }
+
+      .workflow-list {
+        left: 110px;
+        right: 110px;
+        bottom: 142px;
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+      }
+
+      .workflow-chip {
+        min-height: 92px;
+        justify-content: center;
+        border-color: #5b5f58;
+        background: rgba(23, 26, 24, 0.95);
+        color: var(--cream);
+        font-size: 18px;
+      }
+
+      .workflow-chip:last-child {
+        border-color: var(--orange);
+        color: #ff8e67;
+      }
+
+      .final-statement {
+        position: absolute;
+        z-index: 10;
+        left: 108px;
+        top: 190px;
+        width: 920px;
+      }
+
+      .final-statement span {
+        display: block;
+        margin-bottom: 18px;
+        color: #ff8e67;
+        font-family: "Geist Mono", Consolas, monospace;
+        font-size: 17px;
+        font-weight: 720;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .final-statement strong {
+        display: block;
+        font-size: 112px;
+        font-weight: 780;
+        letter-spacing: -0.065em;
+        line-height: 0.92;
+      }
+
+      .final-statement p {
+        max-width: 820px;
+        margin: 28px 0 0;
+        color: #c6c8c1;
+        font-size: 29px;
+        line-height: 1.45;
+      }
+
+      #s1 { z-index: 1; }
+      #s2, #s3, #s4, #s5, #s6, #s7, #s8 { z-index: 2; opacity: 0; }
+
+      #s1 .callout-a { left: 108px; top: 218px; }
+      #s1 .callout-b { right: 104px; bottom: 84px; }
+      #s1 .connector-a { left: 493px; top: 347px; width: 520px; }
+      #s1 .connector-b { right: 485px; bottom: 192px; width: 380px; }
+
+      #s2 .counter-card { left: 90px; top: 196px; }
+      #s2 .callout-a { left: 90px; top: 385px; width: 450px; }
+      #s2 .metric-row { left: 555px; right: 86px; bottom: 76px; flex-wrap: wrap; }
+
+      #s3 .callout-a { right: 82px; top: 184px; width: 500px; }
+      #s3 .metric-row { left: 108px; right: 92px; bottom: 72px; flex-wrap: wrap; }
+      #s3 .connector-a { right: 554px; top: 378px; width: 360px; }
+
+      #s4 .callout-a { left: 78px; top: 200px; width: 420px; }
+      #s4 .callout-b { right: 88px; top: 210px; width: 440px; }
+
+      #s5 .callout-a { right: 84px; top: 180px; width: 520px; }
+      #s5 .trust-stack { right: 84px; top: 500px; width: 520px; flex-direction: column; }
+
+      #s6 .callout-a { right: 82px; top: 180px; width: 520px; }
+      #s6 .connector-a { right: 565px; top: 380px; width: 360px; }
+
+      #s7 .callout-a { left: 80px; top: 174px; width: 555px; }
+      #s7 .callout-b { left: 660px; bottom: 70px; width: 540px; }
+
+      #s8 .media-plane { opacity: 0.26; }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="154.5"
+      data-width="1920"
+      data-height="1080"
+    >
+      <audio
+        id="narration"
+        class="clip"
+        data-start="0"
+        data-duration="154.5"
+        data-track-index="0"
+        data-volume="1"
+        src="narration.wav"
+      ></audio>
+
+      <div class="tutorial-ribbon" id="tutorial-ribbon">
+        <span>Research Factory Hangar / guided workflow</span>
+        <span>Synthetic demonstration — not scientific evidence</span>
+      </div>
+      <div class="tutorial-progress"><i id="tutorial-progress-fill"></i></div>
+
+      <section class="scene scene-dark" id="s1">
+        <div class="dark-haze" data-layout-ignore></div>
+        <div class="scene-content">
+          <div class="chapter-bar" id="s1-chapter"><span>01 / The question</span><span class="chapter-number">00:00</span></div>
+          <div class="media-plane media-full media-dim" id="s1-media"><img id="s1-image" data-layout-allow-overflow src="assets/screens/home.png" alt="Research Factory Hangar overview" /></div>
+          <div class="callout callout-dark callout-a" id="s1-callout-a"><span class="kicker">The tempting shortcut</span><strong>Answers are cheap.</strong><p>An agent can produce a polished claim before anyone has defined what would make it true.</p></div>
+          <span class="connector connector-a" id="s1-connector-a" data-layout-ignore></span>
+          <div class="callout callout-green callout-b" id="s1-callout-b"><span class="kicker">The factory question</span><strong>Trust needs a process.</strong><p>Start with gates the claim cannot negotiate after the fact.</p></div>
+          <span class="connector connector-b" id="s1-connector-b" data-layout-ignore></span>
+        </div>
+      </section>
+
+      <section class="scene scene-light" id="s2">
+        <div class="paper-grid" data-layout-ignore></div>
+        <div class="scene-content">
+          <div class="chapter-bar" id="s2-chapter"><span>02 / Choose a bounded problem</span><span class="chapter-number">00:10</span></div>
+          <div class="media-plane media-right" id="s2-media"><img id="s2-image" data-layout-allow-overflow src="assets/screens/stations.png" alt="Searchable station floor" /></div>
+          <div class="counter-card" id="s2-counter"><span>bounded workbenches</span><strong id="station-count">100</strong><span>across 9 domains</span></div>
+          <div class="callout callout-a" id="s2-callout"><span class="kicker">Selection rule</span><strong>Measured, not vibes.</strong><p>Choose the problem by its external truth condition and hard gate.</p></div>
+          <div class="metric-row" id="s2-metrics">
+            <div class="metric-chip"><i></i>Truth condition</div>
+            <div class="metric-chip"><i></i>Benchmark</div>
+            <div class="metric-chip"><i></i>Hard gate</div>
+            <div class="metric-chip"><i></i>Guardrail</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene scene-light" id="s3">
+        <div class="paper-grid" data-layout-ignore></div>
+        <div class="scene-content">
+          <div class="chapter-bar" id="s3-chapter"><span>03 / Read the contract</span><span class="chapter-number">00:28</span></div>
+          <div class="media-plane media-left" id="s3-media"><img id="s3-image" data-layout-allow-overflow src="assets/screens/station-001.png" alt="WB-001 lossless compression specification" /></div>
+          <div class="callout callout-dark callout-a" id="s3-callout"><span class="kicker">WB-001 / hard gate</span><strong>A clever idea still has to pass.</strong><p>If it cannot clear the frozen measurements, it remains a recorded attempt.</p></div>
+          <span class="connector connector-a" id="s3-connector" data-layout-ignore></span>
+          <div class="metric-row" id="s3-metrics">
+            <div class="metric-chip"><i></i>Exact reconstruction</div>
+            <div class="metric-chip"><i></i>Bytes</div>
+            <div class="metric-chip"><i></i>Speed</div>
+            <div class="metric-chip"><i></i>Memory</div>
+            <div class="metric-chip"><i></i>Energy</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene scene-light" id="s4">
+        <div class="paper-grid" data-layout-ignore></div>
+        <div class="scene-content">
+          <div class="chapter-bar" id="s4-chapter"><span>04 / Control the work</span><span class="chapter-number">00:49</span></div>
+          <div class="media-plane media-full media-dim" id="s4-media"><img id="s4-image" data-layout-allow-overflow src="assets/screens/operations.png" alt="Synthetic work-order shift board" /></div>
+          <div class="callout callout-a" id="s4-callout-a"><span class="kicker">Attributed work</span><strong>One operator. One bounded order.</strong><p>The station, mode, task, and done condition are fixed before progress begins.</p></div>
+          <div class="callout callout-warning callout-b" id="s4-callout-b"><span class="kicker">Why it matters</span><strong>Commands are revision-checked.</strong><p>No arbitrary status editing. A stale command cannot quietly rewrite the shift.</p></div>
+          <div class="state-rail" id="s4-state-rail">
+            <div class="state-step"><span>R0</span><strong>OPEN</strong></div>
+            <div class="state-step"><span>R1</span><strong>CLAIMED</strong></div>
+            <div class="state-step"><span>R2</span><strong>IN PROGRESS</strong></div>
+            <div class="state-step"><span>R3</span><strong>REVIEW</strong></div>
+            <div class="state-step"><span>R4</span><strong>COMPLETED</strong></div>
+          </div>
+          <div class="blocked-branch" id="s4-blocked">↳ BLOCKED / reason retained</div>
+        </div>
+      </section>
+
+      <section class="scene scene-light" id="s5">
+        <div class="paper-grid" data-layout-ignore></div>
+        <div class="scene-content">
+          <div class="chapter-bar" id="s5-chapter"><span>05 / Declare the runner boundary</span><span class="chapter-number">01:12</span></div>
+          <div class="media-plane media-left" id="s5-media"><img id="s5-image" data-layout-allow-overflow src="assets/screens/runners.png" alt="Commissioning runner registry" /></div>
+          <div class="callout callout-dark callout-a" id="s5-callout"><span class="kicker">Machine accountability</span><strong>The runner declares its boundary.</strong><p>Its permissions and trust assumptions are part of the record.</p></div>
+          <div class="trust-stack" id="s5-trust">
+            <div class="trust-chip"><i></i>Trusted code only</div>
+            <div class="trust-chip"><i></i>Metadata interface</div>
+            <div class="trust-chip"><i></i>Promotion eligible: no</div>
+          </div>
+          <div class="stamp-stack" id="s5-stamps">
+            <div class="stamp">No arbitrary upload</div>
+            <div class="stamp">No live dispatch</div>
+            <div class="stamp">No self-promotion</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene scene-light" id="s6">
+        <div class="paper-grid" data-layout-ignore></div>
+        <div class="scene-content">
+          <div class="chapter-bar" id="s6-chapter"><span>06 / Preserve the attempts</span><span class="chapter-number">01:29</span></div>
+          <div class="media-plane media-full" id="s6-media"><img id="s6-image" data-layout-allow-overflow src="assets/screens/history.png" alt="Append-only hangar history" /></div>
+          <div class="callout callout-green callout-a" id="s6-callout"><span class="kicker">Reusable negative knowledge</span><strong>Dead ends stay searchable.</strong><p>Corrections append a new event. Earlier failures are never polished out.</p></div>
+          <span class="connector connector-a" id="s6-connector" data-layout-ignore></span>
+          <div class="invariant-lock" id="s6-lock">DB invariant / update and delete rejected</div>
+        </div>
+      </section>
+
+      <section class="scene scene-dark" id="s7">
+        <div class="dark-haze" data-layout-ignore></div>
+        <div class="scene-content">
+          <div class="chapter-bar" id="s7-chapter"><span>07 / Keep science separate</span><span class="chapter-number">01:45</span></div>
+          <div class="media-plane media-left media-dim" id="s7-media"><img id="s7-image" data-layout-allow-overflow src="assets/screens/architecture.png" alt="One-way scientific trust boundary" /></div>
+          <div class="callout callout-warning callout-a" id="s7-callout-a"><span class="kicker">The non-negotiable boundary</span><strong>Synthetic pass ≠ scientific evidence.</strong><p>It proves the factory plumbing worked. Nothing more.</p></div>
+          <div class="callout callout-dark callout-b" id="s7-callout-b"><span class="kicker">Future scientific lane</span><strong>Different people. Fresh counts. Separate authority.</strong></div>
+          <div class="bulkhead" id="s7-bulkhead" data-layout-ignore></div>
+          <div class="bulkhead-label" id="s7-bulkhead-label">Proposal-only bulkhead</div>
+          <div class="zero-stack" id="s7-zero-stack">
+            <div class="zero-row"><strong>0</strong><span>scientific evidence</span></div>
+            <div class="zero-row"><strong>0</strong><span>independent reproductions</span></div>
+            <div class="zero-row"><strong>0</strong><span>promotion authority</span></div>
+          </div>
+          <div class="people-pair" id="s7-people"><span class="person-token">A</span><span class="person-token">B</span><span>Two different people in a separate lane</span></div>
+        </div>
+      </section>
+
+      <section class="scene scene-dark" id="s8">
+        <div class="dark-haze" data-layout-ignore></div>
+        <div class="scene-content">
+          <div class="chapter-bar" id="s8-chapter"><span>08 / The workflow</span><span class="chapter-number">02:16</span></div>
+          <div class="media-plane media-full media-dim" id="s8-media"><img id="s8-image" data-layout-allow-overflow src="assets/screens/home-outro.png" alt="Hangar readiness overview" /></div>
+          <div class="final-statement" id="s8-statement"><span>Research Factory Hangar</span><strong>Make progress repeatable.</strong><p>Discipline does not promise an instant breakthrough. It makes genuine progress legible—and harder to fake.</p></div>
+          <div class="workflow-list" id="s8-workflow">
+            <div class="workflow-chip"><i></i>Bound</div>
+            <div class="workflow-chip"><i></i>Gate</div>
+            <div class="workflow-chip"><i></i>Attribute</div>
+            <div class="workflow-chip"><i></i>Constrain</div>
+            <div class="workflow-chip"><i></i>Retain</div>
+            <div class="workflow-chip"><i></i>Separate</div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      function enter(selector, fromVars, toVars, at) {
+        tl.fromTo(selector, fromVars, { ...toVars, immediateRender: false }, at);
+      }
+
+      function push(oldSelector, newSelector, at, vertical) {
+        const axis = vertical ? "y" : "x";
+        const distance = vertical ? 1080 : 1920;
+        tl.to(oldSelector, { [axis]: -distance, duration: 0.5, ease: "power3.inOut" }, at);
+        enter(newSelector, { [axis]: distance, opacity: 1 }, { [axis]: 0, opacity: 1, duration: 0.5, ease: "power3.inOut" }, at);
+        tl.set(oldSelector, { opacity: 0, [axis]: 0 }, at + 0.51);
+      }
+
+      function focus(oldSelector, newSelector, at) {
+        tl.to(oldSelector, { filter: "blur(15px)", duration: 0.5, ease: "power1.in" }, at);
+        tl.to(oldSelector, { opacity: 0, duration: 0.3, ease: "power2.in" }, at + 0.25);
+        enter(newSelector, { opacity: 0, filter: "blur(12px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.45, ease: "power2.out" }, at + 0.25);
+        tl.set(oldSelector, { opacity: 0, filter: "blur(0px)" }, at + 0.72);
+      }
+
+      function colorDip(oldSelector, newSelector, at) {
+        tl.to(oldSelector, { opacity: 0, duration: 0.25, ease: "power2.in" }, at);
+        enter(newSelector, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, at + 0.32);
+        tl.set(oldSelector, { opacity: 0 }, at + 0.65);
+      }
+
+      enter("#tutorial-ribbon", { y: -38, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "expo.out" }, 0.1);
+      enter("#tutorial-progress-fill", { scaleX: 0 }, { scaleX: 1, duration: 154.4, ease: "none" }, 0.1);
+
+      enter("#s1-chapter", { y: -32, opacity: 0 }, { y: 0, opacity: 1, duration: 0.75, ease: "power2.out" }, 0.22);
+      enter("#s1-media", { opacity: 0, scale: 0.965 }, { opacity: 1, scale: 1, duration: 1.15, ease: "expo.out" }, 0.3);
+      tl.to("#s1-image", { scale: 1.035, x: -22, duration: 9.2, ease: "none" }, 0.32);
+      enter("#s1-callout-a", { x: -72, opacity: 0 }, { x: 0, opacity: 1, duration: 0.72, ease: "power4.out" }, 0.95);
+      enter("#s1-connector-a", { scaleX: 0 }, { scaleX: 1, duration: 0.62, ease: "power2.inOut" }, 1.5);
+      enter("#s1-callout-b", { y: 70, opacity: 0 }, { y: 0, opacity: 1, duration: 0.82, ease: "back.out(1.25)" }, 5.45);
+      enter("#s1-connector-b", { scaleX: 0 }, { scaleX: 1, duration: 0.52, ease: "sine.inOut" }, 6.08);
+
+      focus("#s1", "#s2", 9.72);
+      enter("#s2-chapter", { x: 70, opacity: 0 }, { x: 0, opacity: 1, duration: 0.62, ease: "expo.out" }, 10.48);
+      enter("#s2-media", { scale: 0.955, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.9, ease: "power3.out" }, 10.55);
+      tl.to("#s2-image", { scale: 1.035, y: -22, duration: 16.6, ease: "none" }, 10.58);
+      enter("#s2-counter", { x: -80, opacity: 0 }, { x: 0, opacity: 1, duration: 0.68, ease: "power4.out" }, 11.0);
+      enter("#s2-callout", { y: 55, opacity: 0 }, { y: 0, opacity: 1, duration: 0.78, ease: "back.out(1.18)" }, 18.1);
+      enter("#s2-metrics .metric-chip", { y: 46, opacity: 0 }, { y: 0, opacity: 1, duration: 0.48, ease: "power2.out", stagger: 0.11 }, 21.5);
+
+      push("#s2", "#s3", 27.58, false);
+      enter("#s3-chapter", { y: -35, opacity: 0 }, { y: 0, opacity: 1, duration: 0.65, ease: "sine.out" }, 28.22);
+      enter("#s3-media", { rotationY: -7, opacity: 0 }, { rotationY: 0, opacity: 1, duration: 1.05, ease: "expo.out" }, 28.28);
+      tl.to("#s3-image", { scale: 1.04, x: -26, duration: 19.5, ease: "none" }, 28.3);
+      enter("#s3-callout", { x: 82, opacity: 0 }, { x: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 32.2);
+      enter("#s3-connector", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "power1.inOut" }, 33.0);
+      enter("#s3-metrics .metric-chip", { scale: 0.84, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.42, ease: "back.out(1.35)", stagger: 0.13 }, 37.7);
+
+      push("#s3", "#s4", 48.6, true);
+      enter("#s4-chapter", { x: -70, opacity: 0 }, { x: 0, opacity: 1, duration: 0.62, ease: "power4.out" }, 49.22);
+      enter("#s4-media", { opacity: 0, scale: 0.97 }, { opacity: 1, scale: 1, duration: 0.85, ease: "expo.out" }, 49.28);
+      tl.to("#s4-image", { scale: 1.03, y: -18, duration: 21.8, ease: "none" }, 49.3);
+      enter("#s4-callout-a", { x: -74, opacity: 0 }, { x: 0, opacity: 1, duration: 0.72, ease: "power3.out" }, 52.0);
+      enter("#s4-callout-b", { x: 78, opacity: 0 }, { x: 0, opacity: 1, duration: 0.68, ease: "expo.out" }, 58.8);
+      enter("#s4-state-rail", { y: 110, opacity: 0 }, { y: 0, opacity: 1, duration: 0.75, ease: "power4.out" }, 61.2);
+      enter("#s4-state-rail .state-step", { y: 32, opacity: 0 }, { y: 0, opacity: 1, duration: 0.38, ease: "power2.out", stagger: 0.12 }, 62.0);
+      enter("#s4-blocked", { x: -30, opacity: 0 }, { x: 0, opacity: 1, duration: 0.48, ease: "back.out(1.2)" }, 68.0);
+
+      push("#s4", "#s5", 71.45, false);
+      enter("#s5-chapter", { y: -32, opacity: 0 }, { y: 0, opacity: 1, duration: 0.72, ease: "power2.out" }, 72.1);
+      enter("#s5-media", { rotationY: 7, opacity: 0 }, { rotationY: 0, opacity: 1, duration: 0.9, ease: "expo.out" }, 72.12);
+      tl.to("#s5-image", { scale: 1.035, x: -20, duration: 16.2, ease: "none" }, 72.15);
+      enter("#s5-callout", { x: 80, opacity: 0 }, { x: 0, opacity: 1, duration: 0.68, ease: "power4.out" }, 73.3);
+      enter("#s5-trust .trust-chip", { x: 48, opacity: 0 }, { x: 0, opacity: 1, duration: 0.44, ease: "power2.out", stagger: 0.13 }, 77.0);
+      enter("#s5-stamps .stamp", { scale: 1.16, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.32, ease: "power3.out", stagger: 0.22 }, 82.1);
+
+      focus("#s5", "#s6", 88.67);
+      enter("#s6-chapter", { y: -36, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "sine.out" }, 89.35);
+      enter("#s6-media", { opacity: 0, scale: 0.97 }, { opacity: 1, scale: 1, duration: 0.82, ease: "power3.out" }, 89.4);
+      tl.to("#s6-image", { scale: 1.04, y: -24, duration: 14.5, ease: "none" }, 89.42);
+      enter("#s6-callout", { x: 82, opacity: 0 }, { x: 0, opacity: 1, duration: 0.7, ease: "power4.out" }, 92.1);
+      enter("#s6-connector", { scaleX: 0 }, { scaleX: 1, duration: 0.62, ease: "power1.inOut" }, 92.85);
+      enter("#s6-lock", { y: 66, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "back.out(1.22)" }, 97.2);
+
+      colorDip("#s6", "#s7", 104.28);
+      enter("#s7-chapter", { x: 60, opacity: 0 }, { x: 0, opacity: 1, duration: 0.7, ease: "expo.out" }, 104.95);
+      enter("#s7-media", { opacity: 0, scale: 0.96 }, { opacity: 1, scale: 1, duration: 1.0, ease: "power3.out" }, 105.0);
+      tl.to("#s7-image", { scale: 1.045, x: -28, duration: 29.8, ease: "none" }, 105.02);
+      enter("#s7-callout-a", { x: -82, opacity: 0 }, { x: 0, opacity: 1, duration: 0.76, ease: "power4.out" }, 106.2);
+      enter("#s7-bulkhead", { scaleY: 0 }, { scaleY: 1, duration: 0.8, ease: "power2.inOut", transformOrigin: "center top" }, 112.0);
+      enter("#s7-bulkhead-label", { y: -26, opacity: 0 }, { y: 0, opacity: 1, duration: 0.65, ease: "power2.out" }, 112.45);
+      enter("#s7-zero-stack .zero-row", { x: 90, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, ease: "expo.out", stagger: 0.16 }, 115.0);
+      enter("#s7-people", { y: 54, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "back.out(1.2)" }, 123.0);
+      enter("#s7-callout-b", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.72, ease: "power3.out" }, 128.2);
+
+      focus("#s7", "#s8", 135.5);
+      enter("#s8-chapter", { y: -32, opacity: 0 }, { y: 0, opacity: 1, duration: 0.75, ease: "power2.out" }, 136.18);
+      enter("#s8-media", { opacity: 0, scale: 0.97 }, { opacity: 0.26, scale: 1, duration: 1.0, ease: "sine.out" }, 136.2);
+      tl.to("#s8-image", { scale: 1.035, x: -24, duration: 17.4, ease: "none" }, 136.22);
+      enter("#s8-statement span", { x: -70, opacity: 0 }, { x: 0, opacity: 1, duration: 0.58, ease: "power4.out" }, 136.6);
+      enter("#s8-statement strong", { y: 58, opacity: 0 }, { y: 0, opacity: 1, duration: 0.82, ease: "expo.out" }, 137.0);
+      enter("#s8-statement p", { opacity: 0 }, { opacity: 1, duration: 0.9, ease: "sine.out" }, 138.0);
+      enter("#s8-workflow .workflow-chip", { y: 70, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out", stagger: 0.13 }, 140.2);
+      tl.to("#s8-statement, #s8-workflow, #s8-chapter", { opacity: 0, duration: 0.75, ease: "power2.in" }, 153.65);
+      tl.to("#s8-media", { opacity: 0, duration: 0.75, ease: "power2.in" }, 153.65);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

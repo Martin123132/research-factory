@@ -1,0 +1,19 @@
+# Research Factory Hangar — Workflow Tutorial
+
+Imagine a factory for difficult problems. The useful part isn't asking an agent for an answer. It's knowing exactly what must be true before any answer earns trust.
+
+The hangar begins with one hundred bounded workbenches across nine domains. Every station starts with an external truth condition, a reference benchmark, a hard pass gate, and an economic or physical guardrail. Pick a problem by what can be measured, not by how exciting a claim sounds.
+
+Here we open workbench zero zero one: general-purpose lossless compression. Its job is precise. Reconstruct every file identically. Measure compressed bytes, speed, memory, and energy. Then compare the result against pinned reference tools. A clever idea that cannot clear those gates stays a recorded attempt.
+
+The shift board is where the factory itself is built and tested. An operator creates a construction or synthetic commissioning order, defines the bounded task and its done condition, and claims it under their own identity. The order can move only through explicit, revision-checked commands: open, claimed, in progress, review, then completed—or blocked with a reason.
+
+Runner interfaces are registered separately. Each runner states what it is allowed to execute and the trust assumptions around it. In this first hangar, runners are commissioning-only. They cannot upload arbitrary code, dispatch live research, or mark themselves promotion grade.
+
+Every change creates a new append-only history event. Corrections never erase earlier work. A failed attempt, a blocked route, or a disagreement remains searchable, so future people and agents don't pay to explore the same dead end without knowing it.
+
+And here is the most important guardrail. Completing a synthetic work order proves only that the factory plumbing worked. It is not scientific evidence. It is not an independent reproduction. It cannot promote a result.
+
+The scientific control plane is deliberately separate. When that lane is built, a claim can begin blind validation by two different people and their agents, starting from zero evidence and zero reproductions. The hangar may propose a handoff. It cannot approve its own science.
+
+That is the workflow: bound the problem, define the gates, attribute the work, constrain the runner, preserve every attempt, and keep promotion outside the system that produced the claim. The factory doesn't promise instant breakthroughs. It makes genuine progress legible, repeatable, and harder to fake.

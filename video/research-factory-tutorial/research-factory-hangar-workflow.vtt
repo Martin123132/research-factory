@@ -1,0 +1,223 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.180
+Imagine a factory for difficult problems.
+
+00:00:02.840 --> 00:00:04.940
+The useful part isn't asking an agent for
+
+00:00:04.940 --> 00:00:05.420
+an answer.
+
+00:00:05.940 --> 00:00:07.760
+It's knowing exactly what must be true
+
+00:00:07.760 --> 00:00:09.460
+before any answer earns trust.
+
+00:00:10.100 --> 00:00:12.040
+The hanger begins with 100 bounded
+
+00:00:12.040 --> 00:00:14.000
+workbenches across nine domains.
+
+00:00:14.720 --> 00:00:16.700
+Every station starts with an external
+
+00:00:16.700 --> 00:00:19.640
+truth condition, a reference benchmark, a
+
+00:00:19.640 --> 00:00:22.180
+hard passgate, and an economic or physical
+
+00:00:22.180 --> 00:00:22.720
+guardrail.
+
+00:00:23.640 --> 00:00:25.260
+Pick a problem by what can be measured,
+
+00:00:25.740 --> 00:00:27.840
+not by how exciting a claim sounds.
+
+00:00:27.840 --> 00:00:31.140
+Here we open workbench 001, general
+
+00:00:31.140 --> 00:00:32.620
+purpose lossless compression.
+
+00:00:33.320 --> 00:00:36.440
+Its job is precise, reconstruct every file
+
+00:00:36.440 --> 00:00:37.540
+identically.
+
+00:00:37.980 --> 00:00:39.980
+Measure compressed bytes, speed, memory,
+
+00:00:39.980 --> 00:00:40.580
+and energy.
+
+00:00:41.160 --> 00:00:43.040
+Then compare the result against pinned
+
+00:00:43.040 --> 00:00:43.840
+reference tools.
+
+00:00:44.480 --> 00:00:46.420
+A clever idea that cannot clear those
+
+00:00:46.420 --> 00:00:48.180
+gates stays a recorded attempt.
+
+00:00:48.880 --> 00:00:50.460
+The shift board is where the factory
+
+00:00:50.460 --> 00:00:52.240
+itself is built and tested.
+
+00:00:52.830 --> 00:00:55.400
+An operator creates a construction or
+
+00:00:55.400 --> 00:00:58.040
+synthetic commissioning order, defines the
+
+00:00:58.040 --> 00:00:59.980
+bounded task and its done condition and
+
+00:00:59.980 --> 00:01:01.760
+claims it under their own identity.
+
+00:01:02.600 --> 00:01:04.700
+The order can move only through explicit
+
+00:01:04.700 --> 00:01:07.700
+revision checked commands, open claimed in
+
+00:01:07.700 --> 00:01:10.200
+progress review then completed, or blocked
+
+00:01:10.200 --> 00:01:10.840
+with a reason.
+
+00:01:11.740 --> 00:01:13.280
+Runner interfaces are registered
+
+00:01:13.280 --> 00:01:13.800
+separately.
+
+00:01:14.380 --> 00:01:16.320
+Each runner states what it is allowed to
+
+00:01:16.320 --> 00:01:18.340
+execute and the trust assumptions around
+
+00:01:18.340 --> 00:01:18.880
+it.
+
+00:01:19.140 --> 00:01:21.360
+In this first -hanger, runners are
+
+00:01:21.360 --> 00:01:22.220
+commissioning only.
+
+00:01:22.880 --> 00:01:24.780
+They cannot upload arbitrary code,
+
+00:01:25.020 --> 00:01:27.400
+dispatch live research, or mark themselves
+
+00:01:27.400 --> 00:01:28.360
+promotion grade.
+
+00:01:28.940 --> 00:01:31.240
+Every change creates a new appendonely
+
+00:01:31.240 --> 00:01:32.100
+history event.
+
+00:01:33.020 --> 00:01:34.740
+Corrections never erase earlier work.
+
+00:01:35.340 --> 00:01:37.580
+A failed attempt, a blocked route, or a
+
+00:01:37.580 --> 00:01:40.060
+disagreement remains searchable, so future
+
+00:01:40.060 --> 00:01:42.280
+people and agents don't pay to explore the
+
+00:01:42.280 --> 00:01:44.220
+same dead end without knowing it.
+
+00:01:44.540 --> 00:01:46.840
+And here is the most important guardrail.
+
+00:01:47.400 --> 00:01:49.720
+Completing a synthetic work order proves
+
+00:01:49.720 --> 00:01:51.720
+only that the factory plumbing worked.
+
+00:01:52.500 --> 00:01:54.960
+It is not scientific evidence, it is not
+
+00:01:54.960 --> 00:01:56.240
+an independent reproduction.
+
+00:01:56.900 --> 00:01:58.240
+It cannot promote a result.
+
+00:01:58.840 --> 00:02:00.600
+The scientific control plane is
+
+00:02:00.600 --> 00:02:01.560
+deliberately separate.
+
+00:02:02.300 --> 00:02:04.300
+When that lane is built, a claim can begin
+
+00:02:04.300 --> 00:02:06.460
+blind validation by two different people
+
+00:02:06.460 --> 00:02:08.620
+and their agents starting from zero
+
+00:02:08.620 --> 00:02:10.420
+evidence and zero reproductions.
+
+00:02:11.280 --> 00:02:12.880
+The hanger may propose a handoff.
+
+00:02:13.480 --> 00:02:15.200
+It cannot approve its own science.
+
+00:02:15.790 --> 00:02:16.940
+That is the workflow.
+
+00:02:17.600 --> 00:02:19.380
+Bound the problem, define the gates,
+
+00:02:19.700 --> 00:02:21.560
+attribute the work, constrain the runner,
+
+00:02:21.980 --> 00:02:24.000
+preserve every attempt, and keep promotion
+
+00:02:24.000 --> 00:02:25.900
+outside the system that produced the
+
+00:02:25.900 --> 00:02:26.240
+claim.
+
+00:02:27.040 --> 00:02:29.020
+The factory doesn't promise instant
+
+00:02:29.020 --> 00:02:30.100
+breakthroughs.
+
+00:02:30.100 --> 00:02:32.520
+It makes genuine progress legible,
+
+00:02:32.660 --> 00:02:34.360
+repeatable, and harder to fake.
