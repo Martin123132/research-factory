@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "override_type": "DIGITAL_OPTIMIZATION_V1",
+  "problem_plugin": "SYMMETRIC_TSP_V1",
+  "workbench_code": "WB-013",
+  "catalogue_entry_sha256": "7c16bdedcee2220cf6eea130f226ba43c5f4458569d903d4fb3d4001392cf1db",
+  "implementation_version": "0.1.0",
+  "implementation_root": "factory/workbenches/wb013_travelling_salesperson_route_kernel",
+  "truth": {
+    "subject_or_input_population": "A content-locked symmetric travelling-salesperson instance whose type, dimension and edge-weight convention are accepted by the named problem plugin.",
+    "required_output": "One Hamiltonian cycle containing every one-based node exactly once; the trusted verifier, not the candidate, calculates its closed-tour length.",
+    "pass_rule": "The instance parser, candidate process, exact node-set, independent length calculation and same-seed canonical-cycle gates all pass; score and utility cannot override a failed hard gate."
+  },
+  "official_benchmark": {
+    "suite_id": "TSPLIB95_SYMMETRIC_TSP",
+    "instance_type": "TSP",
+    "entry_weight_type": "EXPLICIT",
+    "entry_weight_format": "FULL_MATRIX",
+    "specification_url": "https://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/tsp95.pdf",
+    "faq_url": "https://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/TSPFAQ.html",
+    "optima_url": "https://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/STSP.html",
+    "observed_on": "2026-08-02",
+    "distribution_policy": "Official TSPLIB source URLs are recorded, but instances are not republished until a suitable redistribution basis or permission is established.",
+    "authority_boundary": "The Factory may reproduce a locked score but cannot rewrite TSPLIB's distance conventions, convert a best observation into a proven optimum, or claim external acceptance."
+  },
+  "entry_gate": {
+    "target_duration_minutes": 60,
+    "brief": "Run the locked factory-owned symmetric-matrix fixture, reproduce its exact known route length and explain why candidate-reported scores are rejected; this is a method gate with zero scientific credit.",
+    "command": "python factory/workbenches/wb013_travelling_salesperson_route_kernel/scripts/run_entry_gate.py --fixture --output work/wb013-entry-result.json",
+    "expected_outputs": [
+      "locked entry-only JSON with a valid canonical Hamiltonian cycle",
+      "independently calculated integer route length 33",
+      "same-seed deterministic result and exact fixture/source commitments",
+      "PASS, INVALID or UNRUNNABLE construction conclusion"
+    ]
+  },
+  "scoring": {
+    "minimum_improvement_fraction": 0.001,
+    "stochastic_repetitions": 7,
+    "seed_policy": "Derive seven public seeds from the committed claim hash before any result is revealed.",
+    "confidence_rule": "The median route-length improvement must clear the frozen threshold and both independent validators must reproduce the declared aggregate without a hard-gate failure."
+  },
+  "practical_accounting": {
+    "scenario_version": "regional-route-kernel-tco-v1",
+    "formula": "annual vehicle distance + driver time + solver compute and energy + integration + operations + failed-run fallback",
+    "system_boundary": "A frozen population of symmetric single-vehicle route kernels over one year, excluding every fleet constraint not represented in the input.",
+    "included_costs": ["vehicle distance", "driver time", "solver compute and energy", "integration", "operations", "failed-run fallback"],
+    "comparator": "best eligible solver under the same frozen route population, runner class and operational scenario",
+    "decision_threshold": 0.01
+  },
+  "paths": {
+    "public_input_manifest": "factory/workbenches/wb013_travelling_salesperson_route_kernel/data/benchmark_manifest.json",
+    "economic_scenario": "factory/workbenches/wb013_travelling_salesperson_route_kernel/practical_scenario.json",
+    "runner_protocol": "factory/workbenches/wb013_travelling_salesperson_route_kernel/PROTOCOL.md",
+    "isolation_policy": "factory/workbenches/wb013_travelling_salesperson_route_kernel/isolation/local_trust_policy.toml"
+  },
+  "assets": [
+    {
+      "role": "truth_verifier",
+      "path": "factory/workbench_standard/commissioning/runner/evaluate_optimization_trusted.py",
+      "sha256": "18f51fe77f390afd28e9a5c07f6a09306b4a2ff848b13f9e37be7142a4aba528"
+    },
+    {
+      "role": "runner_implementation",
+      "path": "factory/workbench_standard/commissioning/runner/process_control.py",
+      "sha256": "f24b5f9abeff798e6370a1e92631b9f890ae5071a6e8cc73ca5663d5a82c067e"
+    },
+    {
+      "role": "submission_schema",
+      "path": "factory/workbench_standard/commissioning/digital_optimization_submission.schema.json",
+      "sha256": "df19302fad4ad464b575f9be4dae4b1e52872bcb915d1688c5c1587add6819c1"
+    },
+    {
+      "role": "result_schema",
+      "path": "factory/workbench_standard/commissioning/digital_optimization_result.schema.json",
+      "sha256": "6dcade6a443923132fb3f0d421ebdb3cf9eb65c91e181e3c6735cdbfae474fc2"
+    },
+    {
+      "role": "public_input_manifest",
+      "path": "factory/workbenches/wb013_travelling_salesperson_route_kernel/data/benchmark_manifest.json",
+      "sha256": "6506036d12a971fe6de983ba3e0ba23ef9854004bf315f43f1ecefdb635507a7"
+    },
+    {
+      "role": "entry_baseline_definition",
+      "path": "factory/workbenches/wb013_travelling_salesperson_route_kernel/baselines/entry_reference.json",
+      "sha256": "cc4d52e757a7b613941afab9b7ef96746a7bbbdb13f77d8b7547aecb8cf76b63"
+    },
+    {
+      "role": "entry_baseline_result",
+      "path": "factory/workbenches/wb013_travelling_salesperson_route_kernel/baselines/entry_expected.json",
+      "sha256": "6f8196af698efa3704dc777cbf3e93c4eb95c10ab0583fd1ac0e8a22e7ebdd27"
+    },
+    {
+      "role": "economic_scenario",
+      "path": "factory/workbenches/wb013_travelling_salesperson_route_kernel/practical_scenario.json",
+      "sha256": "513381c2e8f77bf65645d19c4484b72909a8686fabe05b578f3b1616486cd9d2"
+    },
+    {
+      "role": "runner_protocol",
+      "path": "factory/workbenches/wb013_travelling_salesperson_route_kernel/PROTOCOL.md",
+      "sha256": "36df3101ba129f8322a84c681f4a5e7602b210fd76375195d0af81c04ff5f341"
+    },
+    {
+      "role": "isolation_policy",
+      "path": "factory/workbenches/wb013_travelling_salesperson_route_kernel/isolation/local_trust_policy.toml",
+      "sha256": "261be287ffed2d9646f0888e76aae53f0f94d81e4ad4090ccafff4d9d6be4136"
+    },
+    {
+      "role": "starter_pack_instructions",
+      "path": "factory/workbenches/wb013_travelling_salesperson_route_kernel/STARTER_PACK.md",
+      "sha256": "4c6d4f5a178f9fb5f6b07039d29f3d3cea01a3bfe1bf6289d7ffa44201c66ada"
+    },
+    {
+      "role": "entry_fixture",
+      "path": "factory/workbenches/wb013_travelling_salesperson_route_kernel/data/entry_fixture.tsp",
+      "sha256": "885973a9a40b3311814ea5fec039b092b9a6aa9871d08d73c5429b42d3bfa227"
+    },
+    {
+      "role": "entry_gate_script",
+      "path": "factory/workbenches/wb013_travelling_salesperson_route_kernel/scripts/run_entry_gate.py",
+      "sha256": "2c7b800357a48c5c0940c4c59ba7d2283c3cc5b4b4ff196a47245899d5449d8d"
+    }
+  ],
+  "external_limitations": [
+    "ARBITRARY_PUBLIC_CODE_ISOLATION_MISSING",
+    "CENTRAL_BLIND_EVALUATOR_NOT_DEPLOYED",
+    "FULL_TSPLIB_DISTANCE_CONFORMANCE_MISSING",
+    "HIDDEN_GENERALIZATION_SUITE_MISSING",
+    "LIVE_AUTHORIZATION_NOT_IMPLEMENTED",
+    "OFFICIAL_COMPARATOR_SNAPSHOT_NOT_FROZEN",
+    "OFFICIAL_OPTIMUM_CERTIFICATE_PROTOCOL_MISSING",
+    "OFFICIAL_TSPLIB_ASSETS_NOT_FACTORY_HASHED",
+    "OFFICIAL_TSPLIB_REDISTRIBUTION_PERMISSION_UNCONFIRMED",
+    "PRACTICAL_PRICE_AND_DEMAND_SNAPSHOT_NOT_FROZEN",
+    "PRODUCTION_IDENTITY_NOT_IMPLEMENTED",
+    "PROMOTION_COMPUTE_ENERGY_BUDGET_UNDEFINED",
+    "PROMOTION_RUNNER_NOT_IMPLEMENTED"
+  ]
+}

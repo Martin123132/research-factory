@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://research-factory.local/schemas/wb001-result-v2.json",
+  "title": "WB-001 evaluation result",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "result_type",
+    "runner_version",
+    "workbench",
+    "operator_id",
+    "candidate_artifact_sha256",
+    "corpus",
+    "execution_boundary",
+    "runtime_fingerprint_sha256",
+    "hard_gate_pass",
+    "failures",
+    "files",
+    "aggregate",
+    "result_sha256"
+  ],
+  "properties": {
+    "schema_version": {"const": 2},
+    "result_type": {"const": "wb001_evaluation"},
+    "runner_version": {"const": "0.2.0"},
+    "operator_id": {"type": "string", "minLength": 3, "maxLength": 128},
+    "candidate_artifact_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "runtime_fingerprint_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "hard_gate_pass": {"type": "boolean"},
+    "failures": {"type": "array"},
+    "files": {"type": "array"},
+    "aggregate": {"type": ["object", "null"]},
+    "result_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  },
+  "additionalProperties": true
+}

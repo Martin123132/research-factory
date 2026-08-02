@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "result_type", "workbench_code", "submission_id", "input", "instance", "artifact", "hard_gates", "metrics", "advisory", "credit_boundary", "result_sha256"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "result_type": { "const": "DIGITAL_OPTIMIZATION_ENTRY_RESULT" },
+    "workbench_code": { "type": "string", "pattern": "^WB-[0-9]{3}$" },
+    "submission_id": { "type": "string", "minLength": 3 },
+    "input": { "$ref": "#/$defs/file" },
+    "instance": {
+      "type": "object", "additionalProperties": false,
+      "required": ["name", "problem_plugin", "dimension", "edge_weight_type", "edge_weight_format", "reference_length"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "problem_plugin": { "const": "SYMMETRIC_TSP_V1" },
+        "dimension": { "type": "integer", "minimum": 3 },
+        "edge_weight_type": { "const": "EXPLICIT" },
+        "edge_weight_format": { "const": "FULL_MATRIX" },
+        "reference_length": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "artifact": {
+      "type": "object", "additionalProperties": false,
+      "required": ["source_package_bytes", "source_package_sha256", "tour", "tour_sha256"],
+      "properties": {
+        "source_package_bytes": { "type": "integer", "minimum": 0 },
+        "source_package_sha256": { "$ref": "#/$defs/sha256" },
+        "tour": { "type": "array", "minItems": 3, "items": { "type": "integer", "minimum": 1 } },
+        "tour_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "hard_gates": {
+      "type": "object", "additionalProperties": false,
+      "required": ["candidate_processes_pass", "supported_instance", "tour_valid", "exact_length_accounting", "same_seed_determinism"],
+      "properties": {
+        "candidate_processes_pass": { "type": "boolean" },
+        "supported_instance": { "type": "boolean" },
+        "tour_valid": { "type": "boolean" },
+        "exact_length_accounting": { "type": "boolean" },
+        "same_seed_determinism": { "type": "boolean" }
+      }
+    },
+    "metrics": {
+      "type": "object", "additionalProperties": false,
+      "required": ["supported_instance", "tour_valid", "route_length", "length_accounting_difference", "determinism_fraction", "optimality_gap_fraction"],
+      "properties": {
+        "supported_instance": { "const": true },
+        "tour_valid": { "const": true },
+        "route_length": { "type": "integer", "minimum": 0 },
+        "length_accounting_difference": { "const": 0 },
+        "determinism_fraction": { "const": 1 },
+        "optimality_gap_fraction": { "type": "number", "minimum": 0 }
+      }
+    },
+    "advisory": {
+      "type": "object", "additionalProperties": false,
+      "required": ["first_solve_elapsed_ns", "second_solve_elapsed_ns", "peak_rss_bytes"],
+      "properties": {
+        "first_solve_elapsed_ns": { "type": "integer", "minimum": 0 },
+        "second_solve_elapsed_ns": { "type": "integer", "minimum": 0 },
+        "peak_rss_bytes": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "credit_boundary": {
+      "type": "object", "additionalProperties": false,
+      "required": ["scope", "scientific_evidence", "counts_as_independent_reproduction", "eligible_for_promotion", "official_tsplib_score", "optimum_claim_verified"],
+      "properties": {
+        "scope": { "const": "ENTRY_GATE_ONLY" },
+        "scientific_evidence": { "const": false },
+        "counts_as_independent_reproduction": { "const": false },
+        "eligible_for_promotion": { "const": false },
+        "official_tsplib_score": { "const": false },
+        "optimum_claim_verified": { "const": false }
+      }
+    },
+    "result_sha256": { "$ref": "#/$defs/sha256" }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "file": {
+      "type": "object", "additionalProperties": false,
+      "required": ["name", "bytes", "sha256"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "bytes": { "type": "integer", "minimum": 0 },
+        "sha256": { "$ref": "#/$defs/sha256" }
+      }
+    }
+  }
+}

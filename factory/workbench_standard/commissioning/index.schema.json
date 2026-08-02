@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "registrations", "index_sha256"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "registrations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["workbench_code", "adapter", "override_path", "override_sha256"],
+        "properties": {
+          "workbench_code": { "type": "string", "pattern": "^WB-[0-9]{3}$" },
+          "adapter": { "enum": ["DIGITAL_COMPRESSION_V1", "DIGITAL_OPTIMIZATION_V1"] },
+          "override_path": { "type": "string", "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\)[A-Za-z0-9._/-]+$" },
+          "override_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+        }
+      }
+    },
+    "index_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+  }
+}

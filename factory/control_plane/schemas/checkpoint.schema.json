@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://research-factory.invalid/schemas/ledger-checkpoint-v1.json",
+  "title": "Research Factory externally anchorable ledger checkpoint",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "checkpoint_type",
+    "label",
+    "generated_at",
+    "factory_id",
+    "ledger_name",
+    "events",
+    "head_event_sha256",
+    "checkpoint_sha256"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "checkpoint_type": {"const": "research_factory_ledger_head"},
+    "label": {"type": "string", "minLength": 1},
+    "generated_at": {"type": "string", "format": "date-time"},
+    "factory_id": {"type": "string", "minLength": 3},
+    "ledger_name": {"type": "string", "minLength": 1},
+    "events": {"type": "integer", "minimum": 1},
+    "head_event_sha256": {"$ref": "#/$defs/sha256"},
+    "checkpoint_sha256": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

@@ -1,103 +1,66 @@
-# Research Factory Hangar
+# Research Factory
 
-The Hangar is the construction and synthetic-commissioning workspace for the
-Research Factory. It maps all 100 proposed workbenches and provides operational
-infrastructure for building their contracts, runners, measurement plans and
-review plumbing.
+Research Factory is a human–AI workshop for objective, reproducible research.
+It turns large problems into bounded workbenches with explicit inputs, hard
+gates, metrics, economic or physical guardrails, negative-result retention and
+two-person independent reproduction.
 
-It is deliberately **not** a scientific execution or promotion surface.
+The project is currently building the aircraft hangar, not claiming scientific
+breakthroughs. Synthetic commissioning proves that the machinery works; it does
+not count as evidence, independent reproduction or promotion.
 
-## Scope boundary
+## Current construction state
 
-The application accepts only two operating modes:
+- 100 deterministic station kits
+- 99 contract drafts
+- 1 commissioning-ready legacy test article
+- 2 adapter-bound stations
+- 3 runnable entry gates
+- 0 live-research stations
 
-- `HANGAR_CONSTRUCTION`
-- `SYNTHETIC_COMMISSIONING`
+The first reusable families are exact public-corpus compression and symmetric
+travelling-salesperson optimisation. Each adapter is deliberately narrow: a
+TSP verifier cannot silently score vehicle routing, scheduling or another
+distance convention.
 
-Every work order and event is structurally fixed to:
+## Repository map
 
-```text
-scientific_evidence = false
-counts_as_independent_reproduction = false
-eligible_for_promotion = false
-```
+- [`factory/workbench_standard/`](factory/workbench_standard/) — closed contract
+  schema, adapter registry, deterministic kit generator and governance tests.
+- [`factory/workbenches/`](factory/workbenches/) — fitted station work areas and
+  known-answer commissioning fixtures.
+- [`factory/station_kits/`](factory/station_kits/) — generated, content-addressed
+  construction envelopes for all 100 stations.
+- [`factory/control_plane/`](factory/control_plane/) — work orders, blind
+  validation states, disputes and append-only evidence plumbing.
+- [`factory/hangar/`](factory/hangar/) — the construction and commissioning web
+  interface.
+- [`research_factory_100_workbenches.json`](research_factory_100_workbenches.json)
+  — canonical 100-problem catalogue.
 
-There are no result, rerun, evidence, holdout, upload, dispatch or promotion
-endpoints. Live research remains in the separate factory control plane.
-
-## What is implemented
-
-- a verified, searchable catalogue of 100 objective workbench briefs;
-- a verified Contract v1 snapshot and deterministic kit status for every station;
-- station detail pages with hard gates, benchmarks and economic/physical
-  guardrails;
-- attributed construction and synthetic-commissioning work orders;
-- command-based, revision-checked work-order transitions;
-- a registry for non-promotion runner interfaces;
-- append-only operational activity with database triggers rejecting updates and
-  deletes;
-- private-workspace identity from the hosting platform's authenticated user
-  headers;
-- a local preview identity restricted to synthetic commissioning;
-- a system-boundary view describing the future proposal-only handoff.
-
-The bundled catalogue is byte-identical to
-`research_factory_100_workbenches.json` at the project root:
-
-```text
-SHA-256 9b37a47c265e916cbf460f4dd0120b02b01fa800b104017b117ba2fc40644cd5
-```
-
-## Routes
-
-```text
-/                   Hangar readiness overview
-/workbenches        Search and filter all 100 stations
-/workbenches/:id    Full station brief
-/operations         Construction and commissioning shift board
-/runners            Non-promotion runner registry
-/history            Searchable append-only activity
-/architecture       Trust boundaries and future handoff
-/standards          Contract v1, readiness gates and downloadable artifacts
-/tutorial           Guided synthetic workflow tutorial and transcript
-```
-
-## Development
-
-Node.js 22.13 or newer is required.
+## Verify the factory
 
 ```powershell
-npm.cmd ci --ignore-scripts --prefer-offline --no-audit --no-fund
-npm.cmd run dev
+python -m pip install -r factory/requirements.lock
+python factory/workbench_standard/generate_station_kits.py --check
+python -m unittest discover -s factory/workbench_standard/tests -p "test_*.py" -v
+cd factory/hangar
+npm ci
+npm test
 ```
 
-The project uses a Sites/Vinext Cloudflare Worker and a project-local D1 database.
-The application performs an idempotent schema bootstrap for local development;
-the tracked Drizzle migration is the deployment schema.
+## Evidence boundary
 
-## Verification
+An accepted pull request is not automatically an accepted scientific result.
+Scientific promotion additionally requires two reproductions owned by two
+different humans, commitment before reveal, the station-specific tolerance
+contract and every hard gate. The author cannot validate their own work.
 
-```powershell
-npm.cmd run catalogue:verify
-npm.cmd run contracts:verify
-npm.cmd run typecheck
-npm.cmd run lint
-npm.cmd test
-```
+Hidden holdouts, answer sheets, evaluator secrets and private identity records
+are intentionally excluded from this repository. See
+[`GOVERNANCE.md`](GOVERNANCE.md), [`CONTRIBUTING.md`](CONTRIBUTING.md) and
+[`SECURITY.md`](SECURITY.md).
 
-The test suite builds the site, starts its real local Worker runtime, renders
-representative pages, and exercises negative governance paths. It asserts that
-live research mode, client-supplied promotion fields, promotion-grade runners
-and arbitrary status writes are rejected.
+The private Hangar deployment is available to authorised project members at
+[Research Factory Hangar 01](https://research-factory-hangar-01.clear-seed-4435.chatgpt.site).
 
-## Deployment
-
-`.openai/hosting.json` requests a separate D1 binding named `DB` and no R2
-bucket. Deploy this site privately. The hosting access policy establishes
-workspace membership; application mutations use the stable
-`oai-authenticated-user-id` header injected by the platform.
-
-Construction may eventually export a handoff proposal containing contracts and
-tool hashes. Such a proposal can request separate control-plane review only. It
-must never create a live round, carry synthetic reproduction credit, or append
-Hangar events to the scientific ledger.

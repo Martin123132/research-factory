@@ -1,0 +1,262 @@
+{
+  "schema_version": 1,
+  "pack_type": "wb001_baseline_frontier",
+  "pack_id": "wb001-reference-codecs-v1",
+  "generated_at": "2026-08-02T01:45:36.541456+00:00",
+  "workbench": {
+    "id": "WB-001",
+    "version": "0.2.0"
+  },
+  "corpus_sha256": "7e87977d8f79843d4e383590c0bc7d7058d773cf558007de66d258e9b01bb30f",
+  "corpus_manifest_sha256": "5603ae2bf4c6b4212d9d11c0f690c8a6f25f2797f01267234aa8955e10cd6b49",
+  "timing_grade": "advisory-local",
+  "promotable": false,
+  "pack_state": "LOCAL_QUALIFICATION_ONLY",
+  "execution_class": {
+    "system": "Windows",
+    "release": "10",
+    "machine": "AMD64",
+    "python": "3.13.13",
+    "python_executable_sha256": "e6c07188984d41b80f822dcdaeaceeb217cdf977f18f79c421a3a53edba895c3",
+    "boundary": {
+      "mode": "trusted-local-process",
+      "security_boundary": false,
+      "timing_grade": "advisory"
+    }
+  },
+  "execution_class_sha256": "7d2e27d9c15d49c71c912381d651de6f976ff695f0e57ee7744047fc6cd119eb",
+  "dimensions": [
+    "total_compressed_bytes",
+    "encode_wall_ns",
+    "decode_wall_ns",
+    "peak_rss_bytes"
+  ],
+  "entries": [
+    {
+      "profile_id": "zlib-1",
+      "submission_id": "wb001-baseline-zlib-1-v2",
+      "candidate_artifact_sha256": "d6ba35098dc048086d5a0b7e3c8329b6a4fcf6810e4d363eaba419e880e92698",
+      "result_sha256": "44ca306062d2bfa9916cfd6d85bda4d1235458c668c622f9d70d6306c3161f5f",
+      "runtime_fingerprint_sha256": "c44a4b41fd0fa0ac31357e4909749feb1f94469abf459fe8f466696dbdeac839",
+      "metrics": {
+        "total_compressed_bytes": 902003,
+        "encode_wall_ns": 230415900,
+        "decode_wall_ns": 175595000,
+        "peak_rss_bytes": 20463616
+      },
+      "annualized_scenario_cost_gbp": 5451.137144,
+      "file_fingerprint_sha256": "96652cd332a0be575ed50fd80761aa015cc8d8e9050bbb4cc25ae616af7c04f8"
+    },
+    {
+      "profile_id": "zlib-6",
+      "submission_id": "wb001-baseline-zlib-6-v2",
+      "candidate_artifact_sha256": "a251c76a4ae971d97a8e7c9032835b79c4fc7fe8f05a2bb502d5aa771915b1a5",
+      "result_sha256": "563a486825987aa0ec6cab3c3816e298fecd9fe290e5a036eeb7d7e260727729",
+      "runtime_fingerprint_sha256": "454e2d39186ed803ecdbaf1a2f0db5715e2133f33d27672e26b026eadd22e1f6",
+      "metrics": {
+        "total_compressed_bytes": 796225,
+        "encode_wall_ns": 271194900,
+        "decode_wall_ns": 180594700,
+        "peak_rss_bytes": 20721664
+      },
+      "annualized_scenario_cost_gbp": 4840.443368,
+      "file_fingerprint_sha256": "8241fcb80df35f363c1dd818480df80aafd4799ed14bff43f18de32050d96bee"
+    },
+    {
+      "profile_id": "zlib-9",
+      "submission_id": "wb001-baseline-zlib-9-v2",
+      "candidate_artifact_sha256": "1323167632e633215715b5de9ac8351eee30d1ee3b70a66e70e3e9f720fecfcb",
+      "result_sha256": "b5ca4f92d19c8322aef2bfa17d955f1cec6be958b2491d9c3d4cb680bcac44d6",
+      "runtime_fingerprint_sha256": "14793fb589eb78a55bbdc60ceed09b264f15235f443f50a1abe48b3e8e3c6ddc",
+      "metrics": {
+        "total_compressed_bytes": 800126,
+        "encode_wall_ns": 408510200,
+        "decode_wall_ns": 188543700,
+        "peak_rss_bytes": 20402176
+      },
+      "annualized_scenario_cost_gbp": 4891.725989,
+      "file_fingerprint_sha256": "661bf41898f20ed0a343f9f86c913eba2d5f9aa092f31d4e7080f69604e789c0"
+    },
+    {
+      "profile_id": "zstd-1",
+      "submission_id": "wb001-baseline-zstd-1-v2",
+      "candidate_artifact_sha256": "c1aabad991d994a7d226a8e7fdae4de9393e1a45f2a9b1a26328249b86b5e1c8",
+      "result_sha256": "72f42c6371ce97392ef5e36f97bf36102416bfb562c579cf0f77f135741e6bbd",
+      "runtime_fingerprint_sha256": "381f946ba09a2d993cce35cca9f972583f76f64b5afd9a0c4cf157012950a62d",
+      "metrics": {
+        "total_compressed_bytes": 793644,
+        "encode_wall_ns": 205359800,
+        "decode_wall_ns": 192080000,
+        "peak_rss_bytes": 20221952
+      },
+      "annualized_scenario_cost_gbp": 4821.95433,
+      "file_fingerprint_sha256": "d99feb839b4d9aa9e3bdb59ba1c1849f016e0196fccfef6735aa37aa8b118f7a"
+    },
+    {
+      "profile_id": "zstd-3",
+      "submission_id": "wb001-baseline-zstd-3-v2",
+      "candidate_artifact_sha256": "701b873a958fb8f4dd33337fee2f721d6c6134f91b122e56e59ccbab46af47a1",
+      "result_sha256": "c4ae8776f68215fae234ec618c7ccf4f19b31aca7e2a8b3b25c9b20ab0476030",
+      "runtime_fingerprint_sha256": "c91522e2f6a491306a66d68a67d8343a6b949e67af237df3649db48733172cad",
+      "metrics": {
+        "total_compressed_bytes": 823734,
+        "encode_wall_ns": 181186200,
+        "decode_wall_ns": 154985900,
+        "peak_rss_bytes": 21041152
+      },
+      "annualized_scenario_cost_gbp": 4969.614701,
+      "file_fingerprint_sha256": "d5bdadb124c4ee2ee578b94f95b8397db59fa7a4345a92786f9ee10eae284f94"
+    },
+    {
+      "profile_id": "zstd-9",
+      "submission_id": "wb001-baseline-zstd-9-v2",
+      "candidate_artifact_sha256": "969df348bef944f5382d0dd51119fbc3268f599fa2470d07aded291def376253",
+      "result_sha256": "af007b9a93b64c0180ad4091484efc2950a073c778b463c9175eae020f402980",
+      "runtime_fingerprint_sha256": "978e541975af2582fd15340a41eb7ee69af0a64291419c3b764b130cfb27a7b9",
+      "metrics": {
+        "total_compressed_bytes": 744202,
+        "encode_wall_ns": 266647100,
+        "decode_wall_ns": 182595700,
+        "peak_rss_bytes": 30978048
+      },
+      "annualized_scenario_cost_gbp": 4535.659192,
+      "file_fingerprint_sha256": "3fe087ef892657846d46dc0e6d1b298b36be10ba33e5768c63806163a3ef0878"
+    },
+    {
+      "profile_id": "zstd-19",
+      "submission_id": "wb001-baseline-zstd-19-v2",
+      "candidate_artifact_sha256": "61c0e5533d4e5b95247353edad33a08c8b82964f4e6b02a109b62e49e5b582fc",
+      "result_sha256": "61bf3d2c7ff9aebc0e5ba8b631a3ed65ef1f5d005ed51332874d1843e02aa5fd",
+      "runtime_fingerprint_sha256": "aa98760588d66921e1db2f49e23966bd9ed4d83d9ea777f73d511b8e17fd2156",
+      "metrics": {
+        "total_compressed_bytes": 696389,
+        "encode_wall_ns": 2653030400,
+        "decode_wall_ns": 170251900,
+        "peak_rss_bytes": 54718464
+      },
+      "annualized_scenario_cost_gbp": 4647.262826,
+      "file_fingerprint_sha256": "d48bb69be61bb6e3d3f7aa3cdc3be9678b64f41afcd835b976fa2fbae2b04524"
+    },
+    {
+      "profile_id": "brotli-1",
+      "submission_id": "wb001-baseline-brotli-1-v2",
+      "candidate_artifact_sha256": "9f32c336bae5bf6898a1175309e1399e2987ee54afc6f95eca4cab42c17a7537",
+      "result_sha256": "8ca4f1f3a1c453c34a67a434437674618c2088028044e9d7c9ad80dd1ebdcd77",
+      "runtime_fingerprint_sha256": "1a363a3ef2f01ba687e8676f2a63df54f6d3e258ed1eda514f461b356b8dde7e",
+      "metrics": {
+        "total_compressed_bytes": 845505,
+        "encode_wall_ns": 198905600,
+        "decode_wall_ns": 217945400,
+        "peak_rss_bytes": 21315584
+      },
+      "annualized_scenario_cost_gbp": 5142.649954,
+      "file_fingerprint_sha256": "f0cb1931c2d0278a0d37bf08e97ddbdd3d91fe1387cb0939da1e6975f19d74eb"
+    },
+    {
+      "profile_id": "brotli-5",
+      "submission_id": "wb001-baseline-brotli-5-v2",
+      "candidate_artifact_sha256": "d3348f37f1253c496c1c48d27da2dc6cdc0ce5a383566f995e1a1f18d73436c1",
+      "result_sha256": "9c1899dc4ef6ef9df16155f408030b33c1d72304b3ae550943ee5edf1e76e469",
+      "runtime_fingerprint_sha256": "e330f7d0295de086c359df1ae2f50e1dbe2d2b10d96bc80f125deaf9caa5eb92",
+      "metrics": {
+        "total_compressed_bytes": 733068,
+        "encode_wall_ns": 232158000,
+        "decode_wall_ns": 193038200,
+        "peak_rss_bytes": 24928256
+      },
+      "annualized_scenario_cost_gbp": 4471.526973,
+      "file_fingerprint_sha256": "c0e71bbdb6f2e35ec69c176d9fdb2785d9a50a4e75f756442215b4238ece9547"
+    },
+    {
+      "profile_id": "brotli-9",
+      "submission_id": "wb001-baseline-brotli-9-v2",
+      "candidate_artifact_sha256": "f84ee83ac0c762d5c5f39b7107317d0dde076c3b74004d10513f944286a0d713",
+      "result_sha256": "6b3da375a015ee4769185475037a18401aeaa0d790bd55242b4e256b72655ea1",
+      "runtime_fingerprint_sha256": "422ac89a9a195f1832dcbc83bcacd640b1a2e0722f7ab8f0252109dca3fe47e4",
+      "metrics": {
+        "total_compressed_bytes": 687577,
+        "encode_wall_ns": 389073000,
+        "decode_wall_ns": 192996400,
+        "peak_rss_bytes": 55885824
+      },
+      "annualized_scenario_cost_gbp": 4230.813581,
+      "file_fingerprint_sha256": "a76fc377afdbb974975cdef35e658fcde541ddd0f844bcecf6fde6f33dfa664e"
+    },
+    {
+      "profile_id": "brotli-11",
+      "submission_id": "wb001-baseline-brotli-11-v2",
+      "candidate_artifact_sha256": "795c53880ac5437641eae3d41d4817abae9e08e3c157ce3371e36e47edae51b7",
+      "result_sha256": "038533b826ef0398206305e694eab749deaba93c7cf88e038341cf5955082d80",
+      "runtime_fingerprint_sha256": "0f607373bb0f90537886adf85ed89fce96ff6ce13e657748dc02313266066ce7",
+      "metrics": {
+        "total_compressed_bytes": 666660,
+        "encode_wall_ns": 8100690300,
+        "decode_wall_ns": 232164800,
+        "peak_rss_bytes": 45195264
+      },
+      "annualized_scenario_cost_gbp": 5428.691627,
+      "file_fingerprint_sha256": "ab6927bb85a3ec5bb112dde366ee6810aa2f6af590c56638c954cdf46de5fe4f"
+    },
+    {
+      "profile_id": "xz-0",
+      "submission_id": "wb001-baseline-xz-0-v2",
+      "candidate_artifact_sha256": "bba1b76946489076c4e4d61b7e8f6a4e0e7e65e1447f9d07d328ab4c5b670636",
+      "result_sha256": "2afb4ea74f710252b2166b53537f6025a88c550a2868db5fa186a7bc9f611788",
+      "runtime_fingerprint_sha256": "ee27bb4962639cc155f9a59f92a9297700e5a728240181c41a22b7d4822a69c1",
+      "metrics": {
+        "total_compressed_bytes": 748756,
+        "encode_wall_ns": 598802300,
+        "decode_wall_ns": 277959200,
+        "peak_rss_bytes": 22405120
+      },
+      "annualized_scenario_cost_gbp": 4682.166262,
+      "file_fingerprint_sha256": "11bcccb17f61c8c0d91467824acd68355ca233b51acf3ab8d5a9a46644710706"
+    },
+    {
+      "profile_id": "xz-6",
+      "submission_id": "wb001-baseline-xz-6-v2",
+      "candidate_artifact_sha256": "a9a0acaba46d8e525952619c5a672faf8a9c7572ba2cd352bf80ac180297e263",
+      "result_sha256": "df8784da851efd6adba10a19b9ad09f161837a6ad025876edb777d6739c6a747",
+      "runtime_fingerprint_sha256": "33751aca6e22fef65550637fc84dff5f234c61f45fbf2bcaa6057a4f1f91eb8a",
+      "metrics": {
+        "total_compressed_bytes": 680860,
+        "encode_wall_ns": 1991758600,
+        "decode_wall_ns": 289041700,
+        "peak_rss_bytes": 48685056
+      },
+      "annualized_scenario_cost_gbp": 4524.872652,
+      "file_fingerprint_sha256": "df19e45b4c83bbdb3521b5db2d79687edab84a10e110c5634f40e96cd6a3c02b"
+    },
+    {
+      "profile_id": "xz-9e",
+      "submission_id": "wb001-baseline-xz-9e-v2",
+      "candidate_artifact_sha256": "bd9dc65db63972cab6f62a0e1dd350825a36cf0ee6c82d4689c562e7eef4835a",
+      "result_sha256": "742e9d4b0714623a85c7af3d380bc4f8ee6346081c1005685980916955836fe7",
+      "runtime_fingerprint_sha256": "a68dac29a7f77764707c097e849677f9a76e72cb6079d872eb7b152bf860c101",
+      "metrics": {
+        "total_compressed_bytes": 683040,
+        "encode_wall_ns": 4893996500,
+        "decode_wall_ns": 226555400,
+        "peak_rss_bytes": 99045376
+      },
+      "annualized_scenario_cost_gbp": 4982.843962,
+      "file_fingerprint_sha256": "48becd48f1abc777ef8aa476eb6b5785e28aff2b23875175904fd7d150fbb059"
+    }
+  ],
+  "frontier_profile_ids": [
+    "brotli-11",
+    "brotli-5",
+    "brotli-9",
+    "xz-0",
+    "xz-6",
+    "xz-9e",
+    "zlib-1",
+    "zlib-6",
+    "zlib-9",
+    "zstd-1",
+    "zstd-19",
+    "zstd-3",
+    "zstd-9"
+  ],
+  "pack_sha256": "47251fb969e85ed8cb11fe8ebd5018fa017ac68b68c4870fde90fe6a3c20e056"
+}

@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "submission_id": "wb001-test-broken-v1",
+  "workbench": {
+    "id": "WB-001",
+    "version": "0.2.0"
+  },
+  "candidate": {
+    "name": "broken test candidate",
+    "version": "1.0.0",
+    "protocol": "wb001-batch-v1",
+    "command": ["{python}", "broken_candidate.py"],
+    "source_files": ["broken_candidate.py"],
+    "deterministic": true
+  },
+  "method": {
+    "summary": "A deliberately corrupting decompressor used to test the exact gate.",
+    "license": "test-fixture"
+  }
+}

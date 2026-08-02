@@ -1,0 +1,190 @@
+{
+  "schema_version": 1,
+  "round_id": "WB001-PILOT-001",
+  "title": "WB-001 Pilot Round 1 - measurable lossless-compression advances",
+  "status": "LOCAL_PILOT",
+  "workbench": {
+    "id": "WB-001",
+    "version": "0.2.0",
+    "evidence_lane": "digital-exact"
+  },
+  "identity_assurance": "self-asserted-local",
+  "promotion_scope": "technical-workflow-pilot-no-public-promotion",
+  "worker_timebox_hours": 4,
+  "default_claim_lease_hours": 6,
+  "required_independent_reruns": 2,
+  "max_diagnostic_reruns": 1,
+  "disagreement_policy": "human_review_no_majority_promotion",
+  "evaluator_software_sha256": "83846981f736dfe70757b3bc638c0410ea36886fa04328e95d4787f8fce3460d",
+  "promotion_grade_execution_required": true,
+  "worker_entry_gate": {
+    "required": true,
+    "estimated_minutes": 30,
+    "tasks": [
+      "verify every frozen contract hash",
+      "run the reference candidate on the public corpus",
+      "confirm exact round-trip and deterministic compressed hashes",
+      "read the no-holdout-access and full-cost-accounting rules"
+    ]
+  },
+  "hard_rules": [
+    "Decompression must reproduce every input byte exactly.",
+    "The candidate must be deterministic under the frozen protocol.",
+    "Every byte required for decoding, including headers and dictionaries, counts.",
+    "Encoder, decoder, memory, storage, and deployment costs must be reported.",
+    "Workers and agents must never receive the sealed holdout or hidden target result.",
+    "Independent reruns must use the frozen isolated security boundary and a per-assignment conflict declaration.",
+    "The holdout job token must be issued after and bind the exact confirming rerun-gate event.",
+    "Exact metrics and free-text annotations must not enter the public ledger while reruns are blind.",
+    "A changed artifact, method, corpus, baseline, or rule is a new attempt or successor round.",
+    "No result is promotion-eligible until two other human-owned reruns agree and the signed holdout gate passes."
+  ],
+  "frozen_contracts": [
+    {
+      "name": "workbench_contract",
+      "path": "workbenches/wb001_lossless_compression/workbench.toml",
+      "sha256": "2c83d5a38d2c42e3cb1976da0b5e91f54cee351950e11e31e5c6dd76d648605a"
+    },
+    {
+      "name": "candidate_protocol",
+      "path": "workbenches/wb001_lossless_compression/PROTOCOL.md",
+      "sha256": "f1d9184e1bab97f622cb85cb63bb21c5066ba5a1d1c010314680bd6108c53700"
+    },
+    {
+      "name": "public_corpus_manifest",
+      "path": "workbenches/wb001_lossless_compression/data/public_manifest.json",
+      "sha256": "5603ae2bf4c6b4212d9d11c0f690c8a6f25f2797f01267234aa8955e10cd6b49",
+      "logical_commitment_sha256": "7e87977d8f79843d4e383590c0bc7d7058d773cf558007de66d258e9b01bb30f"
+    },
+    {
+      "name": "sealed_holdout_commitment",
+      "path": "workbenches/wb001_lossless_compression/data/holdout_commitment.json",
+      "sha256": "84de64035b15cc8bd0655793ed5ccfff1ab098219dfe37db63982faead8250da",
+      "logical_commitment_sha256": "c0709bc506b00023f96a5b9a9877121b13e6202db18ce3860feeffbd76bef730"
+    },
+    {
+      "name": "reference_frontier_pack",
+      "path": "workbenches/wb001_lossless_compression/results/reference_pack/baseline_pack.json",
+      "sha256": "9b2e53deef4338040ca38bfe0d2aace3602a39281025266b131daed579971b9d",
+      "logical_commitment_sha256": "47251fb969e85ed8cb11fe8ebd5018fa017ac68b68c4870fde90fe6a3c20e056"
+    },
+    {
+      "name": "docker_isolation_policy",
+      "path": "workbenches/wb001_lossless_compression/isolation/docker_policy.toml",
+      "sha256": "4b901c87bd52e1cdd402be48eb368386745658995c525d69ee59566a8586c71c"
+    },
+    {
+      "name": "evaluator_image_lock",
+      "path": "workbenches/wb001_lossless_compression/isolation/image.lock.json",
+      "sha256": "3adadda85ac1a522f694fdb846add1c4ca0b3507f06cfc1ab36c319798e829ee",
+      "logical_commitment_sha256": "dd517780ac6d44c0481932046cb83c980bd163bfce2a9a48719acbdabb4131a7"
+    },
+    {
+      "name": "evaluator_public_key",
+      "path": "workbenches/wb001_lossless_compression/data/evaluator_public_key.json",
+      "sha256": "1fbb2025694fef9b3f090cc4a55d133eb560eede884ec270fa17c6741610ccee"
+    },
+    {
+      "name": "factory_dependency_lock",
+      "path": "requirements.lock",
+      "sha256": "4cff9c7492c3679bef29bbbf960fbe54bb0d50837e224d855d038862ce563d24"
+    },
+    {
+      "name": "control_plane_software_lock",
+      "path": "control_plane/software.lock.json",
+      "sha256": "9386b3b14fffe07ca963c15fbe20f95ad04f46b191cbb8b39f3b7bb9c037ae33",
+      "logical_commitment_sha256": "1a028fdeb3a88579b09ba6da62596365281d40f93a2aa5c246d564064320e737"
+    },
+    {
+      "name": "evaluator_software_lock",
+      "path": "workbenches/wb001_lossless_compression/isolation/evaluator_software.lock.json",
+      "sha256": "79c962fa67e8608e0cc13e8f08b295bf126336aecb97eb091acf39f96ce00c3e",
+      "logical_commitment_sha256": "83846981f736dfe70757b3bc638c0410ea36886fa04328e95d4787f8fce3460d"
+    }
+  ],
+  "lanes": [
+    {
+      "lane_id": "lane:reversible-preprocessing",
+      "title": "Reversible preprocessing",
+      "goal": "Expose structure to an existing codec without losing a byte or hiding transform overhead.",
+      "economic_question": "Does the size gain repay transform CPU, memory, metadata, and decoder complexity?"
+    },
+    {
+      "lane_id": "lane:block-selection",
+      "title": "Per-block codec and profile selection",
+      "goal": "Select a codec or profile per block using deterministic observable features.",
+      "economic_question": "Does adaptive selection beat the frozen frontier after selectors, headers, libraries, and latency are counted?"
+    },
+    {
+      "lane_id": "lane:dictionaries-domains",
+      "title": "Dictionaries and domain detection",
+      "goal": "Build and select reproducible dictionaries using only allowed training or public data.",
+      "economic_question": "Does dictionary storage, distribution, cold-start, versioning, and decoder support remain viable?"
+    }
+  ],
+  "work_units": [
+    {
+      "work_unit_id": "wu:preprocess-integers",
+      "lane_id": "lane:reversible-preprocessing",
+      "title": "Typed integer delta and zig-zag transforms",
+      "brief": "Detect suitable fixed-width integer streams, transform reversibly, and measure false-positive and metadata costs."
+    },
+    {
+      "work_unit_id": "wu:preprocess-structured-text",
+      "lane_id": "lane:reversible-preprocessing",
+      "title": "Structured-text field and token transforms",
+      "brief": "Test reversible field separation or token remapping on text-like classes without assuming a hidden schema."
+    },
+    {
+      "work_unit_id": "wu:preprocess-sparse-runs",
+      "lane_id": "lane:reversible-preprocessing",
+      "title": "Sparse and repeated-block transforms",
+      "brief": "Explore exact sparse maps or repeated-block references with every map and index byte counted."
+    },
+    {
+      "work_unit_id": "wu:selector-features",
+      "lane_id": "lane:block-selection",
+      "title": "Cheap deterministic block features",
+      "brief": "Find low-cost observable features that predict the useful part of the frozen codec frontier."
+    },
+    {
+      "work_unit_id": "wu:selector-policy",
+      "lane_id": "lane:block-selection",
+      "title": "Deterministic codec/profile selection policy",
+      "brief": "Construct a selection rule and count model, branch, header, and multi-decoder costs."
+    },
+    {
+      "work_unit_id": "wu:selector-granularity",
+      "lane_id": "lane:block-selection",
+      "title": "Block granularity versus overhead",
+      "brief": "Map where smaller blocks help and where framing, ratio, memory, or latency makes them uneconomic."
+    },
+    {
+      "work_unit_id": "wu:dictionary-training",
+      "lane_id": "lane:dictionaries-domains",
+      "title": "Deterministic public-only dictionary construction",
+      "brief": "Build byte-identical dictionaries from declared public inputs with no holdout access."
+    },
+    {
+      "work_unit_id": "wu:domain-detector",
+      "lane_id": "lane:dictionaries-domains",
+      "title": "Content-domain detector",
+      "brief": "Detect whether a known dictionary applies using bounded deterministic features and report misclassification costs."
+    },
+    {
+      "work_unit_id": "wu:dictionary-catalog",
+      "lane_id": "lane:dictionaries-domains",
+      "title": "Bounded dictionary catalog and wire format",
+      "brief": "Test a small versioned catalog while counting dictionary bytes, identifiers, deployment, and fallback behaviour."
+    }
+  ],
+  "negative_result_taxonomy": [
+    "NO_GAIN",
+    "HYPOTHESIS_REJECTED",
+    "RESOURCE_LIMIT",
+    "UNRUNNABLE",
+    "BOUNDARY_FOUND",
+    "DUPLICATE_DIRECTION"
+  ],
+  "round_sha256": "e00dc5b6b89cbbf22ca736815cee34fad35540b6a13c0afe710f8c42fd6cceca"
+}

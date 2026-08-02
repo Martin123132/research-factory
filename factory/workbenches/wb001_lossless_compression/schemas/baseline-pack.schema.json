@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://research-factory.local/schemas/wb001-baseline-pack-v1.json",
+  "title": "WB-001 baseline frontier pack",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "pack_type",
+    "pack_id",
+    "workbench",
+    "corpus_sha256",
+    "promotable",
+    "pack_state",
+    "execution_class_sha256",
+    "dimensions",
+    "entries",
+    "frontier_profile_ids",
+    "pack_sha256"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "pack_type": {"const": "wb001_baseline_frontier"},
+    "promotable": {"type": "boolean"},
+    "pack_state": {"enum": ["LOCAL_QUALIFICATION_ONLY", "PINNED_PROMOTION_PACK"]},
+    "entries": {"type": "array", "minItems": 2},
+    "frontier_profile_ids": {"type": "array", "minItems": 1, "uniqueItems": true},
+    "pack_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  },
+  "additionalProperties": true
+}

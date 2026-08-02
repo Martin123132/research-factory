@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "baseline_id": "wb002-entry-zlib-6-v1",
+  "scope": "ENTRY_GATE_ONLY",
+  "candidate": "examples/zlib_reference/candidate.py",
+  "submission": "examples/zlib_reference/submission.json",
+  "codec": "Python zlib level 6",
+  "stable_fields": [
+    "input.bytes",
+    "input.sha256",
+    "artifact.source_package_bytes",
+    "artifact.source_package_sha256",
+    "artifact.archive_bytes",
+    "artifact.archive_sha256",
+    "artifact.option_bytes",
+    "artifact.entry_counted_size_bytes",
+    "hard_gates"
+  ],
+  "advisory_fields": ["compress_elapsed_ns", "decompress_elapsed_ns", "peak_rss_bytes"],
+  "scientific_evidence": false
+}

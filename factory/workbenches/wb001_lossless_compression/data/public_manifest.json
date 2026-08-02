@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "profile": "synthetic-public-v1",
+  "root": "public",
+  "files": [
+    {
+      "path": "english_like.txt",
+      "class": "generated-text",
+      "bytes": 773325,
+      "sha256": "fa3242cdf2ef80ada355862f59c95869138a66c8e5f676947beea1a88f71b0d5"
+    },
+    {
+      "path": "events.ndjson",
+      "class": "structured-records",
+      "bytes": 1254394,
+      "sha256": "fb2926eab454d84073be9e1a0dad83c8ae016754e20c1f4f4a7dc86d9249a55f"
+    },
+    {
+      "path": "source_like.py.txt",
+      "class": "source-like-text",
+      "bytes": 965000,
+      "sha256": "c378d7e882b8e9400135909e693e6698ede84e276a9eca7557677a99e78038e8"
+    },
+    {
+      "path": "numeric_series.i32le",
+      "class": "integer-array",
+      "bytes": 720000,
+      "sha256": "43fcc2d660e716c7722ada37579e34a03d6969fc72b921c3097b07b49099dcfe"
+    },
+    {
+      "path": "sparse_blocks.bin",
+      "class": "sparse-binary",
+      "bytes": 786432,
+      "sha256": "783877faa89579456ce80379104d2e5d1bea791b111fc6d58475306fefe3e7a2"
+    },
+    {
+      "path": "incompressible.bin",
+      "class": "incompressible",
+      "bytes": 393216,
+      "sha256": "e543fa0e4d17b072d69f95902a090fbf7717e019bcd0991847ee96d5a80deb3c"
+    },
+    {
+      "path": "mixed_blocks.bin",
+      "class": "mixed",
+      "bytes": 900000,
+      "sha256": "1c72bf201deedcc5fcad1fec141975977f82eb4e1d1d392bebccec50c8639356"
+    }
+  ],
+  "corpus_sha256": "7e87977d8f79843d4e383590c0bc7d7058d773cf558007de66d258e9b01bb30f"
+}

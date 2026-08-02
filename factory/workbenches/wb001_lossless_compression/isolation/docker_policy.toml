@@ -1,0 +1,31 @@
+schema_version = 1
+policy_id = "wb001-docker-prototype-v1"
+image_tag = "research-factory/wb001-runner:0.2.0"
+candidate_user = "65532:65532"
+network = "none"
+read_only_root = true
+cap_drop = "ALL"
+no_new_privileges = true
+seccomp = "builtin"
+ipc = "none"
+cgroup_namespace = "private"
+hostname = "wb001"
+promotion_grade = false
+boundary_note = "Docker Desktop on WSL2 is a prototype containment boundary, not the final public hostile-code service."
+
+[limits]
+cpus = 1.0
+memory = "512m"
+memory_swap = "512m"
+pids = 64
+core_ulimit = "0:0"
+nofile_ulimit = "64:64"
+nproc_ulimit = "64:64"
+tmpfs = "/tmp:rw,nosuid,nodev,noexec,size=64m"
+stop_timeout_seconds = 1
+stdout_stderr_bytes = 65536
+
+[mounts]
+candidate = "/candidate"
+corpus = "/corpus"
+work = "/work"

@@ -1,0 +1,11 @@
+workbenches/wb001_lossless_compression/data/public/
+workbenches/wb001_lossless_compression/results/*
+!workbenches/wb001_lossless_compression/results/reference_pack/
+!workbenches/wb001_lossless_compression/results/reference_pack/**
+workbenches/wb001_lossless_compression/data/holdout_commitment.local.json
+private/
+.venv/
+__pycache__/
+*.pyc
+state/*
+!state/README.md

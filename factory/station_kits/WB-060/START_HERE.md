@@ -1,0 +1,32 @@
+# WB-060 — Metal-AM residual-stress and distortion control
+
+Stage: `CONTRACT_DRAFT`  
+Contract SHA-256: `9ad74c0d0e0d9a105eb1b6fb6c83ff8ea02a9436a7e13251be45621e91f31a39`
+
+This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
+
+## Unresolved before live work
+
+- `BASELINE_UNFROZEN`
+- `BLIND_EVALUATOR_NOT_IMPLEMENTED`
+- `ECONOMIC_ACCOUNTING_UNSTRUCTURED`
+- `ENTRY_GATE_NOT_EXECUTABLE`
+- `INDEPENDENT_VERIFIER_MISSING`
+- `ISOLATION_NOT_IMPLEMENTED`
+- `LIVE_AUTHORIZATION_NOT_IMPLEMENTED`
+- `PRODUCTION_IDENTITY_NOT_IMPLEMENTED`
+- `PROMOTION_RUNNER_NOT_IMPLEMENTED`
+- `PUBLIC_INPUTS_UNFROZEN`
+- `RUNNER_NOT_IMPLEMENTED`
+- `STARTER_PACK_IS_GENERIC`
+- `STRUCTURED_METRICS_MISSING`
+- `STRUCTURED_PREDICATE_MISSING`
+- `TOLERANCES_UNDECLARED`
+
+## Fixed factory rules
+
+- Exactly two other human owners must reproduce a locked claim.
+- Neither the author nor one person using two accounts may validate it.
+- Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
+- Failed and negative work remains searchable.
+- This kit, synthetic demonstrations and Hangar activity carry no scientific or promotion credit.

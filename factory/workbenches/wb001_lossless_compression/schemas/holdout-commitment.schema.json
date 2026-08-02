@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://research-factory.local/schemas/wb001-holdout-commitment-v1.json",
+  "title": "WB-001 sealed holdout commitment",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "commitment_type",
+    "profile",
+    "committed_at",
+    "corpus_sha256",
+    "manifest_sha256",
+    "files",
+    "total_bytes",
+    "evaluator_key_id",
+    "commitment_sha256"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "commitment_type": {"const": "wb001_sealed_holdout"},
+    "profile": {"type": "string", "minLength": 1},
+    "committed_at": {"type": "string", "format": "date-time"},
+    "corpus_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "files": {"type": "integer", "minimum": 1},
+    "total_bytes": {"type": "integer", "minimum": 1},
+    "evaluator_key_id": {"type": "string", "pattern": "^ed25519:[0-9a-f]{64}$"},
+    "commitment_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "scenario_id": "regional-route-kernel-tco-v1",
+  "status": "STRUCTURED_COMMISSIONING_SCENARIO_PRICES_AND_DEMAND_NOT_FROZEN",
+  "formula": "annual_vehicle_distance_cost + driver_time + solver_compute + integration + operations + failure_risk",
+  "system_boundary": "A frozen batch of symmetric single-vehicle route kernels over one year; no capacity, time-window, traffic, depot, safety or multi-vehicle fleet claim is permitted.",
+  "included_costs": [
+    "vehicle distance",
+    "driver time",
+    "solver compute and energy",
+    "integration",
+    "operations",
+    "failed-run fallback"
+  ],
+  "required_parameters": [
+    "frozen route population",
+    "distance-to-cost conversion",
+    "driver time model",
+    "runner class",
+    "compute and energy prices",
+    "latency service level",
+    "integration cost",
+    "fallback policy"
+  ],
+  "minimum_annual_cost_gain_fraction": 0.01,
+  "scope_rule": "A shorter abstract TSP tour is not a fleet saving unless the same practical scenario passes and all real constraints are represented."
+}

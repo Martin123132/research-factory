@@ -1,0 +1,274 @@
+{
+  "standard": "research-factory/workbench-contract/v1",
+  "contract_version": "1.1.0",
+  "workbench": {
+    "code": "WB-060",
+    "numeric_id": 60,
+    "slug": "metal-am-residual-stress-and-distortion-control",
+    "title": "Metal-AM residual-stress and distortion control",
+    "category": "Manufacturing & materials",
+    "short_category": "Manufacturing",
+    "evidence_lane": "LAB_PILOT",
+    "track": "PRACTICAL_IMPROVEMENT"
+  },
+  "source": {
+    "catalogue_version": 1,
+    "catalogue_generated_at": "2026-08-01",
+    "catalogue_sha256": "9b37a47c265e916cbf460f4dd0120b02b01fa800b104017b117ba2fc40644cd5",
+    "entry_sha256": "b3e85c5c312a39df538a822639aa301fc9d0eed871b01ca44038d3d6657cefaf",
+    "benchmark_name": "NIST AM-Bench 2022-01",
+    "reference_urls": [
+      "https://www.nist.gov/ambench/amb2022-01-benchmark-measurements-and-challenge-problems"
+    ],
+    "factory_path": null,
+    "active_round_path": null,
+    "implementation_contract_version": null
+  },
+  "commissioning": {
+    "profile_status": "CATALOGUE_ONLY",
+    "adapter_id": null,
+    "adapter_version": null,
+    "dossier_path": null,
+    "dossier_sha256": null
+  },
+  "problem": {
+    "objective": "Metal-AM residual-stress and distortion control",
+    "truth_condition": "Blindly predict and then reduce NIST bridge-part residual strains and post-cut deflections, with unchanged alloy/feedstock and scan envelope; final coupons must also meet geometry, porosity and tensile requirements.",
+    "hard_gate_statement": "Blindly predict and then reduce NIST bridge-part residual strains and post-cut deflections, with unchanged alloy/feedstock and scan envelope; final coupons must also meet geometry, porosity and tensile requirements.",
+    "utility_guardrail": "Lower $/qualified part after build time, scrap, support removal, heat treatment and metrology.",
+    "structured_predicate": {
+      "status": "BRIEF_ONLY",
+      "subject_or_input_population": null,
+      "required_output": null,
+      "verifier_status": "NOT_DEFINED",
+      "verifier_path_or_protocol": null,
+      "verifier_sha256": null,
+      "pass_rule": null,
+      "candidate_claim_is_authoritative": false,
+      "failure_behavior": "FAIL_CLOSED"
+    }
+  },
+  "measurement": {
+    "criteria": [
+      {
+        "criterion_id": "station-hard-gate",
+        "statement": "Blindly predict and then reduce NIST bridge-part residual strains and post-cut deflections, with unchanged alloy/feedstock and scan envelope; final coupons must also meet geometry, porosity and tensile requirements.",
+        "comparison": "STATION_DEFINED",
+        "metric_id": null,
+        "threshold": null,
+        "unit": null,
+        "machine_check": "NOT_IMPLEMENTED",
+        "verifier_path_or_protocol": null,
+        "verifier_sha256": null,
+        "failure_behavior": "FAIL_CLOSED",
+        "score_may_override_failure": false
+      }
+    ],
+    "metrics": [],
+    "tolerance": {
+      "policy": "STATION_DEFINED",
+      "logical_tolerance": null,
+      "reproduction_rules": [
+        "The station must define task-specific equivalence before commissioning.",
+        "Correctness, improvement and safety thresholds must remain separate."
+      ],
+      "reproduction_equivalence": [],
+      "improvement_thresholds": [],
+      "safety_limits": [],
+      "stochastic_protocol": {
+        "required": false,
+        "repetitions": null,
+        "seed_policy": null,
+        "aggregation": null,
+        "confidence_rule": null,
+        "permitted_runner_class": null
+      }
+    },
+    "public_inputs": {
+      "status": "UNFROZEN",
+      "manifest_path": null,
+      "content_commitment_sha256": null
+    },
+    "hidden_inputs": {
+      "policy": "TO_BE_DEFINED",
+      "commitment_path": null
+    },
+    "baseline": {
+      "status": "UNFROZEN",
+      "definition_path": null,
+      "result_path": null
+    },
+    "compute_budget": {
+      "status": "UNDEFINED",
+      "wall_time_seconds": null,
+      "cpu_cores": null,
+      "memory_bytes": null,
+      "energy_measurement_required": false
+    },
+    "economic_or_physical_accounting": {
+      "required": true,
+      "applicability": "REQUIRED",
+      "structured": false,
+      "scenario_path": null,
+      "scenario_version": null,
+      "formula": null,
+      "system_boundary": null,
+      "included_costs": [],
+      "comparator": null,
+      "decision_threshold": null
+    }
+  },
+  "starter_pack": {
+    "entry_gate_required": true,
+    "credential_neutral": true,
+    "target_duration_minutes": null,
+    "brief": "Reproduce the pinned baseline, pass the public verifier, then submit one sealed candidate against hidden holdouts.",
+    "fixture_status": "BRIEF_ONLY",
+    "command": null,
+    "expected_outputs": []
+  },
+  "runner": {
+    "protocol_status": "NOT_DEFINED",
+    "protocol_path": null,
+    "isolation_status": "NOT_DEFINED",
+    "isolation_policy_path": null,
+    "network_policy": "NOT_DEFINED",
+    "trusted_code_only": true,
+    "arbitrary_public_code_allowed": false,
+    "promotion_grade": false
+  },
+  "submission": {
+    "template_path": "submission-template.json",
+    "required_sections": [
+      "human_owner",
+      "hypothesis",
+      "method",
+      "artifact",
+      "environment",
+      "commands",
+      "public_evidence",
+      "hard_gates",
+      "measurements",
+      "economic_or_physical_accounting"
+    ],
+    "artifact_lock_required": true,
+    "environment_manifest_required": true,
+    "exact_commands_required": true,
+    "seeds_required_when_stochastic": true
+  },
+  "reproduction": {
+    "required_independent_human_validators": 2,
+    "author_may_validate": false,
+    "distinct_people_required": true,
+    "validator_conflict_declaration_required": true,
+    "identity_assurance": "NOT_IMPLEMENTED",
+    "result_visibility": "COMMIT_BEFORE_REVEAL",
+    "pass_rule": "TWO_INDEPENDENT_PASSES",
+    "split_rule": "DIAGNOSTIC_THEN_HUMAN_REVIEW",
+    "majority_vote_resolves_deterministic_dispute": false,
+    "tolerance_binding": "STATION_MEASUREMENT_CONTRACT"
+  },
+  "negative_results": {
+    "retained": true,
+    "searchable": true,
+    "append_only": true,
+    "taxonomy": [
+      "NO_GAIN",
+      "HYPOTHESIS_REJECTED",
+      "RESOURCE_LIMIT",
+      "UNRUNNABLE",
+      "BOUNDARY_FOUND",
+      "DUPLICATE_DIRECTION",
+      "INVALID",
+      "DISPUTED"
+    ]
+  },
+  "blind_evaluation": {
+    "required_before_live": true,
+    "hidden_claim_withheld": true,
+    "human_authorization_required": true,
+    "evaluator_status": "NOT_IMPLEMENTED",
+    "public_verdicts": [
+      "PASS",
+      "NO_GAIN",
+      "INVALID",
+      "ESCALATE"
+    ],
+    "detailed_results_private_until_reveal": true
+  },
+  "disputes": {
+    "failed_reproduction_is_not_automatic_falsification": true,
+    "third_run_role": "DIAGNOSTIC_ONLY",
+    "deterministic_disagreement_policy": "HUMAN_REVIEW_REQUIRED",
+    "majority_vote_can_promote": false,
+    "outcomes": [
+      "REPRODUCED",
+      "ORIGINAL_ERROR",
+      "VALIDATOR_ERROR",
+      "ENVIRONMENT_MISMATCH",
+      "INCOMPLETE_METHOD",
+      "UNSTABLE_BENCHMARK",
+      "DISPUTED",
+      "UNRUNNABLE"
+    ]
+  },
+  "readiness": {
+    "current_stage": "CONTRACT_DRAFT",
+    "live_research_enabled": false,
+    "scientific_standing": "NONE",
+    "promotion_claims_allowed": false,
+    "facets": {
+      "objective_truth_brief": true,
+      "hard_gate_brief": true,
+      "reference_benchmark": true,
+      "utility_guardrail": true,
+      "lane_specific_starter_pack": false,
+      "structured_predicate": false,
+      "independent_verifier": false,
+      "structured_metrics": false,
+      "declared_tolerances": false,
+      "frozen_public_inputs": false,
+      "pinned_baseline": false,
+      "executable_entry_gate": false,
+      "runner_protocol": false,
+      "isolation_policy": false,
+      "blind_evaluator": false,
+      "dispute_policy": true,
+      "negative_result_policy": true,
+      "production_identity": false,
+      "promotion_grade_runner": false,
+      "live_authorization": false
+    },
+    "unresolved": [
+      "BASELINE_UNFROZEN",
+      "BLIND_EVALUATOR_NOT_IMPLEMENTED",
+      "ECONOMIC_ACCOUNTING_UNSTRUCTURED",
+      "ENTRY_GATE_NOT_EXECUTABLE",
+      "INDEPENDENT_VERIFIER_MISSING",
+      "ISOLATION_NOT_IMPLEMENTED",
+      "LIVE_AUTHORIZATION_NOT_IMPLEMENTED",
+      "PRODUCTION_IDENTITY_NOT_IMPLEMENTED",
+      "PROMOTION_RUNNER_NOT_IMPLEMENTED",
+      "PUBLIC_INPUTS_UNFROZEN",
+      "RUNNER_NOT_IMPLEMENTED",
+      "STARTER_PACK_IS_GENERIC",
+      "STRUCTURED_METRICS_MISSING",
+      "STRUCTURED_PREDICATE_MISSING",
+      "TOLERANCES_UNDECLARED"
+    ]
+  },
+  "provenance": {
+    "generator_version": "1.2.0",
+    "generator_sha256": "87e4d7c087551dec3e66f21829d9038c0557d46847be4c80aaf43e6e6b7f1e20",
+    "generated_from": "research_factory_100_workbenches.json",
+    "source_entry_sha256": "b3e85c5c312a39df538a822639aa301fc9d0eed871b01ca44038d3d6657cefaf",
+    "referenced_assets": [],
+    "shared_templates": [
+      "submission-template.json",
+      "negative-result-template.json",
+      "dispute-template.json",
+      "VALIDATOR_CHECKLIST.md",
+      "NO_SCIENTIFIC_CREDIT.md"
+    ]
+  }
+}

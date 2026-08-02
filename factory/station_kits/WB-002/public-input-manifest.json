@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "manifest_type": "WB002_CORPUS_IDENTIFIERS",
+  "status": "OFFICIAL_CORPORA_NOT_BUNDLED_OR_FACTORY_SHA256_FROZEN",
+  "sources_observed_on": "2026-08-02",
+  "sources": {
+    "corpus": "https://mattmahoney.net/dc/textdata.html",
+    "hutter_prize": "https://prize.hutter1.net/",
+    "hutter_rules": "https://prize.hutter1.net/hrules.htm",
+    "hutter_faq": "https://prize.hutter1.net/hfaq.htm"
+  },
+  "corpora": [
+    {
+      "id": "enwik8",
+      "role": "ENTRY_GATE_ONLY",
+      "extracted_bytes": 100000000,
+      "official_md5": "a1fa5ffddb56f4953e226637dabbb36a",
+      "official_sha1": "57b8363b814821dc9d47aa4d41f58733519076b2",
+      "factory_sha256": null,
+      "zip_url": "https://mattmahoney.net/dc/enwik8.zip",
+      "published_zip_bytes": 36445475
+    },
+    {
+      "id": "enwik9",
+      "role": "HUTTER_OFFICIAL_COMPATIBLE",
+      "extracted_bytes": 1000000000,
+      "official_md5": "e206c3450ac99950df65bf70ef61a12d",
+      "official_sha1": "2996e86fb978f93cca8f566cc56998923e7fe581",
+      "factory_sha256": null,
+      "zip_url": "https://mattmahoney.net/dc/enwik9.zip",
+      "published_zip_bytes": 322592222
+    }
+  ],
+  "official_comparator_observation": {
+    "source": "https://prize.hutter1.net/",
+    "observed_on": "2026-08-02",
+    "record_bytes": 110793128,
+    "one_percent_requires_strictly_less_than_bytes": 109685197,
+    "integer_maximum_for_one_percent": 109685196,
+    "status": "MUTABLE_WEB_OBSERVATION_NOT_FROZEN_AUTHORITY_SNAPSHOT",
+    "note": "A newer Large Text Compression Benchmark entry is not silently treated as the official Hutter comparator; committee confirmation is required."
+  },
+  "credit_boundary": {
+    "scientific_evidence": false,
+    "counts_as_independent_reproduction": false,
+    "eligible_for_promotion": false
+  }
+}

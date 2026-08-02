@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "lock_type": "wb001_evaluator",
+  "files": [
+    {
+      "path": "workbenches/wb001_lossless_compression/runner/baseline_frontier.py",
+      "sha256": "61cbdbf4689c1f82604b9e7da0db4148736bd2790d58aa3b4b05505f83861235"
+    },
+    {
+      "path": "workbenches/wb001_lossless_compression/runner/blind_evaluate.py",
+      "sha256": "93c8148c011d7d4eb186e6794b435fe823c1422d12e5c35671a98686e9de92b5"
+    },
+    {
+      "path": "workbenches/wb001_lossless_compression/runner/common.py",
+      "sha256": "9c60a6b7209fdcf153cc4a5d48daf121addd0ff09007fd3c7ddab7453dd574fc"
+    },
+    {
+      "path": "workbenches/wb001_lossless_compression/runner/compare_frontier.py",
+      "sha256": "2b5f01fc6c8aaaba8044c02e50d223506c2ebe6152eb5cc3998be0edd20f9342"
+    },
+    {
+      "path": "workbenches/wb001_lossless_compression/runner/evaluate_isolated.py",
+      "sha256": "b09f9c810a34e04c2e0417bffac7f169a7d6eee6557886e9e0b154718b7d05e2"
+    },
+    {
+      "path": "workbenches/wb001_lossless_compression/runner/evaluate_local.py",
+      "sha256": "885890a7f607c61d859ceca15e070afb876ee78c367e7a11a68ee41399918341"
+    },
+    {
+      "path": "workbenches/wb001_lossless_compression/runner/issue_job_token.py",
+      "sha256": "8d8d405d4dd7369e11fa5f36ed14543915a35bb2bb4e6c740df6750420de0e9d"
+    },
+    {
+      "path": "workbenches/wb001_lossless_compression/runner/process_control.py",
+      "sha256": "778b20e41e289d7d534a0040aa5509b6b889a59cb72e1fc1e4c05cf062e6bca7"
+    },
+    {
+      "path": "workbenches/wb001_lossless_compression/runner/signing.py",
+      "sha256": "3395e1ab084d2be3b9ec27274d37f09d9003964a6aaee01e9f3545befefcfdd8"
+    },
+    {
+      "path": "workbenches/wb001_lossless_compression/runner/verify_attestation.py",
+      "sha256": "6c9ff478d582fe3742ee167e2a169ef1ced4d00def06dd1cc5974901ff3c63c7"
+    },
+    {
+      "path": "workbenches/wb001_lossless_compression/runner/verify_reproductions.py",
+      "sha256": "13f97e5021a242958eda961bbb4d028e4cc5717c9ba3ebc7eb74295cdd1f4260"
+    },
+    {
+      "path": "workbenches/wb001_lossless_compression/schemas/result.schema.json",
+      "sha256": "f95506a6bd3f1616d875cfcfedc5fa4c050959a969d1e27166d555fd68584867"
+    },
+    {
+      "path": "workbenches/wb001_lossless_compression/schemas/submission.schema.json",
+      "sha256": "c32fed391f8d551956d800d6f434623aeab6e43659f07937ec0e8c0a2c025fb8"
+    },
+    {
+      "path": "workbenches/wb001_lossless_compression/workbench.toml",
+      "sha256": "2c83d5a38d2c42e3cb1976da0b5e91f54cee351950e11e31e5c6dd76d648605a"
+    }
+  ],
+  "software_sha256": "83846981f736dfe70757b3bc638c0410ea36886fa04328e95d4787f8fce3460d"
+}

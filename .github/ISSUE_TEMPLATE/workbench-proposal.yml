@@ -1,0 +1,42 @@
+name: Workbench proposal
+description: Propose a measurable new station or a stricter boundary for an existing one.
+title: "[WORKBENCH] "
+labels: ["workbench-proposal"]
+body:
+  - type: input
+    id: station
+    attributes:
+      label: Workbench code
+      description: Use WB-NNN for an existing station or PROPOSED for a new catalogue discussion.
+      placeholder: WB-013
+    validations:
+      required: true
+  - type: textarea
+    id: objective
+    attributes:
+      label: Objective truth condition
+      description: State the input population, required output and what makes the answer objectively correct.
+    validations:
+      required: true
+  - type: textarea
+    id: gates
+    attributes:
+      label: Hard gates and independent verifier
+      description: Explain what fails closed and which calculation the candidate cannot control.
+    validations:
+      required: true
+  - type: textarea
+    id: utility
+    attributes:
+      label: Practical or physical value
+      description: Explain how an improvement would matter after compute, cost, energy, safety and integration are counted.
+    validations:
+      required: true
+  - type: textarea
+    id: starter
+    attributes:
+      label: Credential-neutral starter gate
+      description: Describe a bounded known-answer task that tests method discipline without granting scientific credit.
+    validations:
+      required: true
+

@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "submission_id": "wb001-baseline-zlib-level6-v1",
+  "workbench": {
+    "id": "WB-001",
+    "version": "0.1.0"
+  },
+  "candidate": {
+    "name": "zlib reference baseline",
+    "version": "1.0.0",
+    "command": ["{python}", "candidate.py"],
+    "source_files": ["candidate.py"],
+    "deterministic": true
+  },
+  "method": {
+    "summary": "Python standard-library zlib stream at compression level 6.",
+    "license": "Python-2.0-compatible standard-library use"
+  }
+}
+

@@ -1,0 +1,229 @@
+{
+  "schema_version": 2,
+  "result_type": "wb001_evaluation",
+  "runner_version": "0.2.0",
+  "generated_at": "2026-08-02T01:45:36.535050+00:00",
+  "workbench": {
+    "id": "WB-001",
+    "version": "0.2.0"
+  },
+  "operator_id": "demo:central-xz-9e",
+  "submission_id": "wb001-baseline-xz-9e-v2",
+  "candidate": {
+    "name": "reference XZ preset 9 extreme",
+    "version": "1.0.0",
+    "metadata": {
+      "adapter": "wb001-reference-codec-adapter",
+      "adapter_version": "1.0.0",
+      "deterministic": true,
+      "library": {
+        "check": "crc64",
+        "container": "xz",
+        "package": "stdlib-lzma"
+      },
+      "parameters": {
+        "check": "crc64",
+        "codec": "xz",
+        "extreme": true,
+        "preset": 9
+      },
+      "profile_id": "xz-9e",
+      "protocol": "wb001-batch-v1",
+      "python": "3.13.13"
+    }
+  },
+  "candidate_artifact_sha256": "bd9dc65db63972cab6f62a0e1dd350825a36cf0ee6c82d4689c562e7eef4835a",
+  "artifact_manifest": {
+    "submission": {
+      "schema_version": 1,
+      "submission_id": "wb001-baseline-xz-9e-v2",
+      "workbench": {
+        "id": "WB-001",
+        "version": "0.2.0"
+      },
+      "candidate": {
+        "name": "reference XZ preset 9 extreme",
+        "version": "1.0.0",
+        "protocol": "wb001-batch-v1",
+        "command": [
+          "{python}",
+          "codec_adapter.py",
+          "--profile",
+          "xz-9e"
+        ],
+        "source_files": [
+          "codec_adapter.py",
+          "profiles.json"
+        ],
+        "deterministic": true
+      },
+      "method": {
+        "summary": "XZ container, LZMA2 preset 9 extreme, CRC64.",
+        "license": "reference-runtime licenses apply"
+      }
+    },
+    "submission_sha256": "d998eba8911a47c9a3eb2b839d97caa72ecf87cfd71e5f0b271ba2236bf47e07",
+    "source_files": [
+      {
+        "path": "codec_adapter.py",
+        "bytes": 5597,
+        "sha256": "3c3fa5cca78bc1aa7131bef3dbc3d67655d42e0a81f1e57cb2e92e5ab8b7ea9e"
+      },
+      {
+        "path": "profiles.json",
+        "bytes": 1189,
+        "sha256": "ee38462297cf65734417624210cb040e8516257844baefa8b7aa4d829b4825cb"
+      }
+    ],
+    "artifact_sha256": "bd9dc65db63972cab6f62a0e1dd350825a36cf0ee6c82d4689c562e7eef4835a"
+  },
+  "corpus": {
+    "profile": "synthetic-public-v1",
+    "manifest_sha256": "5603ae2bf4c6b4212d9d11c0f690c8a6f25f2797f01267234aa8955e10cd6b49",
+    "corpus_sha256": "7e87977d8f79843d4e383590c0bc7d7058d773cf558007de66d258e9b01bb30f",
+    "files": 7
+  },
+  "environment": {
+    "system": "Windows",
+    "release": "10",
+    "machine": "AMD64",
+    "python": "3.13.13",
+    "python_executable_sha256": "e6c07188984d41b80f822dcdaeaceeb217cdf977f18f79c421a3a53edba895c3",
+    "processor_count": 12
+  },
+  "execution_boundary": {
+    "mode": "trusted-local-process",
+    "security_boundary": false,
+    "timing_grade": "advisory"
+  },
+  "runtime_fingerprint_sha256": "a68dac29a7f77764707c097e849677f9a76e72cb6079d872eb7b152bf860c101",
+  "measurement_contract": {
+    "protocol": "wb001-batch-v1",
+    "scope": "whole-corpus process per operation",
+    "warmup_runs": 1,
+    "timing_runs": 3,
+    "determinism_runs": 3,
+    "timeout_seconds": 30.0
+  },
+  "hard_gate_pass": true,
+  "failures": [],
+  "files": [
+    {
+      "path": "english_like.txt",
+      "class": "generated-text",
+      "original_bytes": 773325,
+      "original_sha256": "fa3242cdf2ef80ada355862f59c95869138a66c8e5f676947beea1a88f71b0d5",
+      "compressed_bytes": 29396,
+      "compressed_sha256": "703ec5200c06cd55ebac0da96815a672c015b726188bf6a4bca668a2dd5282cf",
+      "compression_fraction": 0.03801247858274335,
+      "space_saving_fraction": 0.9619875214172566,
+      "deterministic": true,
+      "round_trip_pass": true
+    },
+    {
+      "path": "events.ndjson",
+      "class": "structured-records",
+      "original_bytes": 1254394,
+      "original_sha256": "fb2926eab454d84073be9e1a0dad83c8ae016754e20c1f4f4a7dc86d9249a55f",
+      "compressed_bytes": 54572,
+      "compressed_sha256": "80bd2cbbec9ee355bf3c1b9eb02769813adc8e75032b995f8d7f908a627f9209",
+      "compression_fraction": 0.04350467237566506,
+      "space_saving_fraction": 0.956495327624335,
+      "deterministic": true,
+      "round_trip_pass": true
+    },
+    {
+      "path": "source_like.py.txt",
+      "class": "source-like-text",
+      "original_bytes": 965000,
+      "original_sha256": "c378d7e882b8e9400135909e693e6698ede84e276a9eca7557677a99e78038e8",
+      "compressed_bytes": 416,
+      "compressed_sha256": "41f7e6fbd53cc4c10036af962a81d0e3265b6845b359a0d18bd9a1e6d7a42c32",
+      "compression_fraction": 0.0004310880829015544,
+      "space_saving_fraction": 0.9995689119170984,
+      "deterministic": true,
+      "round_trip_pass": true
+    },
+    {
+      "path": "numeric_series.i32le",
+      "class": "integer-array",
+      "original_bytes": 720000,
+      "original_sha256": "43fcc2d660e716c7722ada37579e34a03d6969fc72b921c3097b07b49099dcfe",
+      "compressed_bytes": 260,
+      "compressed_sha256": "28647d6cbebc4066fcba85b0f3488ab7713bf3fdf86b4006ac6933e7a2c3c3bc",
+      "compression_fraction": 0.0003611111111111111,
+      "space_saving_fraction": 0.9996388888888889,
+      "deterministic": true,
+      "round_trip_pass": true
+    },
+    {
+      "path": "sparse_blocks.bin",
+      "class": "sparse-binary",
+      "original_bytes": 786432,
+      "original_sha256": "783877faa89579456ce80379104d2e5d1bea791b111fc6d58475306fefe3e7a2",
+      "compressed_bytes": 1368,
+      "compressed_sha256": "b2f595acaf6cf2789afaf1c1b24a2e74aa7001f684c6f40391238055680ea2b9",
+      "compression_fraction": 0.001739501953125,
+      "space_saving_fraction": 0.998260498046875,
+      "deterministic": true,
+      "round_trip_pass": true
+    },
+    {
+      "path": "incompressible.bin",
+      "class": "incompressible",
+      "original_bytes": 393216,
+      "original_sha256": "e543fa0e4d17b072d69f95902a090fbf7717e019bcd0991847ee96d5a80deb3c",
+      "compressed_bytes": 393296,
+      "compressed_sha256": "6032882f19795db079ba92340db954b20a0785e1b80866b36a7b9c4b2b5c37a3",
+      "compression_fraction": 1.0002034505208333,
+      "space_saving_fraction": -0.00020345052083325932,
+      "deterministic": true,
+      "round_trip_pass": true
+    },
+    {
+      "path": "mixed_blocks.bin",
+      "class": "mixed",
+      "original_bytes": 900000,
+      "original_sha256": "1c72bf201deedcc5fcad1fec141975977f82eb4e1d1d392bebccec50c8639356",
+      "compressed_bytes": 203732,
+      "compressed_sha256": "ebb25a92d25cee9feb3a493a47097fc82a9ac13e5390006b5071c188d272bcda",
+      "compression_fraction": 0.2263688888888889,
+      "space_saving_fraction": 0.7736311111111112,
+      "deterministic": true,
+      "round_trip_pass": true
+    }
+  ],
+  "aggregate": {
+    "files": 7,
+    "total_input_bytes": 5792367,
+    "total_compressed_bytes": 683040,
+    "compression_fraction": 0.11792070495533173,
+    "space_saving_fraction": 0.8820792950446683,
+    "encode_wall_ns": 4893996500,
+    "decode_wall_ns": 226555400,
+    "encode_samples_ns": [
+      5017377900,
+      4667384000,
+      4893996500
+    ],
+    "decode_samples_ns": [
+      205814000,
+      244089900,
+      226555400
+    ],
+    "encode_coefficient_of_variation": 0.03652906984122692,
+    "decode_coefficient_of_variation": 0.08497330484155463,
+    "peak_rss_bytes": 99045376,
+    "encode_throughput_bytes_per_second": 1183565.823964116,
+    "decode_throughput_bytes_per_second": 25567110.737594426,
+    "economic_scenario": {
+      "scenario": "archive-and-retrieval-v1",
+      "measurement_grade": "advisory-unless-pinned-central-runner",
+      "storage_gbp": 2122.572689,
+      "cpu_gbp": 973.539993,
+      "egress_gbp": 1886.731279,
+      "total_gbp": 4982.843962
+    }
+  },
+  "result_sha256": "742e9d4b0714623a85c7af3d380bc4f8ee6346081c1005685980916955836fe7"
+}

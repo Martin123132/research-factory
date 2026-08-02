@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "submission_id": "wb001-baseline-zstd-1-v2",
+  "workbench": {"id": "WB-001", "version": "0.2.0"},
+  "candidate": {
+    "name": "reference Zstandard level 1",
+    "version": "1.0.0",
+    "protocol": "wb001-batch-v1",
+    "command": ["{python}", "codec_adapter.py", "--profile", "zstd-1"],
+    "source_files": ["codec_adapter.py", "profiles.json"],
+    "deterministic": true
+  },
+  "method": {"summary": "Single-threaded Zstandard level 1 with content size and checksum.", "license": "reference-runtime licenses apply"}
+}

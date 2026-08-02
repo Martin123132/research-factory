@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "commitment_type": "wb001_sealed_holdout",
+  "profile": "sealed-mixed-corpus-v1",
+  "committed_at": "2026-08-02T01:22:46.821850+00:00",
+  "corpus_sha256": "edfbe19d189e13e1b6363ed1f11e1db33fdc27cc8b05466634bd1343a59c9a09",
+  "manifest_sha256": "e86d50030429ed2b34526a58523ac76b1e0627f0fe4d9e0629b1639842b3db35",
+  "files": 5,
+  "total_bytes": 8323243,
+  "evaluator_key_id": "ed25519:fab1ba36aef9e3486ffbbcf73ed72eaabe31670fc7be6ebdc13c3b03843030f6",
+  "commitment_sha256": "c0709bc506b00023f96a5b9a9877121b13e6202db18ce3860feeffbd76bef730"
+}

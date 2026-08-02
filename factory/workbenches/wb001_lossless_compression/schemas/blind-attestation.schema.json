@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://research-factory.local/schemas/wb001-blind-attestation-v1.json",
+  "title": "WB-001 signed blind verdict",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "attestation_type",
+    "run_id",
+    "token_id",
+    "candidate_artifact_sha256",
+    "holdout_commitment_sha256",
+    "verdict",
+    "evaluator_key_id",
+    "evaluator_software_sha256",
+    "image_lock_sha256",
+    "private_evidence_sha256",
+    "details_sealed",
+    "signature_base64"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "attestation_type": {"const": "wb001_blind_verdict"},
+    "verdict": {"enum": ["PASS", "NO_GAIN", "INVALID", "ESCALATE"]},
+    "details_sealed": {"const": true},
+    "evaluator_software_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "image_lock_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "signature_base64": {"type": "string", "minLength": 80}
+  },
+  "additionalProperties": true
+}

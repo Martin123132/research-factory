@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "workbench_code": "WB-062",
+  "contract_sha256": "REPLACE_WITH_LOCKED_CONTRACT_SHA256",
+  "human_owner_subject_id": "REPLACE_WITH_AUTHENTICATED_SUBJECT",
+  "classification": "NO_GAIN",
+  "hypothesis": "State the hypothesis that was tested.",
+  "explored_region": "Define the bounded search region so later workers can avoid repetition.",
+  "method": "Record exact commands, environment, seeds and artifact hashes.",
+  "evidence_sha256": "REPLACE_WITH_EVIDENCE_SHA256",
+  "first_failed_gate_or_boundary": "Identify the first decisive failure or useful boundary.",
+  "revisit_condition": "State what must change before this direction is worth repeating.",
+  "retention": {
+    "append_only": true,
+    "searchable": true
+  },
+  "construction_boundary": {
+    "scientific_evidence": false,
+    "counts_as_independent_reproduction": false,
+    "eligible_for_promotion": false
+  }
+}

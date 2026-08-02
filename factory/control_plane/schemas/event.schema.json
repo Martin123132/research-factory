@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://research-factory.invalid/schemas/control-event-v1.json",
+  "title": "Research Factory append-only event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "sequence",
+    "event_id",
+    "request_id",
+    "event_type",
+    "recorded_at",
+    "actor_id",
+    "payload",
+    "previous_event_sha256",
+    "event_sha256"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "sequence": {"type": "integer", "minimum": 1},
+    "event_id": {"type": "string", "pattern": "^event:[0-9a-f]{32}$"},
+    "request_id": {"type": "string", "minLength": 3, "maxLength": 160},
+    "event_type": {
+      "enum": [
+        "FACTORY_INITIALIZED",
+        "OPERATOR_CHECKED_IN",
+        "ROUND_OPENED",
+        "ENTRY_GATE_COMPLETED",
+        "WORK_CLAIMED",
+        "ATTEMPT_STARTED",
+        "RESULT_SUBMITTED",
+        "NEGATIVE_RESULT_RECORDED",
+        "RERUN_WORK_CLAIMED",
+        "RERUN_SUBMITTED",
+        "RERUN_GATE_RECORDED",
+        "HOLDOUT_JOB_ISSUED",
+        "HOLDOUT_ATTESTATION_RECORDED",
+        "DISPUTE_ESCALATED",
+        "ATTEMPT_ANNOTATED"
+      ]
+    },
+    "recorded_at": {"type": "string", "format": "date-time"},
+    "actor_id": {"type": "string", "minLength": 3, "maxLength": 160},
+    "payload": {"type": "object"},
+    "previous_event_sha256": {"$ref": "#/$defs/sha256"},
+    "event_sha256": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

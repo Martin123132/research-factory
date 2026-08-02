@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "override_type": "DIGITAL_COMPRESSION_V1",
+  "workbench_code": "WB-002",
+  "catalogue_entry_sha256": "cfc924ba1436c1523a30ec39ee1645ee0469e905e18d8fde8fb8696bf6cb29c0",
+  "implementation_version": "0.1.0",
+  "implementation_root": "factory/workbenches/wb002_large_text_archive_compression",
+  "truth": {
+    "subject_or_input_population": "The fixed public 1,000,000,000-byte enwik9 corpus after published byte-count, MD5 and SHA-1 verification.",
+    "required_output": "A self-contained counted compressor/archive/decoder package that restores enwik9 exactly and satisfies every official resource and disclosure rule.",
+    "pass_rule": "All correctness, corpus identity, packaging, self-containment, resource and exact-score gates pass; only the Hutter committee may declare official acceptance."
+  },
+  "official_benchmark": {
+    "corpus_id": "enwik9",
+    "input_bytes": 1000000000,
+    "official_md5": "e206c3450ac99950df65bf70ef61a12d",
+    "official_sha1": "2996e86fb978f93cca8f566cc56998923e7fe581",
+    "official_record_bytes": 110793128,
+    "one_percent_maximum_bytes": 109685196,
+    "record_observed_on": "2026-08-02",
+    "record_url": "https://prize.hutter1.net/",
+    "rules_observed_on": "2026-08-02",
+    "rules_url": "https://prize.hutter1.net/hrules.htm",
+    "authority_boundary": "Only the Hutter Prize committee may mark a package as an officially accepted record or prize result."
+  },
+  "entry_gate": {
+    "target_duration_minutes": 240,
+    "brief": "Complete the locked local fixture preflight, then verify and reproduce the enwik8 entry method with exact evidence; a valid NO_GAIN is acceptable.",
+    "command": "python factory/workbenches/wb002_large_text_archive_compression/scripts/run_entry_gate.py --fixture --output work/wb002-fixture-result.json",
+    "expected_outputs": [
+      "locked fixture result JSON with exact restoration and deterministic archive",
+      "verified enwik8 manifest with labelled factory-derived SHA-256",
+      "second stable evidence package committed before reveal",
+      "PASS, NO_GAIN, INVALID or UNRUNNABLE conclusion"
+    ]
+  },
+  "practical_accounting": {
+    "scenario_version": "knowledge-archive-tco-v1",
+    "formula": "encode CPU + retained storage + retrieval decode CPU + egress + decoder distribution + operations",
+    "system_boundary": "One fixed archive population from ingest through 12 months retention and four complete retrievals.",
+    "included_costs": ["encode CPU", "retained storage", "decode CPU", "egress", "decoder distribution", "operations"],
+    "comparator": "best eligible candidate under the same frozen practical scenario",
+    "decision_threshold": 0.01
+  },
+  "paths": {
+    "public_input_manifest": "factory/workbenches/wb002_large_text_archive_compression/data/corpus_manifest.json",
+    "economic_scenario": "factory/workbenches/wb002_large_text_archive_compression/practical_scenario.json",
+    "runner_protocol": "factory/workbenches/wb002_large_text_archive_compression/PROTOCOL.md",
+    "isolation_policy": "factory/workbenches/wb002_large_text_archive_compression/isolation/local_trust_policy.toml"
+  },
+  "assets": [
+    {
+      "role": "truth_verifier",
+      "path": "factory/workbench_standard/commissioning/runner/evaluate_trusted.py",
+      "sha256": "223173ff350c1550da7f3252e5c91b0134c8b2ce1d78aacd54d0d7dc08c6ec45"
+    },
+    {
+      "role": "runner_implementation",
+      "path": "factory/workbench_standard/commissioning/runner/process_control.py",
+      "sha256": "f24b5f9abeff798e6370a1e92631b9f890ae5071a6e8cc73ca5663d5a82c067e"
+    },
+    {
+      "role": "submission_schema",
+      "path": "factory/workbench_standard/commissioning/digital_compression_submission.schema.json",
+      "sha256": "96fcd41b81df4e87c98923e39f17e808033cc25338cca0d7e2d4cf2278d148ff"
+    },
+    {
+      "role": "result_schema",
+      "path": "factory/workbench_standard/commissioning/digital_compression_result.schema.json",
+      "sha256": "0551770135f11031a54f7319e4a20c6f5ee740177a56b98d40882efd07f80bc5"
+    },
+    {
+      "role": "public_input_manifest",
+      "path": "factory/workbenches/wb002_large_text_archive_compression/data/corpus_manifest.json",
+      "sha256": "b64d9f665407610004323ef12655fe5d91e97605b74839138f25dd6cb06dac2d"
+    },
+    {
+      "role": "entry_baseline_definition",
+      "path": "factory/workbenches/wb002_large_text_archive_compression/baselines/entry_reference.json",
+      "sha256": "08585687138802489ee4f9a9d62dbb56e8c0a35d9067a8f778e1bd8b64286ef2"
+    },
+    {
+      "role": "entry_baseline_result",
+      "path": "factory/workbenches/wb002_large_text_archive_compression/baselines/entry_expected.json",
+      "sha256": "4a782655423b9491aac4bb2789f788504781a9beb5baf542d235fce5aabdd70e"
+    },
+    {
+      "role": "economic_scenario",
+      "path": "factory/workbenches/wb002_large_text_archive_compression/practical_scenario.json",
+      "sha256": "609cb99704b635294f7b6959011b6cf15b13108b50259547108c31e2f9d78be4"
+    },
+    {
+      "role": "runner_protocol",
+      "path": "factory/workbenches/wb002_large_text_archive_compression/PROTOCOL.md",
+      "sha256": "9b7cac03da632dc9500794eb691050ed886143476ed3d900795dd7c1f2ffbb3a"
+    },
+    {
+      "role": "isolation_policy",
+      "path": "factory/workbenches/wb002_large_text_archive_compression/isolation/local_trust_policy.toml",
+      "sha256": "b01d004d398a267ea3ed0eb2cc6c870f91574a17bb20471bc081437c25e2bdbc"
+    },
+    {
+      "role": "starter_pack_instructions",
+      "path": "factory/workbenches/wb002_large_text_archive_compression/STARTER_PACK.md",
+      "sha256": "549f3e1d4a867debb79c34a638be938214803fe6f8c2b93375221244994840e9"
+    },
+    {
+      "role": "entry_fixture",
+      "path": "factory/workbenches/wb002_large_text_archive_compression/data/entry_fixture.txt",
+      "sha256": "28ff573875a74d1c634e589c9851ba95ebaca9bba66a0b30e1815d295fbf6052"
+    },
+    {
+      "role": "entry_gate_script",
+      "path": "factory/workbenches/wb002_large_text_archive_compression/scripts/run_entry_gate.py",
+      "sha256": "1db64d686342337ff69c9b57d01db420c0c8161f396e54f2bf13d08ff2e4c458"
+    }
+  ],
+  "external_limitations": [
+    "ARBITRARY_PUBLIC_CODE_ISOLATION_MISSING",
+    "CENTRAL_BLIND_EVALUATOR_NOT_DEPLOYED",
+    "ENWIK9_FACTORY_SHA256_MISSING",
+    "LIVE_AUTHORIZATION_NOT_IMPLEMENTED",
+    "OFFICIAL_RECORD_DISCREPANCY_REQUIRES_CONFIRMATION",
+    "OFFICIAL_RECORD_SNAPSHOT_NOT_FROZEN",
+    "OFFICIAL_RESOURCE_CALIBRATION_NOT_IMPLEMENTED",
+    "OFFICIAL_SIZE_ACCOUNTING_NOT_IMPLEMENTED",
+    "PRACTICAL_PRICE_SNAPSHOT_NOT_FROZEN",
+    "PRODUCTION_IDENTITY_NOT_IMPLEMENTED",
+    "PROMOTION_RUNNER_NOT_IMPLEMENTED"
+  ]
+}

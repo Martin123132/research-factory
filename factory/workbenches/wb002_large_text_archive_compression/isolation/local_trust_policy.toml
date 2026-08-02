@@ -1,0 +1,15 @@
+policy_id = "trusted-local-process-control-v1"
+promotion_grade = false
+arbitrary_public_code_allowed = false
+trusted_code_only = true
+network_enforced_none = false
+filesystem_isolation = false
+process_tree_timeout = true
+combined_output_limit_bytes = 65536
+
+[required_future_boundary]
+runner = "digest-pinned factory container in a disposable evaluator host"
+network = "none"
+root_filesystem = "read-only"
+identity = "verified external human owner"
+attestation = "evaluator-signed"

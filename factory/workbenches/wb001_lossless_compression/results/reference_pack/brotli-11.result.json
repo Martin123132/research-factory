@@ -1,0 +1,228 @@
+{
+  "schema_version": 2,
+  "result_type": "wb001_evaluation",
+  "runner_version": "0.2.0",
+  "generated_at": "2026-08-02T01:44:58.479653+00:00",
+  "workbench": {
+    "id": "WB-001",
+    "version": "0.2.0"
+  },
+  "operator_id": "demo:central-brotli-11",
+  "submission_id": "wb001-baseline-brotli-11-v2",
+  "candidate": {
+    "name": "reference Brotli quality 11",
+    "version": "1.0.0",
+    "metadata": {
+      "adapter": "wb001-reference-codec-adapter",
+      "adapter_version": "1.0.0",
+      "deterministic": true,
+      "library": {
+        "package": "Brotli",
+        "package_version": "1.2.0"
+      },
+      "parameters": {
+        "codec": "brotli",
+        "lgwin": 22,
+        "mode": "generic",
+        "quality": 11
+      },
+      "profile_id": "brotli-11",
+      "protocol": "wb001-batch-v1",
+      "python": "3.13.13"
+    }
+  },
+  "candidate_artifact_sha256": "795c53880ac5437641eae3d41d4817abae9e08e3c157ce3371e36e47edae51b7",
+  "artifact_manifest": {
+    "submission": {
+      "schema_version": 1,
+      "submission_id": "wb001-baseline-brotli-11-v2",
+      "workbench": {
+        "id": "WB-001",
+        "version": "0.2.0"
+      },
+      "candidate": {
+        "name": "reference Brotli quality 11",
+        "version": "1.0.0",
+        "protocol": "wb001-batch-v1",
+        "command": [
+          "{python}",
+          "codec_adapter.py",
+          "--profile",
+          "brotli-11"
+        ],
+        "source_files": [
+          "codec_adapter.py",
+          "profiles.json"
+        ],
+        "deterministic": true
+      },
+      "method": {
+        "summary": "Brotli generic mode, quality 11, lgwin 22.",
+        "license": "reference-runtime licenses apply"
+      }
+    },
+    "submission_sha256": "4875566dc7eed6a333cf4bcc368114c21b813d221fbc1dd79b0d4d16e1ca1422",
+    "source_files": [
+      {
+        "path": "codec_adapter.py",
+        "bytes": 5597,
+        "sha256": "3c3fa5cca78bc1aa7131bef3dbc3d67655d42e0a81f1e57cb2e92e5ab8b7ea9e"
+      },
+      {
+        "path": "profiles.json",
+        "bytes": 1189,
+        "sha256": "ee38462297cf65734417624210cb040e8516257844baefa8b7aa4d829b4825cb"
+      }
+    ],
+    "artifact_sha256": "795c53880ac5437641eae3d41d4817abae9e08e3c157ce3371e36e47edae51b7"
+  },
+  "corpus": {
+    "profile": "synthetic-public-v1",
+    "manifest_sha256": "5603ae2bf4c6b4212d9d11c0f690c8a6f25f2797f01267234aa8955e10cd6b49",
+    "corpus_sha256": "7e87977d8f79843d4e383590c0bc7d7058d773cf558007de66d258e9b01bb30f",
+    "files": 7
+  },
+  "environment": {
+    "system": "Windows",
+    "release": "10",
+    "machine": "AMD64",
+    "python": "3.13.13",
+    "python_executable_sha256": "e6c07188984d41b80f822dcdaeaceeb217cdf977f18f79c421a3a53edba895c3",
+    "processor_count": 12
+  },
+  "execution_boundary": {
+    "mode": "trusted-local-process",
+    "security_boundary": false,
+    "timing_grade": "advisory"
+  },
+  "runtime_fingerprint_sha256": "0f607373bb0f90537886adf85ed89fce96ff6ce13e657748dc02313266066ce7",
+  "measurement_contract": {
+    "protocol": "wb001-batch-v1",
+    "scope": "whole-corpus process per operation",
+    "warmup_runs": 1,
+    "timing_runs": 3,
+    "determinism_runs": 3,
+    "timeout_seconds": 30.0
+  },
+  "hard_gate_pass": true,
+  "failures": [],
+  "files": [
+    {
+      "path": "english_like.txt",
+      "class": "generated-text",
+      "original_bytes": 773325,
+      "original_sha256": "fa3242cdf2ef80ada355862f59c95869138a66c8e5f676947beea1a88f71b0d5",
+      "compressed_bytes": 29285,
+      "compressed_sha256": "2e78cd4ae1b121bfa49028e4ff5d16d8ee0418381607c7dc03417e3f35152b47",
+      "compression_fraction": 0.037868942553260274,
+      "space_saving_fraction": 0.9621310574467398,
+      "deterministic": true,
+      "round_trip_pass": true
+    },
+    {
+      "path": "events.ndjson",
+      "class": "structured-records",
+      "original_bytes": 1254394,
+      "original_sha256": "fb2926eab454d84073be9e1a0dad83c8ae016754e20c1f4f4a7dc86d9249a55f",
+      "compressed_bytes": 45224,
+      "compressed_sha256": "373bc207ce33475c9fc0a772ed85a9bef969c5e186fea45eec654da47ebbc276",
+      "compression_fraction": 0.03605246836320965,
+      "space_saving_fraction": 0.9639475316367904,
+      "deterministic": true,
+      "round_trip_pass": true
+    },
+    {
+      "path": "source_like.py.txt",
+      "class": "source-like-text",
+      "original_bytes": 965000,
+      "original_sha256": "c378d7e882b8e9400135909e693e6698ede84e276a9eca7557677a99e78038e8",
+      "compressed_bytes": 135,
+      "compressed_sha256": "0ab5c4cb86f6c171de6de9b3d51932a7ca622355a3b3c45a94aac638bc3f4631",
+      "compression_fraction": 0.00013989637305699483,
+      "space_saving_fraction": 0.999860103626943,
+      "deterministic": true,
+      "round_trip_pass": true
+    },
+    {
+      "path": "numeric_series.i32le",
+      "class": "integer-array",
+      "original_bytes": 720000,
+      "original_sha256": "43fcc2d660e716c7722ada37579e34a03d6969fc72b921c3097b07b49099dcfe",
+      "compressed_bytes": 38,
+      "compressed_sha256": "11fc5bf4b375ee5ca1f53f4646fc956b1e96315df62e5445759e54c4e1ed0f57",
+      "compression_fraction": 5.277777777777778e-05,
+      "space_saving_fraction": 0.9999472222222222,
+      "deterministic": true,
+      "round_trip_pass": true
+    },
+    {
+      "path": "sparse_blocks.bin",
+      "class": "sparse-binary",
+      "original_bytes": 786432,
+      "original_sha256": "783877faa89579456ce80379104d2e5d1bea791b111fc6d58475306fefe3e7a2",
+      "compressed_bytes": 1237,
+      "compressed_sha256": "eac30f5b101f5f545344458616d3861fc5641747e3ecafa89541357311bf4163",
+      "compression_fraction": 0.0015729268391927083,
+      "space_saving_fraction": 0.9984270731608073,
+      "deterministic": true,
+      "round_trip_pass": true
+    },
+    {
+      "path": "incompressible.bin",
+      "class": "incompressible",
+      "original_bytes": 393216,
+      "original_sha256": "e543fa0e4d17b072d69f95902a090fbf7717e019bcd0991847ee96d5a80deb3c",
+      "compressed_bytes": 393221,
+      "compressed_sha256": "898528fef53a7046a1c58891703f1da7230d21868ce29a6b47b7d182bc1a8809",
+      "compression_fraction": 1.000012715657552,
+      "space_saving_fraction": -1.2715657552009318e-05,
+      "deterministic": true,
+      "round_trip_pass": true
+    },
+    {
+      "path": "mixed_blocks.bin",
+      "class": "mixed",
+      "original_bytes": 900000,
+      "original_sha256": "1c72bf201deedcc5fcad1fec141975977f82eb4e1d1d392bebccec50c8639356",
+      "compressed_bytes": 197520,
+      "compressed_sha256": "e56cc711a88d6a4bc38064cc6e8f4b2f4bd89fa256560d0d5ed6a07f1b5c5d43",
+      "compression_fraction": 0.21946666666666667,
+      "space_saving_fraction": 0.7805333333333333,
+      "deterministic": true,
+      "round_trip_pass": true
+    }
+  ],
+  "aggregate": {
+    "files": 7,
+    "total_input_bytes": 5792367,
+    "total_compressed_bytes": 666660,
+    "compression_fraction": 0.11509284546369386,
+    "space_saving_fraction": 0.8849071545363061,
+    "encode_wall_ns": 8100690300,
+    "decode_wall_ns": 232164800,
+    "encode_samples_ns": [
+      8600697400,
+      8100690300,
+      8037174800
+    ],
+    "decode_samples_ns": [
+      206539500,
+      232164800,
+      247958100
+    ],
+    "encode_coefficient_of_variation": 0.03742974897580182,
+    "decode_coefficient_of_variation": 0.09132387133818315,
+    "peak_rss_bytes": 45195264,
+    "encode_throughput_bytes_per_second": 715046.0992194702,
+    "decode_throughput_bytes_per_second": 24949376.477398813,
+    "economic_scenario": {
+      "scenario": "archive-and-retrieval-v1",
+      "measurement_grade": "advisory-unless-pinned-central-runner",
+      "storage_gbp": 2071.671218,
+      "cpu_gbp": 1515.534882,
+      "egress_gbp": 1841.485527,
+      "total_gbp": 5428.691627
+    }
+  },
+  "result_sha256": "038533b826ef0398206305e694eab749deaba93c7cf88e038341cf5955082d80"
+}

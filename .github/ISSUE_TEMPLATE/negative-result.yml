@@ -1,0 +1,41 @@
+name: Negative or boundary result
+description: Preserve a reproducible dead end, no-gain result or discovered boundary.
+title: "[NEGATIVE] "
+labels: ["negative-result"]
+body:
+  - type: input
+    id: station
+    attributes:
+      label: Workbench code
+      placeholder: WB-013
+    validations:
+      required: true
+  - type: dropdown
+    id: classification
+    attributes:
+      label: Classification
+      options: ["NO_GAIN", "HYPOTHESIS_REJECTED", "RESOURCE_LIMIT", "UNRUNNABLE", "BOUNDARY_FOUND", "DUPLICATE_DIRECTION", "INVALID", "DISPUTED"]
+    validations:
+      required: true
+  - type: textarea
+    id: region
+    attributes:
+      label: Search region and method
+      description: State precisely what was tried, including locked artifacts, parameters and compute.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Decisive evidence
+      description: Link reproducible logs, hashes and the gate or measurement that determined the outcome.
+    validations:
+      required: true
+  - type: textarea
+    id: revisit
+    attributes:
+      label: Conditions for revisiting
+      description: What new evidence, algorithm, resource limit or assumption would make another attempt non-duplicative?
+    validations:
+      required: true
+

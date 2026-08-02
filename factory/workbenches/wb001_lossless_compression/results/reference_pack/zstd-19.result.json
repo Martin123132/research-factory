@@ -1,0 +1,231 @@
+{
+  "schema_version": 2,
+  "result_type": "wb001_evaluation",
+  "runner_version": "0.2.0",
+  "generated_at": "2026-08-02T01:44:13.352517+00:00",
+  "workbench": {
+    "id": "WB-001",
+    "version": "0.2.0"
+  },
+  "operator_id": "demo:central-zstd-19",
+  "submission_id": "wb001-baseline-zstd-19-v2",
+  "candidate": {
+    "name": "reference Zstandard level 19",
+    "version": "1.0.0",
+    "metadata": {
+      "adapter": "wb001-reference-codec-adapter",
+      "adapter_version": "1.0.0",
+      "deterministic": true,
+      "library": {
+        "backend": "cext",
+        "libzstd": "1.5.7",
+        "package": "zstandard",
+        "package_version": "0.25.0"
+      },
+      "parameters": {
+        "checksum": true,
+        "codec": "zstd",
+        "content_size": true,
+        "level": 19,
+        "threads": 0
+      },
+      "profile_id": "zstd-19",
+      "protocol": "wb001-batch-v1",
+      "python": "3.13.13"
+    }
+  },
+  "candidate_artifact_sha256": "61c0e5533d4e5b95247353edad33a08c8b82964f4e6b02a109b62e49e5b582fc",
+  "artifact_manifest": {
+    "submission": {
+      "schema_version": 1,
+      "submission_id": "wb001-baseline-zstd-19-v2",
+      "workbench": {
+        "id": "WB-001",
+        "version": "0.2.0"
+      },
+      "candidate": {
+        "name": "reference Zstandard level 19",
+        "version": "1.0.0",
+        "protocol": "wb001-batch-v1",
+        "command": [
+          "{python}",
+          "codec_adapter.py",
+          "--profile",
+          "zstd-19"
+        ],
+        "source_files": [
+          "codec_adapter.py",
+          "profiles.json"
+        ],
+        "deterministic": true
+      },
+      "method": {
+        "summary": "Single-threaded Zstandard level 19 with content size and checksum.",
+        "license": "reference-runtime licenses apply"
+      }
+    },
+    "submission_sha256": "2984f03634f1ef88b3a8094a773f6b6ed05a1fb2110cecdf55d937a6971d6ca9",
+    "source_files": [
+      {
+        "path": "codec_adapter.py",
+        "bytes": 5597,
+        "sha256": "3c3fa5cca78bc1aa7131bef3dbc3d67655d42e0a81f1e57cb2e92e5ab8b7ea9e"
+      },
+      {
+        "path": "profiles.json",
+        "bytes": 1189,
+        "sha256": "ee38462297cf65734417624210cb040e8516257844baefa8b7aa4d829b4825cb"
+      }
+    ],
+    "artifact_sha256": "61c0e5533d4e5b95247353edad33a08c8b82964f4e6b02a109b62e49e5b582fc"
+  },
+  "corpus": {
+    "profile": "synthetic-public-v1",
+    "manifest_sha256": "5603ae2bf4c6b4212d9d11c0f690c8a6f25f2797f01267234aa8955e10cd6b49",
+    "corpus_sha256": "7e87977d8f79843d4e383590c0bc7d7058d773cf558007de66d258e9b01bb30f",
+    "files": 7
+  },
+  "environment": {
+    "system": "Windows",
+    "release": "10",
+    "machine": "AMD64",
+    "python": "3.13.13",
+    "python_executable_sha256": "e6c07188984d41b80f822dcdaeaceeb217cdf977f18f79c421a3a53edba895c3",
+    "processor_count": 12
+  },
+  "execution_boundary": {
+    "mode": "trusted-local-process",
+    "security_boundary": false,
+    "timing_grade": "advisory"
+  },
+  "runtime_fingerprint_sha256": "aa98760588d66921e1db2f49e23966bd9ed4d83d9ea777f73d511b8e17fd2156",
+  "measurement_contract": {
+    "protocol": "wb001-batch-v1",
+    "scope": "whole-corpus process per operation",
+    "warmup_runs": 1,
+    "timing_runs": 3,
+    "determinism_runs": 3,
+    "timeout_seconds": 30.0
+  },
+  "hard_gate_pass": true,
+  "failures": [],
+  "files": [
+    {
+      "path": "english_like.txt",
+      "class": "generated-text",
+      "original_bytes": 773325,
+      "original_sha256": "fa3242cdf2ef80ada355862f59c95869138a66c8e5f676947beea1a88f71b0d5",
+      "compressed_bytes": 33923,
+      "compressed_sha256": "4f8fa748f801beff7d15c20fccf784430720b40049f4fec97292ffe0e90e0b3e",
+      "compression_fraction": 0.04386642097436395,
+      "space_saving_fraction": 0.956133579025636,
+      "deterministic": true,
+      "round_trip_pass": true
+    },
+    {
+      "path": "events.ndjson",
+      "class": "structured-records",
+      "original_bytes": 1254394,
+      "original_sha256": "fb2926eab454d84073be9e1a0dad83c8ae016754e20c1f4f4a7dc86d9249a55f",
+      "compressed_bytes": 65429,
+      "compressed_sha256": "cbd6c3cd975ada1f47ec6abadf22a173c6e47a243e55cabb8b06db02f07326a1",
+      "compression_fraction": 0.05215984770335317,
+      "space_saving_fraction": 0.9478401522966469,
+      "deterministic": true,
+      "round_trip_pass": true
+    },
+    {
+      "path": "source_like.py.txt",
+      "class": "source-like-text",
+      "original_bytes": 965000,
+      "original_sha256": "c378d7e882b8e9400135909e693e6698ede84e276a9eca7557677a99e78038e8",
+      "compressed_bytes": 240,
+      "compressed_sha256": "9a1d431111b4ce71f10265ba3d253db743ad73597573072a098cab99082d2857",
+      "compression_fraction": 0.00024870466321243526,
+      "space_saving_fraction": 0.9997512953367875,
+      "deterministic": true,
+      "round_trip_pass": true
+    },
+    {
+      "path": "numeric_series.i32le",
+      "class": "integer-array",
+      "original_bytes": 720000,
+      "original_sha256": "43fcc2d660e716c7722ada37579e34a03d6969fc72b921c3097b07b49099dcfe",
+      "compressed_bytes": 111,
+      "compressed_sha256": "b7fb8acbfcc34c32abfe688c4ca33ca0811d407f55bbe10c990c895f994c2e0d",
+      "compression_fraction": 0.00015416666666666666,
+      "space_saving_fraction": 0.9998458333333333,
+      "deterministic": true,
+      "round_trip_pass": true
+    },
+    {
+      "path": "sparse_blocks.bin",
+      "class": "sparse-binary",
+      "original_bytes": 786432,
+      "original_sha256": "783877faa89579456ce80379104d2e5d1bea791b111fc6d58475306fefe3e7a2",
+      "compressed_bytes": 1095,
+      "compressed_sha256": "75067c19d0f69fa64c4af2c4a2d5be8be6457e2c28df48d2e522a326ca111b74",
+      "compression_fraction": 0.001392364501953125,
+      "space_saving_fraction": 0.9986076354980469,
+      "deterministic": true,
+      "round_trip_pass": true
+    },
+    {
+      "path": "incompressible.bin",
+      "class": "incompressible",
+      "original_bytes": 393216,
+      "original_sha256": "e543fa0e4d17b072d69f95902a090fbf7717e019bcd0991847ee96d5a80deb3c",
+      "compressed_bytes": 393238,
+      "compressed_sha256": "1694b76ed554eefbac2aee0ba5b7db584857c7d3fce9e7fcef005bde605d6cf9",
+      "compression_fraction": 1.0000559488932292,
+      "space_saving_fraction": -5.594889322924068e-05,
+      "deterministic": true,
+      "round_trip_pass": true
+    },
+    {
+      "path": "mixed_blocks.bin",
+      "class": "mixed",
+      "original_bytes": 900000,
+      "original_sha256": "1c72bf201deedcc5fcad1fec141975977f82eb4e1d1d392bebccec50c8639356",
+      "compressed_bytes": 202353,
+      "compressed_sha256": "68d86e0d52cc3232559fb70693a17fdfb38f73bc3aa1d65e6604a0e93842740a",
+      "compression_fraction": 0.22483666666666666,
+      "space_saving_fraction": 0.7751633333333333,
+      "deterministic": true,
+      "round_trip_pass": true
+    }
+  ],
+  "aggregate": {
+    "files": 7,
+    "total_input_bytes": 5792367,
+    "total_compressed_bytes": 696389,
+    "compression_fraction": 0.12022528959232037,
+    "space_saving_fraction": 0.8797747104076796,
+    "encode_wall_ns": 2653030400,
+    "decode_wall_ns": 170251900,
+    "encode_samples_ns": [
+      2653030400,
+      2649942300,
+      2801309600
+    ],
+    "decode_samples_ns": [
+      162149500,
+      172353300,
+      170251900
+    ],
+    "encode_coefficient_of_variation": 0.03202539233295978,
+    "decode_coefficient_of_variation": 0.032023387540786916,
+    "peak_rss_bytes": 54718464,
+    "encode_throughput_bytes_per_second": 2183302.1589198527,
+    "decode_throughput_bytes_per_second": 34022333.965142235,
+    "economic_scenario": {
+      "scenario": "archive-and-retrieval-v1",
+      "measurement_grade": "advisory-unless-pinned-central-runner",
+      "storage_gbp": 2164.055213,
+      "cpu_gbp": 559.60298,
+      "egress_gbp": 1923.604633,
+      "total_gbp": 4647.262826
+    }
+  },
+  "result_sha256": "61bf3d2c7ff9aebc0e5ba8b631a3ed65ef1f5d005ed51332874d1843e02aa5fd"
+}

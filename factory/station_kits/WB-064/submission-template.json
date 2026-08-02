@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "workbench_code": "WB-064",
+  "contract_sha256": "REPLACE_WITH_LOCKED_CONTRACT_SHA256",
+  "human_owner": {
+    "subject_id": "REPLACE_WITH_AUTHENTICATED_SUBJECT",
+    "conflicts_declared": false
+  },
+  "claim": {
+    "hypothesis": "State one falsifiable hypothesis.",
+    "method": "Describe the bounded method and what would refute it.",
+    "claimed_outcome": "UNREVIEWED"
+  },
+  "artifact": {
+    "sha256": "REPLACE_WITH_ARTIFACT_SHA256",
+    "declared_sources": []
+  },
+  "environment": {
+    "manifest_sha256": "REPLACE_WITH_ENVIRONMENT_MANIFEST_SHA256",
+    "exact_commands": [],
+    "seeds": []
+  },
+  "evidence": {
+    "public_input_commitment_sha256": null,
+    "result_sha256": "REPLACE_WITH_RESULT_SHA256",
+    "hard_gate_results": [],
+    "measurements": [],
+    "economic_or_physical_accounting": null
+  },
+  "construction_boundary": {
+    "scientific_evidence": false,
+    "counts_as_independent_reproduction": false,
+    "eligible_for_promotion": false
+  }
+}

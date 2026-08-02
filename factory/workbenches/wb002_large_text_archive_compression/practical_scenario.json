@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "scenario_id": "knowledge-archive-tco-v1",
+  "status": "STRUCTURED_COMMISSIONING_SCENARIO_PRICES_NOT_FROZEN",
+  "formula": "encode_cpu + retention_months * stored_gb * storage_price + reads * (decode_cpu + egress_gb * egress_price) + decoder_distribution + operations",
+  "system_boundary": "One fixed archive population from ingest through 12 months of retention and four complete retrievals, including decoder distribution and operations.",
+  "included_costs": ["encode CPU", "retained storage", "decode CPU", "egress", "decoder distribution", "operations"],
+  "required_parameters": ["archive input bytes", "retention months", "retrieval count", "runner class", "CPU price", "storage price", "egress price", "decoder amortisation", "operations cost"],
+  "minimum_tco_gain_fraction": 0.01,
+  "scope_rule": "A Hutter score improvement is not a practical deployment claim unless this separately frozen scenario passes."
+}

@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "manifest_type": "RESEARCH_FACTORY_STATION_KIT",
+  "generator_version": "1.2.0",
+  "generator_sha256": "87e4d7c087551dec3e66f21829d9038c0557d46847be4c80aaf43e6e6b7f1e20",
+  "workbench_code": "WB-041",
+  "contract_sha256": "4b38cf3795d0febd3218c19a7f3c3909425892550e3ca8775db41c0e2e2e09f9",
+  "source_entry_sha256": "a268905924bc5d50856e1e36b9db116b8f5d2bbc8661c28ae78899f7220c4b9b",
+  "readiness_stage": "CONTRACT_DRAFT",
+  "files": [
+    {
+      "path": "NO_SCIENTIFIC_CREDIT.md",
+      "bytes": 458,
+      "sha256": "39a22c762b6c761131f9b4de2364fef4d26af78ce1d52c46340078454892f7fd"
+    },
+    {
+      "path": "PUBLIC_INPUTS_NOT_FROZEN.md",
+      "bytes": 311,
+      "sha256": "9654080b7b392bff5993e2345730a2fcfeac278b19d02498ab574677214d84d8"
+    },
+    {
+      "path": "RUNNER_TRUST.md",
+      "bytes": 402,
+      "sha256": "e8cfb369c335e0154377773852014ea79ef8b03297617f9cad53c1d6f587ef16"
+    },
+    {
+      "path": "STARTER_PACK.md",
+      "bytes": 665,
+      "sha256": "1cada48ff45fc3fb066344b7dddd290ef3377e571a645d21effeb47f192643e6"
+    },
+    {
+      "path": "START_HERE.md",
+      "bytes": 1269,
+      "sha256": "91fcdb4fe085e6b9d1a55fe1446119bf8ca8b18c54b1c17f33e5896d028ea866"
+    },
+    {
+      "path": "VALIDATOR_CHECKLIST.md",
+      "bytes": 1067,
+      "sha256": "09599eb028254b68b776df50dc37d7ab1b55a3111ad5712151af295a4ce51a98"
+    },
+    {
+      "path": "VERIFICATION.md",
+      "bytes": 405,
+      "sha256": "a1939abee3bf9ab500a2b2e3543ff7e4e4d231a30290f2e965a68e4bccf97fe6"
+    },
+    {
+      "path": "contract.json",
+      "bytes": 8899,
+      "sha256": "e166ae30e3e5f037a7daf41e1d4d30c681dea09447fce408d6dd448079feb963"
+    },
+    {
+      "path": "dispute-template.json",
+      "bytes": 794,
+      "sha256": "7eace6e76481bd4d5a9df94d464242f10388739ef3aedf5c3e95d45430c4c3c7"
+    },
+    {
+      "path": "negative-result-template.json",
+      "bytes": 905,
+      "sha256": "8d541c5c77f62665a73aa84d10709bd9d242e95561cc5af09f6cc81c70c28c58"
+    },
+    {
+      "path": "schemas/workbench-contract-v1.schema.json",
+      "bytes": 27083,
+      "sha256": "d485565357d6de568441a138f76a16cec6a3a12ec85fc8d83c6e724a0753c3b1"
+    },
+    {
+      "path": "submission-template.json",
+      "bytes": 1001,
+      "sha256": "dbeb9e1db62ccd9bd9e922e6de619894c51c15a096f6c7a0c4dbcd5572e81a8b"
+    }
+  ],
+  "construction_boundary": {
+    "scientific_evidence": false,
+    "counts_as_independent_reproduction": false,
+    "eligible_for_promotion": false
+  },
+  "kit_sha256": "2a1d1134804dd3df1957c9fb4db2e4a6b3d66f0583550476571864b7f6601be2"
+}

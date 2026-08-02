@@ -1,0 +1,513 @@
+{
+  "standard": "research-factory/workbench-contract/v1",
+  "contract_version": "1.1.0",
+  "workbench": {
+    "code": "WB-001",
+    "numeric_id": 1,
+    "slug": "general-purpose-lossless-compression",
+    "title": "General-purpose lossless compression",
+    "category": "Compression & storage",
+    "short_category": "Compression",
+    "evidence_lane": "DIGITAL",
+    "track": "PRACTICAL_IMPROVEMENT"
+  },
+  "source": {
+    "catalogue_version": 1,
+    "catalogue_generated_at": "2026-08-01",
+    "catalogue_sha256": "9b37a47c265e916cbf460f4dd0120b02b01fa800b104017b117ba2fc40644cd5",
+    "entry_sha256": "e72bb784d374d1b7c932ee03c56f917f16ac095a892cb8cb86a41b770d5181ee",
+    "benchmark_name": "Silesia Corpus",
+    "reference_urls": [
+      "https://data-compression.info/Corpora/SilesiaCorpus/index.html"
+    ],
+    "factory_path": "factory/workbenches/wb001_lossless_compression",
+    "active_round_path": "factory/rounds/WB001-PILOT-001/round.json",
+    "implementation_contract_version": "0.2.0"
+  },
+  "commissioning": {
+    "profile_status": "LEGACY_INSTRUMENTED",
+    "adapter_id": null,
+    "adapter_version": null,
+    "dossier_path": null,
+    "dossier_sha256": null
+  },
+  "problem": {
+    "objective": "General-purpose lossless compression",
+    "truth_condition": "SHA-256-identical reconstruction on every public and hidden file; measure compressed bytes, encode/decode throughput, peak RAM and joules. Promote only a smaller/faster Pareto point against pinned zstd, xz and other verified anchors.",
+    "hard_gate_statement": "SHA-256-identical reconstruction on every public and hidden file; measure compressed bytes, encode/decode throughput, peak RAM and joules. Promote only a smaller/faster Pareto point against pinned zstd, xz and other verified anchors.",
+    "utility_guardrail": "total CPU, energy and storage cost per retained TB must fall, with a deployable decoder.",
+    "structured_predicate": {
+      "status": "DEFINED",
+      "subject_or_input_population": "Every file named by the frozen public corpus or sealed holdout commitment",
+      "required_output": "A deterministic compressor and deployable decoder that reconstruct every input byte",
+      "verifier_status": "EXECUTABLE",
+      "verifier_path_or_protocol": "factory/workbenches/wb001_lossless_compression/runner/evaluate_isolated.py",
+      "verifier_sha256": "b09f9c810a34e04c2e0417bffac7f169a7d6eee6557886e9e0b154718b7d05e2",
+      "pass_rule": "All exact round-trip, determinism, expansion, resource and frozen-frontier gates pass",
+      "candidate_claim_is_authoritative": false,
+      "failure_behavior": "FAIL_CLOSED"
+    }
+  },
+  "measurement": {
+    "criteria": [
+      {
+        "criterion_id": "exact-round-trip",
+        "statement": "Every decoded public and hidden file must equal the original byte-for-byte.",
+        "comparison": "EXACT",
+        "metric_id": "round_trip_fraction",
+        "threshold": 1.0,
+        "unit": "fraction",
+        "machine_check": "EXECUTABLE",
+        "verifier_path_or_protocol": "factory/workbenches/wb001_lossless_compression/runner/evaluate_isolated.py",
+        "verifier_sha256": "b09f9c810a34e04c2e0417bffac7f169a7d6eee6557886e9e0b154718b7d05e2",
+        "failure_behavior": "FAIL_CLOSED",
+        "score_may_override_failure": false
+      },
+      {
+        "criterion_id": "deterministic-stream",
+        "statement": "Three repeated encodes must produce byte-identical compressed stream hashes.",
+        "comparison": "EXACT",
+        "metric_id": "determinism_fraction",
+        "threshold": 1.0,
+        "unit": "fraction",
+        "machine_check": "EXECUTABLE",
+        "verifier_path_or_protocol": "factory/workbenches/wb001_lossless_compression/runner/evaluate_isolated.py",
+        "verifier_sha256": "b09f9c810a34e04c2e0417bffac7f169a7d6eee6557886e9e0b154718b7d05e2",
+        "failure_behavior": "FAIL_CLOSED",
+        "score_may_override_failure": false
+      }
+    ],
+    "metrics": [
+      {
+        "metric_id": "round_trip_fraction",
+        "label": "Files reconstructed exactly",
+        "unit": "fraction",
+        "direction": "EXACT",
+        "aggregation": "EXACT",
+        "baseline_binding": null,
+        "measurement_grade": "REPRODUCTION",
+        "decision_threshold": 1.0,
+        "required": true
+      },
+      {
+        "metric_id": "determinism_fraction",
+        "label": "Repeated streams with the expected hash",
+        "unit": "fraction",
+        "direction": "EXACT",
+        "aggregation": "EXACT",
+        "baseline_binding": null,
+        "measurement_grade": "REPRODUCTION",
+        "decision_threshold": 1.0,
+        "required": true
+      },
+      {
+        "metric_id": "total_compressed_bytes",
+        "label": "Total compressed bytes including decode requirements",
+        "unit": "bytes",
+        "direction": "MINIMIZE",
+        "aggregation": "SUM",
+        "baseline_binding": "frozen 14-codec reference frontier",
+        "measurement_grade": "REPRODUCTION",
+        "decision_threshold": 0.001,
+        "required": true
+      },
+      {
+        "metric_id": "encode_wall_ns",
+        "label": "Paired whole-corpus encode wall time",
+        "unit": "nanoseconds",
+        "direction": "MINIMIZE",
+        "aggregation": "MEDIAN",
+        "baseline_binding": "frozen 14-codec reference frontier",
+        "measurement_grade": "ADVISORY",
+        "decision_threshold": 0.05,
+        "required": true
+      },
+      {
+        "metric_id": "decode_wall_ns",
+        "label": "Paired whole-corpus decode wall time",
+        "unit": "nanoseconds",
+        "direction": "MINIMIZE",
+        "aggregation": "MEDIAN",
+        "baseline_binding": "frozen 14-codec reference frontier",
+        "measurement_grade": "ADVISORY",
+        "decision_threshold": 0.05,
+        "required": true
+      },
+      {
+        "metric_id": "peak_rss_bytes",
+        "label": "Peak resident memory",
+        "unit": "bytes",
+        "direction": "MINIMIZE",
+        "aggregation": "MAX",
+        "baseline_binding": "frozen 14-codec reference frontier",
+        "measurement_grade": "ADVISORY",
+        "decision_threshold": null,
+        "required": true
+      },
+      {
+        "metric_id": "annualized_scenario_cost_gbp",
+        "label": "Annualized frozen-scenario cost",
+        "unit": "GBP/year",
+        "direction": "MINIMIZE",
+        "aggregation": "SUM",
+        "baseline_binding": "best eligible frontier point for archive-and-retrieval-v1",
+        "measurement_grade": "ADVISORY",
+        "decision_threshold": 0.001,
+        "required": true
+      }
+    ],
+    "tolerance": {
+      "policy": "MIXED",
+      "logical_tolerance": 0,
+      "reproduction_rules": [
+        "Decoded bytes and deterministic stream hashes require exact equality.",
+        "Size uses exact byte counts; timing uses randomized paired promotion runs.",
+        "Equivalence, improvement and safety thresholds are evaluated separately."
+      ],
+      "reproduction_equivalence": [
+        {
+          "rule_id": "exact-round-trip",
+          "metric_id": "round_trip_fraction",
+          "mode": "EXACT",
+          "value": 1.0,
+          "unit": "fraction",
+          "zero_reference_policy": "NOT_APPLICABLE"
+        },
+        {
+          "rule_id": "exact-determinism",
+          "metric_id": "determinism_fraction",
+          "mode": "EXACT",
+          "value": 1.0,
+          "unit": "fraction",
+          "zero_reference_policy": "NOT_APPLICABLE"
+        },
+        {
+          "rule_id": "exact-size",
+          "metric_id": "total_compressed_bytes",
+          "mode": "EXACT",
+          "value": 0,
+          "unit": "bytes difference",
+          "zero_reference_policy": "REQUIRE_EXACT_ZERO"
+        }
+      ],
+      "improvement_thresholds": [
+        {
+          "rule_id": "minimum-size-gain",
+          "metric_id": "total_compressed_bytes",
+          "mode": "RELATIVE",
+          "value": 0.001,
+          "unit": "fraction",
+          "zero_reference_policy": "USE_ABSOLUTE_RULE"
+        },
+        {
+          "rule_id": "minimum-timing-gain",
+          "metric_id": "encode_wall_ns",
+          "mode": "RELATIVE",
+          "value": 0.05,
+          "unit": "fraction",
+          "zero_reference_policy": "USE_ABSOLUTE_RULE"
+        },
+        {
+          "rule_id": "minimum-cost-gain",
+          "metric_id": "annualized_scenario_cost_gbp",
+          "mode": "RELATIVE",
+          "value": 0.001,
+          "unit": "fraction",
+          "zero_reference_policy": "USE_ABSOLUTE_RULE"
+        }
+      ],
+      "safety_limits": [
+        {
+          "rule_id": "maximum-encode-slowdown",
+          "metric_id": "encode_wall_ns",
+          "mode": "RELATIVE",
+          "value": 0.25,
+          "unit": "fraction",
+          "zero_reference_policy": "USE_ABSOLUTE_RULE"
+        },
+        {
+          "rule_id": "maximum-decode-slowdown",
+          "metric_id": "decode_wall_ns",
+          "mode": "RELATIVE",
+          "value": 0.1,
+          "unit": "fraction",
+          "zero_reference_policy": "USE_ABSOLUTE_RULE"
+        }
+      ],
+      "stochastic_protocol": {
+        "required": true,
+        "repetitions": 7,
+        "seed_policy": "Log the randomized paired baseline/candidate schedule seed",
+        "aggregation": "Paired whole-corpus median ratios",
+        "confidence_rule": "The confidence interval must exclude no improvement for a timing claim",
+        "permitted_runner_class": "Pinned central hardware class for promotion; local timing is advisory"
+      }
+    },
+    "public_inputs": {
+      "status": "FROZEN",
+      "manifest_path": "factory/workbenches/wb001_lossless_compression/data/public_manifest.json",
+      "content_commitment_sha256": "7e87977d8f79843d4e383590c0bc7d7058d773cf558007de66d258e9b01bb30f"
+    },
+    "hidden_inputs": {
+      "policy": "REQUIRED",
+      "commitment_path": "factory/workbenches/wb001_lossless_compression/data/holdout_commitment.json"
+    },
+    "baseline": {
+      "status": "FROZEN",
+      "definition_path": "factory/workbenches/wb001_lossless_compression/baselines/reference_pack/baseline_pack.toml",
+      "result_path": "factory/workbenches/wb001_lossless_compression/results/reference_pack/baseline_pack.json"
+    },
+    "compute_budget": {
+      "status": "DECLARED",
+      "wall_time_seconds": 30,
+      "cpu_cores": 1,
+      "memory_bytes": 536870912,
+      "energy_measurement_required": false
+    },
+    "economic_or_physical_accounting": {
+      "required": true,
+      "applicability": "REQUIRED",
+      "structured": true,
+      "scenario_path": "factory/workbenches/wb001_lossless_compression/workbench.toml",
+      "scenario_version": "archive-and-retrieval-v1",
+      "formula": "storage + encode CPU + annual decode CPU + egress + decoder deployment cost",
+      "system_boundary": "100 TB retained for 12 months with four full decode reads per year",
+      "included_costs": [
+        "storage",
+        "encode CPU",
+        "decode CPU",
+        "egress",
+        "decoder deployment"
+      ],
+      "comparator": "best eligible pinned frontier point under the same scenario",
+      "decision_threshold": 0.001
+    }
+  },
+  "starter_pack": {
+    "entry_gate_required": true,
+    "credential_neutral": true,
+    "target_duration_minutes": 240,
+    "brief": "Run the locked entry gate, reproduce the reference floor, then package one four-hour shift or a useful negative result.",
+    "fixture_status": "KNOWN_ANSWER_READY",
+    "command": "python control_plane/scripts/run_entry_gate.py --operator YOUR_OPERATOR_ID --acknowledge-rules --output state/YOUR_OPERATOR_ID-entry.json",
+    "expected_outputs": [
+      "entry-gate evidence JSON",
+      "exact public reference result",
+      "immutable shift evidence bundle"
+    ]
+  },
+  "runner": {
+    "protocol_status": "IMPLEMENTED",
+    "protocol_path": "factory/workbenches/wb001_lossless_compression/PROTOCOL.md",
+    "isolation_status": "PROTOTYPE",
+    "isolation_policy_path": "factory/workbenches/wb001_lossless_compression/isolation/docker_policy.toml",
+    "network_policy": "NONE",
+    "trusted_code_only": true,
+    "arbitrary_public_code_allowed": false,
+    "promotion_grade": false
+  },
+  "submission": {
+    "template_path": "submission-template.json",
+    "required_sections": [
+      "human_owner",
+      "hypothesis",
+      "method",
+      "artifact",
+      "environment",
+      "commands",
+      "public_evidence",
+      "hard_gates",
+      "measurements",
+      "economic_or_physical_accounting"
+    ],
+    "artifact_lock_required": true,
+    "environment_manifest_required": true,
+    "exact_commands_required": true,
+    "seeds_required_when_stochastic": true
+  },
+  "reproduction": {
+    "required_independent_human_validators": 2,
+    "author_may_validate": false,
+    "distinct_people_required": true,
+    "validator_conflict_declaration_required": true,
+    "identity_assurance": "SELF_ASSERTED_LOCAL",
+    "result_visibility": "COMMIT_BEFORE_REVEAL",
+    "pass_rule": "TWO_INDEPENDENT_PASSES",
+    "split_rule": "DIAGNOSTIC_THEN_HUMAN_REVIEW",
+    "majority_vote_resolves_deterministic_dispute": false,
+    "tolerance_binding": "STATION_MEASUREMENT_CONTRACT"
+  },
+  "negative_results": {
+    "retained": true,
+    "searchable": true,
+    "append_only": true,
+    "taxonomy": [
+      "NO_GAIN",
+      "HYPOTHESIS_REJECTED",
+      "RESOURCE_LIMIT",
+      "UNRUNNABLE",
+      "BOUNDARY_FOUND",
+      "DUPLICATE_DIRECTION",
+      "INVALID",
+      "DISPUTED"
+    ]
+  },
+  "blind_evaluation": {
+    "required_before_live": true,
+    "hidden_claim_withheld": true,
+    "human_authorization_required": true,
+    "evaluator_status": "LOCAL_COMMISSIONING_ONLY",
+    "public_verdicts": [
+      "PASS",
+      "NO_GAIN",
+      "INVALID",
+      "ESCALATE"
+    ],
+    "detailed_results_private_until_reveal": true
+  },
+  "disputes": {
+    "failed_reproduction_is_not_automatic_falsification": true,
+    "third_run_role": "DIAGNOSTIC_ONLY",
+    "deterministic_disagreement_policy": "HUMAN_REVIEW_REQUIRED",
+    "majority_vote_can_promote": false,
+    "outcomes": [
+      "REPRODUCED",
+      "ORIGINAL_ERROR",
+      "VALIDATOR_ERROR",
+      "ENVIRONMENT_MISMATCH",
+      "INCOMPLETE_METHOD",
+      "UNSTABLE_BENCHMARK",
+      "DISPUTED",
+      "UNRUNNABLE"
+    ]
+  },
+  "readiness": {
+    "current_stage": "COMMISSIONING_READY",
+    "live_research_enabled": false,
+    "scientific_standing": "NONE",
+    "promotion_claims_allowed": false,
+    "facets": {
+      "objective_truth_brief": true,
+      "hard_gate_brief": true,
+      "reference_benchmark": true,
+      "utility_guardrail": true,
+      "lane_specific_starter_pack": true,
+      "structured_predicate": true,
+      "independent_verifier": true,
+      "structured_metrics": true,
+      "declared_tolerances": true,
+      "frozen_public_inputs": true,
+      "pinned_baseline": true,
+      "executable_entry_gate": true,
+      "runner_protocol": true,
+      "isolation_policy": true,
+      "blind_evaluator": true,
+      "dispute_policy": true,
+      "negative_result_policy": true,
+      "production_identity": false,
+      "promotion_grade_runner": false,
+      "live_authorization": false
+    },
+    "unresolved": [
+      "CENTRAL_BLIND_EVALUATOR_NOT_DEPLOYED",
+      "ECONOMIC_DECISION_ENFORCEMENT_GAP",
+      "LIVE_AUTHORIZATION_NOT_IMPLEMENTED",
+      "PRODUCTION_IDENTITY_NOT_IMPLEMENTED",
+      "PROMOTION_RUNNER_NOT_IMPLEMENTED",
+      "TIMING_PROTOCOL_ADVISORY"
+    ]
+  },
+  "provenance": {
+    "generator_version": "1.2.0",
+    "generator_sha256": "87e4d7c087551dec3e66f21829d9038c0557d46847be4c80aaf43e6e6b7f1e20",
+    "generated_from": "research_factory_100_workbenches.json",
+    "source_entry_sha256": "e72bb784d374d1b7c932ee03c56f917f16ac095a892cb8cb86a41b770d5181ee",
+    "referenced_assets": [
+      {
+        "name": "workbench_contract",
+        "path": "workbenches/wb001_lossless_compression/workbench.toml",
+        "sha256": "2c83d5a38d2c42e3cb1976da0b5e91f54cee351950e11e31e5c6dd76d648605a",
+        "logical_commitment_sha256": null
+      },
+      {
+        "name": "candidate_protocol",
+        "path": "workbenches/wb001_lossless_compression/PROTOCOL.md",
+        "sha256": "f1d9184e1bab97f622cb85cb63bb21c5066ba5a1d1c010314680bd6108c53700",
+        "logical_commitment_sha256": null
+      },
+      {
+        "name": "public_corpus_manifest",
+        "path": "workbenches/wb001_lossless_compression/data/public_manifest.json",
+        "sha256": "5603ae2bf4c6b4212d9d11c0f690c8a6f25f2797f01267234aa8955e10cd6b49",
+        "logical_commitment_sha256": "7e87977d8f79843d4e383590c0bc7d7058d773cf558007de66d258e9b01bb30f"
+      },
+      {
+        "name": "sealed_holdout_commitment",
+        "path": "workbenches/wb001_lossless_compression/data/holdout_commitment.json",
+        "sha256": "84de64035b15cc8bd0655793ed5ccfff1ab098219dfe37db63982faead8250da",
+        "logical_commitment_sha256": "c0709bc506b00023f96a5b9a9877121b13e6202db18ce3860feeffbd76bef730"
+      },
+      {
+        "name": "reference_frontier_pack",
+        "path": "workbenches/wb001_lossless_compression/results/reference_pack/baseline_pack.json",
+        "sha256": "9b2e53deef4338040ca38bfe0d2aace3602a39281025266b131daed579971b9d",
+        "logical_commitment_sha256": "47251fb969e85ed8cb11fe8ebd5018fa017ac68b68c4870fde90fe6a3c20e056"
+      },
+      {
+        "name": "docker_isolation_policy",
+        "path": "workbenches/wb001_lossless_compression/isolation/docker_policy.toml",
+        "sha256": "4b901c87bd52e1cdd402be48eb368386745658995c525d69ee59566a8586c71c",
+        "logical_commitment_sha256": null
+      },
+      {
+        "name": "evaluator_image_lock",
+        "path": "workbenches/wb001_lossless_compression/isolation/image.lock.json",
+        "sha256": "3adadda85ac1a522f694fdb846add1c4ca0b3507f06cfc1ab36c319798e829ee",
+        "logical_commitment_sha256": "dd517780ac6d44c0481932046cb83c980bd163bfce2a9a48719acbdabb4131a7"
+      },
+      {
+        "name": "evaluator_public_key",
+        "path": "workbenches/wb001_lossless_compression/data/evaluator_public_key.json",
+        "sha256": "1fbb2025694fef9b3f090cc4a55d133eb560eede884ec270fa17c6741610ccee",
+        "logical_commitment_sha256": null
+      },
+      {
+        "name": "factory_dependency_lock",
+        "path": "requirements.lock",
+        "sha256": "4cff9c7492c3679bef29bbbf960fbe54bb0d50837e224d855d038862ce563d24",
+        "logical_commitment_sha256": null
+      },
+      {
+        "name": "control_plane_software_lock",
+        "path": "control_plane/software.lock.json",
+        "sha256": "9386b3b14fffe07ca963c15fbe20f95ad04f46b191cbb8b39f3b7bb9c037ae33",
+        "logical_commitment_sha256": "1a028fdeb3a88579b09ba6da62596365281d40f93a2aa5c246d564064320e737"
+      },
+      {
+        "name": "evaluator_software_lock",
+        "path": "workbenches/wb001_lossless_compression/isolation/evaluator_software.lock.json",
+        "sha256": "79c962fa67e8608e0cc13e8f08b295bf126336aecb97eb091acf39f96ce00c3e",
+        "logical_commitment_sha256": "83846981f736dfe70757b3bc638c0410ea36886fa04328e95d4787f8fce3460d"
+      },
+      {
+        "name": "pilot_round",
+        "path": "rounds/WB001-PILOT-001/round.json",
+        "sha256": "8675fabfa7e511a220da733e3b7c9cf8bdfce3f24adb87c46fbefbcc1b8fc401",
+        "logical_commitment_sha256": null
+      },
+      {
+        "name": "four_hour_starter_pack",
+        "path": "rounds/WB001-PILOT-001/STARTER_PACK.md",
+        "sha256": "ccd9b59c42c4009587281be0cc289d402e413f46109feeba92bc87f0fc428b3c",
+        "logical_commitment_sha256": null
+      }
+    ],
+    "shared_templates": [
+      "submission-template.json",
+      "negative-result-template.json",
+      "dispute-template.json",
+      "VALIDATOR_CHECKLIST.md",
+      "NO_SCIENTIFIC_CREDIT.md"
+    ]
+  }
+}

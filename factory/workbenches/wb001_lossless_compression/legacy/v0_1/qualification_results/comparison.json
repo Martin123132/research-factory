@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "decision_type": "wb001_public_baseline_comparison",
+  "generated_at": "2026-08-01T23:36:47.336804+00:00",
+  "workbench": {
+    "id": "WB-001",
+    "version": "0.1.0"
+  },
+  "baseline_result_sha256": "42fefdf1fbf919529a1defb89ef409eaf8c2634a3c9d56b6b126d1b266b0ce2b",
+  "candidate_result_sha256": "7e761e71c585ecf4f84bf04e2bd42286d5a16e36599cac5b92ccb4c5bba49114",
+  "candidate_artifact_sha256": "e873e3db1a24cf912d1f5e1a64306949894ddb7f973029b2932380f5f762e859",
+  "corpus_sha256": "7e87977d8f79843d4e383590c0bc7d7058d773cf558007de66d258e9b01bb30f",
+  "status": "VALID_NO_GAIN",
+  "guardrails": {
+    "hard_gate_pass": true,
+    "size_not_larger": false,
+    "encode_within_limit": true,
+    "decode_within_limit": true,
+    "annualized_cost_not_higher": true
+  },
+  "minimum_improvements_met": {
+    "size": false,
+    "encode_time": false,
+    "decode_time": true,
+    "annualized_cost": false
+  },
+  "deltas": {
+    "compressed_size_gain_fraction": -0.004899368896982637,
+    "encode_time_gain_fraction": -0.054272392777978885,
+    "decode_time_gain_fraction": 0.054142789661141014,
+    "annualized_cost_gain_fraction": 0.0009343684262612897,
+    "compressed_bytes_delta": 3901
+  },
+  "reasons": [
+    "guardrail failed: size_not_larger"
+  ],
+  "decision_sha256": "ac6b49994a3dcb72952c3f9a45a188a40f2ee34c0e352441141994919ac9bf56"
+}

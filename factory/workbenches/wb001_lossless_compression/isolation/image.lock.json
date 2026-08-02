@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "lock_type": "wb001_docker_image",
+  "generated_at": "2026-08-02T01:20:10.709562+00:00",
+  "image_tag": "research-factory/wb001-runner:0.2.0",
+  "image_id": "sha256:6d94e1ed7431bd157a386311ed70f70bd5a5927e2f06f4be0c7b28e8740baa02",
+  "repo_digests": [
+    "research-factory/wb001-runner@sha256:6d94e1ed7431bd157a386311ed70f70bd5a5927e2f06f4be0c7b28e8740baa02"
+  ],
+  "platform": {
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  "docker": {
+    "client_version": "29.6.1",
+    "server_version": "29.6.1",
+    "operating_system": "Docker Desktop",
+    "os_type": "linux",
+    "architecture": "x86_64",
+    "security_options": [
+      "name=seccomp,profile=builtin",
+      "name=cgroupns"
+    ]
+  },
+  "dockerfile_sha256": "90eb64c16379860e78c8ae7eb28be5aa68864fbd904d12afc67324f288205523",
+  "requirements_sha256": "b6b05520ee8a0b51b0d677dd8c287ec79ba40168cd9b299f9fac6c887ed5301a",
+  "policy_sha256": "4b901c87bd52e1cdd402be48eb368386745658995c525d69ee59566a8586c71c",
+  "promotion_grade": false,
+  "boundary_note": "Docker Desktop on WSL2 is a prototype containment boundary, not the final public hostile-code service.",
+  "image_lock_sha256": "dd517780ac6d44c0481932046cb83c980bd163bfce2a9a48719acbdabb4131a7"
+}

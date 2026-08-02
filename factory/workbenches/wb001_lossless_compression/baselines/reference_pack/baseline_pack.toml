@@ -1,0 +1,63 @@
+schema_version = 1
+pack_id = "wb001-reference-codecs-v1"
+workbench_version = "0.2.0"
+timing_grade = "advisory-local"
+promotable = false
+
+[[profiles]]
+id = "zlib-1"
+submission = "zlib-1.submission.json"
+
+[[profiles]]
+id = "zlib-6"
+submission = "zlib-6.submission.json"
+
+[[profiles]]
+id = "zlib-9"
+submission = "zlib-9.submission.json"
+
+[[profiles]]
+id = "zstd-1"
+submission = "zstd-1.submission.json"
+
+[[profiles]]
+id = "zstd-3"
+submission = "zstd-3.submission.json"
+
+[[profiles]]
+id = "zstd-9"
+submission = "zstd-9.submission.json"
+
+[[profiles]]
+id = "zstd-19"
+submission = "zstd-19.submission.json"
+
+[[profiles]]
+id = "brotli-1"
+submission = "brotli-1.submission.json"
+
+[[profiles]]
+id = "brotli-5"
+submission = "brotli-5.submission.json"
+
+[[profiles]]
+id = "brotli-9"
+submission = "brotli-9.submission.json"
+
+[[profiles]]
+id = "brotli-11"
+submission = "brotli-11.submission.json"
+dense_lane = true
+
+[[profiles]]
+id = "xz-0"
+submission = "xz-0.submission.json"
+
+[[profiles]]
+id = "xz-6"
+submission = "xz-6.submission.json"
+
+[[profiles]]
+id = "xz-9e"
+submission = "xz-9e.submission.json"
+dense_lane = true

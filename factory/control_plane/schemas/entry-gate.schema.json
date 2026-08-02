@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://research-factory.invalid/schemas/worker-entry-gate-v1.json",
+  "title": "Worker entry-gate evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "evidence_type",
+    "generated_at",
+    "started_at",
+    "round_id",
+    "round_sha256",
+    "operator_id",
+    "checks",
+    "reference_result",
+    "environment",
+    "commands",
+    "entry_evidence_sha256"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "evidence_type": {"const": "worker_entry_gate"},
+    "generated_at": {"type": "string", "format": "date-time"},
+    "started_at": {"type": "string", "format": "date-time"},
+    "round_id": {"type": "string", "minLength": 3},
+    "round_sha256": {"$ref": "#/$defs/sha256"},
+    "operator_id": {"type": "string", "minLength": 3},
+    "checks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "frozen_contracts_match",
+        "schemas_validate",
+        "reference_round_trip_exact",
+        "reference_output_deterministic",
+        "rules_acknowledged"
+      ],
+      "properties": {
+        "frozen_contracts_match": {"const": true},
+        "schemas_validate": {"const": true},
+        "reference_round_trip_exact": {"const": true},
+        "reference_output_deterministic": {"const": true},
+        "rules_acknowledged": {"const": true}
+      }
+    },
+    "reference_result": {"type": "object"},
+    "environment": {"type": "object"},
+    "commands": {"type": "array", "minItems": 2, "items": {"type": "object"}},
+    "entry_evidence_sha256": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

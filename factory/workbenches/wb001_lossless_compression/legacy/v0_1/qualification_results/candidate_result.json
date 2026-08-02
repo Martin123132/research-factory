@@ -1,0 +1,269 @@
+{
+  "schema_version": 1,
+  "result_type": "wb001_local_evaluation",
+  "runner_version": "0.1.0",
+  "generated_at": "2026-08-01T23:36:47.092793+00:00",
+  "workbench": {
+    "id": "WB-001",
+    "version": "0.1.0"
+  },
+  "operator_id": "demo:author",
+  "submission_id": "wb001-example-zlib-level9-v1",
+  "candidate": {
+    "name": "zlib level-9 exploration",
+    "version": "1.0.0",
+    "metadata": {
+      "codec": "zlib",
+      "deterministic": true,
+      "implementation": "1.3.1",
+      "level": 9,
+      "role": "example-exploration",
+      "wrapper": "zlib"
+    }
+  },
+  "candidate_artifact_sha256": "e873e3db1a24cf912d1f5e1a64306949894ddb7f973029b2932380f5f762e859",
+  "artifact_manifest": {
+    "submission": {
+      "schema_version": 1,
+      "submission_id": "wb001-example-zlib-level9-v1",
+      "workbench": {
+        "id": "WB-001",
+        "version": "0.1.0"
+      },
+      "candidate": {
+        "name": "zlib level-9 exploration",
+        "version": "1.0.0",
+        "command": [
+          "{python}",
+          "candidate.py"
+        ],
+        "source_files": [
+          "candidate.py"
+        ],
+        "deterministic": true
+      },
+      "method": {
+        "summary": "Raise the reference zlib compression level from 6 to 9 and measure the complete cost vector.",
+        "license": "Python-2.0-compatible standard-library use"
+      }
+    },
+    "submission_sha256": "03e91a519fd90c57938192e655cc5f1f4f7b37828a1306951c62c8746f590021",
+    "source_files": [
+      {
+        "path": "candidate.py",
+        "bytes": 1114,
+        "sha256": "64531f43ac57614ecced81b7c83d124bc505b4874184b9d8fbcbaac4070228fc"
+      }
+    ],
+    "artifact_sha256": "e873e3db1a24cf912d1f5e1a64306949894ddb7f973029b2932380f5f762e859"
+  },
+  "corpus": {
+    "profile": "synthetic-public-v1",
+    "manifest_sha256": "5603ae2bf4c6b4212d9d11c0f690c8a6f25f2797f01267234aa8955e10cd6b49",
+    "corpus_sha256": "7e87977d8f79843d4e383590c0bc7d7058d773cf558007de66d258e9b01bb30f",
+    "files": 7
+  },
+  "environment": {
+    "system": "Windows",
+    "release": "10",
+    "machine": "AMD64",
+    "python": "3.13.13"
+  },
+  "measurement_contract": {
+    "warmup_runs": 1,
+    "timing_runs": 3,
+    "determinism_runs": 3,
+    "timeout_seconds": 30.0
+  },
+  "hard_gate_pass": true,
+  "failures": [],
+  "files": [
+    {
+      "path": "english_like.txt",
+      "class": "generated-text",
+      "original_bytes": 773325,
+      "original_sha256": "fa3242cdf2ef80ada355862f59c95869138a66c8e5f676947beea1a88f71b0d5",
+      "compressed_bytes": 72811,
+      "compressed_sha256": "f1c9881e7ce59f45131c71bd2dd873cce20487e6286743c5c371453f3618dec0",
+      "compression_fraction": 0.09415316975398441,
+      "space_saving_fraction": 0.9058468302460156,
+      "encode_wall_ns": 310027200,
+      "decode_wall_ns": 155185600,
+      "encode_samples_ns": [
+        319366600,
+        284158500,
+        310027200
+      ],
+      "decode_samples_ns": [
+        174083700,
+        155185600,
+        133545100
+      ],
+      "deterministic": true,
+      "round_trip_pass": true
+    },
+    {
+      "path": "events.ndjson",
+      "class": "structured-records",
+      "original_bytes": 1254394,
+      "original_sha256": "fb2926eab454d84073be9e1a0dad83c8ae016754e20c1f4f4a7dc86d9249a55f",
+      "compressed_bytes": 107328,
+      "compressed_sha256": "499d5df5921d197cd406e4408be6bcab0fdc64d1f00bb142586cb85e224acb1b",
+      "compression_fraction": 0.08556163374505937,
+      "space_saving_fraction": 0.9144383662549407,
+      "encode_wall_ns": 144953100,
+      "decode_wall_ns": 130635300,
+      "encode_samples_ns": [
+        147433900,
+        142569100,
+        144953100
+      ],
+      "decode_samples_ns": [
+        128683600,
+        130635300,
+        131914400
+      ],
+      "deterministic": true,
+      "round_trip_pass": true
+    },
+    {
+      "path": "source_like.py.txt",
+      "class": "source-like-text",
+      "original_bytes": 965000,
+      "original_sha256": "c378d7e882b8e9400135909e693e6698ede84e276a9eca7557677a99e78038e8",
+      "compressed_bytes": 3918,
+      "compressed_sha256": "eed9129f138e6dc47731103c0b2ed2b256c861144842a9f8b8f78f72305d3683",
+      "compression_fraction": 0.004060103626943005,
+      "space_saving_fraction": 0.995939896373057,
+      "encode_wall_ns": 128533600,
+      "decode_wall_ns": 125956800,
+      "encode_samples_ns": [
+        125794100,
+        129435200,
+        128533600
+      ],
+      "decode_samples_ns": [
+        119740100,
+        125956800,
+        132648300
+      ],
+      "deterministic": true,
+      "round_trip_pass": true
+    },
+    {
+      "path": "numeric_series.i32le",
+      "class": "integer-array",
+      "original_bytes": 720000,
+      "original_sha256": "43fcc2d660e716c7722ada37579e34a03d6969fc72b921c3097b07b49099dcfe",
+      "compressed_bytes": 2139,
+      "compressed_sha256": "3b9505adb319e60e8af491231e321ff375ca6b12953c4c88f605da94f1224827",
+      "compression_fraction": 0.002970833333333333,
+      "space_saving_fraction": 0.9970291666666666,
+      "encode_wall_ns": 136427500,
+      "decode_wall_ns": 134786400,
+      "encode_samples_ns": [
+        152073100,
+        131052500,
+        136427500
+      ],
+      "decode_samples_ns": [
+        127906000,
+        138380100,
+        134786400
+      ],
+      "deterministic": true,
+      "round_trip_pass": true
+    },
+    {
+      "path": "sparse_blocks.bin",
+      "class": "sparse-binary",
+      "original_bytes": 786432,
+      "original_sha256": "783877faa89579456ce80379104d2e5d1bea791b111fc6d58475306fefe3e7a2",
+      "compressed_bytes": 2147,
+      "compressed_sha256": "59abe19944459375387889a7e16c890932ee82452e370cd740d36459d3b46975",
+      "compression_fraction": 0.0027300516764322915,
+      "space_saving_fraction": 0.9972699483235677,
+      "encode_wall_ns": 137978900,
+      "decode_wall_ns": 142045200,
+      "encode_samples_ns": [
+        131039700,
+        137978900,
+        189178700
+      ],
+      "decode_samples_ns": [
+        126258300,
+        142045200,
+        182801800
+      ],
+      "deterministic": true,
+      "round_trip_pass": true
+    },
+    {
+      "path": "incompressible.bin",
+      "class": "incompressible",
+      "original_bytes": 393216,
+      "original_sha256": "e543fa0e4d17b072d69f95902a090fbf7717e019bcd0991847ee96d5a80deb3c",
+      "compressed_bytes": 393342,
+      "compressed_sha256": "726a339177ee7c7e1926671115344f412a128b8266e5cc3c7324081c906937e6",
+      "compression_fraction": 1.0003204345703125,
+      "space_saving_fraction": -0.0003204345703125,
+      "encode_wall_ns": 153142900,
+      "decode_wall_ns": 162089300,
+      "encode_samples_ns": [
+        179425600,
+        153142900,
+        136101800
+      ],
+      "decode_samples_ns": [
+        165656800,
+        144174100,
+        162089300
+      ],
+      "deterministic": true,
+      "round_trip_pass": true
+    },
+    {
+      "path": "mixed_blocks.bin",
+      "class": "mixed",
+      "original_bytes": 900000,
+      "original_sha256": "1c72bf201deedcc5fcad1fec141975977f82eb4e1d1d392bebccec50c8639356",
+      "compressed_bytes": 218441,
+      "compressed_sha256": "ac5af4c4575a0abb329ef998288d16750a9003a496c8356eaffd23cd02551694",
+      "compression_fraction": 0.24271222222222222,
+      "space_saving_fraction": 0.7572877777777778,
+      "encode_wall_ns": 179528300,
+      "decode_wall_ns": 148277100,
+      "encode_samples_ns": [
+        179528300,
+        177134200,
+        188102000
+      ],
+      "decode_samples_ns": [
+        148277100,
+        141972200,
+        173554500
+      ],
+      "deterministic": true,
+      "round_trip_pass": true
+    }
+  ],
+  "aggregate": {
+    "files": 7,
+    "total_input_bytes": 5792367,
+    "total_compressed_bytes": 800126,
+    "compression_fraction": 0.13813454844970977,
+    "space_saving_fraction": 0.8618654515502903,
+    "encode_wall_ns": 1190591500,
+    "decode_wall_ns": 998975700,
+    "encode_throughput_bytes_per_second": 4865117.044763044,
+    "decode_throughput_bytes_per_second": 5798306.205045829,
+    "economic_scenario": {
+      "scenario": "archive-and-retrieval-v1",
+      "storage_gbp": 2486.421872,
+      "cpu_gbp": 870.52927,
+      "egress_gbp": 2210.152775,
+      "total_gbp": 5567.103917
+    }
+  },
+  "result_sha256": "7e761e71c585ecf4f84bf04e2bd42286d5a16e36599cac5b92ccb4c5bba49114"
+}

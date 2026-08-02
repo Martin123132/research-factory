@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://research-factory.invalid/schemas/factory-round-v1.json",
+  "title": "Frozen Research Factory round",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "round_id",
+    "title",
+    "status",
+    "workbench",
+    "identity_assurance",
+    "promotion_scope",
+    "worker_timebox_hours",
+    "default_claim_lease_hours",
+    "required_independent_reruns",
+    "max_diagnostic_reruns",
+    "disagreement_policy",
+    "evaluator_software_sha256",
+    "promotion_grade_execution_required",
+    "worker_entry_gate",
+    "hard_rules",
+    "frozen_contracts",
+    "lanes",
+    "work_units",
+    "negative_result_taxonomy",
+    "round_sha256"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "round_id": {"type": "string", "minLength": 3},
+    "title": {"type": "string", "minLength": 1},
+    "status": {"const": "LOCAL_PILOT"},
+    "workbench": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "evidence_lane"],
+      "properties": {
+        "id": {"type": "string"},
+        "version": {"type": "string"},
+        "evidence_lane": {"type": "string"}
+      }
+    },
+    "identity_assurance": {"enum": ["self-asserted-local", "authenticated-external"]},
+    "promotion_scope": {"type": "string"},
+    "worker_timebox_hours": {"type": "integer", "minimum": 1},
+    "default_claim_lease_hours": {"type": "integer", "minimum": 1},
+    "required_independent_reruns": {"const": 2},
+    "max_diagnostic_reruns": {"const": 1},
+    "disagreement_policy": {"const": "human_review_no_majority_promotion"},
+    "evaluator_software_sha256": {"$ref": "#/$defs/sha256"},
+    "promotion_grade_execution_required": {"const": true},
+    "worker_entry_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required", "estimated_minutes", "tasks"],
+      "properties": {
+        "required": {"const": true},
+        "estimated_minutes": {"type": "integer", "minimum": 1},
+        "tasks": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+      }
+    },
+    "hard_rules": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "frozen_contracts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "path", "sha256"],
+        "properties": {
+          "name": {"type": "string", "minLength": 1},
+          "path": {"type": "string", "minLength": 1},
+          "sha256": {"$ref": "#/$defs/sha256"},
+          "logical_commitment_sha256": {"$ref": "#/$defs/sha256"}
+        }
+      }
+    },
+    "lanes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["lane_id", "title", "goal", "economic_question"],
+        "properties": {
+          "lane_id": {"type": "string"},
+          "title": {"type": "string"},
+          "goal": {"type": "string"},
+          "economic_question": {"type": "string"}
+        }
+      }
+    },
+    "work_units": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["work_unit_id", "lane_id", "title", "brief"],
+        "properties": {
+          "work_unit_id": {"type": "string"},
+          "lane_id": {"type": "string"},
+          "title": {"type": "string"},
+          "brief": {"type": "string"}
+        }
+      }
+    },
+    "negative_result_taxonomy": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "NO_GAIN",
+          "HYPOTHESIS_REJECTED",
+          "RESOURCE_LIMIT",
+          "UNRUNNABLE",
+          "BOUNDARY_FOUND",
+          "DUPLICATE_DIRECTION"
+        ]
+      }
+    },
+    "round_sha256": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

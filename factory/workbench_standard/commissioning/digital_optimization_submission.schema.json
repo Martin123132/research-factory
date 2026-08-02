@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "workbench_code", "submission_id", "human_owner", "problem_plugin", "command", "source_files", "seed", "credit_scope", "trust_acknowledgement"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "workbench_code": { "type": "string", "pattern": "^WB-[0-9]{3}$" },
+    "submission_id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "human_owner": { "type": "string", "minLength": 3 },
+    "problem_plugin": { "const": "SYMMETRIC_TSP_V1" },
+    "command": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+    "source_files": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\)[A-Za-z0-9._/-]+$" } },
+    "seed": { "type": "integer", "minimum": 0, "maximum": 2147483647 },
+    "credit_scope": { "const": "ENTRY_GATE_ONLY" },
+    "trust_acknowledgement": { "const": "TRUSTED_LOCAL_CODE_ONLY" }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://research-factory.local/schemas/wb001-submission-v1.json",
+  "title": "WB-001 submission",
+  "type": "object",
+  "required": ["schema_version", "submission_id", "workbench", "candidate", "method"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "submission_id": {"type": "string", "minLength": 3, "maxLength": 128},
+    "workbench": {
+      "type": "object",
+      "required": ["id", "version"],
+      "properties": {
+        "id": {"const": "WB-001"},
+        "version": {"const": "0.2.0"}
+      },
+      "additionalProperties": false
+    },
+    "candidate": {
+      "type": "object",
+      "required": ["name", "version", "protocol", "command", "source_files", "deterministic"],
+      "properties": {
+        "name": {"type": "string"},
+        "version": {"type": "string"},
+        "protocol": {"const": "wb001-batch-v1"},
+        "command": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "source_files": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "deterministic": {"const": true}
+      },
+      "additionalProperties": false
+    },
+    "method": {
+      "type": "object",
+      "required": ["summary", "license"],
+      "properties": {
+        "summary": {"type": "string"},
+        "license": {"type": "string"}
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

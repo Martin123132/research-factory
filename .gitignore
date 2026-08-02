@@ -1,52 +1,60 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Scientific material that must never enter the source repository
+/factory/private/
+/factory/state/*
+!/factory/state/README.md
+/factory/workbenches/wb001_lossless_compression/data/public/
+/factory/workbenches/wb001_lossless_compression/results/*
+!/factory/workbenches/wb001_lossless_compression/results/reference_pack/
+!/factory/workbenches/wb001_lossless_compression/results/reference_pack/**
+/factory/workbenches/wb001_lossless_compression/data/holdout_commitment.local.json
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
-
-# testing
-/coverage
-
-# next.js
-/.next/
-/.vinext/
-/out/
-
-# misc
-.DS_Store
-*.pem
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-
-# env files (can opt-in for committing if needed)
-.env*
-
-# vercel
-.vercel
-
-# typescript
-next-env.d.ts
-tsconfig.tsbuildinfo
-/dist/
-/.wrangler/
-/outputs/
+# Local work, deployment packages, generated output and databases
 /work/
-/video/research-factory-tutorial/.venv/
-/video/research-factory-tutorial/node_modules/
-/video/research-factory-tutorial/auditions/
-/video/research-factory-tutorial/capture/
-/video/research-factory-tutorial/captures/
-/video/research-factory-tutorial/snapshots/
-/video/research-factory-tutorial/renders/
-/video/research-factory-tutorial/drafts/
-/video/research-factory-tutorial/narration.wav
+/factory/hangar/work/
+/factory/hangar/outputs/
+*.sqlite
+*.sqlite3
+*.db
+
+# Python environments and caches
+**/.venv/
+**/__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# JavaScript dependencies and build caches
+**/node_modules/
+**/.next/
+**/.vinext/
+**/dist/
+**/.wrangler/
+**/coverage/
+**/tsconfig.tsbuildinfo
+
+# Tutorial production intermediates
+/factory/hangar/video/research-factory-tutorial/auditions/
+/factory/hangar/video/research-factory-tutorial/capture/
+/factory/hangar/video/research-factory-tutorial/captures/
+/factory/hangar/video/research-factory-tutorial/snapshots/
+/factory/hangar/video/research-factory-tutorial/renders/
+/factory/hangar/video/research-factory-tutorial/drafts/
+/factory/hangar/video/research-factory-tutorial/narration.wav
+
+# Credentials and local configuration
+**/.env
+**/.env.*
+!**/.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Editor and operating-system noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo

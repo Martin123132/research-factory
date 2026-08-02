@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "result_type", "workbench_code", "submission_id", "input", "artifact", "hard_gates", "metrics", "advisory", "credit_boundary", "result_sha256"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "result_type": { "const": "DIGITAL_COMPRESSION_ENTRY_RESULT" },
+    "workbench_code": { "type": "string", "pattern": "^WB-[0-9]{3}$" },
+    "submission_id": { "type": "string", "minLength": 3 },
+    "input": { "$ref": "#/$defs/file" },
+    "artifact": {
+      "type": "object", "additionalProperties": false,
+      "required": ["source_package_bytes", "source_package_sha256", "archive_bytes", "archive_sha256", "option_bytes", "entry_counted_size_bytes"],
+      "properties": {
+        "source_package_bytes": { "type": "integer", "minimum": 0 },
+        "source_package_sha256": { "$ref": "#/$defs/sha256" },
+        "archive_bytes": { "type": "integer", "minimum": 0 },
+        "archive_sha256": { "$ref": "#/$defs/sha256" },
+        "option_bytes": { "type": "integer", "minimum": 0 },
+        "entry_counted_size_bytes": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "hard_gates": {
+      "type": "object", "additionalProperties": false,
+      "required": ["candidate_processes_pass", "exact_round_trip", "deterministic_archive"],
+      "properties": {
+        "candidate_processes_pass": { "type": "boolean" },
+        "exact_round_trip": { "type": "boolean" },
+        "deterministic_archive": { "type": "boolean" }
+      }
+    },
+    "metrics": {
+      "type": "object", "additionalProperties": false,
+      "required": ["round_trip_fraction", "determinism_fraction", "entry_counted_size_bytes"],
+      "properties": {
+        "round_trip_fraction": { "enum": [0, 1] },
+        "determinism_fraction": { "enum": [0, 1] },
+        "entry_counted_size_bytes": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "advisory": {
+      "type": "object", "additionalProperties": false,
+      "required": ["compress_elapsed_ns", "decompress_elapsed_ns", "peak_rss_bytes"],
+      "properties": {
+        "compress_elapsed_ns": { "type": "integer", "minimum": 0 },
+        "decompress_elapsed_ns": { "type": "integer", "minimum": 0 },
+        "peak_rss_bytes": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "credit_boundary": {
+      "type": "object", "additionalProperties": false,
+      "required": ["scope", "scientific_evidence", "counts_as_independent_reproduction", "eligible_for_promotion", "official_hutter_score"],
+      "properties": {
+        "scope": { "const": "ENTRY_GATE_ONLY" },
+        "scientific_evidence": { "const": false },
+        "counts_as_independent_reproduction": { "const": false },
+        "eligible_for_promotion": { "const": false },
+        "official_hutter_score": { "const": false }
+      }
+    },
+    "result_sha256": { "$ref": "#/$defs/sha256" }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "file": {
+      "type": "object", "additionalProperties": false,
+      "required": ["name", "bytes", "sha256"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "bytes": { "type": "integer", "minimum": 0 },
+        "sha256": { "$ref": "#/$defs/sha256" }
+      }
+    }
+  }
+}

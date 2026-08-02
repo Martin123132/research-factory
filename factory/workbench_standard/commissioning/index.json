@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "registrations": [
+    {
+      "workbench_code": "WB-002",
+      "adapter": "DIGITAL_COMPRESSION_V1",
+      "override_path": "factory/workbenches/wb002_large_text_archive_compression/commissioning.json",
+      "override_sha256": "56228416c0b73f174f94ff5d2facf10968a0016d4175d4ecd1b18ba5a371e0fa"
+    },
+    {
+      "workbench_code": "WB-013",
+      "adapter": "DIGITAL_OPTIMIZATION_V1",
+      "override_path": "factory/workbenches/wb013_travelling_salesperson_route_kernel/commissioning.json",
+      "override_sha256": "6c7d491bd08478c47d5ba2d8fe201e8bf3166144ad262de53fba39281736c47b"
+    }
+  ],
+  "index_sha256": "3f77bafe3019d66360b13ad57538022630d79e7c03565169e06b9ab51f7c41d8"
+}

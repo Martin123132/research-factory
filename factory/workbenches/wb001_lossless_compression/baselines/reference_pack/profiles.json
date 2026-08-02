@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "pack_id": "wb001-reference-codecs-v1",
+  "profiles": {
+    "zlib-1": {"codec": "zlib", "level": 1},
+    "zlib-6": {"codec": "zlib", "level": 6},
+    "zlib-9": {"codec": "zlib", "level": 9},
+    "zstd-1": {"codec": "zstd", "level": 1, "checksum": true, "content_size": true, "threads": 0},
+    "zstd-3": {"codec": "zstd", "level": 3, "checksum": true, "content_size": true, "threads": 0},
+    "zstd-9": {"codec": "zstd", "level": 9, "checksum": true, "content_size": true, "threads": 0},
+    "zstd-19": {"codec": "zstd", "level": 19, "checksum": true, "content_size": true, "threads": 0},
+    "brotli-1": {"codec": "brotli", "quality": 1, "mode": "generic", "lgwin": 22},
+    "brotli-5": {"codec": "brotli", "quality": 5, "mode": "generic", "lgwin": 22},
+    "brotli-9": {"codec": "brotli", "quality": 9, "mode": "generic", "lgwin": 22},
+    "brotli-11": {"codec": "brotli", "quality": 11, "mode": "generic", "lgwin": 22},
+    "xz-0": {"codec": "xz", "preset": 0, "extreme": false, "check": "crc64"},
+    "xz-6": {"codec": "xz", "preset": 6, "extreme": false, "check": "crc64"},
+    "xz-9e": {"codec": "xz", "preset": 9, "extreme": true, "check": "crc64"}
+  }
+}

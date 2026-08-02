@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "lock_type": "research_factory_control_plane",
+  "files": [
+    {
+      "path": "control_plane/__init__.py",
+      "sha256": "70e2cfdfa6c08322d2995bff869d1b6c71a247c7ad0ec78f32a36fc43672e723"
+    },
+    {
+      "path": "control_plane/attestation.py",
+      "sha256": "0dcd0aeaa794c99b9c4f66ed264eb1e3e6bda81b3b0e9ac3d8383373ec7b1f9d"
+    },
+    {
+      "path": "control_plane/cli.py",
+      "sha256": "282221a4ed891a68a0e3c1a50c1c41d22dc08560325cc01ac6075ecca8705eda"
+    },
+    {
+      "path": "control_plane/common.py",
+      "sha256": "3414e49fe918e2a00184ff7dff2a1bc2da17ff230a62b5096e4dd5d86acdb468"
+    },
+    {
+      "path": "control_plane/evidence.py",
+      "sha256": "5db89b525c855556ccb1545ce91ec9d62f50f74d22c02d3817197fd4d4ee8144"
+    },
+    {
+      "path": "control_plane/ledger.py",
+      "sha256": "e366097fa809d8356964914bcdee833a42f4128724acd4fc0f37dc9b4fce17dd"
+    },
+    {
+      "path": "control_plane/schemas/checkpoint.schema.json",
+      "sha256": "9981a7c9f3ed425242b5158fab98415babfb3e11ea0943f9b28796a4f2d17b11"
+    },
+    {
+      "path": "control_plane/schemas/entry-gate.schema.json",
+      "sha256": "7fe85162be8021e70b9168c4baeaa52d4840f3a6b97ee10f2cc3eb98bdbd7bd5"
+    },
+    {
+      "path": "control_plane/schemas/event.schema.json",
+      "sha256": "160fe8aacac1b58b23eb6347d2b1f911661f2b3c49bb8ce4246590da22ec0ead"
+    },
+    {
+      "path": "control_plane/schemas/round.schema.json",
+      "sha256": "0f1cc9a0d3fd4d30cd598128c85ab10cad9f85f0f887591e301434f6514b09c5"
+    },
+    {
+      "path": "control_plane/scripts/run_entry_gate.py",
+      "sha256": "6cab57643dd57e79e3a8faa3783c1384c7ef9ae7bc832412321b72a331a16deb"
+    },
+    {
+      "path": "control_plane/scripts/validate_control_plane.py",
+      "sha256": "3b0982501e5c6931409685b6f6ac951327b314eb800818829dfea2d336a68c4d"
+    },
+    {
+      "path": "control_plane/sealed.py",
+      "sha256": "9536268cd4700fc8eacab13eb306575fed7e0e931cacd428bf1faebee8953a4e"
+    },
+    {
+      "path": "control_plane/wb001_adapter.py",
+      "sha256": "64fff875bfd926a8c6a2804c84ec94344744c64240844ac980e61c5999efa63c"
+    },
+    {
+      "path": "control_plane/workflow.py",
+      "sha256": "fcaeaf9d687bd109308efd51d6f19f4a8fc2480f1258877d1460b43a5bba4f54"
+    },
+    {
+      "path": "factoryctl.py",
+      "sha256": "ed9a80d07d13a020eeeb73b84805e9ae882c4edaeddea94831904ea903275f9f"
+    },
+    {
+      "path": "rounds/WB001-PILOT-001/STARTER_PACK.md",
+      "sha256": "ccd9b59c42c4009587281be0cc289d402e413f46109feeba92bc87f0fc428b3c"
+    }
+  ],
+  "software_sha256": "1a028fdeb3a88579b09ba6da62596365281d40f93a2aa5c246d564064320e737"
+}

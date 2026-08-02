@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "submission_id": "wb001-baseline-zlib-6-v2",
+  "workbench": {"id": "WB-001", "version": "0.2.0"},
+  "candidate": {
+    "name": "reference zlib level 6",
+    "version": "1.0.0",
+    "protocol": "wb001-batch-v1",
+    "command": ["{python}", "codec_adapter.py", "--profile", "zlib-6"],
+    "source_files": ["codec_adapter.py", "profiles.json"],
+    "deterministic": true
+  },
+  "method": {"summary": "zlib wrapper at level 6.", "license": "reference-runtime licenses apply"}
+}

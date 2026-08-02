@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "workbench_code": "WB-013",
+  "submission_id": "factory-reference-held-karp-v1",
+  "human_owner": "Factory reference fixture",
+  "problem_plugin": "SYMMETRIC_TSP_V1",
+  "command": ["{python}", "candidate.py"],
+  "source_files": ["candidate.py"],
+  "seed": 130013,
+  "credit_scope": "ENTRY_GATE_ONLY",
+  "trust_acknowledgement": "TRUSTED_LOCAL_CODE_ONLY"
+}

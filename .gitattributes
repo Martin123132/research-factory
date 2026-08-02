@@ -1,0 +1,11 @@
+# Scientific commitments bind raw file bytes. Do not perform implicit line-ending
+# conversion on checkout or staging; an intentional rewrite must regenerate every
+# affected hash and contract explicitly.
+* -text
+
+*.mp4 binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.woff2 binary
+*.gz binary

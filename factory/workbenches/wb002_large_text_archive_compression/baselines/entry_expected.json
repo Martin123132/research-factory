@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "baseline_id": "wb002-entry-zlib-6-v1",
+  "scope": "ENTRY_GATE_ONLY",
+  "status": "FROZEN",
+  "stable_evidence": {
+    "input": {
+      "name": "input.bin",
+      "bytes": 354091,
+      "sha256": "28ff573875a74d1c634e589c9851ba95ebaca9bba66a0b30e1815d295fbf6052"
+    },
+    "artifact": {
+      "source_package_bytes": 606,
+      "source_package_sha256": "d29a27e659bde7d1f64d3e40ce222b5a489973b96ea5827dd616386b5d3eff66",
+      "archive_bytes": 48110,
+      "archive_sha256": "3b92a07e32f5623fd0efc4532d40d0e7dbf3d153c957bc24cc56524a58e7602b",
+      "option_bytes": 0,
+      "entry_counted_size_bytes": 48716
+    },
+    "hard_gates": {
+      "candidate_processes_pass": true,
+      "exact_round_trip": true,
+      "deterministic_archive": true
+    }
+  },
+  "scientific_evidence": false
+}

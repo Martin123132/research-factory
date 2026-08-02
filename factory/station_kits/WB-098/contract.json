@@ -1,0 +1,293 @@
+{
+  "standard": "research-factory/workbench-contract/v1",
+  "contract_version": "1.1.0",
+  "workbench": {
+    "code": "WB-098",
+    "numeric_id": 98,
+    "slug": "birch-and-swinnertondyer-conjecture",
+    "title": "Birch and Swinnerton–Dyer Conjecture",
+    "category": "Clay exact proofs",
+    "short_category": "Clay proofs",
+    "evidence_lane": "EXACT_PROOF",
+    "track": "FOUNDATIONAL_EXACT_PROOF"
+  },
+  "source": {
+    "catalogue_version": 1,
+    "catalogue_generated_at": "2026-08-01",
+    "catalogue_sha256": "9b37a47c265e916cbf460f4dd0120b02b01fa800b104017b117ba2fc40644cd5",
+    "entry_sha256": "67103d0b0d529cfb1c79dca63994e65eb55011bfd72009576d544e6c214a5da3",
+    "benchmark_name": "Clay Mathematics Institute official problem statement and rules",
+    "reference_urls": [
+      "https://www.claymath.org/library/monographs/MPPc.pdf",
+      "https://www.claymath.org/millennium-problems/rules/"
+    ],
+    "factory_path": null,
+    "active_round_path": null,
+    "implementation_contract_version": null
+  },
+  "commissioning": {
+    "profile_status": "CATALOGUE_ONLY",
+    "adapter_id": null,
+    "adapter_version": null,
+    "dossier_path": null,
+    "dossier_sha256": null
+  },
+  "problem": {
+    "objective": "Birch and Swinnerton–Dyer Conjecture",
+    "truth_condition": "A proof of the official rank/order-of-vanishing statement, with analytic continuation, local factors, ranks and any stronger claims separated explicitly. Finite computations on curves cannot satisfy the universal proof gate.",
+    "hard_gate_statement": "A proof of the official rank/order-of-vanishing statement, with analytic continuation, local factors, ranks and any stronger claims separated explicitly. Finite computations on curves cannot satisfy the universal proof gate.",
+    "utility_guardrail": "Zero logical tolerance. The platform may record internal verification, but must never claim Clay acceptance; the official publication, two-year and general-acceptance process remains external.",
+    "structured_predicate": {
+      "status": "BRIEF_ONLY",
+      "subject_or_input_population": null,
+      "required_output": null,
+      "verifier_status": "NOT_DEFINED",
+      "verifier_path_or_protocol": null,
+      "verifier_sha256": null,
+      "pass_rule": null,
+      "candidate_claim_is_authoritative": false,
+      "failure_behavior": "FAIL_CLOSED"
+    }
+  },
+  "measurement": {
+    "criteria": [
+      {
+        "criterion_id": "formal-proof-valid",
+        "statement": "A proof of the official rank/order-of-vanishing statement, with analytic continuation, local factors, ranks and any stronger claims separated explicitly. Finite computations on curves cannot satisfy the universal proof gate.",
+        "comparison": "FORMAL_PROOF",
+        "metric_id": "proof_valid",
+        "threshold": "TRUE",
+        "unit": "boolean",
+        "machine_check": "NOT_IMPLEMENTED",
+        "verifier_path_or_protocol": null,
+        "verifier_sha256": null,
+        "failure_behavior": "FAIL_CLOSED",
+        "score_may_override_failure": false
+      }
+    ],
+    "metrics": [
+      {
+        "metric_id": "proof_valid",
+        "label": "Proof satisfies the official universal statement",
+        "unit": "boolean",
+        "direction": "EXACT",
+        "aggregation": "CERTIFICATE",
+        "baseline_binding": "official problem statement",
+        "measurement_grade": "NOT_IMPLEMENTED",
+        "decision_threshold": "TRUE",
+        "required": true
+      }
+    ],
+    "tolerance": {
+      "policy": "FORMAL_PROOF",
+      "logical_tolerance": 0,
+      "reproduction_rules": [
+        "Logical validity has zero tolerance.",
+        "Finite numerical evidence cannot substitute for a universal proof.",
+        "The Factory cannot claim official prize acceptance."
+      ],
+      "reproduction_equivalence": [
+        {
+          "rule_id": "proof-validity",
+          "metric_id": "proof_valid",
+          "mode": "FORMAL",
+          "value": "VALID",
+          "unit": "boolean",
+          "zero_reference_policy": "NOT_APPLICABLE"
+        }
+      ],
+      "improvement_thresholds": [],
+      "safety_limits": [],
+      "stochastic_protocol": {
+        "required": false,
+        "repetitions": null,
+        "seed_policy": null,
+        "aggregation": null,
+        "confidence_rule": null,
+        "permitted_runner_class": null
+      }
+    },
+    "public_inputs": {
+      "status": "NOT_APPLICABLE",
+      "manifest_path": null,
+      "content_commitment_sha256": null
+    },
+    "hidden_inputs": {
+      "policy": "NOT_APPLICABLE",
+      "commitment_path": null
+    },
+    "baseline": {
+      "status": "NOT_APPLICABLE",
+      "definition_path": null,
+      "result_path": null
+    },
+    "compute_budget": {
+      "status": "UNDEFINED",
+      "wall_time_seconds": null,
+      "cpu_cores": null,
+      "memory_bytes": null,
+      "energy_measurement_required": false
+    },
+    "economic_or_physical_accounting": {
+      "required": false,
+      "applicability": "NOT_APPLICABLE",
+      "structured": false,
+      "scenario_path": null,
+      "scenario_version": null,
+      "formula": null,
+      "system_boundary": null,
+      "included_costs": [],
+      "comparator": null,
+      "decision_threshold": null
+    }
+  },
+  "starter_pack": {
+    "entry_gate_required": true,
+    "credential_neutral": true,
+    "target_duration_minutes": 240,
+    "brief": "With SageMath or PARI/GP, reproduce analytic-rank and Mordell–Weil calculations for a frozen set of known elliptic curves, check precision sensitivity, and label every output as theorem, certified computation or numerical evidence.",
+    "fixture_status": "BRIEF_ONLY",
+    "command": null,
+    "expected_outputs": []
+  },
+  "runner": {
+    "protocol_status": "NOT_DEFINED",
+    "protocol_path": null,
+    "isolation_status": "NOT_DEFINED",
+    "isolation_policy_path": null,
+    "network_policy": "NOT_DEFINED",
+    "trusted_code_only": true,
+    "arbitrary_public_code_allowed": false,
+    "promotion_grade": false
+  },
+  "submission": {
+    "template_path": "submission-template.json",
+    "required_sections": [
+      "human_owner",
+      "hypothesis",
+      "method",
+      "artifact",
+      "environment",
+      "commands",
+      "public_evidence",
+      "hard_gates",
+      "measurements",
+      "economic_or_physical_accounting"
+    ],
+    "artifact_lock_required": true,
+    "environment_manifest_required": true,
+    "exact_commands_required": true,
+    "seeds_required_when_stochastic": true
+  },
+  "reproduction": {
+    "required_independent_human_validators": 2,
+    "author_may_validate": false,
+    "distinct_people_required": true,
+    "validator_conflict_declaration_required": true,
+    "identity_assurance": "NOT_IMPLEMENTED",
+    "result_visibility": "COMMIT_BEFORE_REVEAL",
+    "pass_rule": "TWO_INDEPENDENT_PASSES",
+    "split_rule": "DIAGNOSTIC_THEN_HUMAN_REVIEW",
+    "majority_vote_resolves_deterministic_dispute": false,
+    "tolerance_binding": "STATION_MEASUREMENT_CONTRACT"
+  },
+  "negative_results": {
+    "retained": true,
+    "searchable": true,
+    "append_only": true,
+    "taxonomy": [
+      "NO_GAIN",
+      "HYPOTHESIS_REJECTED",
+      "RESOURCE_LIMIT",
+      "UNRUNNABLE",
+      "BOUNDARY_FOUND",
+      "DUPLICATE_DIRECTION",
+      "INVALID",
+      "DISPUTED"
+    ]
+  },
+  "blind_evaluation": {
+    "required_before_live": true,
+    "hidden_claim_withheld": true,
+    "human_authorization_required": true,
+    "evaluator_status": "NOT_IMPLEMENTED",
+    "public_verdicts": [
+      "PASS",
+      "NO_GAIN",
+      "INVALID",
+      "ESCALATE"
+    ],
+    "detailed_results_private_until_reveal": true
+  },
+  "disputes": {
+    "failed_reproduction_is_not_automatic_falsification": true,
+    "third_run_role": "DIAGNOSTIC_ONLY",
+    "deterministic_disagreement_policy": "HUMAN_REVIEW_REQUIRED",
+    "majority_vote_can_promote": false,
+    "outcomes": [
+      "REPRODUCED",
+      "ORIGINAL_ERROR",
+      "VALIDATOR_ERROR",
+      "ENVIRONMENT_MISMATCH",
+      "INCOMPLETE_METHOD",
+      "UNSTABLE_BENCHMARK",
+      "DISPUTED",
+      "UNRUNNABLE"
+    ]
+  },
+  "readiness": {
+    "current_stage": "CONTRACT_DRAFT",
+    "live_research_enabled": false,
+    "scientific_standing": "NONE",
+    "promotion_claims_allowed": false,
+    "facets": {
+      "objective_truth_brief": true,
+      "hard_gate_brief": true,
+      "reference_benchmark": true,
+      "utility_guardrail": true,
+      "lane_specific_starter_pack": true,
+      "structured_predicate": false,
+      "independent_verifier": false,
+      "structured_metrics": true,
+      "declared_tolerances": true,
+      "frozen_public_inputs": false,
+      "pinned_baseline": false,
+      "executable_entry_gate": false,
+      "runner_protocol": false,
+      "isolation_policy": false,
+      "blind_evaluator": false,
+      "dispute_policy": true,
+      "negative_result_policy": true,
+      "production_identity": false,
+      "promotion_grade_runner": false,
+      "live_authorization": false
+    },
+    "unresolved": [
+      "BLIND_EVALUATOR_NOT_IMPLEMENTED",
+      "ENTRY_GATE_NOT_EXECUTABLE",
+      "INDEPENDENT_VERIFIER_MISSING",
+      "ISOLATION_NOT_IMPLEMENTED",
+      "LIVE_AUTHORIZATION_NOT_IMPLEMENTED",
+      "OFFICIAL_ACCEPTANCE_EXTERNAL",
+      "OFFICIAL_PROBLEM_STATEMENT_NOT_FROZEN",
+      "PRODUCTION_IDENTITY_NOT_IMPLEMENTED",
+      "PROMOTION_RUNNER_NOT_IMPLEMENTED",
+      "RUNNER_NOT_IMPLEMENTED",
+      "STRUCTURED_PREDICATE_MISSING"
+    ]
+  },
+  "provenance": {
+    "generator_version": "1.2.0",
+    "generator_sha256": "87e4d7c087551dec3e66f21829d9038c0557d46847be4c80aaf43e6e6b7f1e20",
+    "generated_from": "research_factory_100_workbenches.json",
+    "source_entry_sha256": "67103d0b0d529cfb1c79dca63994e65eb55011bfd72009576d544e6c214a5da3",
+    "referenced_assets": [],
+    "shared_templates": [
+      "submission-template.json",
+      "negative-result-template.json",
+      "dispute-template.json",
+      "VALIDATOR_CHECKLIST.md",
+      "NO_SCIENTIFIC_CREDIT.md"
+    ]
+  }
+}

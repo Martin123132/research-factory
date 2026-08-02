@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "workbench_code": "WB-013",
+  "contract_sha256": "REPLACE_WITH_LOCKED_CONTRACT_SHA256",
+  "original_attempt_sha256": "REPLACE_WITH_ORIGINAL_ATTEMPT_SHA256",
+  "validator_a_commitment_sha256": "REPLACE_WITH_FIRST_SEALED_COMMITMENT",
+  "validator_b_commitment_sha256": "REPLACE_WITH_SECOND_SEALED_COMMITMENT",
+  "divergence": {
+    "first_non_equivalent_step": "UNKNOWN",
+    "environment_differences": [],
+    "input_commitment_differences": [],
+    "method_differences": []
+  },
+  "status": "DISPUTED",
+  "third_run_role": "DIAGNOSTIC_ONLY",
+  "majority_vote_can_promote": false,
+  "human_review_required": true,
+  "construction_boundary": {
+    "scientific_evidence": false,
+    "counts_as_independent_reproduction": false,
+    "eligible_for_promotion": false
+  }
+}

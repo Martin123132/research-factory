@@ -1,0 +1,80 @@
+schema_version = 1
+
+[workbench]
+id = "WB-001"
+slug = "general-purpose-lossless-compression"
+title = "General-purpose lossless compression"
+version = "0.2.0"
+status = "prototype"
+evidence_lane = "digital-exact"
+
+[corpus]
+public_profile = "synthetic-public-v1"
+public_manifest = "data/public_manifest.json"
+hidden_profile = "sealed-mixed-corpus-v1"
+hidden_commitment_file = "data/holdout_commitment.json"
+external_scale_up = "Silesia Corpus"
+external_scale_up_url = "https://data-compression.info/Corpora/SilesiaCorpus/index.html"
+
+[correctness]
+round_trip_hash = "sha256"
+required_pass_fraction = 1.0
+deterministic_compressed_output = true
+determinism_runs = 3
+max_output_expansion_ratio = 1.10
+
+[measurement]
+protocol = "wb001-batch-v1"
+timing_runs = 3
+warmup_runs = 1
+per_operation_timeout_seconds = 30
+stdout_stderr_limit_bytes = 65536
+local_timing_grade = "advisory"
+promotion_timing_runs = 7
+primary_metric = "total_compressed_bytes"
+secondary_metrics = [
+  "encode_wall_ns",
+  "decode_wall_ns",
+  "encode_throughput_bytes_per_second",
+  "decode_throughput_bytes_per_second",
+  "annualized_scenario_cost_gbp"
+]
+
+[promotion]
+required_independent_human_reruns = 2
+compressed_size_tolerance_fraction = 0.0
+max_encode_slowdown_fraction = 0.25
+max_decode_slowdown_fraction = 0.10
+minimum_size_improvement_fraction = 0.001
+minimum_timing_improvement_fraction = 0.05
+minimum_cost_improvement_fraction = 0.001
+
+[economic_scenario]
+name = "archive-and-retrieval-v1"
+retained_input_tb = 100.0
+retention_months = 12.0
+decode_reads_per_year = 4.0
+storage_gb_month_gbp = 0.015
+cpu_core_hour_gbp = 0.035
+egress_gb_gbp = 0.040
+
+[local_runner]
+security_boundary = false
+trusted_development_code_only = true
+
+[baseline_pack]
+definition = "baselines/reference_pack/baseline_pack.toml"
+result_directory = "results/reference_pack"
+frontier_dimensions = ["total_compressed_bytes", "encode_wall_ns", "decode_wall_ns", "peak_rss_bytes"]
+local_pack_promotable = false
+
+[isolation]
+policy = "isolation/docker_policy.toml"
+image_lock = "isolation/image.lock.json"
+required_for_hidden_holdout = true
+required_for_promotion = true
+
+[blind_evaluator]
+public_key = "data/evaluator_public_key.json"
+public_verdicts = ["PASS", "NO_GAIN", "INVALID", "ESCALATE"]
+detailed_results_private_until_reveal = true

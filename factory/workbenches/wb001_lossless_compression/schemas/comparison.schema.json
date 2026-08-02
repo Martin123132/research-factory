@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://research-factory.local/schemas/wb001-frontier-comparison-v2.json",
+  "title": "WB-001 frontier comparison",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "decision_type",
+    "baseline_pack_sha256",
+    "candidate_result_sha256",
+    "status",
+    "eligible_for_promotion",
+    "timing_claim_accepted",
+    "dominated_by",
+    "dominates_profiles",
+    "frontier_before",
+    "frontier_after",
+    "decision_sha256"
+  ],
+  "properties": {
+    "schema_version": {"const": 2},
+    "decision_type": {"const": "wb001_frontier_comparison"},
+    "status": {
+      "enum": [
+        "FRONTIER_ADVANCE",
+        "PUBLIC_SIZE_CANDIDATE",
+        "VALID_DOMINATED",
+        "VALID_NONDOMINATED_NO_GAIN",
+        "VALID_NO_CONFIRMED_GAIN",
+        "INVALID"
+      ]
+    },
+    "eligible_for_promotion": {"type": "boolean"},
+    "timing_claim_accepted": {"type": "boolean"},
+    "decision_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  },
+  "additionalProperties": true
+}

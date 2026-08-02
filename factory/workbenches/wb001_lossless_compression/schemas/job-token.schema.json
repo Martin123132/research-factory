@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://research-factory.local/schemas/wb001-job-token-v1.json",
+  "title": "WB-001 one-shot blind job token",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "token_type",
+    "token_id",
+    "issued_at",
+    "expires_at",
+    "operator_id",
+    "candidate_artifact_sha256",
+    "holdout_commitment_sha256",
+    "evaluator_key_id",
+    "maximum_uses",
+    "signature_base64"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "token_type": {"const": "wb001_blind_job"},
+    "maximum_uses": {"const": 1},
+    "candidate_artifact_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "holdout_commitment_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "signature_base64": {"type": "string", "minLength": 80}
+  },
+  "additionalProperties": true
+}

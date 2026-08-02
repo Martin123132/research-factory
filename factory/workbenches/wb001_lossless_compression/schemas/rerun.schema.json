@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://research-factory.local/schemas/wb001-rerun-v1.json",
+  "title": "WB-001 independent-rerun gate decision",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "decision_type",
+    "status",
+    "operator_ids",
+    "claim_result_sha256",
+    "replica_result_sha256",
+    "candidate_artifact_sha256",
+    "corpus_sha256",
+    "decision_sha256"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "decision_type": {"const": "wb001_rerun_gate"},
+    "status": {
+      "enum": [
+        "RERUN_CONFIRMED_ADVANCE_AWAITING_HIDDEN_HOLDOUT",
+        "RERUN_CONFIRMED_NO_GAIN",
+        "DISPUTED"
+      ]
+    },
+    "operator_ids": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 3, "maxLength": 128}
+    },
+    "claim_result_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "replica_result_sha256": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+    },
+    "candidate_artifact_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "corpus_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "decision_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  },
+  "additionalProperties": true
+}

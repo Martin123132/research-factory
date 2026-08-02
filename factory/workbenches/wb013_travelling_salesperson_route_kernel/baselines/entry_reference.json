@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "baseline_id": "wb013-explicit-10-held-karp-v1",
+  "scope": "ENTRY_GATE_ONLY",
+  "problem_plugin": "SYMMETRIC_TSP_V1",
+  "candidate": "examples/reference_solver/candidate.py",
+  "submission": "examples/reference_solver/submission.json",
+  "fixture": "data/entry_fixture.tsp",
+  "reference_length": 33,
+  "reference_basis": "Exhaustive enumeration with node 1 fixed; independently reproduced by the trusted entry evaluator.",
+  "stable_fields": [
+    "input",
+    "instance",
+    "artifact",
+    "hard_gates",
+    "metrics"
+  ],
+  "advisory_fields": [
+    "first_solve_elapsed_ns",
+    "second_solve_elapsed_ns",
+    "peak_rss_bytes"
+  ],
+  "scientific_evidence": false
+}

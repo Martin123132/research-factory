@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "workbench_code": "WB-002",
+  "submission_id": "entry-zlib-6-v1",
+  "human_owner": "factory-commissioning-reference",
+  "command": ["{python}", "candidate.py"],
+  "source_files": ["candidate.py"],
+  "packaging": {
+    "mode": "SHARED_PROGRAM",
+    "compress_options": [],
+    "decompress_options": []
+  },
+  "credit_scope": "ENTRY_GATE_ONLY",
+  "trust_acknowledgement": "TRUSTED_LOCAL_CODE_ONLY"
+}

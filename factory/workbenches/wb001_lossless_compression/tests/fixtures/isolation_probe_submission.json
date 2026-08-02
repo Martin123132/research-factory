@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "submission_id": "wb001-isolation-probe-v1",
+  "workbench": {"id": "WB-001", "version": "0.2.0"},
+  "candidate": {
+    "name": "isolation policy probe",
+    "version": "1.0.0",
+    "protocol": "wb001-batch-v1",
+    "command": ["{python}", "isolation_probe_candidate.py"],
+    "source_files": ["isolation_probe_candidate.py"],
+    "deterministic": true
+  },
+  "method": {
+    "summary": "A correct codec that reports whether the Docker containment controls are active.",
+    "license": "test-fixture"
+  }
+}

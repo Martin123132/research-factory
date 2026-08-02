@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "baseline_id": "wb013-explicit-10-held-karp-v1",
+  "scope": "ENTRY_GATE_ONLY",
+  "status": "FROZEN",
+  "stable_evidence": {
+    "input": {
+      "name": "instance.tsp",
+      "bytes": 418,
+      "sha256": "885973a9a40b3311814ea5fec039b092b9a6aa9871d08d73c5429b42d3bfa227"
+    },
+    "instance": {
+      "name": "rf_wb013_explicit_10",
+      "problem_plugin": "SYMMETRIC_TSP_V1",
+      "dimension": 10,
+      "edge_weight_type": "EXPLICIT",
+      "edge_weight_format": "FULL_MATRIX",
+      "reference_length": 33
+    },
+    "artifact": {
+      "source_package_bytes": 2785,
+      "source_package_sha256": "fa7789a73ae0deb927dc64798c06de6baf1d4db42f26715a48adee774cb38a39",
+      "tour": [1, 2, 3, 4, 5, 10, 6, 7, 8, 9],
+      "tour_sha256": "e6abd44f653aacb87ebfd1e1a1648e9411a590f912c30a37fb7d2f73e739e7ce"
+    },
+    "hard_gates": {
+      "candidate_processes_pass": true,
+      "supported_instance": true,
+      "tour_valid": true,
+      "exact_length_accounting": true,
+      "same_seed_determinism": true
+    },
+    "metrics": {
+      "supported_instance": true,
+      "tour_valid": true,
+      "route_length": 33,
+      "length_accounting_difference": 0,
+      "determinism_fraction": 1,
+      "optimality_gap_fraction": 0.0
+    }
+  },
+  "scientific_evidence": false
+}

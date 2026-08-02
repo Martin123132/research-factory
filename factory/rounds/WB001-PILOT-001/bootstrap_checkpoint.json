@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "checkpoint_type": "research_factory_ledger_head",
+  "label": "wb001-pilot-001-software-locked-bootstrap",
+  "generated_at": "2026-08-02T03:32:59.679430Z",
+  "factory_id": "research-factory-local",
+  "ledger_name": "pilot_events.jsonl",
+  "events": 3,
+  "head_event_sha256": "e223323db6a7fc81dceff0caa9695f7677892ed10000726bfb5f7b98c0976503",
+  "checkpoint_sha256": "6af1426a5a49f3a48a83b8c486bb2a92a166942c06cdb81bd4df89dbacd0460c"
+}

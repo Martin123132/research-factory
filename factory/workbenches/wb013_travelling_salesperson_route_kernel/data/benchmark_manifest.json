@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "manifest_type": "WB013_TSPLIB_IDENTIFIERS",
+  "status": "OFFICIAL_INSTANCES_NOT_BUNDLED_OR_FACTORY_HASHED",
+  "sources_observed_on": "2026-08-02",
+  "sources": {
+    "specification": "https://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/tsp95.pdf",
+    "faq": "https://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/TSPFAQ.html",
+    "data_index": "https://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/tsp.html",
+    "symmetric_optima": "https://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/STSP.html",
+    "concorde": "https://math.uwaterloo.ca/tsp/concorde/"
+  },
+  "implemented_entry_subset": {
+    "type": "TSP",
+    "edge_weight_type": "EXPLICIT",
+    "edge_weight_format": "FULL_MATRIX",
+    "distance_rule": "Read integer weights from the full matrix; do not infer distances from display coordinates.",
+    "factory_fixture": "factory/workbenches/wb013_travelling_salesperson_route_kernel/data/entry_fixture.tsp",
+    "fixture_sha256": "885973a9a40b3311814ea5fec039b092b9a6aa9871d08d73c5429b42d3bfa227",
+    "known_optimal_length": 33
+  },
+  "candidate_official_starter_assets": [
+    {"id": "berlin52", "published_optimum": 7542, "encoding": "EUC_2D", "status": "UNACQUIRED_UNSUPPORTED_ENCODING"},
+    {"id": "st70", "published_optimum": 675, "encoding": "EUC_2D", "status": "UNACQUIRED_UNSUPPORTED_ENCODING"},
+    {"id": "kroA100", "published_optimum": 21282, "encoding": "EUC_2D", "status": "UNACQUIRED_UNSUPPORTED_ENCODING"}
+  ],
+  "distribution_note": "No permissive TSPLIB dataset licence was identified in the official pages reviewed. Keep source URLs and acquire/hash official files without republishing until permission is established.",
+  "credit_boundary": {
+    "scientific_evidence": false,
+    "counts_as_independent_reproduction": false,
+    "eligible_for_promotion": false
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "override_type", "workbench_code", "catalogue_entry_sha256",
+    "implementation_version", "implementation_root", "truth", "official_benchmark",
+    "entry_gate", "practical_accounting", "paths", "assets", "external_limitations"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "override_type": { "const": "DIGITAL_COMPRESSION_V1" },
+    "workbench_code": { "type": "string", "pattern": "^WB-[0-9]{3}$" },
+    "catalogue_entry_sha256": { "$ref": "#/$defs/sha256" },
+    "implementation_version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "implementation_root": { "$ref": "#/$defs/path" },
+    "truth": {
+      "type": "object", "additionalProperties": false,
+      "required": ["subject_or_input_population", "required_output", "pass_rule"],
+      "properties": {
+        "subject_or_input_population": { "type": "string", "minLength": 20 },
+        "required_output": { "type": "string", "minLength": 20 },
+        "pass_rule": { "type": "string", "minLength": 20 }
+      }
+    },
+    "official_benchmark": {
+      "type": "object", "additionalProperties": false,
+      "required": ["corpus_id", "input_bytes", "official_md5", "official_sha1", "official_record_bytes", "one_percent_maximum_bytes", "record_observed_on", "record_url", "rules_observed_on", "rules_url", "authority_boundary"],
+      "properties": {
+        "corpus_id": { "type": "string", "minLength": 3 },
+        "input_bytes": { "type": "integer", "minimum": 1 },
+        "official_md5": { "type": "string", "pattern": "^[a-f0-9]{32}$" },
+        "official_sha1": { "type": "string", "pattern": "^[a-f0-9]{40}$" },
+        "official_record_bytes": { "type": "integer", "minimum": 1 },
+        "one_percent_maximum_bytes": { "type": "integer", "minimum": 1 },
+        "record_observed_on": { "type": "string", "format": "date" },
+        "record_url": { "type": "string", "format": "uri", "pattern": "^https://" },
+        "rules_observed_on": { "type": "string", "format": "date" },
+        "rules_url": { "type": "string", "format": "uri", "pattern": "^https://" },
+        "authority_boundary": { "type": "string", "minLength": 20 }
+      }
+    },
+    "entry_gate": {
+      "type": "object", "additionalProperties": false,
+      "required": ["target_duration_minutes", "brief", "command", "expected_outputs"],
+      "properties": {
+        "target_duration_minutes": { "type": "integer", "minimum": 15 },
+        "brief": { "type": "string", "minLength": 20 },
+        "command": { "type": "string", "minLength": 3 },
+        "expected_outputs": { "type": "array", "minItems": 2, "uniqueItems": true, "items": { "type": "string", "minLength": 3 } }
+      }
+    },
+    "practical_accounting": {
+      "type": "object", "additionalProperties": false,
+      "required": ["scenario_version", "formula", "system_boundary", "included_costs", "comparator", "decision_threshold"],
+      "properties": {
+        "scenario_version": { "type": "string", "minLength": 3 },
+        "formula": { "type": "string", "minLength": 8 },
+        "system_boundary": { "type": "string", "minLength": 8 },
+        "included_costs": { "type": "array", "minItems": 3, "uniqueItems": true, "items": { "type": "string", "minLength": 2 } },
+        "comparator": { "type": "string", "minLength": 3 },
+        "decision_threshold": { "type": "number", "exclusiveMinimum": 0, "maximum": 1 }
+      }
+    },
+    "paths": {
+      "type": "object", "additionalProperties": false,
+      "required": ["public_input_manifest", "economic_scenario", "runner_protocol", "isolation_policy"],
+      "properties": {
+        "public_input_manifest": { "$ref": "#/$defs/path" },
+        "economic_scenario": { "$ref": "#/$defs/path" },
+        "runner_protocol": { "$ref": "#/$defs/path" },
+        "isolation_policy": { "$ref": "#/$defs/path" }
+      }
+    },
+    "assets": {
+      "type": "array", "minItems": 8,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["role", "path", "sha256"],
+        "properties": {
+          "role": { "enum": ["commissioning_override", "truth_verifier", "public_input_manifest", "entry_baseline_definition", "entry_baseline_result", "economic_scenario", "runner_protocol", "runner_implementation", "isolation_policy", "starter_pack_instructions", "entry_fixture", "entry_gate_script", "submission_schema", "result_schema"] },
+          "path": { "$ref": "#/$defs/path" },
+          "sha256": { "$ref": "#/$defs/sha256" }
+        }
+      }
+    },
+    "external_limitations": {
+      "type": "array", "minItems": 1, "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]+$" }
+    }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "path": { "type": "string", "minLength": 3, "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\)[A-Za-z0-9._/-]+$" }
+  }
+}
