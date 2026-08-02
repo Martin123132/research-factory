@@ -31,6 +31,9 @@ export default function StandardsPage() {
   const adapterBoundStations = workbenchContracts.filter(
     (contract) => contract.commissioning_profile === "ADAPTER_BOUND",
   );
+  const adapterFamilies = new Set(
+    adapterBoundStations.flatMap((contract) => contract.adapter_id ? [contract.adapter_id] : []),
+  );
 
   return (
     <>
@@ -101,23 +104,27 @@ export default function StandardsPage() {
 
       <section className="section-block split-section standards-split">
         <article className="feature-card feature-card-orange">
-          <p className="eyebrow">Commissioning adapter / first reusable lane</p>
-          <h2>{adapterBoundStations.length} station bound without being over-promoted</h2>
+          <p className="eyebrow">Commissioning adapters / closed families</p>
+          <h2>{adapterBoundStations.length} stations across {adapterFamilies.size} bounded families</h2>
           <p>
             WB-002 uses <span className="mono">DIGITAL_COMPRESSION_V1</span>: a closed dossier,
             allowlisted adapter, hashed operational assets, exact restoration rules and a runnable
-            entry fixture. Its stage is still contract draft because the official enwik9 content
-            commitment and full official scorer are not yet frozen.
+            entry fixture. WB-013 uses <span className="mono">DIGITAL_OPTIMIZATION_V1</span> with
+            only <span className="mono">SYMMETRIC_TSP_V1</span> enabled. Both remain contract drafts;
+            their official inputs, complete scorers and promotion boundaries are not frozen.
           </p>
-          <Link className="text-link" href="/workbenches/2">Inspect WB-002 →</Link>
+          <div className="button-row">
+            <Link className="text-link" href="/workbenches/2">Inspect WB-002 →</Link>
+            <Link className="text-link" href="/workbenches/13">Inspect WB-013 →</Link>
+          </div>
         </article>
         <article className="feature-card">
           <p className="eyebrow">Visible construction progress</p>
           <h2>{contractCounts.runnable_entry_gate} runnable entry gates</h2>
           <p>
-            One is the legacy WB-001 test article and one is the adapter-bound WB-002 method gate.
-            Passing either demonstrates careful procedure only: it creates no scientific evidence,
-            independent reproduction or promotion credit.
+            One is the legacy WB-001 test article; WB-002 and WB-013 add adapter-bound method gates.
+            Passing any of them demonstrates careful procedure only: it creates no scientific
+            evidence, independent reproduction or promotion credit.
           </p>
         </article>
       </section>

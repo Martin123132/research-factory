@@ -7,7 +7,7 @@ import {
   getWorkbench,
   workbenchCode,
 } from "@/lib/workbenches";
-import { contractCounts } from "@/lib/workbench-contracts";
+import { contractCounts, workbenchContracts } from "@/lib/workbench-contracts";
 
 export const metadata: Metadata = {
   title: "Hangar overview",
@@ -38,9 +38,13 @@ async function operationalSnapshot(): Promise<{
 export default async function Home() {
   const snapshot = await operationalSnapshot();
   const fitted = contractCounts.commissioning_ready + contractCounts.adapter_bound;
+  const adapterFamilies = new Set(
+    workbenchContracts.flatMap((contract) => contract.adapter_id ? [contract.adapter_id] : []),
+  ).size;
   const activeOrders = snapshot.orders.filter((order) => order.status !== "COMPLETED");
   const testArticle = getWorkbench(1)!;
-  const adapterArticle = getWorkbench(2)!;
+  const compressionArticle = getWorkbench(2)!;
+  const routeArticle = getWorkbench(13)!;
 
   return (
     <>
@@ -96,10 +100,10 @@ export default async function Home() {
         <article className="feature-card">
           <div className="card-topline">
             <span className="status-dot status-dot-amber" />
-            <span>Reusable lane proof</span>
-            <span className="mono">ADAPTER 01</span>
+            <span>Reusable family 01</span>
+            <span className="mono">EXACT COMPRESSION</span>
           </div>
-          <h2>{adapterArticle.workbench}</h2>
+          <h2>{compressionArticle.workbench}</h2>
           <p>
             WB-002 now has a closed, hashed exact-compression dossier and a runnable four-hour
             entry route. It remains a contract draft until the full official corpus, comparator
@@ -111,17 +115,22 @@ export default async function Home() {
         <article className="feature-card">
           <div className="card-topline">
             <span className="status-dot" />
-            <span>Lane scale</span>
-            <span className="mono">COMPRESSION / 12</span>
+            <span>Reusable family 02</span>
+            <span className="mono">SYMMETRIC TSP</span>
           </div>
-          <h2>One adapter, one bounded problem class</h2>
+          <h2>{routeArticle.workbench}</h2>
           <p>
-            The reusable layer handles fixed-public-corpus exact restoration. CRAM, lossy arrays,
-            perceptual codecs and stateful deduplication will receive their own truthful adapters,
-            not a misleading universal compression score.
+            WB-013 now has an exact symmetric-matrix route verifier and a known-answer gate under
+            <span className="mono"> DIGITAL_OPTIMIZATION_V1</span>. Full TSPLIB encodings, official
+            assets, hidden routes and the economic comparator remain visibly unresolved.
           </p>
-          <Link className="text-link" href="/standards">See the commissioning lane →</Link>
+          <Link className="text-link" href="/workbenches/13">Inspect the routing station →</Link>
         </article>
+      </section>
+
+      <section className="section-block standard-digest-panel">
+        <div><p className="eyebrow">Adapter architecture</p><h2>{adapterFamilies} bounded families, never one universal score</h2></div>
+        <p>A family accepts only named problem plugins. A TSP verifier cannot silently score vehicle routing, scheduling, graph optimisation or a different TSPLIB distance convention.</p>
       </section>
 
       <section className="section-block">
@@ -154,8 +163,8 @@ export default async function Home() {
           </div>
           <h2>{testArticle.workbench}</h2>
           <p>
-            The single station currently fitted with a contract, runner, isolation prototype,
-            and commissioning history. It remains unclaimed for live research.
+            The single commissioning-ready test article, with a contract, runner, isolation
+            prototype and commissioning history. It remains unclaimed for live research.
           </p>
           <Link className="text-link" href="/workbenches/1">Inspect the station →</Link>
         </article>

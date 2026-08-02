@@ -14,8 +14,9 @@ test("renders the hangar overview without inventing operational data", async () 
   assert.match(html, /One hundred stations\. One evidence standard\./);
   assert.match(html, /readiness-value">100</);
   assert.match(html, /deterministic station kits/);
-  assert.match(html, /2<\/strong><span>fitted or adapter-bound stations/);
+  assert.match(html, /3<\/strong><span>fitted or adapter-bound stations/);
   assert.match(html, /WB-002 now has a closed, hashed exact-compression dossier/);
+  assert.match(html, /WB-013 now has an exact symmetric-matrix route verifier/);
   assert.match(html, /stat-card stat-card-safe"><strong>0/);
   assert.match(html, /live investigations enabled/);
   assert.match(html, /Synthetic commissioning[^<]*not scientific evidence/i);
@@ -53,6 +54,21 @@ test("renders WB-002 as adapter-bound without claiming commissioning", async () 
   assert.match(html, /adapter-bound does not mean commissioned/i);
 });
 
+test("renders WB-013 as a narrowly adapter-bound symmetric TSP station", async () => {
+  const response = await fetch(`${baseUrl}/workbenches/13`, {
+    headers: { accept: "text/html" },
+  });
+
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /WB-013/);
+  assert.match(html, /Travelling-salesperson route kernel/);
+  assert.match(html, /ADAPTER BOUND/);
+  assert.match(html, /DIGITAL OPTIMIZATION V1/);
+  assert.match(html, /CONTRACT DRAFT/);
+  assert.match(html, /adapter-bound does not mean commissioned/i);
+});
+
 test("renders the fail-closed Contract v1 standard and downloadable artifacts", async () => {
   const response = await fetch(`${baseUrl}/standards`, {
     headers: { accept: "text/html" },
@@ -65,7 +81,8 @@ test("renders the fail-closed Contract v1 standard and downloadable artifacts", 
   assert.match(html, /commit conclusions and evidence hashes before either result is revealed/i);
   assert.match(html, /stage-number mono">99</);
   assert.match(html, /DIGITAL_COMPRESSION_V1/);
-  assert.match(html, /2<!-- --> runnable entry gates/);
+  assert.match(html, /DIGITAL_OPTIMIZATION_V1/);
+  assert.match(html, /3<!-- --> runnable entry gates/);
   assert.match(html, /Contract draft/);
   assert.match(html, /href="\/workbench-contracts-v1\.json"/);
   assert.match(html, /href="\/workbench-contract-v1\.schema\.json"/);
