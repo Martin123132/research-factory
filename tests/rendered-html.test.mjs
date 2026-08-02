@@ -13,11 +13,12 @@ test("renders the hangar overview without inventing operational data", async () 
   assert.match(html, /Research Factory Hangar/);
   assert.match(html, /One hundred stations\. One evidence standard\./);
   assert.match(html, /readiness-value">100</);
-  assert.match(html, /catalogued stations/);
+  assert.match(html, /deterministic station kits/);
   assert.match(html, /stat-card stat-card-safe"><strong>0/);
-  assert.match(html, /live investigations claimed/);
+  assert.match(html, /live investigations enabled/);
   assert.match(html, /Synthetic commissioning[^<]*not scientific evidence/i);
   assert.match(html, /href="\/tutorial"[^>]*>Tutorial</);
+  assert.match(html, /href="\/standards"[^>]*>Standards</);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton|Your site is taking shape/i);
 });
 
@@ -31,7 +32,25 @@ test("renders a foundational station with its exact-proof boundary", async () =>
   assert.match(html, /WB-099/);
   assert.match(html, /Riemann Hypothesis/);
   assert.match(html, /Zero logical tolerance/);
+  assert.match(html, /CONTRACT DRAFT/);
+  assert.match(html, /gates remain before live work/);
   assert.match(html, /not scientific evidence/i);
+});
+
+test("renders the fail-closed Contract v1 standard and downloadable artifacts", async () => {
+  const response = await fetch(`${baseUrl}/standards`, {
+    headers: { accept: "text/html" },
+  });
+
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /Workbench Contract v1/);
+  assert.match(html, /Exactly two distinct human owners/);
+  assert.match(html, /commit conclusions and evidence hashes before either result is revealed/i);
+  assert.match(html, /stage-number mono">99</);
+  assert.match(html, /Contract draft/);
+  assert.match(html, /href="\/workbench-contracts-v1\.json"/);
+  assert.match(html, /href="\/workbench-contract-v1\.schema\.json"/);
 });
 
 test("renders the synthetic workflow tutorial with captions and a transcript", async () => {

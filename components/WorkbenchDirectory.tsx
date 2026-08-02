@@ -3,7 +3,11 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { Workbench } from "@/lib/workbenches";
-import { workbenchCode, workbenchReadiness } from "@/lib/workbenches";
+import {
+  workbenchCode,
+  workbenchReadiness,
+  workbenchStatusDot,
+} from "@/lib/workbenches";
 
 export function WorkbenchDirectory({
   items,
@@ -78,7 +82,7 @@ export function WorkbenchDirectory({
         {visible.map((item) => (
           <article className="workbench-card" key={item.id}>
             <div className="card-topline">
-              <span className={item.implementation_status ? "status-dot status-dot-green" : "status-dot"} />
+              <span className={workbenchStatusDot(item)} />
               <span>{workbenchReadiness(item)}</span>
               <span className="mono">{workbenchCode(item.id)}</span>
             </div>

@@ -28,6 +28,7 @@ endpoints. Live research remains in the separate factory control plane.
 ## What is implemented
 
 - a verified, searchable catalogue of 100 objective workbench briefs;
+- a verified Contract v1 snapshot and deterministic kit status for every station;
 - station detail pages with hard gates, benchmarks and economic/physical
   guardrails;
 - attributed construction and synthetic-commissioning work orders;
@@ -57,6 +58,7 @@ SHA-256 9b37a47c265e916cbf460f4dd0120b02b01fa800b104017b117ba2fc40644cd5
 /runners            Non-promotion runner registry
 /history            Searchable append-only activity
 /architecture       Trust boundaries and future handoff
+/standards          Contract v1, readiness gates and downloadable artifacts
 /tutorial           Guided synthetic workflow tutorial and transcript
 ```
 
@@ -77,6 +79,7 @@ the tracked Drizzle migration is the deployment schema.
 
 ```powershell
 npm.cmd run catalogue:verify
+npm.cmd run contracts:verify
 npm.cmd run typecheck
 npm.cmd run lint
 npm.cmd test

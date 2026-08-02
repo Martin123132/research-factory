@@ -9,11 +9,12 @@
     "dev": "vinext dev",
     "build": "vinext build",
     "start": "vinext start",
-    "test": "npm run catalogue:verify && npm run build && node scripts/run-tests.mjs",
+    "test": "npm run catalogue:verify && npm run contracts:verify && npm run build && node scripts/run-tests.mjs",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next --ignore-pattern work --ignore-pattern video",
     "db:generate": "drizzle-kit generate",
-    "catalogue:verify": "node scripts/verify-catalogue.mjs"
+    "catalogue:verify": "node scripts/verify-catalogue.mjs",
+    "contracts:verify": "node scripts/verify-station-kits.mjs"
   },
   "dependencies": {
     "drizzle-orm": "0.45.2",

@@ -7,7 +7,9 @@ import {
   referenceLinks,
   workbenchCode,
   workbenchReadiness,
+  workbenchStatusDot,
 } from "@/lib/workbenches";
+import { getWorkbenchContract } from "@/lib/workbench-contracts";
 
 export async function generateMetadata({
   params,
@@ -31,6 +33,8 @@ export default async function WorkbenchPage({
   const { id } = await params;
   const workbench = getWorkbench(Number(id));
   if (!workbench) notFound();
+  const contract = getWorkbenchContract(workbench.id);
+  if (!contract) notFound();
   const references = referenceLinks(workbench.reference_url);
 
   return (
@@ -41,7 +45,7 @@ export default async function WorkbenchPage({
       <section className="station-hero">
         <div>
           <div className="card-topline">
-            <span className={workbench.implementation_status ? "status-dot status-dot-green" : "status-dot"} />
+            <span className={workbenchStatusDot(workbench)} />
             <span>{workbenchReadiness(workbench)}</span>
             <span className="mono">CATALOGUE V1</span>
           </div>
@@ -57,6 +61,24 @@ export default async function WorkbenchPage({
           <article className="spec-block"><span className="spec-number">01</span><div><p className="eyebrow">Hard gate and score</p><h2>What has to be true</h2><p>{workbench.hard_gate_and_score}</p></div></article>
           <article className="spec-block"><span className="spec-number">02</span><div><p className="eyebrow">Economic / physical guardrail</p><h2>What makes it useful</h2><p>{workbench.economic_or_physical_guardrail}</p></div></article>
           <article className="spec-block"><span className="spec-number">03</span><div><p className="eyebrow">Entry pack</p><h2>Proof of care before submission</h2><p>{workbench.starter_pack}</p></div></article>
+          <article className="spec-block contract-gates">
+            <span className="spec-number">04</span>
+            <div>
+              <p className="eyebrow">Workbench Contract v1</p>
+              <h2>{contract.unresolved_count} gates remain before live work</h2>
+              <p>
+                The contract separates a useful brief from a commissioned station. Missing
+                verifiers, fixtures, runners or identity controls remain visible; the generator
+                is not allowed to invent them.
+              </p>
+              <ul className="gate-list">
+                {contract.unresolved.slice(0, 8).map((gate) => <li key={gate}>{gate.replaceAll("_", " ")}</li>)}
+              </ul>
+              {contract.unresolved.length > 8 && (
+                <p className="gate-more">+ {contract.unresolved.length - 8} further commissioning gates</p>
+              )}
+            </div>
+          </article>
         </div>
         <aside className="station-sidebar">
           <div className="sidebar-panel">
@@ -72,12 +94,22 @@ export default async function WorkbenchPage({
             <p className="eyebrow">Construction state</p>
             <dl>
               <div><dt>Readiness</dt><dd>{workbenchReadiness(workbench)}</dd></div>
-              <div><dt>Contract</dt><dd>{workbench.contract_version ?? "Not built"}</dd></div>
+              <div><dt>Contract</dt><dd>v{contract.contract_version}</dd></div>
+              <div><dt>Starter</dt><dd>{contract.starter_pack_status.replaceAll("_", " ")}</dd></div>
+              <div><dt>Digest</dt><dd className="mono">{contract.contract_sha256.slice(0, 12)}…</dd></div>
               <div><dt>Live work</dt><dd>Locked</dd></div>
             </dl>
             <Link className="button button-primary button-full" href={`/operations?workbench=${workbench.id}`}>
               Create build order
             </Link>
+            <Link className="button button-secondary button-full" href="/standards">
+              Read the evidence standard
+            </Link>
+          </div>
+          <div className="sidebar-panel">
+            <p className="eyebrow">Open construction artifacts</p>
+            <a className="text-link" href="/workbench-contracts-v1.json">All 100 contracts ↗</a>
+            <a className="text-link" href="/workbench-contract-v1.schema.json">Contract schema ↗</a>
           </div>
         </aside>
       </section>

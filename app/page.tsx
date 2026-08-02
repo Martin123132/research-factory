@@ -6,8 +6,8 @@ import {
   categoryCounts,
   getWorkbench,
   workbenchCode,
-  workbenches,
 } from "@/lib/workbenches";
+import { contractCounts } from "@/lib/workbench-contracts";
 
 export const metadata: Metadata = {
   title: "Hangar overview",
@@ -37,7 +37,7 @@ async function operationalSnapshot(): Promise<{
 
 export default async function Home() {
   const snapshot = await operationalSnapshot();
-  const instrumented = workbenches.filter((item) => item.implementation_status).length;
+  const instrumented = contractCounts.commissioning_ready;
   const activeOrders = snapshot.orders.filter((order) => order.status !== "COMPLETED");
   const testArticle = getWorkbench(1)!;
 
@@ -59,6 +59,9 @@ export default async function Home() {
             <Link className="button button-secondary" href="/operations">
               Open shift board
             </Link>
+            <Link className="button button-secondary" href="/standards">
+              Inspect Contract v1
+            </Link>
           </div>
         </div>
         <div className="hero-instrument" aria-label="Factory readiness summary">
@@ -68,11 +71,11 @@ export default async function Home() {
           </div>
           <div className="readiness-dial">
             <span className="readiness-value">100</span>
-            <span className="readiness-label">catalogued stations</span>
+            <span className="readiness-label">deterministic station kits</span>
           </div>
           <div className="instrument-bars">
-            <div><span>Registry</span><i style={{ width: "100%" }} /></div>
-            <div><span>Instrumented</span><i style={{ width: "1%" }} /></div>
+            <div><span>Contract envelopes</span><i style={{ width: "100%" }} /></div>
+            <div><span>Commissioning-ready</span><i style={{ width: `${instrumented}%` }} /></div>
             <div><span>Live research</span><i className="bar-zero" style={{ width: "0%" }} /></div>
           </div>
           <p className="instrument-note">
@@ -82,10 +85,10 @@ export default async function Home() {
       </section>
 
       <section className="stat-grid" aria-label="Hangar statistics">
-        <article className="stat-card"><strong>100</strong><span>objective workbench briefs</span></article>
+        <article className="stat-card"><strong>{contractCounts.total}</strong><span>hashed station construction kits</span></article>
         <article className="stat-card"><strong>9</strong><span>physical and computational domains</span></article>
         <article className="stat-card"><strong>{instrumented}</strong><span>instrumented test article</span></article>
-        <article className="stat-card stat-card-safe"><strong>0</strong><span>live investigations claimed</span></article>
+        <article className="stat-card stat-card-safe"><strong>{contractCounts.live_research_enabled}</strong><span>live investigations enabled</span></article>
       </section>
 
       <section className="section-block">
@@ -112,8 +115,8 @@ export default async function Home() {
       <section className="split-section section-block">
         <article className="feature-card feature-card-orange">
           <div className="card-topline">
-            <span className="status-dot" />
-            <span>Instrumented test article</span>
+            <span className="status-dot status-dot-amber" />
+            <span>Commissioning-ready test article</span>
             <span className="mono">{workbenchCode(testArticle.id)}</span>
           </div>
           <h2>{testArticle.workbench}</h2>

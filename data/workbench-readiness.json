@@ -1,0 +1,508 @@
+{
+  "schema_version": 1,
+  "standard": "research-factory/workbench-contract/v1",
+  "catalogue_sha256": "9b37a47c265e916cbf460f4dd0120b02b01fa800b104017b117ba2fc40644cd5",
+  "stations": [
+    {
+      "numeric_id": 1,
+      "workbench_code": "WB-001",
+      "readiness_stage": "COMMISSIONING_READY"
+    },
+    {
+      "numeric_id": 2,
+      "workbench_code": "WB-002",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 3,
+      "workbench_code": "WB-003",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 4,
+      "workbench_code": "WB-004",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 5,
+      "workbench_code": "WB-005",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 6,
+      "workbench_code": "WB-006",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 7,
+      "workbench_code": "WB-007",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 8,
+      "workbench_code": "WB-008",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 9,
+      "workbench_code": "WB-009",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 10,
+      "workbench_code": "WB-010",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 11,
+      "workbench_code": "WB-011",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 12,
+      "workbench_code": "WB-012",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 13,
+      "workbench_code": "WB-013",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 14,
+      "workbench_code": "WB-014",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 15,
+      "workbench_code": "WB-015",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 16,
+      "workbench_code": "WB-016",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 17,
+      "workbench_code": "WB-017",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 18,
+      "workbench_code": "WB-018",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 19,
+      "workbench_code": "WB-019",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 20,
+      "workbench_code": "WB-020",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 21,
+      "workbench_code": "WB-021",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 22,
+      "workbench_code": "WB-022",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 23,
+      "workbench_code": "WB-023",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 24,
+      "workbench_code": "WB-024",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 25,
+      "workbench_code": "WB-025",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 26,
+      "workbench_code": "WB-026",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 27,
+      "workbench_code": "WB-027",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 28,
+      "workbench_code": "WB-028",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 29,
+      "workbench_code": "WB-029",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 30,
+      "workbench_code": "WB-030",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 31,
+      "workbench_code": "WB-031",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 32,
+      "workbench_code": "WB-032",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 33,
+      "workbench_code": "WB-033",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 34,
+      "workbench_code": "WB-034",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 35,
+      "workbench_code": "WB-035",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 36,
+      "workbench_code": "WB-036",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 37,
+      "workbench_code": "WB-037",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 38,
+      "workbench_code": "WB-038",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 39,
+      "workbench_code": "WB-039",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 40,
+      "workbench_code": "WB-040",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 41,
+      "workbench_code": "WB-041",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 42,
+      "workbench_code": "WB-042",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 43,
+      "workbench_code": "WB-043",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 44,
+      "workbench_code": "WB-044",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 45,
+      "workbench_code": "WB-045",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 46,
+      "workbench_code": "WB-046",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 47,
+      "workbench_code": "WB-047",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 48,
+      "workbench_code": "WB-048",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 49,
+      "workbench_code": "WB-049",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 50,
+      "workbench_code": "WB-050",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 51,
+      "workbench_code": "WB-051",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 52,
+      "workbench_code": "WB-052",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 53,
+      "workbench_code": "WB-053",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 54,
+      "workbench_code": "WB-054",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 55,
+      "workbench_code": "WB-055",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 56,
+      "workbench_code": "WB-056",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 57,
+      "workbench_code": "WB-057",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 58,
+      "workbench_code": "WB-058",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 59,
+      "workbench_code": "WB-059",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 60,
+      "workbench_code": "WB-060",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 61,
+      "workbench_code": "WB-061",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 62,
+      "workbench_code": "WB-062",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 63,
+      "workbench_code": "WB-063",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 64,
+      "workbench_code": "WB-064",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 65,
+      "workbench_code": "WB-065",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 66,
+      "workbench_code": "WB-066",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 67,
+      "workbench_code": "WB-067",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 68,
+      "workbench_code": "WB-068",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 69,
+      "workbench_code": "WB-069",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 70,
+      "workbench_code": "WB-070",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 71,
+      "workbench_code": "WB-071",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 72,
+      "workbench_code": "WB-072",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 73,
+      "workbench_code": "WB-073",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 74,
+      "workbench_code": "WB-074",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 75,
+      "workbench_code": "WB-075",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 76,
+      "workbench_code": "WB-076",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 77,
+      "workbench_code": "WB-077",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 78,
+      "workbench_code": "WB-078",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 79,
+      "workbench_code": "WB-079",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 80,
+      "workbench_code": "WB-080",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 81,
+      "workbench_code": "WB-081",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 82,
+      "workbench_code": "WB-082",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 83,
+      "workbench_code": "WB-083",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 84,
+      "workbench_code": "WB-084",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 85,
+      "workbench_code": "WB-085",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 86,
+      "workbench_code": "WB-086",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 87,
+      "workbench_code": "WB-087",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 88,
+      "workbench_code": "WB-088",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 89,
+      "workbench_code": "WB-089",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 90,
+      "workbench_code": "WB-090",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 91,
+      "workbench_code": "WB-091",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 92,
+      "workbench_code": "WB-092",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 93,
+      "workbench_code": "WB-093",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 94,
+      "workbench_code": "WB-094",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 95,
+      "workbench_code": "WB-095",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 96,
+      "workbench_code": "WB-096",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 97,
+      "workbench_code": "WB-097",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 98,
+      "workbench_code": "WB-098",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 99,
+      "workbench_code": "WB-099",
+      "readiness_stage": "CONTRACT_DRAFT"
+    },
+    {
+      "numeric_id": 100,
+      "workbench_code": "WB-100",
+      "readiness_stage": "CONTRACT_DRAFT"
+    }
+  ],
+  "readiness_sha256": "c604054af07be1c109300dc1964460fe2d9402d6b800abb89a61a6710f1ea8cf"
+}
