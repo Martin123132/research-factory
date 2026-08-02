@@ -9,3 +9,8 @@
 *.jpeg binary
 *.woff2 binary
 *.gz binary
+
+# Frozen WB-001 corpus payloads are reviewed by manifest hash, not as source
+# text. Public result JSON preserves its original signed/hash-bound CRLF bytes.
+factory/workbenches/wb001_lossless_compression/data/public/** binary
+factory/workbenches/wb001_lossless_compression/results/**/*.json -text whitespace=cr-at-eol

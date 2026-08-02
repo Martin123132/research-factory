@@ -2,10 +2,18 @@
 /factory/private/
 /factory/state/*
 !/factory/state/README.md
-/factory/workbenches/wb001_lossless_compression/data/public/
 /factory/workbenches/wb001_lossless_compression/results/*
+!/factory/workbenches/wb001_lossless_compression/results/README.md
 !/factory/workbenches/wb001_lossless_compression/results/reference_pack/
 !/factory/workbenches/wb001_lossless_compression/results/reference_pack/**
+!/factory/workbenches/wb001_lossless_compression/results/qualification_v0_2/
+/factory/workbenches/wb001_lossless_compression/results/qualification_v0_2/*
+!/factory/workbenches/wb001_lossless_compression/results/qualification_v0_2/candidate_result.json
+!/factory/workbenches/wb001_lossless_compression/results/qualification_v0_2/frontier_comparison.json
+!/factory/workbenches/wb001_lossless_compression/results/blind_demo/
+/factory/workbenches/wb001_lossless_compression/results/blind_demo/*
+!/factory/workbenches/wb001_lossless_compression/results/blind_demo/job_token_v3.json
+!/factory/workbenches/wb001_lossless_compression/results/blind_demo/public_attestation.json
 /factory/workbenches/wb001_lossless_compression/data/holdout_commitment.local.json
 
 # Local work, deployment packages, generated output and databases

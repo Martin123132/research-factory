@@ -19,8 +19,8 @@ jobs:
       run:
         working-directory: factory
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.13"
           cache: pip
@@ -29,6 +29,12 @@ jobs:
         run: python -m pip install -r requirements.lock
       - name: Verify deterministic station kits
         run: python workbench_standard/generate_station_kits.py --check
+      - name: Verify clean-checkout worker entry gate
+        run: >-
+          python control_plane/scripts/run_entry_gate.py
+          --operator ci:github-actions
+          --acknowledge-rules
+          --output state/ci-entry.json
       - name: Test control plane
         run: python -m unittest discover -s control_plane/tests -p "test_*.py" -v
       - name: Test WB-001 runner
@@ -42,8 +48,8 @@ jobs:
       run:
         working-directory: factory/hangar
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: "22.13.0"
           cache: npm
