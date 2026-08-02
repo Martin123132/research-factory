@@ -28,12 +28,15 @@ export default function StandardsPage() {
   const exactProofStations = workbenchContracts.filter(
     (contract) => contract.evidence_lane === "EXACT_PROOF",
   );
+  const adapterBoundStations = workbenchContracts.filter(
+    (contract) => contract.commissioning_profile === "ADAPTER_BOUND",
+  );
 
   return (
     <>
       <section className="page-heading-row standards-heading">
         <div className="page-heading">
-          <p className="eyebrow">Factory standard / version 1.0.0</p>
+          <p className="eyebrow">Factory standard / version 1.1.0</p>
           <h1>A station does not become science because its folder exists.</h1>
           <p>
             Workbench Contract v1 is the gate between a promising problem brief and a laboratory
@@ -76,24 +79,47 @@ export default function StandardsPage() {
         </div>
         <div className="standard-stage-grid">
           <article>
-            <span className="stage-number mono">99</span>
+            <span className="stage-number mono">{String(contractCounts.contract_draft).padStart(2, "0")}</span>
             <p className="eyebrow">Contract draft</p>
             <h3>The target is mapped</h3>
             <p>The brief, references and governance exist. Missing datasets, formulas, verifiers or runners are named explicitly. No live submission is accepted.</p>
           </article>
           <article className="stage-commissioning">
-            <span className="stage-number mono">01</span>
+            <span className="stage-number mono">{String(contractCounts.commissioning_ready).padStart(2, "0")}</span>
             <p className="eyebrow">Commissioning ready</p>
             <h3>The plumbing can be tested</h3>
             <p>WB-001 has frozen public inputs, a verifier, runner protocol, starter gate and local blind workflow. Its timing and identity boundaries are still not promotion-grade.</p>
           </article>
           <article className="stage-locked">
-            <span className="stage-number mono">00</span>
+            <span className="stage-number mono">{String(contractCounts.live_ready).padStart(2, "0")}</span>
             <p className="eyebrow">Live ready</p>
             <h3>Locked by design</h3>
             <p>External identity, a central blind evaluator, promotion-grade isolated execution and explicit authorization must all exist before this count can move.</p>
           </article>
         </div>
+      </section>
+
+      <section className="section-block split-section standards-split">
+        <article className="feature-card feature-card-orange">
+          <p className="eyebrow">Commissioning adapter / first reusable lane</p>
+          <h2>{adapterBoundStations.length} station bound without being over-promoted</h2>
+          <p>
+            WB-002 uses <span className="mono">DIGITAL_COMPRESSION_V1</span>: a closed dossier,
+            allowlisted adapter, hashed operational assets, exact restoration rules and a runnable
+            entry fixture. Its stage is still contract draft because the official enwik9 content
+            commitment and full official scorer are not yet frozen.
+          </p>
+          <Link className="text-link" href="/workbenches/2">Inspect WB-002 →</Link>
+        </article>
+        <article className="feature-card">
+          <p className="eyebrow">Visible construction progress</p>
+          <h2>{contractCounts.runnable_entry_gate} runnable entry gates</h2>
+          <p>
+            One is the legacy WB-001 test article and one is the adapter-bound WB-002 method gate.
+            Passing either demonstrates careful procedure only: it creates no scientific evidence,
+            independent reproduction or promotion credit.
+          </p>
+        </article>
       </section>
 
       <section className="section-block standard-flow-section">

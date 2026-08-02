@@ -8,6 +8,9 @@ export type WorkbenchContractSummary = {
   slug: string;
   title: string;
   contract_version: string;
+  commissioning_profile: "CATALOGUE_ONLY" | "LEGACY_INSTRUMENTED" | "ADAPTER_BOUND";
+  adapter_id: string | null;
+  adapter_version: string | null;
   evidence_lane: string;
   kit_path: string;
   contract_path: string;
@@ -37,6 +40,9 @@ type ContractSnapshot = {
     live_ready: number;
     runnable_entry_gate: number;
     live_research_enabled: number;
+    adapter_bound: number;
+    legacy_instrumented: number;
+    catalogue_only: number;
   };
   stations: WorkbenchContractSummary[];
 };

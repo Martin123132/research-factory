@@ -37,9 +37,10 @@ async function operationalSnapshot(): Promise<{
 
 export default async function Home() {
   const snapshot = await operationalSnapshot();
-  const instrumented = contractCounts.commissioning_ready;
+  const fitted = contractCounts.commissioning_ready + contractCounts.adapter_bound;
   const activeOrders = snapshot.orders.filter((order) => order.status !== "COMPLETED");
   const testArticle = getWorkbench(1)!;
+  const adapterArticle = getWorkbench(2)!;
 
   return (
     <>
@@ -75,7 +76,7 @@ export default async function Home() {
           </div>
           <div className="instrument-bars">
             <div><span>Contract envelopes</span><i style={{ width: "100%" }} /></div>
-            <div><span>Commissioning-ready</span><i style={{ width: `${instrumented}%` }} /></div>
+            <div><span>Fitted or adapter-bound</span><i style={{ width: `${fitted}%` }} /></div>
             <div><span>Live research</span><i className="bar-zero" style={{ width: "0%" }} /></div>
           </div>
           <p className="instrument-note">
@@ -87,8 +88,40 @@ export default async function Home() {
       <section className="stat-grid" aria-label="Hangar statistics">
         <article className="stat-card"><strong>{contractCounts.total}</strong><span>hashed station construction kits</span></article>
         <article className="stat-card"><strong>9</strong><span>physical and computational domains</span></article>
-        <article className="stat-card"><strong>{instrumented}</strong><span>instrumented test article</span></article>
+        <article className="stat-card"><strong>{fitted}</strong><span>fitted or adapter-bound stations</span></article>
         <article className="stat-card stat-card-safe"><strong>{contractCounts.live_research_enabled}</strong><span>live investigations enabled</span></article>
+      </section>
+
+      <section className="split-section section-block">
+        <article className="feature-card">
+          <div className="card-topline">
+            <span className="status-dot status-dot-amber" />
+            <span>Reusable lane proof</span>
+            <span className="mono">ADAPTER 01</span>
+          </div>
+          <h2>{adapterArticle.workbench}</h2>
+          <p>
+            WB-002 now has a closed, hashed exact-compression dossier and a runnable four-hour
+            entry route. It remains a contract draft until the full official corpus, comparator
+            snapshot, package scorer and resource boundary are frozen.
+          </p>
+          <Link className="text-link" href="/workbenches/2">Inspect the adapter-bound station →</Link>
+        </article>
+
+        <article className="feature-card">
+          <div className="card-topline">
+            <span className="status-dot" />
+            <span>Lane scale</span>
+            <span className="mono">COMPRESSION / 12</span>
+          </div>
+          <h2>One adapter, one bounded problem class</h2>
+          <p>
+            The reusable layer handles fixed-public-corpus exact restoration. CRAM, lossy arrays,
+            perceptual codecs and stateful deduplication will receive their own truthful adapters,
+            not a misleading universal compression score.
+          </p>
+          <Link className="text-link" href="/standards">See the commissioning lane →</Link>
+        </article>
       </section>
 
       <section className="section-block">

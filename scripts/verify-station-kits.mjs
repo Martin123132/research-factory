@@ -71,6 +71,7 @@ const readinessByCode = new Map(readiness.stations.map((station) => [station.wor
 const stageCounts = { CONTRACT_DRAFT: 0, COMMISSIONING_READY: 0, LIVE_READY: 0 };
 let runnableEntryGates = 0;
 let liveResearch = 0;
+const profileCounts = { ADAPTER_BOUND: 0, LEGACY_INSTRUMENTED: 0, CATALOGUE_ONLY: 0 };
 
 bundle.contracts.forEach((contract, index) => {
   const numericId = index + 1;
@@ -95,6 +96,23 @@ bundle.contracts.forEach((contract, index) => {
     throw new Error(`${code} has an unsupported readiness stage.`);
   }
   stageCounts[contract.readiness.current_stage] += 1;
+  if (!(contract.commissioning?.profile_status in profileCounts)) {
+    throw new Error(`${code} has an unsupported commissioning profile.`);
+  }
+  profileCounts[contract.commissioning.profile_status] += 1;
+  if (
+    station.commissioning_profile !== contract.commissioning.profile_status ||
+    station.adapter_id !== contract.commissioning.adapter_id ||
+    station.adapter_version !== contract.commissioning.adapter_version
+  ) {
+    throw new Error(`${code} commissioning profile disagrees across snapshots.`);
+  }
+  if (
+    contract.commissioning.profile_status === "ADAPTER_BOUND" &&
+    (!contract.commissioning.adapter_id || !contract.commissioning.dossier_sha256)
+  ) {
+    throw new Error(`${code} is adapter-bound without a committed adapter dossier.`);
+  }
   if (contract.starter_pack.fixture_status === "KNOWN_ANSWER_READY") runnableEntryGates += 1;
   if (contract.readiness.live_research_enabled) liveResearch += 1;
   if (
@@ -124,6 +142,9 @@ const expectedCounts = {
   live_ready: stageCounts.LIVE_READY,
   runnable_entry_gate: runnableEntryGates,
   live_research_enabled: liveResearch,
+  adapter_bound: profileCounts.ADAPTER_BOUND,
+  legacy_instrumented: profileCounts.LEGACY_INSTRUMENTED,
+  catalogue_only: profileCounts.CATALOGUE_ONLY,
 };
 if (JSON.stringify(summary.counts) !== JSON.stringify(expectedCounts)) {
   throw new Error(`Contract readiness counts disagree: ${JSON.stringify({ expectedCounts, actual: summary.counts })}`);

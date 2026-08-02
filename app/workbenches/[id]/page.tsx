@@ -67,9 +67,9 @@ export default async function WorkbenchPage({
               <p className="eyebrow">Workbench Contract v1</p>
               <h2>{contract.unresolved_count} gates remain before live work</h2>
               <p>
-                The contract separates a useful brief from a commissioned station. Missing
-                verifiers, fixtures, runners or identity controls remain visible; the generator
-                is not allowed to invent them.
+                {contract.commissioning_profile === "ADAPTER_BOUND"
+                  ? "A reusable commissioning adapter has fitted the measurable pieces that genuinely exist. Missing official inputs, scorers, resource controls or authority remain visible; adapter-bound does not mean commissioned."
+                  : "The contract separates a useful brief from a commissioned station. Missing verifiers, fixtures, runners or identity controls remain visible; the generator is not allowed to invent them."}
               </p>
               <ul className="gate-list">
                 {contract.unresolved.slice(0, 8).map((gate) => <li key={gate}>{gate.replaceAll("_", " ")}</li>)}
@@ -95,6 +95,8 @@ export default async function WorkbenchPage({
             <dl>
               <div><dt>Readiness</dt><dd>{workbenchReadiness(workbench)}</dd></div>
               <div><dt>Contract</dt><dd>v{contract.contract_version}</dd></div>
+              <div><dt>Profile</dt><dd>{contract.commissioning_profile.replaceAll("_", " ")}</dd></div>
+              {contract.adapter_id && <div><dt>Adapter</dt><dd>{contract.adapter_id.replaceAll("_", " ")} v{contract.adapter_version}</dd></div>}
               <div><dt>Starter</dt><dd>{contract.starter_pack_status.replaceAll("_", " ")}</dd></div>
               <div><dt>Digest</dt><dd className="mono">{contract.contract_sha256.slice(0, 12)}…</dd></div>
               <div><dt>Live work</dt><dd>Locked</dd></div>

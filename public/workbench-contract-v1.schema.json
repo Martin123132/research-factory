@@ -10,6 +10,7 @@
     "contract_version",
     "workbench",
     "source",
+    "commissioning",
     "problem",
     "measurement",
     "starter_pack",
@@ -28,7 +29,7 @@
     },
     "contract_version": {
       "type": "string",
-      "pattern": "^1\\.0\\.[0-9]+$"
+      "pattern": "^1\\.[0-9]+\\.[0-9]+$"
     },
     "workbench": {
       "type": "object",
@@ -95,6 +96,23 @@
         "implementation_contract_version": {
           "type": ["string", "null"],
           "minLength": 1
+        }
+      }
+    },
+    "commissioning": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["profile_status", "adapter_id", "adapter_version", "dossier_path", "dossier_sha256"],
+      "properties": {
+        "profile_status": { "enum": ["CATALOGUE_ONLY", "LEGACY_INSTRUMENTED", "ADAPTER_BOUND"] },
+        "adapter_id": { "type": ["string", "null"], "pattern": "^[A-Z][A-Z0-9_]+$" },
+        "adapter_version": { "type": ["string", "null"], "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+        "dossier_path": { "$ref": "#/$defs/pathOrNull" },
+        "dossier_sha256": {
+          "oneOf": [
+            { "$ref": "#/$defs/sha256" },
+            { "type": "null" }
+          ]
         }
       }
     },
