@@ -1,0 +1,57 @@
+name: Pilot validator check-in
+description: Qualify a distinct human owner for synthetic independent-rerun testing.
+title: "[VALIDATOR CHECK-IN] "
+labels: ["validator-onboarding"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This check-in is for the technical-workflow pilot. It grants no scientific credit and does not make a station live.
+  - type: input
+    id: handle
+    attributes:
+      label: GitHub handle
+      description: Use the account you personally control for this validator role.
+    validations:
+      required: true
+  - type: dropdown
+    id: operating_system
+    attributes:
+      label: Primary test environment
+      options: ["Windows", "Linux", "macOS", "Google Colab", "Other documented environment"]
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Bounded environment description
+      description: Hardware class, OS version, Python version, Docker availability and material limits. Do not post secrets or personal filesystem paths.
+    validations:
+      required: true
+  - type: input
+    id: entry_receipt
+    attributes:
+      label: Entry-receipt SHA-256
+      description: Run the WB-001 entry gate locally and post only the 64-character receipt hash.
+    validations:
+      required: true
+  - type: textarea
+    id: conflicts
+    attributes:
+      label: Conflict declaration
+      description: State shared employment, collaboration, funding or other relationships relevant to a future assignment. "None known" is acceptable.
+    validations:
+      required: true
+  - type: checkboxes
+    id: declarations
+    attributes:
+      label: Human and protocol declarations
+      options:
+        - label: I am one human using this account and will not occupy a second validator identity.
+          required: true
+        - label: I will not validate my own claim or a claim for which I cannot make an honest independence declaration.
+          required: true
+        - label: I will commit evidence before reveal and preserve disagreements, invalid runs and unrunnable outcomes.
+          required: true
+        - label: I understand this pilot qualification carries zero scientific or promotion credit.
+          required: true

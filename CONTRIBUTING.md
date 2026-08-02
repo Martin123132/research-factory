@@ -17,6 +17,13 @@ Every contribution should identify one scope:
 Construction changes carry zero scientific credit. Do not relabel them as a
 result because their tests pass.
 
+## First-time validators
+
+Start with [`VALIDATOR_ONBOARDING.md`](VALIDATOR_ONBOARDING.md) and open a
+`Pilot validator check-in` issue. Qualification proves that your independently
+owned environment can follow the locked workflow; it does not count as one of
+the two reproductions for a scientific claim.
+
 ## Pull-request requirements
 
 1. Name the workbench code and scope.

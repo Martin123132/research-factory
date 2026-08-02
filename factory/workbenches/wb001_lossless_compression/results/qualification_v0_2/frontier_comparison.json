@@ -1,0 +1,63 @@
+{
+  "schema_version": 2,
+  "decision_type": "wb001_frontier_comparison",
+  "generated_at": "2026-08-02T01:52:58.906804+00:00",
+  "workbench": {
+    "id": "WB-001",
+    "version": "0.2.0"
+  },
+  "baseline_pack_sha256": "47251fb969e85ed8cb11fe8ebd5018fa017ac68b68c4870fde90fe6a3c20e056",
+  "candidate_result_sha256": "3ca70f4eee3cac74dff975e71d3c7b70f04c9995d8c9cb546289f3968e3bd8eb",
+  "candidate_artifact_sha256": "0c1e60ac829abcd99b94ba2fdc4c54c8504372c54852c2ebae44d1e8c0b82fff",
+  "corpus_sha256": "7e87977d8f79843d4e383590c0bc7d7058d773cf558007de66d258e9b01bb30f",
+  "status": "VALID_NO_CONFIRMED_GAIN",
+  "eligible_for_promotion": false,
+  "timing_claim_accepted": false,
+  "candidate_metrics": {
+    "total_compressed_bytes": 800126,
+    "encode_wall_ns": 542854800,
+    "decode_wall_ns": 241610800,
+    "peak_rss_bytes": 18477056
+  },
+  "dominated_by": [],
+  "dominates_profiles": [],
+  "threshold_extremes": [],
+  "diagnostic_threshold_extremes": [
+    "peak_rss_bytes"
+  ],
+  "frontier_before": [
+    "brotli-11",
+    "brotli-5",
+    "brotli-9",
+    "xz-0",
+    "xz-6",
+    "xz-9e",
+    "zlib-1",
+    "zlib-6",
+    "zlib-9",
+    "zstd-1",
+    "zstd-19",
+    "zstd-3",
+    "zstd-9"
+  ],
+  "frontier_after": [
+    "brotli-11",
+    "brotli-5",
+    "brotli-9",
+    "candidate",
+    "xz-0",
+    "xz-6",
+    "xz-9e",
+    "zlib-1",
+    "zlib-6",
+    "zlib-9",
+    "zstd-1",
+    "zstd-19",
+    "zstd-3",
+    "zstd-9"
+  ],
+  "reasons": [
+    "advisory timing and memory measurements cannot establish an advance"
+  ],
+  "decision_sha256": "f896a3b3cd4f01d5af01c3e9671387ccc4130adf4c3fa1b5ffd72db44a3af756"
+}

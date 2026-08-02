@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "attestation_type": "wb001_blind_verdict",
+  "run_id": "5cac1084605640cc942e9a47872b26e8",
+  "token_id": "7fb6ce4cb2854fb4b44d153c34aadbd7",
+  "generated_at": "2026-08-02T01:52:37.579082+00:00",
+  "operator_id": "demo:blind-author",
+  "workbench": {
+    "id": "WB-001",
+    "version": "0.2.0"
+  },
+  "candidate_artifact_sha256": "0c1e60ac829abcd99b94ba2fdc4c54c8504372c54852c2ebae44d1e8c0b82fff",
+  "holdout_commitment_sha256": "c0709bc506b00023f96a5b9a9877121b13e6202db18ce3860feeffbd76bef730",
+  "verdict": "NO_GAIN",
+  "evaluator_key_id": "ed25519:fab1ba36aef9e3486ffbbcf73ed72eaabe31670fc7be6ebdc13c3b03843030f6",
+  "evaluator_software_sha256": "c38ace24890d723747991d73c161ef8025d7a87791a28f3c8bb81d6d1a1c606f",
+  "image_lock_sha256": "dd517780ac6d44c0481932046cb83c980bd163bfce2a9a48719acbdabb4131a7",
+  "private_evidence_sha256": "d586a5315d710ff980cec1df0f532d446daf79dc8adfee4052b48d595ee189d3",
+  "details_sealed": true,
+  "signature_base64": "Qoi+T+nugQ92RgO7Z/IauPceE7V0uCc4M2r5yg6jAUGPiRjrINFrJtWyGcmbzn+8PjTH3K2oC5I5X+KQOLiDCQ=="
+}

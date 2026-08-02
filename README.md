@@ -58,9 +58,9 @@ contract and every hard gate. The author cannot validate their own work.
 
 Hidden holdouts, answer sheets, evaluator secrets and private identity records
 are intentionally excluded from this repository. See
+[`VALIDATOR_ONBOARDING.md`](VALIDATOR_ONBOARDING.md),
 [`GOVERNANCE.md`](GOVERNANCE.md), [`CONTRIBUTING.md`](CONTRIBUTING.md) and
 [`SECURITY.md`](SECURITY.md).
 
 The private Hangar deployment is available to authorised project members at
 [Research Factory Hangar 01](https://research-factory-hangar-01.clear-seed-4435.chatgpt.site).
-

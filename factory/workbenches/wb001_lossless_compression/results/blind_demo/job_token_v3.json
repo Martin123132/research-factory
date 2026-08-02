@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "token_type": "wb001_blind_job",
+  "token_id": "7fb6ce4cb2854fb4b44d153c34aadbd7",
+  "issued_at": "2026-08-02T01:52:16.920592+00:00",
+  "expires_at": "2026-08-02T02:52:16.920592+00:00",
+  "operator_id": "demo:blind-author",
+  "workbench": {
+    "id": "WB-001",
+    "version": "0.2.0"
+  },
+  "candidate_artifact_sha256": "0c1e60ac829abcd99b94ba2fdc4c54c8504372c54852c2ebae44d1e8c0b82fff",
+  "holdout_commitment_sha256": "c0709bc506b00023f96a5b9a9877121b13e6202db18ce3860feeffbd76bef730",
+  "evaluator_key_id": "ed25519:fab1ba36aef9e3486ffbbcf73ed72eaabe31670fc7be6ebdc13c3b03843030f6",
+  "maximum_uses": 1,
+  "signature_base64": "UP8IkK/UiR9H8Oz0zfR9Uo7RkG/dnxdRBo2unnH2RfgLYYQtaB+3dOtrDIBDJ/iUsINzTHVDAu7rhMWvG6uWDA=="
+}
