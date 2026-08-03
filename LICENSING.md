@@ -28,7 +28,7 @@ development of the Factory itself.
 
 ## Proposed path-specific model
 
-Subject to rights audit and legal review:
+Subject to a documented path-and-rights audit and repository-owner approval:
 
 | Material | Proposed treatment |
 | --- | --- |
@@ -45,6 +45,28 @@ infrastructure but may be inappropriate as an automatic blanket licence for
 every research candidate. Candidate artifacts therefore need a deliberate
 choice rather than accidental inheritance.
 
+## No paid-advice entry gate
+
+Building, testing and contributing to the Factory must not depend on anyone
+being able to pay a lawyer or patent attorney. In particular:
+
+- no contributor is required to buy legal advice to open a workbench, run an
+  experiment, validate a result or receive scientific credit;
+- the Factory should use established, unmodified standard licences instead of
+  inventing bespoke legal language wherever possible;
+- a candidate that cannot yet be shared under an approved standard licence can
+  remain private, or the public record can contain only non-confidential factual
+  metadata, provenance, hashes and permitted links rather than ingesting the
+  protected artifact; and
+- free official tools, IP clinics and introductory consultations can be used
+  for early guidance.
+
+Paid professional help is an optional decision for the relevant rightsholder
+when a concrete high-value event exists, such as filing a patent, negotiating a
+commercial transaction, resolving complex joint ownership or handling a
+dispute. It is not a Factory membership cost or a condition of scientific
+acceptance.
+
 ## Activation checklist
 
 Before adding operative licence files:
@@ -52,9 +74,9 @@ Before adding operative licence files:
 1. identify the rightsholder for every existing path;
 2. audit third-party code, data, fonts, media and generated assets;
 3. define exact path boundaries and precedence rules;
-4. draft the narrow research-deposit permission with qualified legal advice;
-5. decide whether candidate artifacts must be open, may be evaluation-only, or
-   may choose from an approved licence list;
+4. choose established standard licences and avoid bespoke terms;
+5. define an approved licence list and a metadata-only route for artifacts that
+   cannot be deposited under one of those licences;
 6. add full standard licence texts, SPDX identifiers and notices;
 7. obtain consent for any existing material being relicensed; and
 8. enable contributor sign-off only after those licences exist.
@@ -67,3 +89,5 @@ References:
 - [GitHub: Licensing a repository](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository)
 - [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0.html)
 - [UK IPO: Licensing intellectual property](https://www.gov.uk/guidance/licensing-intellectual-property)
+- [UK IPO: free advice and PatLib centres](https://www.gov.uk/guidance/seeking-intellectual-property-advice)
+- [UK IPO: free CIPA IP Clinics](https://www.gov.uk/guidance/get-legal-advice-from-an-intellectual-property-professional)
