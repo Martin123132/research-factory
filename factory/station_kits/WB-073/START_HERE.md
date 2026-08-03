@@ -1,7 +1,7 @@
 # WB-073 — Cheaper PFAS removal from drinking water
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `b590047c9e1c50c2c081d67edfa6a13f9031e2053306f38a1d7015a6109306d4`
+Contract SHA-256: `c5edf0cd44131c8875a81c12a59a7100261236e589f3b12f6a1d3b6788a00d48`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

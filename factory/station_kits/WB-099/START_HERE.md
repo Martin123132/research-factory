@@ -1,7 +1,7 @@
 # WB-099 — Riemann Hypothesis
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `ed035b5989442caa3d78e5e2cbf4102de61ca55584a2b71ba1d9fca212966ed1`
+Contract SHA-256: `6c7c3afd98c7bb57cec65ea65fb60670ef36dc37dc6483adc71c55dcb6bacb20`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -21,7 +21,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

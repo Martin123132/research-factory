@@ -1,7 +1,7 @@
 # WB-006 — Still-image rate–distortion compression
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `dc8975f8596668dd36c1966bfcbb567f1fbfadd62f41666d49bfb0a6591e7014`
+Contract SHA-256: `c8578482eee52780d69e16a090ae78712391d7acd2e8644de0ca5a413e402cde`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

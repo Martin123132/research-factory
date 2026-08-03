@@ -1,7 +1,7 @@
 # WB-033 — Efficient image super-resolution
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `7f2a5e012ddbd4b2a48744162905fc47b117002f381a278e5deaf66cfd01913c`
+Contract SHA-256: `e8958ef7bb23cf7a5fd4f4e6e38541aea68c3fc3447f2c54583f1835121d47a3`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

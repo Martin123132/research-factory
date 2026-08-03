@@ -1,7 +1,7 @@
 # WB-027 — Forward-error-correction decoder
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `3d1a3b068a0fb72866c6496580b1b2aaa4249a3a6f679c54eab56c2548318650`
+Contract SHA-256: `e6802facc2d3b75ff70204292f73b2114e0d8c9e56ac44e21802549f6917f3d3`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

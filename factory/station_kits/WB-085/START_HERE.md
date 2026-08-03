@@ -1,7 +1,7 @@
 # WB-085 — Accurate low-cost in-situ industrial-robot calibration
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `c0d21db3a033ed086349c4913f9bcd01ba54239ff5776b97ec113b9068592527`
+Contract SHA-256: `822b2c68a3c8ed06379c223bfec2e73969d1db5c65698ef3873958100c6af284`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

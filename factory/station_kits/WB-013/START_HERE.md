@@ -1,7 +1,7 @@
 # WB-013 — Travelling-salesperson route kernel
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `b7150f3d1d1abdd5496d5f510c1673df6fb9efeb83ffef4cda6881ff61f5adaa`
+Contract SHA-256: `902af30ebb8439ad5dfcf83a07a196d650142eed3ba5d8096b7ca2d4ae3b4e39`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -23,7 +23,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

@@ -1,7 +1,7 @@
 # WB-068 — Direct recycling of lithium-ion cathode material
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `24beb7fc178c201bf63a56ec45c1436bdc3af8d096f1a84de0c6eeab924c489d`
+Contract SHA-256: `ffadcc667e0209ec851d24e10768f2f818beee6cc6bca0ef1cda6dcdd43cd53c`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

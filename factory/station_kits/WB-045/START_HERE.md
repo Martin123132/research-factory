@@ -1,7 +1,7 @@
 # WB-045 — Sparse iterative scientific solver
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `6a0a9654c6dc3b1497c9c9aa38b3160bedc92736dcd9e642baba6d543bd3c574`
+Contract SHA-256: `e0f5e823aa0420e2bd7611aa62a1cb5a5432d9c9fff1ffb5b6c7d2f807ee99d9`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

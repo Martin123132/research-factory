@@ -1,7 +1,7 @@
 # WB-062 — Five-axis CNC accuracy/productivity optimisation
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `8860fc98da87472d089d9bfeb29f7f2ddaa794d5660280d7655157da636a4166`
+Contract SHA-256: `0e7d116a431101de847f5c77ee493f741d95a43254e840044814b5cde82eb1e3`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

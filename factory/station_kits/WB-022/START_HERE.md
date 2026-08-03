@@ -1,7 +1,7 @@
 # WB-022 — Job-shop manufacturing scheduling
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `3524763350d9b1abbcd2c5928e3f17e0a4036f19605b43781c3e8f7c55b2b22d`
+Contract SHA-256: `e5b4422bee837f2df4c92c30d32092a9a20953a544dc5e6cb311f24f8ede62aa`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

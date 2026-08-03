@@ -1,7 +1,7 @@
 # WB-001 — General-purpose lossless compression
 
 Stage: `COMMISSIONING_READY`  
-Contract SHA-256: `1ea8b0a2d821e4eae1545244011be1bd37ac7a611fa9e5082ffdeeb6b4b2940f`
+Contract SHA-256: `e1fb98d39c2cd0e75307432b751b61967c282847b54aaaa22d6054a6445ad052`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -16,7 +16,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

@@ -1,7 +1,7 @@
 # WB-057 — Compact, low-pressure-drop heat exchanger
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `54af4e67ad880f49d28f7e738e319fdab435aab62f3793bff96b8326c079ad56`
+Contract SHA-256: `eafbdec92aefd6485082ec0d9eb40d2412a4fce2d6e494543fdb3d9107e18132`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

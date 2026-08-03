@@ -7,6 +7,10 @@ reproduction or promotion credit.
 ## Contents
 
 - `schema/workbench-contract-v1.schema.json` — closed Draft 2020-12 contract.
+- `schema/rights-and-ip-v1.schema.json` — closed contributor declaration
+  vocabulary that cannot claim Factory legal clearance.
+- `schema/contribution-ledger-v1.schema.json` — role, credit and external-prize
+  provenance without automatic authorship or inventorship claims.
 - `generate_station_kits.py` — fail-closed generator and semantic validator.
 - `commissioning/` — self-hashed adapter registry, closed override schemas and
   named transformations that cannot set governance or readiness.

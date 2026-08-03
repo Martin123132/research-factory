@@ -1,7 +1,7 @@
 # WB-083 — Agile robotic kitting and assembly
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `f89f627dc16d9b9f632b197012af32fbafbf924248cda3c9fe5264bf6d07cc21`
+Contract SHA-256: `0341d05eb14c07534a70052c92cc4efdde63ead636abbe3be2f28186b8dc8308`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

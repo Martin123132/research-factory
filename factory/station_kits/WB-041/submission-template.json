@@ -1,10 +1,45 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "workbench_code": "WB-041",
   "contract_sha256": "REPLACE_WITH_LOCKED_CONTRACT_SHA256",
-  "human_owner": {
+  "accountable_human": {
     "subject_id": "REPLACE_WITH_AUTHENTICATED_SUBJECT",
     "conflicts_declared": false
+  },
+  "rights_and_ip": {
+    "declaration_version": 1,
+    "rights_basis": "REPLACE_AFTER_REVIEW",
+    "public_confidentiality": "REPLACE_AFTER_REVIEW",
+    "patent_intent": "REPLACE_AFTER_REVIEW",
+    "rights_review_declared": false,
+    "joint_inventors_identified": "REPLACE_AFTER_REVIEW",
+    "institutional_interests_declared": false,
+    "third_party_rights_declared": false,
+    "material_ai_use_declared": false,
+    "progress_friendly_patent_pledge": "REPLACE_AFTER_REVIEW",
+    "freedom_to_operate": "NOT_ASSESSED",
+    "institutional_interests": [],
+    "other_rightsholders": [],
+    "material_ai_systems": [],
+    "derived_from": [],
+    "artifact_permissions": []
+  },
+  "contribution_ledger": {
+    "ledger_version": 1,
+    "entries": [
+      {
+        "subject_id": "REPLACE_WITH_AUTHENTICATED_SUBJECT",
+        "roles": ["REPLACE_WITH_ALLOWED_ROLE"],
+        "contribution": "Describe the material contribution and its boundary.",
+        "artifact_refs": [],
+        "credit_status": "REPLACE_AFTER_REVIEW",
+        "inventorship_review": "NOT_ASSESSED"
+      }
+    ],
+    "external_prize_authority": "EXTERNAL_BODY_DECIDES",
+    "factory_automatic_share": "NONE",
+    "collaboration_agreement": "NOT_RECORDED",
+    "credit_disputes": []
   },
   "claim": {
     "hypothesis": "State one falsifiable hypothesis.",

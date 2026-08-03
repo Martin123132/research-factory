@@ -1,7 +1,7 @@
 # WB-046 — Sparse-matrix kernels and factorisation
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `2619c4562430877bc80ff384a848ab8de3b65ebcebce4e88a6ca6edbafd59caf`
+Contract SHA-256: `492be29d714037509af22947cec5610b60bb005109a09363e5e16701748928ec`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

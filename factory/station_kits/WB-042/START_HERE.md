@@ -1,7 +1,7 @@
 # WB-042 — Key-value and cloud-serving store
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `3200c3ba8a918b7be00b6d72824f2feb34ada8d5d0e388ce60c809fd71454619`
+Contract SHA-256: `5f5f1c23781b53fa9b47ebb6de2345be320bd77e1097b6f1056962457d9fbc38`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

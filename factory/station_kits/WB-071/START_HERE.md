@@ -1,7 +1,7 @@
 # WB-071 — Rare-earth magnet recovery and remanufacture
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `c1767399f65305c52c8b446944dd6daae271194b8ab06ab9ce6ce55ef8d3904a`
+Contract SHA-256: `fc953670e8659058a429448dbb1ec87b658b4f0f2620d52d1c48bf2764b4ed80`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

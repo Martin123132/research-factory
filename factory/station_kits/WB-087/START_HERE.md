@@ -1,7 +1,7 @@
 # WB-087 — Predictive maintenance with useful warning, not alarm spam
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `4d8d84f9e267bd9a8861dc6e7932469fd55347d9bc0fc324ee15b8452aead88a`
+Contract SHA-256: `e933ef8e8819ec44bf37e6f60b154a5af107ff6766ea86e6a3a28eb027fd2e55`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

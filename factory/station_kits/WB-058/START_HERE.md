@@ -1,7 +1,7 @@
 # WB-058 — High-temperature thermal-energy store
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `f82fa2cdaa3bcc420c7ca47500db4edfadbf39aaa5f9931c5e005d1a1cae00f2`
+Contract SHA-256: `4dc958674b1afd20466ce481b516abc306d0d42bab335206a2e694a7cdc16b68`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

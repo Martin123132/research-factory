@@ -1,7 +1,7 @@
 # WB-074 — Wastewater nitrogen/phosphorus recovery
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `2c1df474f990dc2749f4e71b52ea0cd9de38d50a7007636e0ed3ded8bcb464f0`
+Contract SHA-256: `e03247a93672d8954f2d114358632f3cbe5a1b2c9c1bb096af9184e406661a79`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

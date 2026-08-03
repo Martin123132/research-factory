@@ -1,7 +1,7 @@
 # WB-075 — Water-network leak localisation and pressure control
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `f06e6c9fa2bce6b46e7146219af304128c681f7c8c91a3d4f86a43ab4e21264c`
+Contract SHA-256: `4fc41249594c261ac0e9225cc0aea722d44dfe413271a0dc830fdefa4380786d`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

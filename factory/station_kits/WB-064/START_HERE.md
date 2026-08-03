@@ -1,7 +1,7 @@
 # WB-064 — Robust weld schedule with less distortion and rework
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `4985af25537ae092bfe00cf1ad91383d7068908c4ecbb2291bcae085da10848a`
+Contract SHA-256: `175052578ba896152a3b39fe59db1de1b5764f809909166ad0a27ebac6bbec4d`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

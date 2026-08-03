@@ -1,7 +1,7 @@
 # WB-070 — Stronger products from mixed recycled polyolefins
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `a8adff15b100ef41c94e40a30f8ade926525e55ab4f5db38bf5da4d282cf0ab2`
+Contract SHA-256: `7e667c9eff65a64822925aff6dc810c8b9989dbd3afcbe8bae175858f295290d`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

@@ -1,7 +1,7 @@
 # WB-051 — Longer-lived emerging photovoltaic module
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `d980bad46cfd9329ebbbc91a1e36f705ae1b048d5c08a5b6785ca09576c6d1c2`
+Contract SHA-256: `e27b6e59f3aa5ab5197d544ab90bdb294f4aab0ba8c05bde419eba4fd0d4bdbb`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

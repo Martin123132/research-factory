@@ -6,6 +6,7 @@ import {
   contractGeneratorSha256,
   contractSnapshotSha256,
   contractStandard,
+  contractVersion,
   stationKitsManifestSha256,
   workbenchContracts,
 } from "@/lib/workbench-contracts";
@@ -19,9 +20,10 @@ const invariants = [
   ["01", "Objective truth", "Each station must define the input population, required output, locked independent verifier and exact pass rule. A candidate's own claim is never authoritative."],
   ["02", "Hard gates fail closed", "Missing evidence, malformed output, verifier errors and timeouts fail the gate. A good aggregate score cannot cancel failed correctness or safety."],
   ["03", "Task-specific tolerances", "Exact bytes, hashes and proofs use zero tolerance. Statistical or physical work declares repetitions, seeds, aggregation, confidence and runner class."],
-  ["04", "Two other humans", "Exactly two distinct human owners reproduce the locked claim. The author cannot validate their own work and one person cannot occupy both identities."],
+  ["04", "Two other humans", "Exactly two distinct accountable humans reproduce the locked claim. The author cannot validate their own work and one person cannot occupy both identities."],
   ["05", "Blind before reveal", "Both validators commit conclusions and evidence hashes before either result is revealed. A deterministic split opens diagnosis and human review, never majority promotion."],
   ["06", "Failures remain useful", "Negative and disputed work stays append-only and searchable with its explored region, decisive boundary and conditions for revisiting it."],
+  ["07", "Rights without takeover", "Contributors retain the rights they lawfully hold. The Factory records provenance and declarations but cannot certify ownership, inventorship, patentability or freedom to operate."],
 ] as const;
 
 export default function StandardsPage() {
@@ -39,7 +41,7 @@ export default function StandardsPage() {
     <>
       <section className="page-heading-row standards-heading">
         <div className="page-heading">
-          <p className="eyebrow">Factory standard / version 1.1.0</p>
+          <p className="eyebrow">Factory standard / version {contractVersion}</p>
           <h1>A station does not become science because its folder exists.</h1>
           <p>
             Workbench Contract v1 is the gate between a promising problem brief and a laboratory
@@ -163,6 +165,8 @@ export default function StandardsPage() {
           <div className="button-row">
             <a className="button button-primary" href="/workbench-contracts-v1.json">Download 100 contracts</a>
             <a className="button button-secondary" href="/workbench-contract-v1.schema.json">Download JSON schema</a>
+            <a className="button button-secondary" href="/rights-and-ip-v1.schema.json">Download rights schema</a>
+            <a className="button button-secondary" href="/contribution-ledger-v1.schema.json">Download credit schema</a>
           </div>
         </article>
       </section>

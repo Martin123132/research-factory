@@ -1,7 +1,7 @@
 # WB-020 — Two-dimensional sheet cutting and nesting
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `f88bc2056ac79f8b5b1b72d9393fc7e184b87783a5c62ac5a33f16f5eebd4a4f`
+Contract SHA-256: `8b40759783bc0879f2913bf77d5f0de573824bff1d9c633139ee2c505200e04e`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

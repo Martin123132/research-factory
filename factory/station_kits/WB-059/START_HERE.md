@@ -1,7 +1,7 @@
 # WB-059 — More efficient, durable PEM electrolyser
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `01f8e9700f5c8e5f88361ee065b97205d74c0560f311ef428b2a1e64fb8e3774`
+Contract SHA-256: `3cae2eae959c2df72bb1fec7792fdf8b908520afa536c0c7b5df8ca41ceefccf`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

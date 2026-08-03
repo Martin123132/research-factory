@@ -1,8 +1,10 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "workbench_code": "WB-071",
   "contract_sha256": "REPLACE_WITH_LOCKED_CONTRACT_SHA256",
-  "human_owner_subject_id": "REPLACE_WITH_AUTHENTICATED_SUBJECT",
+  "accountable_human_subject_id": "REPLACE_WITH_AUTHENTICATED_SUBJECT",
+  "rights_and_ip_declaration_path": "REPLACE_WITH_COMPLETED_RIGHTS_DECLARATION_PATH",
+  "contribution_ledger_path": "REPLACE_WITH_COMPLETED_CONTRIBUTION_LEDGER_PATH",
   "classification": "NO_GAIN",
   "hypothesis": "State the hypothesis that was tested.",
   "explored_region": "Define the bounded search region so later workers can avoid repetition.",

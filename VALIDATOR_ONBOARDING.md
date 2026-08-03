@@ -70,7 +70,7 @@ absolute paths containing personal information.
 ### 3. Reproduce the synthetic test article
 
 The first two pilot validators will rerun a known-answer commissioning artifact
-under separate human ownership. This validates assignment, isolation, evidence
+under separate human accountability. This validates assignment, isolation, evidence
 commitment, reveal and dispute plumbing. It carries zero scientific credit and
 cannot promote a research claim.
 

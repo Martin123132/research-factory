@@ -1,7 +1,7 @@
 # WB-021 — Three-dimensional pallet/container loading
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `ae8171d7229f2f121fe1b92b7dba08ceb0b524e3355dc37fb618d02d303cec5a`
+Contract SHA-256: `98f5d5f45d223910c0187a67d24740c3e6955cbaac64b4e91348cb6db86f70b8`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

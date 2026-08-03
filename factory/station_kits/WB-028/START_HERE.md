@@ -1,7 +1,7 @@
 # WB-028 — 5G uplink channel estimation and receiver
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `c443c68287d990d1e33cf7dec3f6076c0b0bc0581543ac75bb8e1ab7a7456907`
+Contract SHA-256: `18154a82b6d69ea0a99a3a6d2d54f35b5e7afe8624fbf934a69c0a927ed1f1fb`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

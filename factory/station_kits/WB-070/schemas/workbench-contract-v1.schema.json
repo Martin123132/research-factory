@@ -396,6 +396,8 @@
       "additionalProperties": false,
       "required": [
         "template_path",
+        "rights_declaration_schema_path",
+        "contribution_ledger_schema_path",
         "required_sections",
         "artifact_lock_required",
         "environment_manifest_required",
@@ -404,6 +406,12 @@
       ],
       "properties": {
         "template_path": { "type": "string", "minLength": 3 },
+        "rights_declaration_schema_path": {
+          "const": "schemas/rights-and-ip-v1.schema.json"
+        },
+        "contribution_ledger_schema_path": {
+          "const": "schemas/contribution-ledger-v1.schema.json"
+        },
         "required_sections": {
           "type": "array",
           "minItems": 6,

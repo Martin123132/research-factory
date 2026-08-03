@@ -1,8 +1,48 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "workbench_code": "WB-002",
   "submission_id": "entry-zlib-6-v1",
-  "human_owner": "factory-commissioning-reference",
+  "accountable_human": "factory-commissioning-reference",
+  "rights_and_ip": {
+    "declaration_version": 1,
+    "rights_basis": "RIGHTS_LAWFULLY_HELD_OR_AUTHORISED",
+    "public_confidentiality": "PUBLIC_NON_CONFIDENTIAL",
+    "patent_intent": "NONE",
+    "rights_review_declared": true,
+    "joint_inventors_identified": "NOT_APPLICABLE",
+    "institutional_interests_declared": true,
+    "third_party_rights_declared": true,
+    "material_ai_use_declared": true,
+    "progress_friendly_patent_pledge": "NOT_APPLICABLE",
+    "freedom_to_operate": "NOT_ASSESSED",
+    "institutional_interests": [],
+    "other_rightsholders": [],
+    "material_ai_systems": [],
+    "derived_from": [],
+    "artifact_permissions": [
+      {
+        "path": "candidate.py",
+        "licence_or_permission": "FACTORY_AUTHORED_COMMISSIONING_FIXTURE; NO_EXTERNAL_LICENCE_ACTIVE"
+      }
+    ]
+  },
+  "contribution_ledger": {
+    "ledger_version": 1,
+    "entries": [
+      {
+        "subject_id": "factory-commissioning-reference",
+        "roles": ["SOFTWARE", "VALIDATION"],
+        "contribution": "Built and checked the non-scientific zlib commissioning fixture.",
+        "artifact_refs": ["candidate.py"],
+        "credit_status": "INFRASTRUCTURE_ONLY",
+        "inventorship_review": "NO_INVENTORSHIP_CLAIM"
+      }
+    ],
+    "external_prize_authority": "EXTERNAL_BODY_DECIDES",
+    "factory_automatic_share": "NONE",
+    "collaboration_agreement": "NOT_APPLICABLE",
+    "credit_disputes": []
+  },
   "command": ["{python}", "candidate.py"],
   "source_files": ["candidate.py"],
   "packaging": {

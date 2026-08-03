@@ -2,12 +2,16 @@ from __future__ import annotations
 
 import copy
 import hashlib
+import json
 import sys
 import unittest
 from pathlib import Path
 
+from jsonschema import Draft202012Validator
+
 
 STANDARD_ROOT = Path(__file__).resolve().parents[1]
+REPOSITORY_ROOT = STANDARD_ROOT.parents[1]
 sys.path.insert(0, str(STANDARD_ROOT))
 
 import generate_station_kits as kits  # noqa: E402
@@ -116,6 +120,107 @@ class StationKitContractTests(unittest.TestCase):
         contract = self.mutated(self.wb003)
         contract["readiness"]["current_stage"] = "COMMISSIONING_READY"
         self.assert_rejected(contract)
+
+    def test_submission_contract_requires_accountability_and_rights_declaration(self) -> None:
+        sections = set(self.wb001["submission"]["required_sections"])
+        self.assertIn("accountable_human", sections)
+        self.assertIn("rights_and_ip", sections)
+        self.assertIn("contribution_ledger", sections)
+        self.assertNotIn("human_owner", sections)
+        self.assertEqual(
+            "schemas/rights-and-ip-v1.schema.json",
+            self.wb001["submission"]["rights_declaration_schema_path"],
+        )
+        self.assertEqual(
+            "schemas/contribution-ledger-v1.schema.json",
+            self.wb001["submission"]["contribution_ledger_schema_path"],
+        )
+        contract = self.mutated(self.wb001)
+        contract["submission"]["required_sections"].remove("rights_and_ip")
+        self.assert_rejected(contract)
+
+    def test_rights_schema_rejects_untouched_scaffold_and_fake_legal_clearance(self) -> None:
+        schema = json.loads(kits.RIGHTS_SCHEMA_PATH.read_text(encoding="utf-8"))
+        Draft202012Validator.check_schema(schema)
+        validator = Draft202012Validator(schema)
+        files, _ = kits.build_kit_files(self.wb001)
+        template = json.loads(files["submission-template.json"].decode("utf-8"))
+        self.assertIn("accountable_human", template)
+        self.assertNotIn("human_owner", template)
+        self.assertTrue(list(validator.iter_errors(template["rights_and_ip"])))
+        rights_scaffold = json.loads(files["rights-and-ip-template.json"].decode("utf-8"))
+        self.assertTrue(list(validator.iter_errors(rights_scaffold)))
+        valid = json.loads(
+            (
+                REPOSITORY_ROOT
+                / "factory/workbenches/wb002_large_text_archive_compression/examples/zlib_reference/submission.json"
+            ).read_text(encoding="utf-8")
+        )["rights_and_ip"]
+        self.assertFalse(list(validator.iter_errors(valid)))
+        invalid = copy.deepcopy(valid)
+        invalid["freedom_to_operate"] = "CLEARED"
+        self.assertTrue(list(validator.iter_errors(invalid)))
+
+    def test_credit_schema_records_roles_without_assigning_prizes_or_inventorship(self) -> None:
+        schema = json.loads(kits.CREDIT_SCHEMA_PATH.read_text(encoding="utf-8"))
+        Draft202012Validator.check_schema(schema)
+        validator = Draft202012Validator(schema)
+        files, _ = kits.build_kit_files(self.wb001)
+        scaffold = json.loads(files["contribution-ledger-template.json"].decode("utf-8"))
+        self.assertTrue(list(validator.iter_errors(scaffold)))
+        valid = json.loads(
+            (
+                REPOSITORY_ROOT
+                / "factory/workbenches/wb002_large_text_archive_compression/examples/zlib_reference/submission.json"
+            ).read_text(encoding="utf-8")
+        )["contribution_ledger"]
+        self.assertFalse(list(validator.iter_errors(valid)))
+        automatic_cut = copy.deepcopy(valid)
+        automatic_cut["factory_automatic_share"] = "TEN_PERCENT"
+        self.assertTrue(list(validator.iter_errors(automatic_cut)))
+        invented_legal_status = copy.deepcopy(valid)
+        invented_legal_status["entries"][0]["inventorship_review"] = "INVENTOR"
+        self.assertTrue(list(validator.iter_errors(invented_legal_status)))
+
+    def test_embedded_lane_rights_schemas_match_governed_schema(self) -> None:
+        governed = json.loads(kits.RIGHTS_SCHEMA_PATH.read_text(encoding="utf-8"))
+        governed_core = {
+            key: governed[key]
+            for key in ["type", "additionalProperties", "required", "properties"]
+        }
+        for name in [
+            "digital_compression_submission.schema.json",
+            "digital_optimization_submission.schema.json",
+        ]:
+            lane = json.loads((STANDARD_ROOT / "commissioning" / name).read_text(encoding="utf-8"))
+            self.assertEqual(governed_core, lane["$defs"]["rightsAndIp"])
+
+    def test_embedded_lane_credit_schemas_match_governed_schema(self) -> None:
+        governed = json.loads(kits.CREDIT_SCHEMA_PATH.read_text(encoding="utf-8"))
+        governed_core = {
+            key: governed[key]
+            for key in ["type", "additionalProperties", "required", "properties"]
+        }
+        for name in [
+            "digital_compression_submission.schema.json",
+            "digital_optimization_submission.schema.json",
+        ]:
+            lane = json.loads((STANDARD_ROOT / "commissioning" / name).read_text(encoding="utf-8"))
+            self.assertEqual(governed_core, lane["$defs"]["contributionLedger"])
+
+    def test_kit_and_generator_identity_bind_rights_policy_assets(self) -> None:
+        files, _ = kits.build_kit_files(self.wb001)
+        self.assertIn("schemas/rights-and-ip-v1.schema.json", files)
+        self.assertIn("schemas/contribution-ledger-v1.schema.json", files)
+        negative = json.loads(files["negative-result-template.json"].decode("utf-8"))
+        dispute = json.loads(files["dispute-template.json"].decode("utf-8"))
+        for template in [negative, dispute]:
+            self.assertIn("rights_and_ip_declaration_path", template)
+            self.assertIn("contribution_ledger_path", template)
+        self.assertIn(kits.RIGHTS_SCHEMA_PATH, kits.GENERATOR_SOURCE_PATHS)
+        self.assertIn(kits.CREDIT_SCHEMA_PATH, kits.GENERATOR_SOURCE_PATHS)
+        for template_name in kits.SHARED_TEMPLATE_NAMES:
+            self.assertIn(kits.TEMPLATES_ROOT / template_name, kits.GENERATOR_SOURCE_PATHS)
 
     def test_wb002_is_adapter_bound_but_fail_closed(self) -> None:
         self.assertEqual("ADAPTER_BOUND", self.wb002["commissioning"]["profile_status"])

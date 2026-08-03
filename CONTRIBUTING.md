@@ -34,9 +34,23 @@ the two reproductions for a scientific claim.
 5. State the practical or economic comparison, including adverse trade-offs.
 6. Retain useful failed work and classify it accurately.
 7. Never include hidden holdouts, answer sheets, credentials or personal data.
+8. Complete the accountable-human and rights/IP declarations without treating
+   schema validity as proof of ownership.
+9. Record material sources, collaborators, institutional interests and AI use.
+10. Do not upload confidential or patent-sensitive material. If patent
+    protection may matter, stop before the issue or pull request and follow
+    [`PATENTS_AND_PUBLIC_DISCLOSURE.md`](PATENTS_AND_PUBLIC_DISCLOSURE.md).
+11. Complete the contribution ledger with roles, artifact references and credit
+    boundaries; do not turn validation or infrastructure work into solver credit.
 
 For a scientific claim, code review may merge construction support while the
 claim remains unpromoted. Two independent reproductions are recorded separately.
+
+Read [`IP_POLICY.md`](IP_POLICY.md),
+[`CONTRIBUTOR_TERMS.md`](CONTRIBUTOR_TERMS.md) and
+[`LICENSING.md`](LICENSING.md) before contributing protected material. The
+licensing framework is not active yet, so external substantive work must not be
+merged on an assumed or implied licence.
 
 ## Local verification
 

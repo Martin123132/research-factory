@@ -39,4 +39,21 @@ body:
       description: Describe a bounded known-answer task that tests method discipline without granting scientific credit.
     validations:
       required: true
-
+  - type: dropdown
+    id: patent_intent
+    attributes:
+      label: Patent intent for disclosed material
+      description: Do not open this issue if the answer is unknown or a filing may still be needed.
+      options:
+        - NONE
+        - OPEN_COMMONS
+        - FILED_BEFORE_PUBLICATION
+    validations:
+      required: true
+  - type: checkboxes
+    id: rights_boundary
+    attributes:
+      label: Public rights boundary
+      options:
+        - label: I have the right to submit this public, non-confidential material and have declared material sources, collaborators, institutional interests and AI use.
+          required: true

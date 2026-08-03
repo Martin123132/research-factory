@@ -1,7 +1,7 @@
 # WB-031 — Acoustic machine-fault detection
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `785df7770a1f74f24609fede7ae185c736a6d08d3db072badb0f12a58cb6fdf4`
+Contract SHA-256: `9f91058231dfa86276b9016d3033f63ae9623f82fbcab019d0729aefefbaa26d`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

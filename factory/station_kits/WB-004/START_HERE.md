@@ -1,7 +1,7 @@
 # WB-004 — Error-bounded scientific-array compression
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `b65f5f9be25c3e7abf753d4311849e328f306f21f30ae4b70cfc45e6e4ac5f7a`
+Contract SHA-256: `f5f5436bc1fb1a6cfbf5950d8f0ead9671c0c4fd7387434c8e264c4c23974d0d`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

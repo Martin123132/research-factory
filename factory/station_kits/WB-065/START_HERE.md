@@ -1,7 +1,7 @@
 # WB-065 — Lower-energy injection-moulding cycle
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `7a979ad942942177610c4fe8e557cd006065543b1d9bbbd6e4baa858c2501659`
+Contract SHA-256: `e62830e802930f60a6da66d20fc3c936681f101e2564f61ed041f9cabb26f5f6`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

@@ -5,14 +5,14 @@
       "workbench_code": "WB-002",
       "adapter": "DIGITAL_COMPRESSION_V1",
       "override_path": "factory/workbenches/wb002_large_text_archive_compression/commissioning.json",
-      "override_sha256": "56228416c0b73f174f94ff5d2facf10968a0016d4175d4ecd1b18ba5a371e0fa"
+      "override_sha256": "a80339ef158778f1a1f13d9399db4086ab650d3b4c55406b9def8140effa06fe"
     },
     {
       "workbench_code": "WB-013",
       "adapter": "DIGITAL_OPTIMIZATION_V1",
       "override_path": "factory/workbenches/wb013_travelling_salesperson_route_kernel/commissioning.json",
-      "override_sha256": "6c7d491bd08478c47d5ba2d8fe201e8bf3166144ad262de53fba39281736c47b"
+      "override_sha256": "ce5c2662f3df6dec2434aeef92b238d35dd0a1e5e5711b753d03390157cb2802"
     }
   ],
-  "index_sha256": "3f77bafe3019d66360b13ad57538022630d79e7c03565169e06b9ab51f7c41d8"
+  "index_sha256": "7acfbf3221ac9ee26403eb1dab5afe3afcf07083a2495dc1cf59f94747e4f7fc"
 }

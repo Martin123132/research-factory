@@ -1,7 +1,7 @@
 # WB-093 — Vehicle powertrain and energy-management controller
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `8822591fba3d9c858f670828d62759ba2c1bc5232da5eb282f5d27e478373985`
+Contract SHA-256: `1ed6af07f7239a1ffbdd82189934468e288a8691abc6e982fa90be79dc9bf959`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

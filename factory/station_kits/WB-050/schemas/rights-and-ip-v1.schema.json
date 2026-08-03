@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://research-factory.local/schemas/rights-and-ip-v1.schema.json",
+  "title": "Research Factory rights and IP declaration v1",
+  "description": "A contributor declaration. Schema validity is not proof of ownership, inventorship, patentability or freedom to operate.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "declaration_version",
+    "rights_basis",
+    "public_confidentiality",
+    "patent_intent",
+    "rights_review_declared",
+    "joint_inventors_identified",
+    "institutional_interests_declared",
+    "third_party_rights_declared",
+    "material_ai_use_declared",
+    "progress_friendly_patent_pledge",
+    "freedom_to_operate",
+    "institutional_interests",
+    "other_rightsholders",
+    "material_ai_systems",
+    "derived_from",
+    "artifact_permissions"
+  ],
+  "properties": {
+    "declaration_version": { "const": 1 },
+    "rights_basis": { "const": "RIGHTS_LAWFULLY_HELD_OR_AUTHORISED" },
+    "public_confidentiality": { "const": "PUBLIC_NON_CONFIDENTIAL" },
+    "patent_intent": {
+      "enum": ["NONE", "OPEN_COMMONS", "FILED_BEFORE_PUBLICATION"]
+    },
+    "rights_review_declared": { "const": true },
+    "joint_inventors_identified": { "enum": ["YES", "NOT_APPLICABLE"] },
+    "institutional_interests_declared": { "const": true },
+    "third_party_rights_declared": { "const": true },
+    "material_ai_use_declared": { "const": true },
+    "progress_friendly_patent_pledge": {
+      "enum": ["EXPRESSED_INTENT", "NOT_EXPRESSED", "NOT_APPLICABLE"]
+    },
+    "freedom_to_operate": {
+      "enum": ["NOT_ASSESSED", "SUBMITTER_REVIEWED", "COUNSEL_REVIEWED"]
+    },
+    "institutional_interests": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 3, "maxLength": 500 }
+    },
+    "other_rightsholders": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["subject_id", "role", "permission_status"],
+        "properties": {
+          "subject_id": { "type": "string", "minLength": 3, "maxLength": 200 },
+          "role": { "type": "string", "minLength": 3, "maxLength": 300 },
+          "permission_status": { "enum": ["NOT_REQUIRED", "RECORDED"] }
+        }
+      }
+    },
+    "material_ai_systems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["system", "role", "human_reviewed"],
+        "properties": {
+          "system": { "type": "string", "minLength": 2, "maxLength": 200 },
+          "role": { "type": "string", "minLength": 3, "maxLength": 500 },
+          "human_reviewed": { "const": true }
+        }
+      }
+    },
+    "derived_from": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["artifact", "version_or_hash", "licence_or_permission", "material_contribution"],
+        "properties": {
+          "artifact": { "type": "string", "minLength": 3, "maxLength": 500 },
+          "version_or_hash": { "type": "string", "minLength": 1, "maxLength": 300 },
+          "licence_or_permission": { "type": "string", "minLength": 2, "maxLength": 300 },
+          "material_contribution": { "type": "string", "minLength": 3, "maxLength": 1000 }
+        }
+      }
+    },
+    "artifact_permissions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "licence_or_permission"],
+        "properties": {
+          "path": {
+            "type": "string",
+            "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\)[A-Za-z0-9._/*-]+$"
+          },
+          "licence_or_permission": { "type": "string", "minLength": 2, "maxLength": 300 }
+        }
+      }
+    },
+    "notes": { "type": "string", "maxLength": 4000 }
+  }
+}

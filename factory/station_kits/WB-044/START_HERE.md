@@ -1,7 +1,7 @@
 # WB-044 — Large-scale graph traversal
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `454fd4e83deb19a5e05c003fa54bdb8d577067dccaca302966739a4b7c83529e`
+Contract SHA-256: `076d09d8fe5172d84b79c90a23f735741bc418038f92961187dfa9b2b6b61bca`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

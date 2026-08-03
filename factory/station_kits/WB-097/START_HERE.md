@@ -1,7 +1,7 @@
 # WB-097 — Hodge Conjecture
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `8882c57e5da90d53f8ad14f532f33c6ddb242e6ca0a5dee100e9ad095823d3d3`
+Contract SHA-256: `68b36dff049480203720d012b8022f7b99b642e72e3907b1e8d991abdbbcd456`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -21,7 +21,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

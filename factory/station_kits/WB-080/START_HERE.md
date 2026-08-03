@@ -1,7 +1,7 @@
 # WB-080 — Reliable low-cost PM2.5/ozone air sensor
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `0a1a8dfc96d3c424302a3907fd19c7ae11381ead13efb88579d933879b7fb464`
+Contract SHA-256: `d4ec517289b543af6f9c3b18532a69a594c731085d2b50dc6ec84972a047cce4`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

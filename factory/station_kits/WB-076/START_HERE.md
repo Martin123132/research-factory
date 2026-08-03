@@ -1,7 +1,7 @@
 # WB-076 — Stormwater and combined-sewer overflow control
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `de2547c7a2d10165f9e1f7498998f6f6dd90676f2194949f6d90e22dd7562e47`
+Contract SHA-256: `01552328da24ee971edded59080e12142bf36bd9be574b5eef82752415f5537a`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

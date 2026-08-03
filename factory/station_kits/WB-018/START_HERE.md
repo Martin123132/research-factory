@@ -1,7 +1,7 @@
 # WB-018 — Dynamic ride-pooling and taxi dispatch
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `9dea23167c4f6ebed32bf4bea69d721f44cd7a58668b466ab16be79efdf7c147`
+Contract SHA-256: `ddedbc84a0eab310a1b5a0d0f688545465f9352b6947892a6bd09003a8d43f85`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

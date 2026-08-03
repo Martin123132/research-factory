@@ -1,7 +1,7 @@
 # WB-015 — Delivery routing with time windows
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `a9169e1c5d56458c01ca97df2e8b27eeaf04f9a5c4900fa74ffc5fe5774c29e8`
+Contract SHA-256: `351fb3cc5d5b4ba5c969cf56a24f92f5da9602b588d338b5a070d772851ed7e6`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

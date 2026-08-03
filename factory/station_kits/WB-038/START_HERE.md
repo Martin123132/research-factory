@@ -1,7 +1,7 @@
 # WB-038 — Embedded compiler optimisation
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `5f0b733e33272270c8b70c555fcec817543cc7a9508381ed0537618ea86efd01`
+Contract SHA-256: `912d6fe2c0bd2ebf9291f91ce27c2e1cbfb4cd2243deeaecf4680309d2dac6a7`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

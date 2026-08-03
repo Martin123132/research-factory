@@ -1,7 +1,7 @@
 # WB-061 — Metal-AM fatigue-life improvement
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `48f7a4a4537ef503772547c5141ff98eef697ee04163a56ddecfea56bb79ae9c`
+Contract SHA-256: `fd27a7d7ec2ab9e3cf1699cc5bb67bd073ef2fcdb1a16cff935f727c00ecff2c`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

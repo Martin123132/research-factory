@@ -2,12 +2,14 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "workbench_code", "submission_id", "human_owner", "command", "source_files", "packaging", "credit_scope", "trust_acknowledgement"],
+  "required": ["schema_version", "workbench_code", "submission_id", "accountable_human", "rights_and_ip", "contribution_ledger", "command", "source_files", "packaging", "credit_scope", "trust_acknowledgement"],
   "properties": {
-    "schema_version": { "const": 1 },
+    "schema_version": { "const": 2 },
     "workbench_code": { "type": "string", "pattern": "^WB-[0-9]{3}$" },
     "submission_id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
-    "human_owner": { "type": "string", "minLength": 3 },
+    "accountable_human": { "type": "string", "minLength": 3 },
+    "rights_and_ip": { "$ref": "#/$defs/rightsAndIp" },
+    "contribution_ledger": { "$ref": "#/$defs/contributionLedger" },
     "command": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
     "source_files": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\)[A-Za-z0-9._/-]+$" } },
     "packaging": {
@@ -21,5 +23,105 @@
     },
     "credit_scope": { "const": "ENTRY_GATE_ONLY" },
     "trust_acknowledgement": { "const": "TRUSTED_LOCAL_CODE_ONLY" }
+  },
+  "$defs": {
+    "rightsAndIp": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["declaration_version", "rights_basis", "public_confidentiality", "patent_intent", "rights_review_declared", "joint_inventors_identified", "institutional_interests_declared", "third_party_rights_declared", "material_ai_use_declared", "progress_friendly_patent_pledge", "freedom_to_operate", "institutional_interests", "other_rightsholders", "material_ai_systems", "derived_from", "artifact_permissions"],
+      "properties": {
+        "declaration_version": { "const": 1 },
+        "rights_basis": { "const": "RIGHTS_LAWFULLY_HELD_OR_AUTHORISED" },
+        "public_confidentiality": { "const": "PUBLIC_NON_CONFIDENTIAL" },
+        "patent_intent": { "enum": ["NONE", "OPEN_COMMONS", "FILED_BEFORE_PUBLICATION"] },
+        "rights_review_declared": { "const": true },
+        "joint_inventors_identified": { "enum": ["YES", "NOT_APPLICABLE"] },
+        "institutional_interests_declared": { "const": true },
+        "third_party_rights_declared": { "const": true },
+        "material_ai_use_declared": { "const": true },
+        "progress_friendly_patent_pledge": { "enum": ["EXPRESSED_INTENT", "NOT_EXPRESSED", "NOT_APPLICABLE"] },
+        "freedom_to_operate": { "enum": ["NOT_ASSESSED", "SUBMITTER_REVIEWED", "COUNSEL_REVIEWED"] },
+        "institutional_interests": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 3, "maxLength": 500 } },
+        "other_rightsholders": {
+          "type": "array",
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["subject_id", "role", "permission_status"],
+            "properties": {
+              "subject_id": { "type": "string", "minLength": 3, "maxLength": 200 },
+              "role": { "type": "string", "minLength": 3, "maxLength": 300 },
+              "permission_status": { "enum": ["NOT_REQUIRED", "RECORDED"] }
+            }
+          }
+        },
+        "material_ai_systems": {
+          "type": "array",
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["system", "role", "human_reviewed"],
+            "properties": {
+              "system": { "type": "string", "minLength": 2, "maxLength": 200 },
+              "role": { "type": "string", "minLength": 3, "maxLength": 500 },
+              "human_reviewed": { "const": true }
+            }
+          }
+        },
+        "derived_from": {
+          "type": "array",
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["artifact", "version_or_hash", "licence_or_permission", "material_contribution"],
+            "properties": {
+              "artifact": { "type": "string", "minLength": 3, "maxLength": 500 },
+              "version_or_hash": { "type": "string", "minLength": 1, "maxLength": 300 },
+              "licence_or_permission": { "type": "string", "minLength": 2, "maxLength": 300 },
+              "material_contribution": { "type": "string", "minLength": 3, "maxLength": 1000 }
+            }
+          }
+        },
+        "artifact_permissions": {
+          "type": "array", "minItems": 1,
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["path", "licence_or_permission"],
+            "properties": {
+              "path": { "type": "string", "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\)[A-Za-z0-9._/*-]+$" },
+              "licence_or_permission": { "type": "string", "minLength": 2, "maxLength": 300 }
+            }
+          }
+        },
+        "notes": { "type": "string", "maxLength": 4000 }
+      }
+    },
+    "contributionLedger": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ledger_version", "entries", "external_prize_authority", "factory_automatic_share", "collaboration_agreement", "credit_disputes"],
+      "properties": {
+        "ledger_version": { "const": 1 },
+        "entries": {
+          "type": "array", "minItems": 1,
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["subject_id", "roles", "contribution", "artifact_refs", "credit_status", "inventorship_review"],
+            "properties": {
+              "subject_id": { "type": "string", "minLength": 3, "maxLength": 200 },
+              "roles": {
+                "type": "array", "minItems": 1, "uniqueItems": true,
+                "items": { "enum": ["PROBLEM_FORMULATION", "METHODOLOGY", "SOFTWARE", "FORMALIZATION", "INVESTIGATION", "DATA_CURATION", "ANALYSIS", "VALIDATION", "DISCREPANCY_DIAGNOSIS", "WRITING", "VISUALIZATION", "SUPERVISION", "PROJECT_ADMINISTRATION", "FUNDING_ACQUISITION"] }
+              },
+              "contribution": { "type": "string", "minLength": 10, "maxLength": 2000 },
+              "artifact_refs": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 3, "maxLength": 500 } },
+              "credit_status": { "enum": ["CLAIM_CONTRIBUTOR", "VALIDATOR_ONLY", "ACKNOWLEDGEMENT", "INFRASTRUCTURE_ONLY"] },
+              "inventorship_review": { "enum": ["NOT_ASSESSED", "POSSIBLE_REVIEW_REQUIRED", "NO_INVENTORSHIP_CLAIM"] }
+            }
+          }
+        },
+        "external_prize_authority": { "const": "EXTERNAL_BODY_DECIDES" },
+        "factory_automatic_share": { "const": "NONE" },
+        "collaboration_agreement": { "enum": ["NOT_APPLICABLE", "RECORDED_OUTSIDE_REPOSITORY", "NOT_RECORDED"] },
+        "credit_disputes": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 3, "maxLength": 500 } }
+      }
+    }
   }
 }

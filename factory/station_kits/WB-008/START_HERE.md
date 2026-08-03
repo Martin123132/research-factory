@@ -1,7 +1,7 @@
 # WB-008 — 3D point-cloud compression
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `59a81a7ce39429c38f42bc26d4364f4f49efffbcfcb3143981b5a0a02ed2a31d`
+Contract SHA-256: `8e4b3b20f0d2478a93660f21e9cefd7bd8e4ec89c50739e77fae4410a39f85cb`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.
