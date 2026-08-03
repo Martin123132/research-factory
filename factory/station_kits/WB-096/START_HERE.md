@@ -1,7 +1,7 @@
 # WB-096 — Navier–Stokes existence and smoothness
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `c2214a8e5fe95badbb86e345e0e8e644f79c32df48a64a126af034529b6d0ae0`
+Contract SHA-256: `24d67685954c3440af74b76219c3deda9140d0d47021ddd1c709718cb912b2ac`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -21,7 +21,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

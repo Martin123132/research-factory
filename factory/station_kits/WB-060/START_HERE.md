@@ -1,7 +1,7 @@
 # WB-060 — Metal-AM residual-stress and distortion control
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `9ad74c0d0e0d9a105eb1b6fb6c83ff8ea02a9436a7e13251be45621e91f31a39`
+Contract SHA-256: `c65faf5890b97a1c8386388e63c47c864dcfc53782d4208c68ea5f4bcea65faa`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

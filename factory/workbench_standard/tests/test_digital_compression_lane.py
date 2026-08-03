@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 import json
 import subprocess
 import sys
@@ -22,6 +23,15 @@ SUBMISSION_SCHEMA = STANDARD_ROOT / "commissioning" / "digital_compression_submi
 
 
 class DigitalCompressionLaneTests(unittest.TestCase):
+    def load_submission_contract(self) -> tuple[dict, dict]:
+        schema = json.loads(SUBMISSION_SCHEMA.read_text(encoding="utf-8"))
+        submission = json.loads(
+            (WB002 / "examples" / "zlib_reference" / "submission.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        return schema, submission
+
     def test_locked_fixture_reproduces_stable_evidence(self) -> None:
         with tempfile.TemporaryDirectory(prefix="wb002-test-") as temporary:
             output = Path(temporary) / "result.json"
@@ -46,12 +56,20 @@ class DigitalCompressionLaneTests(unittest.TestCase):
             self.assertFalse(result["credit_boundary"]["official_hutter_score"])
 
     def test_entry_schema_rejects_unimplemented_official_packaging_branches(self) -> None:
-        schema = json.loads(SUBMISSION_SCHEMA.read_text(encoding="utf-8"))
-        submission = json.loads(
-            (WB002 / "examples" / "zlib_reference" / "submission.json").read_text(encoding="utf-8")
-        )
+        schema, submission = self.load_submission_contract()
         submission["packaging"]["mode"] = "SEPARATE_PROGRAMS"
         self.assertTrue(list(Draft202012Validator(schema).iter_errors(submission)))
+
+    def test_entry_schema_requires_accountable_human_and_honest_rights_status(self) -> None:
+        schema, submission = self.load_submission_contract()
+        validator = Draft202012Validator(schema)
+        self.assertFalse(list(validator.iter_errors(submission)))
+        legacy = copy.deepcopy(submission)
+        legacy["human_owner"] = legacy.pop("accountable_human")
+        self.assertTrue(list(validator.iter_errors(legacy)))
+        false_clearance = copy.deepcopy(submission)
+        false_clearance["rights_and_ip"]["freedom_to_operate"] = "CLEARED"
+        self.assertTrue(list(validator.iter_errors(false_clearance)))
 
     def test_generator_identity_binds_adapter_sources(self) -> None:
         self.assertIn(

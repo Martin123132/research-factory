@@ -1,7 +1,7 @@
 # WB-079 — Remote methane leak detection and quantification
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `8f058687deaf7a679c1728f7129ea2bbb2bb3461ff1f49f32a5891c29846d776`
+Contract SHA-256: `6e08b1f55f86c33e0e5ee2a9ccaef88a13a62eeb073f9beafa232b69a71a7e85`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

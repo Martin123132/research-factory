@@ -30,7 +30,7 @@ A result is not promoted because it looks promising. It is promoted only when:
 2. the benchmark and baseline versions are frozen;
 3. the candidate is a useful Pareto improvement after resource and economic
    costs are counted;
-4. two other human owners independently rerun the locked artifact; and
+4. two other accountable humans independently rerun the locked artifact; and
 5. the central evaluator confirms the result on sealed holdouts.
 
 Reproducible failures are kept as typed evidence. `RERUN_CONFIRMED_NO_GAIN`,
@@ -55,7 +55,7 @@ The factory keeps construction, commissioning and scientific evidence separate:
    workbench history or count as independent reproduction.
 3. **Live research** uses real operators and real measurements. A single person
    may explore or retain negative work, but no candidate advances through the
-   two-person gate until two genuinely separate human owners reproduce it.
+   two-person gate until two genuinely separate accountable humans reproduce it.
 
 The present phase is hangar construction plus commissioning. WB-001 is the
 legacy instrumented test article. WB-002 and WB-013 are fitted through separate

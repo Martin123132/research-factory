@@ -1,7 +1,7 @@
 # WB-035 — Visual–inertial navigation
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `1d22194e3345eb8eef6d744e0e7189efb6c9bb4fe092cd51629089d12d7a3674`
+Contract SHA-256: `b08c10fc0c1bd7482ccb378a539d15f341103975e15acca4681d47af579f8918`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

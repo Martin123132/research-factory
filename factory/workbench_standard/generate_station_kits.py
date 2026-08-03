@@ -17,8 +17,8 @@ from jsonschema import Draft202012Validator, FormatChecker
 from commissioning import digital_compression, digital_optimization
 
 
-GENERATOR_VERSION = "1.2.0"
-CONTRACT_VERSION = "1.1.0"
+GENERATOR_VERSION = "1.3.0"
+CONTRACT_VERSION = "1.2.0"
 STANDARD = "research-factory/workbench-contract/v1"
 PINNED_CATALOGUE_SHA256 = "9b37a47c265e916cbf460f4dd0120b02b01fa800b104017b117ba2fc40644cd5"
 GENERIC_STARTER = (
@@ -61,6 +61,8 @@ TRACK_MAP = {
 }
 SHARED_TEMPLATE_NAMES = [
     "submission-template.json",
+    "rights-and-ip-template.json",
+    "contribution-ledger-template.json",
     "negative-result-template.json",
     "dispute-template.json",
     "VALIDATOR_CHECKLIST.md",
@@ -73,11 +75,15 @@ REPOSITORY_ROOT = FACTORY_ROOT.parent
 CATALOGUE_PATH = REPOSITORY_ROOT / "research_factory_100_workbenches.json"
 HANGAR_CATALOGUE_PATH = FACTORY_ROOT / "hangar" / "data" / "workbenches.json"
 SCHEMA_PATH = STANDARD_ROOT / "schema" / "workbench-contract-v1.schema.json"
+RIGHTS_SCHEMA_PATH = STANDARD_ROOT / "schema" / "rights-and-ip-v1.schema.json"
+CREDIT_SCHEMA_PATH = STANDARD_ROOT / "schema" / "contribution-ledger-v1.schema.json"
 TEMPLATES_ROOT = STANDARD_ROOT / "templates"
 KITS_ROOT = FACTORY_ROOT / "station_kits"
 HANGAR_DATA_PATH = FACTORY_ROOT / "hangar" / "data" / "workbench-contracts.json"
 HANGAR_READINESS_PATH = FACTORY_ROOT / "hangar" / "data" / "workbench-readiness.json"
 HANGAR_PUBLIC_SCHEMA_PATH = FACTORY_ROOT / "hangar" / "public" / SCHEMA_PATH.name
+HANGAR_PUBLIC_RIGHTS_SCHEMA_PATH = FACTORY_ROOT / "hangar" / "public" / RIGHTS_SCHEMA_PATH.name
+HANGAR_PUBLIC_CREDIT_SCHEMA_PATH = FACTORY_ROOT / "hangar" / "public" / CREDIT_SCHEMA_PATH.name
 HANGAR_PUBLIC_BUNDLE_PATH = FACTORY_ROOT / "hangar" / "public" / "workbench-contracts-v1.json"
 COMMISSIONING_ROOT = STANDARD_ROOT / "commissioning"
 COMMISSIONING_INDEX_PATH = COMMISSIONING_ROOT / "index.json"
@@ -87,6 +93,8 @@ DIGITAL_OPTIMIZATION_SCHEMA_PATH = COMMISSIONING_ROOT / "digital-optimization-ov
 GENERATOR_SOURCE_PATHS = [
     Path(__file__).resolve(),
     SCHEMA_PATH,
+    RIGHTS_SCHEMA_PATH,
+    CREDIT_SCHEMA_PATH,
     COMMISSIONING_INDEX_PATH,
     COMMISSIONING_INDEX_SCHEMA_PATH,
     DIGITAL_COMPRESSION_SCHEMA_PATH,
@@ -100,7 +108,7 @@ GENERATOR_SOURCE_PATHS = [
     COMMISSIONING_ROOT / "digital_optimization_submission.schema.json",
     COMMISSIONING_ROOT / "digital_optimization_result.schema.json",
     COMMISSIONING_ROOT / "runner" / "evaluate_optimization_trusted.py",
-]
+] + [TEMPLATES_ROOT / name for name in SHARED_TEMPLATE_NAMES]
 _SCHEMA_VALIDATOR: Draft202012Validator | None = None
 
 
@@ -527,8 +535,12 @@ def build_draft_contract(
         },
         "submission": {
             "template_path": "submission-template.json",
+            "rights_declaration_schema_path": f"schemas/{RIGHTS_SCHEMA_PATH.name}",
+            "contribution_ledger_schema_path": f"schemas/{CREDIT_SCHEMA_PATH.name}",
             "required_sections": [
-                "human_owner",
+                "accountable_human",
+                "rights_and_ip",
+                "contribution_ledger",
                 "hypothesis",
                 "method",
                 "artifact",
@@ -1106,6 +1118,34 @@ def validate_contract(contract: dict[str, Any], *, require_stage: str | None = N
         raise ContractError(f"{code}: code and numeric ID disagree")
     if contract["source"]["entry_sha256"] != contract["provenance"]["source_entry_sha256"]:
         raise ContractError(f"{code}: source entry digests disagree")
+    required_submission_sections = {
+        "accountable_human",
+        "rights_and_ip",
+        "contribution_ledger",
+        "hypothesis",
+        "method",
+        "artifact",
+        "environment",
+        "commands",
+        "public_evidence",
+        "hard_gates",
+        "measurements",
+        "economic_or_physical_accounting",
+    }
+    declared_submission_sections = set(contract["submission"]["required_sections"])
+    if not required_submission_sections.issubset(declared_submission_sections):
+        missing = sorted(required_submission_sections - declared_submission_sections)
+        raise ContractError(f"{code}: submission contract omits required sections: {missing}")
+    if "human_owner" in declared_submission_sections:
+        raise ContractError(f"{code}: ambiguous human_owner field is not permitted")
+    if contract["submission"]["rights_declaration_schema_path"] != (
+        f"schemas/{RIGHTS_SCHEMA_PATH.name}"
+    ):
+        raise ContractError(f"{code}: rights declaration is not bound to the governed schema")
+    if contract["submission"]["contribution_ledger_schema_path"] != (
+        f"schemas/{CREDIT_SCHEMA_PATH.name}"
+    ):
+        raise ContractError(f"{code}: contribution ledger is not bound to the governed schema")
     commissioning = contract["commissioning"]
     profile = commissioning["profile_status"]
     adapter_fields = [
@@ -1328,7 +1368,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.
@@ -1409,6 +1449,8 @@ def build_kit_files(contract: dict[str, Any]) -> tuple[dict[str, bytes], dict[st
     files: dict[str, bytes] = {
         "contract.json": contract_payload,
         f"schemas/{SCHEMA_PATH.name}": SCHEMA_PATH.read_bytes(),
+        f"schemas/{RIGHTS_SCHEMA_PATH.name}": RIGHTS_SCHEMA_PATH.read_bytes(),
+        f"schemas/{CREDIT_SCHEMA_PATH.name}": CREDIT_SCHEMA_PATH.read_bytes(),
         "START_HERE.md": start_here_bytes(contract, contract_sha256),
         "STARTER_PACK.md": starter_pack_bytes(contract),
         "RUNNER_TRUST.md": runner_trust_bytes(contract),
@@ -1582,6 +1624,8 @@ def build_outputs() -> tuple[list[dict[str, Any]], dict[Path, bytes], dict[str, 
     )
     expected[HANGAR_READINESS_PATH] = pretty_bytes(readiness_snapshot)
     expected[HANGAR_PUBLIC_SCHEMA_PATH] = SCHEMA_PATH.read_bytes()
+    expected[HANGAR_PUBLIC_RIGHTS_SCHEMA_PATH] = RIGHTS_SCHEMA_PATH.read_bytes()
+    expected[HANGAR_PUBLIC_CREDIT_SCHEMA_PATH] = CREDIT_SCHEMA_PATH.read_bytes()
     public_bundle = make_self_hashed(
         {
             "schema_version": 1,

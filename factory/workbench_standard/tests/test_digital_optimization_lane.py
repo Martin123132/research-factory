@@ -9,6 +9,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from jsonschema import Draft202012Validator
+
 
 STANDARD_ROOT = Path(__file__).resolve().parents[1]
 REPOSITORY_ROOT = STANDARD_ROOT.parents[1]
@@ -27,9 +29,19 @@ evaluator = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(evaluator)
 
 WB013 = REPOSITORY_ROOT / "factory" / "workbenches" / "wb013_travelling_salesperson_route_kernel"
+SUBMISSION_SCHEMA = STANDARD_ROOT / "commissioning" / "digital_optimization_submission.schema.json"
 
 
 class DigitalOptimizationLaneTests(unittest.TestCase):
+    def load_submission_contract(self) -> tuple[dict, dict]:
+        schema = json.loads(SUBMISSION_SCHEMA.read_text(encoding="utf-8"))
+        submission = json.loads(
+            (WB013 / "examples" / "reference_solver" / "submission.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        return schema, submission
+
     def test_locked_fixture_reproduces_exact_stable_evidence(self) -> None:
         with tempfile.TemporaryDirectory(prefix="wb013-test-") as temporary:
             output = Path(temporary) / "result.json"
@@ -79,6 +91,17 @@ class DigitalOptimizationLaneTests(unittest.TestCase):
             path.write_text(fixture, encoding="utf-8")
             with self.assertRaises(evaluator.EvaluationError):
                 evaluator.parse_explicit_symmetric_tsp(path)
+
+    def test_entry_schema_requires_accountable_human_and_honest_rights_status(self) -> None:
+        schema, submission = self.load_submission_contract()
+        validator = Draft202012Validator(schema)
+        self.assertFalse(list(validator.iter_errors(submission)))
+        legacy = copy.deepcopy(submission)
+        legacy["human_owner"] = legacy.pop("accountable_human")
+        self.assertTrue(list(validator.iter_errors(legacy)))
+        false_clearance = copy.deepcopy(submission)
+        false_clearance["rights_and_ip"]["freedom_to_operate"] = "CLEARED"
+        self.assertTrue(list(validator.iter_errors(false_clearance)))
 
     def test_generator_identity_binds_optimization_sources(self) -> None:
         for path in [

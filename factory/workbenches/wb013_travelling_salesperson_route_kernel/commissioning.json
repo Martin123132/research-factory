@@ -68,7 +68,7 @@
     {
       "role": "submission_schema",
       "path": "factory/workbench_standard/commissioning/digital_optimization_submission.schema.json",
-      "sha256": "df19302fad4ad464b575f9be4dae4b1e52872bcb915d1688c5c1587add6819c1"
+      "sha256": "9cd1966a312b124549e07171675641500b05a3a56ca7e145cb1706764a91c6e1"
     },
     {
       "role": "result_schema",

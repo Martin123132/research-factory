@@ -1,7 +1,7 @@
 # WB-003 — Genomic alignment compression
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `1074bb78db1c1b039469b8074df833e092afc69894fa699bb765efbb1250134f`
+Contract SHA-256: `013e9f32c677a815691a01807f282a63f7417e41ac272d03db6388f94c81b8e2`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

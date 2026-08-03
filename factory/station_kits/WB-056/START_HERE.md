@@ -1,7 +1,7 @@
 # WB-056 — Building HVAC supervisory controller
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `92f35a16dbf4e13a8bfb38b5f1dc0cc598aed1a7f3e2208aad255b4f118a90a7`
+Contract SHA-256: `82729b715f4558e489d11c03f13214f8e514b48682497836f65e6abe21ff8d56`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

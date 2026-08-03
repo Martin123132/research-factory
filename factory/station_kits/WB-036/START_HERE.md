@@ -1,7 +1,7 @@
 # WB-036 — Camera–radar–LiDAR 3D perception
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `cffbc1c8c914620d66b79b9c88bf0b83455d53130298b15427406a0f1d92645f`
+Contract SHA-256: `97545a4724f76a8cbb36068f4adf232996441ba890dc95bf7693775b94edb90c`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

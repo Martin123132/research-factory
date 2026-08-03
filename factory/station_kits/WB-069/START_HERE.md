@@ -1,7 +1,7 @@
 # WB-069 — Higher-purity plastic sorting
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `ef5fc293d2294f692c4e08d574a4f86040dd67b494a073989f0cb71aa364a59a`
+Contract SHA-256: `606c2becbd96ca21c8e35839b39213ebfb320c1859215c9e67e8c89bfe8cf0ad`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

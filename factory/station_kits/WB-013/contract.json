@@ -1,6 +1,6 @@
 {
   "standard": "research-factory/workbench-contract/v1",
-  "contract_version": "1.1.0",
+  "contract_version": "1.2.0",
   "workbench": {
     "code": "WB-013",
     "numeric_id": 13,
@@ -29,7 +29,7 @@
     "adapter_id": "DIGITAL_OPTIMIZATION_V1",
     "adapter_version": "1.0.0",
     "dossier_path": "factory/workbenches/wb013_travelling_salesperson_route_kernel/commissioning.json",
-    "dossier_sha256": "6c7d491bd08478c47d5ba2d8fe201e8bf3166144ad262de53fba39281736c47b"
+    "dossier_sha256": "ce5c2662f3df6dec2434aeef92b238d35dd0a1e5e5711b753d03390157cb2802"
   },
   "problem": {
     "objective": "Travelling-salesperson route kernel",
@@ -360,8 +360,12 @@
   },
   "submission": {
     "template_path": "submission-template.json",
+    "rights_declaration_schema_path": "schemas/rights-and-ip-v1.schema.json",
+    "contribution_ledger_schema_path": "schemas/contribution-ledger-v1.schema.json",
     "required_sections": [
-      "human_owner",
+      "accountable_human",
+      "rights_and_ip",
+      "contribution_ledger",
       "hypothesis",
       "method",
       "artifact",
@@ -477,15 +481,15 @@
     ]
   },
   "provenance": {
-    "generator_version": "1.2.0",
-    "generator_sha256": "87e4d7c087551dec3e66f21829d9038c0557d46847be4c80aaf43e6e6b7f1e20",
+    "generator_version": "1.3.0",
+    "generator_sha256": "f0a80cee454a6259cfc3d05157bbee9d21c2eab6341ec03db9d69447c7b9f4fa",
     "generated_from": "research_factory_100_workbenches.json",
     "source_entry_sha256": "7c16bdedcee2220cf6eea130f226ba43c5f4458569d903d4fb3d4001392cf1db",
     "referenced_assets": [
       {
         "name": "commissioning_override",
         "path": "factory/workbenches/wb013_travelling_salesperson_route_kernel/commissioning.json",
-        "sha256": "6c7d491bd08478c47d5ba2d8fe201e8bf3166144ad262de53fba39281736c47b",
+        "sha256": "ce5c2662f3df6dec2434aeef92b238d35dd0a1e5e5711b753d03390157cb2802",
         "logical_commitment_sha256": null
       },
       {
@@ -557,7 +561,7 @@
       {
         "name": "submission_schema",
         "path": "factory/workbench_standard/commissioning/digital_optimization_submission.schema.json",
-        "sha256": "df19302fad4ad464b575f9be4dae4b1e52872bcb915d1688c5c1587add6819c1",
+        "sha256": "9cd1966a312b124549e07171675641500b05a3a56ca7e145cb1706764a91c6e1",
         "logical_commitment_sha256": null
       },
       {
@@ -569,6 +573,8 @@
     ],
     "shared_templates": [
       "submission-template.json",
+      "rights-and-ip-template.json",
+      "contribution-ledger-template.json",
       "negative-result-template.json",
       "dispute-template.json",
       "VALIDATOR_CHECKLIST.md",

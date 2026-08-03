@@ -62,5 +62,15 @@ are intentionally excluded from this repository. See
 [`GOVERNANCE.md`](GOVERNANCE.md), [`CONTRIBUTING.md`](CONTRIBUTING.md) and
 [`SECURITY.md`](SECURITY.md).
 
+## Rights and licensing status
+
+The Factory does not take ownership of contributor work. Rights, scientific
+credit, inventorship and prizes are separate records. This repository currently
+has no active repository-wide licence and should remain private while the
+path-specific model is reviewed. Start with [`IP_POLICY.md`](IP_POLICY.md),
+[`LICENSING.md`](LICENSING.md) and
+[`PATENTS_AND_PUBLIC_DISCLOSURE.md`](PATENTS_AND_PUBLIC_DISCLOSURE.md) before
+submitting protected or potentially patentable material.
+
 The private Hangar deployment is available to authorised project members at
 [Research Factory Hangar 01](https://research-factory-hangar-01.clear-seed-4435.chatgpt.site).

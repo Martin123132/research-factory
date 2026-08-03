@@ -1,7 +1,7 @@
 # WB-024 — Resource-constrained project scheduling
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `0e536a16b05484ebcc98ea8454e476bf33e75f581668066d7e1c613c970a085d`
+Contract SHA-256: `68d32679599959b60cd1d8b4d198d527f995d6885221cfb7576f1ac1416e3a89`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

@@ -77,7 +77,9 @@ test("renders the fail-closed Contract v1 standard and downloadable artifacts", 
   assert.equal(response.status, 200);
   const html = await response.text();
   assert.match(html, /Workbench Contract v1/);
-  assert.match(html, /Exactly two distinct human owners/);
+  assert.match(html, /Exactly two distinct accountable humans/);
+  assert.match(html, /Factory standard \/ version (?:<!-- -->)?1\.2\.0/);
+  assert.match(html, /Contributors retain the rights they lawfully hold/);
   assert.match(html, /commit conclusions and evidence hashes before either result is revealed/i);
   assert.match(html, /stage-number mono">99</);
   assert.match(html, /DIGITAL_COMPRESSION_V1/);
@@ -86,6 +88,8 @@ test("renders the fail-closed Contract v1 standard and downloadable artifacts", 
   assert.match(html, /Contract draft/);
   assert.match(html, /href="\/workbench-contracts-v1\.json"/);
   assert.match(html, /href="\/workbench-contract-v1\.schema\.json"/);
+  assert.match(html, /href="\/rights-and-ip-v1\.schema\.json"/);
+  assert.match(html, /href="\/contribution-ledger-v1\.schema\.json"/);
 });
 
 test("renders the synthetic workflow tutorial with captions and a transcript", async () => {

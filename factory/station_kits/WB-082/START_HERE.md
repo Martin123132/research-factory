@@ -1,7 +1,7 @@
 # WB-082 — Bridge structural-health monitoring with fewer false alarms
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `652b3838fc153ea6b7047142231aff3f0c147ea94c164da012b767e80600c3f7`
+Contract SHA-256: `e82a2a4fbb5d8d5468aa4ac2cd16624729d5d57262370bf30be7703705940472`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

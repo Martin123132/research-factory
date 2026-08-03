@@ -1,7 +1,7 @@
 # WB-092 — Safe, fuel-saving cooperative vehicle platooning
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `1ff56641ad63c7970d9cab5f485cff91cf15f93d8b6f1634fd5821bc858b22e9`
+Contract SHA-256: `a48d1b5bfa253322871ea1beffa3e23143d0b54e7aa2b9ecba57a40625d63ad8`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

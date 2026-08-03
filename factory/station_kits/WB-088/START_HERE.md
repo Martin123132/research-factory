@@ -1,7 +1,7 @@
 # WB-088 — Automatic emergency braking that avoids crashes without false stops
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `c68901c1ce1746660cc7e0e1a173f132cfb800d1c84bd15dc3a5500f9785d5dc`
+Contract SHA-256: `1c8d622b1725bcc6d945eac833b879cb0a57d445f2c9557c3cd664cddccd29b3`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

@@ -3,6 +3,9 @@
   "workbench_code": "WB-080",
   "contract_sha256": "REPLACE_WITH_LOCKED_CONTRACT_SHA256",
   "original_attempt_sha256": "REPLACE_WITH_ORIGINAL_ATTEMPT_SHA256",
+  "accountable_reviewer_subject_ids": [],
+  "rights_and_ip_declaration_path": "REPLACE_WITH_COMPLETED_RIGHTS_DECLARATION_PATH",
+  "contribution_ledger_path": "REPLACE_WITH_COMPLETED_CONTRIBUTION_LEDGER_PATH",
   "validator_a_commitment_sha256": "REPLACE_WITH_FIRST_SEALED_COMMITMENT",
   "validator_b_commitment_sha256": "REPLACE_WITH_SECOND_SEALED_COMMITMENT",
   "divergence": {

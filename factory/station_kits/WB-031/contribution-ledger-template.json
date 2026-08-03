@@ -1,0 +1,17 @@
+{
+  "ledger_version": 1,
+  "entries": [
+    {
+      "subject_id": "REPLACE_WITH_AUTHENTICATED_SUBJECT",
+      "roles": ["REPLACE_WITH_ALLOWED_ROLE"],
+      "contribution": "Describe the material contribution and its boundary.",
+      "artifact_refs": [],
+      "credit_status": "REPLACE_AFTER_REVIEW",
+      "inventorship_review": "NOT_ASSESSED"
+    }
+  ],
+  "external_prize_authority": "EXTERNAL_BODY_DECIDES",
+  "factory_automatic_share": "NONE",
+  "collaboration_agreement": "NOT_RECORDED",
+  "credit_disputes": []
+}

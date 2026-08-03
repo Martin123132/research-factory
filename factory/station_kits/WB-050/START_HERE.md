@@ -1,7 +1,7 @@
 # WB-050 — Grid-supporting DER inverter controls
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `999e736591ee6cd8c08f6b39f946ce26d71ec0eac777a37a0ef2aa07b1bfb490`
+Contract SHA-256: `d7eff70a1b2b1f93f091c31de8fe1b7ccf0317f8399e5404a5570676cb2ab6a6`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

@@ -1,7 +1,7 @@
 # WB-025 — Hospital nurse rostering
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `7c4879ba27d485c308d2a4cb28828cacaecd8b6ab7de38f9cf59e0e6c9fdadb9`
+Contract SHA-256: `fc5552a86208dc1f629c220b0c1c33843e95bda7d93fdb297e11d34deee94e13`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

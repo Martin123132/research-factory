@@ -1,7 +1,7 @@
 # WB-043 — Streaming-data execution engine
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `9f2524f6840558d561c2673b6eea630a9e9f56909a5b6fa2c7bf555b646b37be`
+Contract SHA-256: `430cfc8dc565d767df0d382f8ba2a7e6c4ff67989f31e707e54f229917db6dd5`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

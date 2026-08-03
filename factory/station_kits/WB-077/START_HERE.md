@@ -1,7 +1,7 @@
 # WB-077 — Precision irrigation scheduling
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `3af51a0f4ea05e6f7b64531bc0295a636683adcd823fa1438b64545b6767da78`
+Contract SHA-256: `fe087c06e309ef68bf2bf07c3a0f9d00ee45b9856a326930f613661b6bb489ac`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

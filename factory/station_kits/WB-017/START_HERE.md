@@ -1,7 +1,7 @@
 # WB-017 — Driver-aware last-mile route sequencing
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `d09b9588f6c922a078d4cdc3cf82992d206dba9bd15bdecdc6216bcefa78e2d8`
+Contract SHA-256: `e2000b8a9c1bd79ac6bed2578b2153af02cfddbabed1eedf9f95ed2632b112d2`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

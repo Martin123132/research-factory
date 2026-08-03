@@ -1,7 +1,7 @@
 # WB-048 — Security-constrained electricity-grid dispatch
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `8482c2b04013c48f5bb50ff4ee1728482b5a3bb92f968d0e1634562c94606eba`
+Contract SHA-256: `77a59cad54f151de59e3aea8b6518e3b8a68cd5f177e98689798be86791593d3`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

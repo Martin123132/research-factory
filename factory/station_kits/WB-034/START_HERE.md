@@ -1,7 +1,7 @@
 # WB-034 — Road-scene optical flow
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `80385a0884c63d60e6d774d2865266e51eee37f7d5dc0df09bba6e663fce6628`
+Contract SHA-256: `72feb9da21a4e1f3c4c9e008842c2d5ebc5a5c6b9738fea6098b6f599f8152a1`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

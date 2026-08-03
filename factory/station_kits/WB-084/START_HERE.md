@@ -1,7 +1,7 @@
 # WB-084 — More capable, repeatable robotic grasping
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `9643ce62f4ce7964c8940c12dbdae664d6593fb0e487e5dedb1c95d1b9a9337d`
+Contract SHA-256: `7dbc0fdf931b53739110151ac071d10f56345c78433e5b96b87bc4f22e33a35c`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

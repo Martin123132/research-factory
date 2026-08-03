@@ -1,7 +1,7 @@
 # WB-011 — Tiny neural-model compression
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `d49998007e4da1db53eedeeaf5e872607803755b7f821fb5411bef1379ed96e1`
+Contract SHA-256: `881cc65da109c4ed5e3a04deb2bdf2bda933161d4135dfff7d5a883cfd15a999`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

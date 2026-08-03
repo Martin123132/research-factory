@@ -1,7 +1,7 @@
 # WB-098 — Birch and Swinnerton–Dyer Conjecture
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `999689e7a52c1f37f981e6a2a75cb99532c2d3ed32101c10ef067328eaf33c83`
+Contract SHA-256: `a97293d9dda08b8000d731b933004bd2e8508d98a663c80f91c9c24a37bd7795`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -21,7 +21,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

@@ -1,6 +1,6 @@
 {
   "standard": "research-factory/workbench-contract/v1",
-  "contract_version": "1.1.0",
+  "contract_version": "1.2.0",
   "workbench": {
     "code": "WB-002",
     "numeric_id": 2,
@@ -29,7 +29,7 @@
     "adapter_id": "DIGITAL_COMPRESSION_V1",
     "adapter_version": "1.0.0",
     "dossier_path": "factory/workbenches/wb002_large_text_archive_compression/commissioning.json",
-    "dossier_sha256": "56228416c0b73f174f94ff5d2facf10968a0016d4175d4ecd1b18ba5a371e0fa"
+    "dossier_sha256": "a80339ef158778f1a1f13d9399db4086ab650d3b4c55406b9def8140effa06fe"
   },
   "problem": {
     "objective": "Large-text and knowledge-archive compression",
@@ -345,8 +345,12 @@
   },
   "submission": {
     "template_path": "submission-template.json",
+    "rights_declaration_schema_path": "schemas/rights-and-ip-v1.schema.json",
+    "contribution_ledger_schema_path": "schemas/contribution-ledger-v1.schema.json",
     "required_sections": [
-      "human_owner",
+      "accountable_human",
+      "rights_and_ip",
+      "contribution_ledger",
       "hypothesis",
       "method",
       "artifact",
@@ -460,15 +464,15 @@
     ]
   },
   "provenance": {
-    "generator_version": "1.2.0",
-    "generator_sha256": "87e4d7c087551dec3e66f21829d9038c0557d46847be4c80aaf43e6e6b7f1e20",
+    "generator_version": "1.3.0",
+    "generator_sha256": "f0a80cee454a6259cfc3d05157bbee9d21c2eab6341ec03db9d69447c7b9f4fa",
     "generated_from": "research_factory_100_workbenches.json",
     "source_entry_sha256": "cfc924ba1436c1523a30ec39ee1645ee0469e905e18d8fde8fb8696bf6cb29c0",
     "referenced_assets": [
       {
         "name": "commissioning_override",
         "path": "factory/workbenches/wb002_large_text_archive_compression/commissioning.json",
-        "sha256": "56228416c0b73f174f94ff5d2facf10968a0016d4175d4ecd1b18ba5a371e0fa",
+        "sha256": "a80339ef158778f1a1f13d9399db4086ab650d3b4c55406b9def8140effa06fe",
         "logical_commitment_sha256": null
       },
       {
@@ -540,7 +544,7 @@
       {
         "name": "submission_schema",
         "path": "factory/workbench_standard/commissioning/digital_compression_submission.schema.json",
-        "sha256": "96fcd41b81df4e87c98923e39f17e808033cc25338cca0d7e2d4cf2278d148ff",
+        "sha256": "969a46f971ed305645a1fa933d4ecf228ddd97943bbfb5c303e9a84a05f65828",
         "logical_commitment_sha256": null
       },
       {
@@ -552,6 +556,8 @@
     ],
     "shared_templates": [
       "submission-template.json",
+      "rights-and-ip-template.json",
+      "contribution-ledger-template.json",
       "negative-result-template.json",
       "dispute-template.json",
       "VALIDATOR_CHECKLIST.md",

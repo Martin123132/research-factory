@@ -1,7 +1,7 @@
 # WB-049 — Higher-efficiency photovoltaic inverter
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `9f0f2686d0acac8109d5139418c62f2fc024c507aad2f52e49b24f84b9b84245`
+Contract SHA-256: `664b53609af40ee02779e1e7b7ac62bcaa09a42ca8d639895d1b6f7baa9f7b19`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

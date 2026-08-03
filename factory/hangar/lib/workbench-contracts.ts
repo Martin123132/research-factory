@@ -53,6 +53,7 @@ const contractById = new Map(
 );
 
 export const contractStandard = contracts.standard;
+export const contractVersion = contracts.stations[0]?.contract_version ?? "unknown";
 export const contractGeneratorSha256 = contracts.generator_sha256;
 export const contractSnapshotSha256 = contracts.summary_sha256;
 export const stationKitsManifestSha256 = contracts.station_kits_manifest_sha256;

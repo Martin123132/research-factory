@@ -1,7 +1,7 @@
 # WB-067 — Longer-life corrosion protection for structural steel
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `0be6c8481ac8a04d03ebd443ec68372ee3a623c6302b90668454fe72bbbeb276`
+Contract SHA-256: `49959bd30a15a34fe64df5ad791b71effce58d5052d8443c320272bd3ba73ce9`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

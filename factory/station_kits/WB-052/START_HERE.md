@@ -1,7 +1,7 @@
 # WB-052 — Wind-turbine controller that raises useful energy without consuming fatigue life
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `b3fe189d3c1b3b4c7dfc2949662f0c049f6857c5f72ed7a79f6e2d6cac86139e`
+Contract SHA-256: `e7cf52eb71679cce07e5d6118d039befee5be51d5fffabad550c9cd6ab757f36`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

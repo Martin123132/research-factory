@@ -1,7 +1,7 @@
 # WB-089 — Robust lane centering/lane-departure prevention
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `e716ae1d29b5024cbf29c926a025d23d176e4b7570dd49c15ec22b34b52af308`
+Contract SHA-256: `0fb958b2e3f3aad8a8d564a3dc6b31450c7fa61eb54514a03af325697bc0e6de`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

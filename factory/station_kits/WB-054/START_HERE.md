@@ -1,7 +1,7 @@
 # WB-054 — Lower-cost long-duration electricity storage
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `124e72f3346487b588f994928a62780c66c80214838aff3423e5159d66a34182`
+Contract SHA-256: `5878a1704689a342623205a0cb0579c4005d5b8173cebb997f14bf60af5fdf4d`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

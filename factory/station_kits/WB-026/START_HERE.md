@@ -1,7 +1,7 @@
 # WB-026 — Examination and course timetabling
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `719b8b21632e1c96566bceea13e741189f4d04cefd9c6577b0ecf9e37309aa6e`
+Contract SHA-256: `9cdadb09ef91930ee5498f6947fcc2d407f2645d84dc3d0852ad170eca844921`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

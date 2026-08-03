@@ -1,7 +1,7 @@
 # WB-002 — Large-text and knowledge-archive compression
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `ad6d301143ee7379a15425aeaaa29a31183cd3c17fc91f92924c5b522b3641d3`
+Contract SHA-256: `b89d3e4e047cd6683b5b09cacf58188b4de116641ee0a0f70f2f0ad933a76d27`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -21,7 +21,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.

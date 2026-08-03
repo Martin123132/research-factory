@@ -62,7 +62,7 @@
     {
       "role": "submission_schema",
       "path": "factory/workbench_standard/commissioning/digital_compression_submission.schema.json",
-      "sha256": "96fcd41b81df4e87c98923e39f17e808033cc25338cca0d7e2d4cf2278d148ff"
+      "sha256": "969a46f971ed305645a1fa933d4ecf228ddd97943bbfb5c303e9a84a05f65828"
     },
     {
       "role": "result_schema",

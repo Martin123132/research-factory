@@ -1,7 +1,7 @@
 # WB-030 — Real-time speech denoising and dereverberation
 
 Stage: `CONTRACT_DRAFT`  
-Contract SHA-256: `00c91a33c74e58ad6ae0c3c7642556c26fcab97fca393b29976159613b56c4b1`
+Contract SHA-256: `8b9823bf570fafd060edde399d2c98bd43f2298838e54d40c1236c33d3858f10`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 
@@ -25,7 +25,7 @@ This is a generated construction kit. It records the station's measurable brief,
 
 ## Fixed factory rules
 
-- Exactly two other human owners must reproduce a locked claim.
+- Exactly two other accountable humans must reproduce a locked claim.
 - Neither the author nor one person using two accounts may validate it.
 - Conclusions commit before reveal; deterministic disagreement is reviewed, never majority-voted into truth.
 - Failed and negative work remains searchable.
