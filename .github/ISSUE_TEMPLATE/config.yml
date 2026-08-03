@@ -1,3 +1,5 @@
-blank_issues_enabled: true
-contact_links: []
-
+blank_issues_enabled: false
+contact_links:
+  - name: Scientific reproduction intake is not public
+    url: https://github.com/Martin123132/research-factory/blob/main/VALIDATOR_ONBOARDING.md
+    about: Read why reproduction verdicts must use the sealed control plane rather than a public issue.

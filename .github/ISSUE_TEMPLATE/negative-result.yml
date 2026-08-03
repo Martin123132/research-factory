@@ -3,6 +3,17 @@ description: Preserve a reproducible dead end, no-gain result or discovered boun
 title: "[NEGATIVE] "
 labels: ["negative-result"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        No workbench is open for live public research. This form currently retains construction findings, synthetic commissioning outcomes and clearly labelled exploration notes only. It cannot record a scientific reproduction or promotion decision.
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Current scope
+      options: ["HANGAR_CONSTRUCTION", "SYNTHETIC_COMMISSIONING", "EXPLORATION_NOTE_ONLY"]
+    validations:
+      required: true
   - type: input
     id: station
     attributes:
@@ -38,4 +49,12 @@ body:
       description: What new evidence, algorithm, resource limit or assumption would make another attempt non-duplicative?
     validations:
       required: true
-
+  - type: checkboxes
+    id: boundary
+    attributes:
+      label: Public boundary
+      options:
+        - label: This issue claims no scientific standing, independent reproduction or promotion eligibility.
+          required: true
+        - label: I have the right to post the non-confidential material and have not exposed a sealed verdict, hidden answer or patent-sensitive invention.
+          required: true

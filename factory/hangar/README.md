@@ -60,6 +60,7 @@ SHA-256 9b37a47c265e916cbf460f4dd0120b02b01fa800b104017b117ba2fc40644cd5
 /architecture       Trust boundaries and future handoff
 /standards          Contract v1, readiness gates and downloadable artifacts
 /tutorial           Guided synthetic workflow tutorial and transcript
+/contribute         Construction-only contributor entrance and licence boundary
 ```
 
 ## Development

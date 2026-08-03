@@ -105,3 +105,15 @@ test("renders the synthetic workflow tutorial with captions and a transcript", a
   assert.match(html, /NO SCIENTIFIC CREDIT/);
   assert.match(html, /Read the complete narration transcript/);
 });
+
+test("renders a construction-only contributor entrance", async () => {
+  const response = await fetch(`${baseUrl}/contribute`);
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /Clock in\. Leave the bench clearer than you found it\./);
+  assert.match(html, /PUBLIC LANE/);
+  assert.match(html, /Scientific promotion remains locked/);
+  assert.match(html, /Your work stays yours/);
+  assert.match(html, /No inherited licence/);
+  assert.doesNotMatch(html, /Submit a scientific reproduction/);
+});

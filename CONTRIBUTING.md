@@ -4,6 +4,9 @@ Contributions are welcome from people at every level of formal education. The
 standard is whether someone else can run the locked work and obtain the declared
 result—not the contributor's title.
 
+For a first construction contribution, use
+[`CONTRIBUTOR_QUICKSTART.md`](CONTRIBUTOR_QUICKSTART.md).
+
 ## Choose the correct scope
 
 Every contribution should identify one scope:
@@ -49,12 +52,26 @@ claim remains unpromoted. Two independent reproductions are recorded separately.
 Read [`IP_POLICY.md`](IP_POLICY.md),
 [`CONTRIBUTOR_TERMS.md`](CONTRIBUTOR_TERMS.md) and
 [`LICENSING.md`](LICENSING.md) before contributing protected material. The
-licensing framework is not active yet, so external substantive work must not be
-merged on an assumed or implied licence.
+path-scoped licensing framework is active for construction work. Commits must
+carry a `Signed-off-by` trailer (`git commit -s`). Candidate scientific
+artifacts remain outside this route and never inherit the licence of a nearby
+Factory file.
+
+Every new tracked file must be classified by [`REUSE.toml`](REUSE.toml) or
+valid file-local SPDX information. Run `reuse lint` before submitting when the
+REUSE tool is available; CI performs the authoritative check.
 
 ## Local verification
 
-Run before opening a pull request:
+Use the narrowest relevant check while developing:
+
+- documentation, issue forms or provenance: `reuse lint`;
+- station contracts or generated kits: the generator check and workbench
+  standard tests;
+- control-plane changes: the control-plane tests;
+- Hangar changes: typecheck, lint and Hangar tests.
+
+The full pull-request gate remains:
 
 ```powershell
 python factory/workbench_standard/generate_station_kits.py --check

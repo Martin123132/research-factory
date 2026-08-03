@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "generated_on": "2026-08-04",
+  "hash_algorithm": "SHA-256",
+  "assets": [
+    {
+      "paths": [
+        "factory/hangar/video/research-factory-tutorial/assets/fonts/geist-latin.woff2",
+        "factory/hangar/video/research-factory-tutorial/assets/fonts/geist-mono-latin.woff2"
+      ],
+      "origin": "Geist font subsets distributed by Vercel and used by the Research Factory tutorial",
+      "upstream": "https://github.com/vercel/geist-font",
+      "licence": "OFL-1.1",
+      "copyright": "2023 Vercel, in collaboration with basement.studio",
+      "sha256": {
+        "factory/hangar/video/research-factory-tutorial/assets/fonts/geist-latin.woff2": "1b5ebfb3a01a97343ac96873e6d59a8cb285c66012b6a1ac509cb2765e995ba8",
+        "factory/hangar/video/research-factory-tutorial/assets/fonts/geist-mono-latin.woff2": "b7ac144b394cbd81052d6397ec0c33397977b1d7e9bc095e744e652a378c6fb3"
+      }
+    },
+    {
+      "paths": [
+        "factory/hangar/video/research-factory-tutorial/assets/screens/architecture.png",
+        "factory/hangar/video/research-factory-tutorial/assets/screens/history.png",
+        "factory/hangar/video/research-factory-tutorial/assets/screens/home.png",
+        "factory/hangar/video/research-factory-tutorial/assets/screens/home-outro.png",
+        "factory/hangar/video/research-factory-tutorial/assets/screens/operations.png",
+        "factory/hangar/video/research-factory-tutorial/assets/screens/runners.png",
+        "factory/hangar/video/research-factory-tutorial/assets/screens/station-001.png",
+        "factory/hangar/video/research-factory-tutorial/assets/screens/stations.png"
+      ],
+      "origin": "Screenshots captured from the locally rendered Research Factory Hangar",
+      "licence": "CC-BY-4.0",
+      "sha256": {
+        "factory/hangar/video/research-factory-tutorial/assets/screens/architecture.png": "244d06ba3310f1a159126148a13e494bcff7ae8ba9c91190df8e210e2c3d3071",
+        "factory/hangar/video/research-factory-tutorial/assets/screens/history.png": "5189c7d1cf21e7e73ac0d49ac6b1aa2b5f43c6b68075d2ee5fb89ce4cdea2903",
+        "factory/hangar/video/research-factory-tutorial/assets/screens/home.png": "3274c763af71ed35c47283a1cb76a613e6186f56966b503c94b04d22df5d1e62",
+        "factory/hangar/video/research-factory-tutorial/assets/screens/home-outro.png": "3274c763af71ed35c47283a1cb76a613e6186f56966b503c94b04d22df5d1e62",
+        "factory/hangar/video/research-factory-tutorial/assets/screens/operations.png": "19ca4f8c20e3115f3486e661ab1b86ff58f662fd9fe342067d1e4f73edc5201b",
+        "factory/hangar/video/research-factory-tutorial/assets/screens/runners.png": "33e55bfb70fd7570e12360e1c2ae49f8a0008d8a703135b0be51120654d376ea",
+        "factory/hangar/video/research-factory-tutorial/assets/screens/station-001.png": "0ce04baec2abd94d17a4c949d333b8200ebfd951d1d85c3d00ff2ac115ee0c44",
+        "factory/hangar/video/research-factory-tutorial/assets/screens/stations.png": "0ddf6f57aed348fd65e419bc9f5fc6b912690a5820df20ce6a0c815c2e11141d"
+      }
+    },
+    {
+      "paths": [
+        "factory/hangar/public/favicon.svg",
+        "factory/hangar/public/og.png",
+        "factory/hangar/public/research-factory-hangar-workflow.mp4",
+        "factory/hangar/public/research-factory-hangar-workflow.vtt",
+        "factory/hangar/public/tutorial-poster.jpg",
+        "factory/hangar/video/research-factory-tutorial/research-factory-hangar-workflow.vtt"
+      ],
+      "origin": "Project-authored Hangar identity art and tutorial output assembled from the recorded Hangar screenshots, project text and Geist fonts",
+      "licence": "CC-BY-4.0",
+      "sha256": {
+        "factory/hangar/public/favicon.svg": "508fa40dd0974af1797b81dc44c7ca485b286a2bf820422da38e639deb2ebf96",
+        "factory/hangar/public/og.png": "8f133ce72a0628a41aa7ff8cea4f1d6a2598c2e8c45475d70d0ff09d1f7c182a",
+        "factory/hangar/public/research-factory-hangar-workflow.mp4": "63236a7f645fb9923b343768891b616f6bd8aedaa57903802e17af4a9366df4d",
+        "factory/hangar/public/research-factory-hangar-workflow.vtt": "e31869c62c31f18364f6e342165fe5c0d86b40a2d97fd3bd8cb4120e2e14e1de",
+        "factory/hangar/public/tutorial-poster.jpg": "0a93cebfcf349c7f34fe3aaa203a2623cc968145b383a248a5d73c3f5b5a32ba",
+        "factory/hangar/video/research-factory-tutorial/research-factory-hangar-workflow.vtt": "e31869c62c31f18364f6e342165fe5c0d86b40a2d97fd3bd8cb4120e2e14e1de"
+      }
+    }
+  ]
+}
