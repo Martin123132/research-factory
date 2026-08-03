@@ -10,6 +10,11 @@
 *.woff2 binary
 *.gz binary
 
+# Standard licence texts are downloaded byte-for-byte by the REUSE tool on
+# Windows. Preserve those CRLF bytes while treating the carriage return as EOL
+# rather than trailing whitespace during review.
+LICENSES/*.txt -text whitespace=cr-at-eol
+
 # Frozen WB-001 corpus payloads are reviewed by manifest hash, not as source
 # text. Public result JSON preserves its original signed/hash-bound CRLF bytes.
 factory/workbenches/wb001_lossless_compression/data/public/** binary

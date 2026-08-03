@@ -3,6 +3,8 @@
 - Workbench: `WB-NNN` or `FACTORY-WIDE`
 - Contribution type: `HANGAR_CONSTRUCTION | EXPLORATION | NEGATIVE_RESULT | REPRODUCTION | DISPUTE`
 - Accountable human:
+- Construction issue or control-plane record:
+- REUSE/SPDX path class:
 
 ## What changed and why
 
@@ -26,6 +28,8 @@ it affects.
 - [ ] No hidden inputs, answer sheets, credentials or personal data are included.
 - [ ] Construction output is not presented as scientific evidence.
 - [ ] I have read `IP_POLICY.md`, `CONTRIBUTOR_TERMS.md` and `LICENSING.md`.
+- [ ] Every new tracked file passes `reuse lint` and uses the intended path licence.
+- [ ] Every commit I authored carries a `Signed-off-by` trailer under DCO 1.1.
 - [ ] I have the right to submit every included component and declared material
       sources, licences, collaborators, institutional interests and AI use.
 - [ ] The package is public and non-confidential; any necessary patent step
@@ -48,8 +52,9 @@ it affects.
 - [ ] Or: two reproductions operated by two distinct accountable humans are linked below, and
       neither validator is the author.
 
-Validator A commitment:
+Control-plane Validator A commitment record:
 
-Validator B commitment:
+Control-plane Validator B commitment record:
 
-GitHub approvals are code review and do not satisfy the reproduction gate.
+Do not post an unrevealed validator verdict in this pull request. GitHub
+approvals are code review and do not satisfy the reproduction gate.

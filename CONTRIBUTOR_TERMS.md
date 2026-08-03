@@ -1,7 +1,8 @@
 # Contributor declaration
 
-Status: **draft; activation depends on the licensing decision in
-[LICENSING.md](LICENSING.md)**.
+Status: **active for classified construction contributions**. Candidate
+scientific artifacts remain closed until a live workbench and per-artifact
+intake are explicitly enabled.
 
 The Factory does not require contributors to assign ownership. It does require
 an accountable human to make a truthful provenance and rights declaration for
@@ -34,14 +35,15 @@ contributor's ownership to it.
 
 ## Repository acceptance
 
-Before the licence framework is activated, external substantive contributions
-must not be merged merely because a pull request is technically valid. Default
-copyright applies unless an explicit licence or written permission says
-otherwise. Construction-only review can continue in the private repository.
+Each accepted construction artifact must have the unambiguous licence class
+assigned by [`REUSE.toml`](REUSE.toml). By intentionally submitting material
+for inclusion in a classified path, the contributor offers that contribution
+under the licence assigned to that path. Copyright ownership is not assigned.
 
-After activation, each accepted artifact must have an unambiguous licence class.
 An unlabeled research artifact fails closed rather than inheriting a guessed
-licence from a neighbouring file.
+licence from a neighbouring file. Future research candidates use the separate
+[`candidate_artifacts/`](candidate_artifacts/) boundary; it is currently closed
+to artifact deposits.
 
 ## Machine-readable declaration
 
@@ -57,10 +59,11 @@ Maintainers may stop distribution, quarantine a package and append a correction
 or retraction. Public hashes, citations and already distributed copies may make
 complete erasure impossible, so contributors must review before submission.
 
-## Future sign-off
+## Contributor sign-off
 
-When the repository's path-specific licences are activated, maintainers should
-consider adopting the
-[Developer Certificate of Origin 1.1](https://developercertificate.org/) with
-`Signed-off-by` commits. It should not be activated before the repository has
-the open-source licence referenced by that certificate.
+Construction commits use a `Signed-off-by` trailer created with `git commit -s`.
+The sign-off certifies the
+[Developer Certificate of Origin 1.1](https://developercertificate.org/): the
+contributor created the work or has the right to submit it under the applicable
+path licence, and understands that the contribution and sign-off are public.
+It is a provenance certificate, not a copyright assignment.

@@ -23,6 +23,7 @@ export async function AppShell({ children }: { children: React.ReactNode }) {
           <Link href="/architecture">System</Link>
           <Link href="/standards">Standards</Link>
           <Link href="/tutorial">Tutorial</Link>
+          <Link href="/contribute">Contribute</Link>
         </nav>
         <div className="operator-chip">
           <span className={user ? "operator-light online" : "operator-light"} />

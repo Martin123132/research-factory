@@ -1,15 +1,17 @@
 # Licensing plan and current status
 
-Status: **no repository-wide licence is active**.
+Status: **path-scoped standard licences are active; no repository-wide blanket
+licence exists**.
 
-The absence of a `LICENSE` file is deliberate while this framework is reviewed.
-Under default copyright, publishing a GitHub repository does not automatically
-give everyone permission to reproduce, modify or redistribute its contents.
-Repository visibility and licensing are separate decisions.
+[`REUSE.toml`](REUSE.toml) is the authoritative machine-readable map and
+[`LICENSE.md`](LICENSE.md) is the human summary. Every tracked file is assigned
+an established SPDX licence, or is one of the licence/REUSE control files that
+the REUSE specification excludes from coverage. CI fails when a new tracked
+file has no classification.
 
-This means the repository should remain private during the current policy
-review, and outside substantive contributions should not be merged without a
-clear written rights basis.
+Repository visibility and licensing remain separate decisions. Making the
+repository public does not open live scientific intake: it opens only the
+classified construction materials and contribution route described below.
 
 ## Why one blanket licence is unsuitable
 
@@ -26,17 +28,15 @@ for research artifacts that their rightsholders did not intend. Conversely, an
 evaluation-only rule over the whole tree would prevent useful open-source
 development of the Factory itself.
 
-## Proposed path-specific model
+## Active path-specific model
 
-Subject to a documented path-and-rights audit and repository-owner approval:
-
-| Material | Proposed treatment |
+| Material | Treatment |
 | --- | --- |
 | Factory infrastructure and evaluator code | Apache License 2.0 |
 | Factory-authored documentation and diagrams | Creative Commons Attribution 4.0 |
 | Factory-authored factual metadata and public-domain-ready records | CC0 1.0 dedication where legally possible |
 | Third-party assets | Their upstream licence; never silently relicensed |
-| Candidate research artifacts | Per-artifact licence plus the minimum explicit permission needed to store, reproduce, validate and publish the evidence record |
+| Candidate research artifacts | Per-artifact approved licence or metadata-only; never inherited from the surrounding repository |
 | Names, logos and marks | Reserved; no implied trade-mark licence |
 
 Apache 2.0 contains an express patent grant for certain contributor patent
@@ -67,22 +67,22 @@ commercial transaction, resolving complex joint ownership or handling a
 dispute. It is not a Factory membership cost or a condition of scientific
 acceptance.
 
-## Activation checklist
+## Classification checklist
 
-Before adding operative licence files:
+Before adding or moving a tracked file:
 
-1. identify the rightsholder for every existing path;
-2. audit third-party code, data, fonts, media and generated assets;
-3. define exact path boundaries and precedence rules;
-4. choose established standard licences and avoid bespoke terms;
-5. define an approved licence list and a metadata-only route for artifacts that
-   cannot be deposited under one of those licences;
-6. add full standard licence texts, SPDX identifiers and notices;
-7. obtain consent for any existing material being relicensed; and
-8. enable contributor sign-off only after those licences exist.
+1. identify the contributor or upstream rightsholder;
+2. record third-party source, version, licence and required notice;
+3. place the path in the correct `REUSE.toml` class or add file-local SPDX
+   information;
+4. keep candidate artifacts inside the dedicated intake boundary and choose
+   `OPEN_DEPOSIT` or `METADATA_ONLY`;
+5. run `reuse lint`; and
+6. update provenance records when media, datasets or generated artifacts change.
 
-No maintainer can relicense another person's contribution merely by merging a
-policy pull request.
+No maintainer can relicense another person's contribution merely by changing a
+path rule. Moving an existing contribution into a different licence class
+requires the rightsholder's permission.
 
 References:
 

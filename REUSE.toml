@@ -1,0 +1,103 @@
+version = 1
+SPDX-PackageName = "Research Factory"
+SPDX-PackageSupplier = "Research Factory contributors"
+SPDX-PackageDownloadLocation = "https://github.com/Martin123132/research-factory"
+
+# Factory software, configuration and repository automation.
+[[annotations]]
+path = [
+  ".gitattributes",
+  ".gitignore",
+  ".github/**",
+  "build_portfolio.mjs",
+]
+precedence = "override"
+SPDX-FileCopyrightText = "2026 Research Factory contributors"
+SPDX-License-Identifier = "Apache-2.0"
+
+# Authored project explanations and the descriptive workbench catalogue.
+[[annotations]]
+path = [
+  "*.md",
+  "algorithms_workbenches_47.md",
+  "engineering_workbenches_47.md",
+  "research_factory_100_report_artifact.json",
+  "research_factory_100_workbenches.json",
+  "candidate_artifacts/README.md",
+]
+precedence = "override"
+SPDX-FileCopyrightText = "2026 Research Factory contributors"
+SPDX-License-Identifier = "CC-BY-4.0"
+
+# The asset ledger is a factual provenance record.
+[[annotations]]
+path = "ASSET_PROVENANCE.json"
+precedence = "override"
+SPDX-FileCopyrightText = "2026 Research Factory contributors"
+SPDX-License-Identifier = "CC0-1.0"
+
+# Factory code, schemas, configuration and generated functional templates.
+[[annotations]]
+path = "factory/**"
+precedence = "override"
+SPDX-FileCopyrightText = "2026 Research Factory contributors"
+SPDX-License-Identifier = "Apache-2.0"
+
+# Human-readable station, protocol, governance and tutorial documentation.
+[[annotations]]
+path = "factory/**/*.md"
+precedence = "override"
+SPDX-FileCopyrightText = "2026 Research Factory contributors"
+SPDX-License-Identifier = "CC-BY-4.0"
+
+# Generated contracts carry the authored catalogue descriptions they snapshot.
+[[annotations]]
+path = [
+  "factory/station_kits/**/contract.json",
+  "factory/hangar/data/workbench-contracts.json",
+  "factory/hangar/data/workbenches.json",
+  "factory/hangar/public/workbench-contracts-v1.json",
+]
+precedence = "override"
+SPDX-FileCopyrightText = "2026 Research Factory contributors"
+SPDX-License-Identifier = "CC-BY-4.0"
+
+# Factory-created measurements, manifests, locks and synthetic public fixtures.
+[[annotations]]
+path = [
+  "factory/control_plane/software.lock.json",
+  "factory/hangar/data/workbench-readiness.json",
+  "factory/rounds/**/*.json",
+  "factory/station_kits/**/kit-manifest.json",
+  "factory/workbench_standard/commissioning/index.json",
+  "factory/workbenches/**/data/**",
+  "factory/workbenches/**/results/**",
+]
+precedence = "override"
+SPDX-FileCopyrightText = "2026 Research Factory contributors"
+SPDX-License-Identifier = "CC0-1.0"
+
+# Project-authored Hangar graphics, tutorial video, captions and source captures.
+[[annotations]]
+path = [
+  "factory/hangar/public/favicon.svg",
+  "factory/hangar/public/og.png",
+  "factory/hangar/public/research-factory-hangar-workflow.mp4",
+  "factory/hangar/public/research-factory-hangar-workflow.vtt",
+  "factory/hangar/public/tutorial-poster.jpg",
+  "factory/hangar/video/research-factory-tutorial/assets/screens/**",
+  "factory/hangar/video/research-factory-tutorial/meta.json",
+  "factory/hangar/video/research-factory-tutorial/narration.txt",
+  "factory/hangar/video/research-factory-tutorial/research-factory-hangar-workflow.vtt",
+  "factory/hangar/video/research-factory-tutorial/transcript.json",
+]
+precedence = "override"
+SPDX-FileCopyrightText = "2026 Research Factory contributors"
+SPDX-License-Identifier = "CC-BY-4.0"
+
+# Third-party Geist font subsets retain their upstream licence and notice.
+[[annotations]]
+path = "factory/hangar/video/research-factory-tutorial/assets/fonts/**"
+precedence = "override"
+SPDX-FileCopyrightText = "2023 Vercel, in collaboration with basement.studio"
+SPDX-License-Identifier = "OFL-1.1"

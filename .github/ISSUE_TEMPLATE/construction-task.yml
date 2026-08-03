@@ -1,0 +1,87 @@
+name: Construction task
+description: Define a bounded, pick-up-ready job that builds or tests the Factory.
+title: "[CONSTRUCTION] "
+labels: ["enhancement", "hangar-construction"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This route builds the workshop. It cannot submit live research, record an independent reproduction or promote a result.
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Operating scope
+      options:
+        - HANGAR_CONSTRUCTION
+        - SYNTHETIC_COMMISSIONING
+    validations:
+      required: true
+  - type: input
+    id: station
+    attributes:
+      label: Workbench
+      description: Use WB-NNN or FACTORY-WIDE.
+      placeholder: WB-013
+    validations:
+      required: true
+  - type: textarea
+    id: objective
+    attributes:
+      label: Bounded objective and definition of done
+      description: State one checkable construction outcome. Do not ask for a breakthrough.
+    validations:
+      required: true
+  - type: textarea
+    id: deliverables
+    attributes:
+      label: Exact deliverables and paths
+      description: List files, schemas, fixtures, documentation or test artifacts expected from this task.
+      placeholder: |
+        - factory/path/file.py
+        - factory/path/test_file.py
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance checks
+      description: Give exact commands and the pass conditions another person will verify.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: provenance
+    attributes:
+      label: Inputs, dependencies and known blockers
+      description: Name source material, versions, licences, unresolved decisions and tasks that must happen first.
+    validations:
+      required: true
+  - type: dropdown
+    id: licence_class
+    attributes:
+      label: Expected path licence
+      description: Select the existing REUSE class; do not invent a new licence in this form.
+      options:
+        - Apache-2.0 — Factory software, schemas or automation
+        - CC-BY-4.0 — authored documentation or media
+        - CC0-1.0 — Factory-created factual record or synthetic data
+        - OFL-1.1 or other recorded upstream terms — third-party material
+        - No artifact deposit — metadata or link only
+    validations:
+      required: true
+  - type: input
+    id: related
+    attributes:
+      label: Related issue, pull request or work order
+      description: Optional provenance link; leave blank if this task starts the chain.
+  - type: checkboxes
+    id: boundaries
+    attributes:
+      label: Construction boundary
+      options:
+        - label: Completion carries zero scientific evidence, reproduction or promotion credit.
+          required: true
+        - label: The task contains no hidden answer, credential, personal data, confidential invention or unlicensed artifact.
+          required: true
+        - label: Generated files will be changed through their governed source and regenerated, not hand-edited.
+          required: true

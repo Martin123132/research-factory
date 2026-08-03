@@ -1,6 +1,6 @@
 # Rights and intellectual-property policy
 
-Status: **draft for review before public launch**.
+Status: **active project policy**.
 
 This policy preserves attribution and provenance without turning the Research
 Factory into the owner of other people's work. It is a project rule, not a
@@ -72,8 +72,8 @@ See [PATENTS_AND_PUBLIC_DISCLOSURE.md](PATENTS_AND_PUBLIC_DISCLOSURE.md).
 
 Ownership and permission are different. Contributors keep the rights they hold
 but a licence is still needed for other people to copy, run, validate, modify
-or redistribute protected material. The proposed path-by-path licensing model
-and its current inactive status are in [LICENSING.md](LICENSING.md).
+or redistribute protected material. The active path-by-path licensing model
+and candidate-artifact exception are in [LICENSING.md](LICENSING.md).
 
 ## Scientific standing is rights-neutral
 
