@@ -9,6 +9,11 @@ The project is currently building the aircraft hangar, not claiming scientific
 breakthroughs. Synthetic commissioning proves that the machinery works; it does
 not count as evidence, independent reproduction or promotion.
 
+The source repository is intended to be public construction infrastructure.
+That does not make the separately hosted Hangar public and does not open
+scientific intake. Candidate artifacts, hidden answers, evaluator secrets and
+private identity records remain outside Git.
+
 ## Current construction state
 
 - 100 deterministic station kits
@@ -42,10 +47,19 @@ distance convention.
 
 ```powershell
 python -m pip install -r factory/requirements.lock
+python -m pip install reuse==6.2.0
+reuse lint
+python -m unittest discover -s .github/scripts/tests -p "test_*.py" -v
+python .github/scripts/verify_asset_provenance.py
+python .github/scripts/verify_public_readiness.py
 python factory/workbench_standard/generate_station_kits.py --check
+python -m unittest discover -s factory/control_plane/tests -p "test_*.py" -v
+python -m unittest discover -s factory/workbenches/wb001_lossless_compression/tests -p "test_*.py" -v
 python -m unittest discover -s factory/workbench_standard/tests -p "test_*.py" -v
 cd factory/hangar
 npm ci
+npm run typecheck
+npm run lint
 npm test
 ```
 
@@ -61,6 +75,11 @@ are intentionally excluded from this repository. See
 [`VALIDATOR_ONBOARDING.md`](VALIDATOR_ONBOARDING.md),
 [`GOVERNANCE.md`](GOVERNANCE.md), [`CONTRIBUTING.md`](CONTRIBUTING.md) and
 [`SECURITY.md`](SECURITY.md).
+
+Community participation is governed by
+[`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md). The publication boundary and manual
+post-publication checks are recorded in
+[`PUBLIC_LAUNCH_CHECKLIST.md`](PUBLIC_LAUNCH_CHECKLIST.md).
 
 ## Rights and licensing status
 

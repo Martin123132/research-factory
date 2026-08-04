@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Martin123132/research-factory/blob/main/.github/schemas/asset-provenance-v1.schema.json",
+  "title": "Research Factory asset provenance ledger v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "generated_on",
+    "hash_algorithm",
+    "assets"
+  ],
+  "properties": {
+    "$schema": {
+      "const": ".github/schemas/asset-provenance-v1.schema.json"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "generated_on": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "hash_algorithm": {
+      "const": "SHA-256"
+    },
+    "assets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/asset_group"
+      }
+    }
+  },
+  "$defs": {
+    "safe_path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?![A-Za-z]:)(?!.*\\\\)(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*//)[^\\r\\n]+$"
+    },
+    "asset_group": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "paths",
+        "origin",
+        "licence",
+        "sha256"
+      ],
+      "properties": {
+        "paths": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/safe_path"
+          }
+        },
+        "origin": {
+          "type": "string",
+          "minLength": 10
+        },
+        "upstream": {
+          "type": "string",
+          "pattern": "^https://\\S+$"
+        },
+        "licence": {
+          "enum": [
+            "CC-BY-4.0",
+            "OFL-1.1"
+          ]
+        },
+        "copyright": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": {
+            "$ref": "#/$defs/safe_path"
+          },
+          "additionalProperties": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+    labels:
+      - hangar-construction
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: pip
+    directory: "/factory"
+    schedule:
+      interval: weekly
+    labels:
+      - hangar-construction
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: npm
+    directory: "/factory/hangar"
+    schedule:
+      interval: weekly
+    labels:
+      - hangar-construction
+    open-pull-requests-limit: 5

@@ -22,12 +22,16 @@ jobs:
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.13"
-      - name: Install pinned REUSE checker
-        run: python -m pip install reuse==6.2.0
+      - name: Install pinned licensing and schema tools
+        run: python -m pip install reuse==6.2.0 jsonschema==4.26.0
       - name: Verify every tracked path has an explicit licence
         run: reuse lint
+      - name: Test asset provenance verifier
+        run: python -m unittest discover -s .github/scripts/tests -p "test_*.py" -v
       - name: Verify media provenance and hashes
         run: python .github/scripts/verify_asset_provenance.py
+      - name: Verify public repository boundary
+        run: python .github/scripts/verify_public_readiness.py
       - name: Verify DCO sign-off on pull-request commits
         if: github.event_name == 'pull_request'
         run: >-
@@ -49,6 +53,10 @@ jobs:
           cache-dependency-path: factory/requirements.lock
       - name: Install locked Python dependencies
         run: python -m pip install -r requirements.lock
+      - name: Audit locked Python dependencies
+        run: |
+          python -m pip install pip-audit==2.10.1
+          python -m pip_audit -r requirements.lock --progress-spinner off
       - name: Verify deterministic station kits
         run: python workbench_standard/generate_station_kits.py --check
       - name: Verify clean-checkout worker entry gate
@@ -78,9 +86,35 @@ jobs:
           cache-dependency-path: factory/hangar/package-lock.json
       - name: Install locked Hangar dependencies
         run: npm ci
+      - name: Audit deployable Hangar dependencies
+        run: npm audit --omit=dev --audit-level=high
       - name: Typecheck
         run: npm run typecheck
       - name: Lint
         run: npm run lint
       - name: Build and test Hangar
         run: npm test
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - name: Install checksum-pinned Gitleaks v8.30.1
+        shell: bash
+        run: |
+          archive="$RUNNER_TEMP/gitleaks.tar.gz"
+          curl --fail --location --silent --show-error \
+            https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz \
+            --output "$archive"
+          echo "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb  $archive" \
+            | sha256sum --check --strict
+          tar --extract --gzip --file "$archive" --directory "$RUNNER_TEMP" gitleaks
+      - name: Scan the complete reachable Git history
+        shell: bash
+        run: >-
+          "$RUNNER_TEMP/gitleaks" git .
+          --log-opts="--all"
+          --redact=100
+          --no-banner
