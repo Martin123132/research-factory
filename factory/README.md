@@ -8,6 +8,10 @@ The first workbench is
 [`WB-001: general-purpose lossless compression`](workbenches/wb001_lossless_compression/README.md).
 
 The working factory control plane is in [`control_plane/`](control_plane/README.md).
+The provider-neutral local engine front door is documented in
+[`ENGINE.md`](ENGINE.md). It verifies and navigates the 100 stations without a
+website or hosted account, and delegates governed lifecycle operations to the
+same append-only control plane.
 The construction and commissioning dashboard is in
 [`hangar/`](hangar/README.md). It maps all 100 stations, schedules hangar work,
 registers non-promotion runner interfaces and keeps a separate append-only
@@ -90,6 +94,8 @@ python factory\workbench_standard\generate_station_kits.py --check --require-pro
 python factory\workbench_standard\generate_station_kits.py --explain WB-013
 python factory\workbench_standard\generate_station_kits.py --check --require-profile WB-013=ADAPTER_BOUND
 python -m unittest discover -s factory\workbench_standard\tests -p "test_*.py" -v
+python factory\enginectl.py doctor
+python -m unittest discover -s factory\engine\tests -t factory -p "test_*.py" -v
 ```
 
 `--require-stage COMMISSIONING_READY` is intentionally fail-closed: it rejects

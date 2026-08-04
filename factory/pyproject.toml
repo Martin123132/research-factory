@@ -1,6 +1,6 @@
 [project]
 name = "research-factory-prototype"
-version = "0.3.0"
+version = "0.4.0"
 description = "Reproducible human-AI research factory workbench prototype"
 requires-python = ">=3.11"
 dependencies = [
@@ -12,7 +12,14 @@ dependencies = [
 ]
 
 [project.scripts]
-factoryctl = "control_plane.cli:main"
+factoryctl = "engine.cli:main"
+
+[tool.setuptools]
+packages = ["control_plane", "engine"]
+
+[tool.setuptools.package-data]
+engine = ["schemas/*.json"]
+control_plane = ["schemas/*.json"]
 
 [tool.unittest]
 start-directory = "workbenches/wb001_lossless_compression/tests"

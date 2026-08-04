@@ -39,6 +39,9 @@ distance convention.
   construction envelopes for all 100 stations.
 - [`factory/control_plane/`](factory/control_plane/) — work orders, blind
   validation states, disputes and append-only evidence plumbing.
+- [`factory/engine/`](factory/engine/) — provider-neutral catalogue discovery,
+  clean-clone diagnostics and portable construction evidence packaging; start
+  with [`factory/ENGINE.md`](factory/ENGINE.md).
 - [`factory/shift_reports/`](factory/shift_reports/) — immutable operational
   memory for progress, no-gain, blocked and unrunnable shifts; zero scientific
   standing.
@@ -59,6 +62,8 @@ python .github/scripts/verify_public_readiness.py
 python factory/shift_reports/validate_shift_reports.py factory/shift_reports/examples
 python -m unittest discover -s factory/shift_reports/tests -p "test_*.py" -v
 python factory/workbench_standard/generate_station_kits.py --check
+python factory/enginectl.py doctor
+python -m unittest discover -s factory/engine/tests -t factory -p "test_*.py" -v
 python -m unittest discover -s factory/control_plane/tests -t factory -p "test_*.py" -v
 python -m unittest discover -s factory/workbenches/wb001_lossless_compression/tests -p "test_*.py" -v
 python -m unittest discover -s factory/workbench_standard/tests -p "test_*.py" -v
