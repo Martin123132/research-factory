@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "vinext dev",
     "build": "vinext build",
+    "build:hosting": "node scripts/build-hosting.mjs",
     "start": "vinext start",
     "test": "npm run catalogue:verify && npm run contracts:verify && npm run build && node scripts/run-tests.mjs",
     "typecheck": "tsc --noEmit",
