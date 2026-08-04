@@ -94,8 +94,6 @@ jobs:
         run: npm run lint
       - name: Build and test Hangar
         run: npm test
-      - name: Build the private hosting artifact
-        run: npm run build
 
   security:
     runs-on: ubuntu-latest

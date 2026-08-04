@@ -6,12 +6,10 @@
     "node": ">=22.13.0"
   },
   "scripts": {
-    "dev": "node scripts/run-local.mjs dev:raw",
-    "dev:raw": "vinext dev",
+    "dev": "vinext dev",
     "build": "vinext build",
-    "build:local": "node scripts/run-local.mjs build",
     "start": "vinext start",
-    "test": "npm run catalogue:verify && npm run contracts:verify && npm run build:local && node scripts/run-tests.mjs",
+    "test": "npm run catalogue:verify && npm run contracts:verify && npm run build && node scripts/run-tests.mjs",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next --ignore-pattern work --ignore-pattern video",
     "db:generate": "drizzle-kit generate",
