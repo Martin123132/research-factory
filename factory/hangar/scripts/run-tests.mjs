@@ -43,7 +43,7 @@ try {
     );
     server = spawn(process.execPath, [cli, "dev", "--port", String(port)], {
       cwd: projectRoot,
-      env: process.env,
+      env: { ...process.env, LOCAL_NODE_COMPAT: "1" },
       stdio: ["ignore", "pipe", "pipe"],
     });
     server.stdout.on("data", (chunk) => { serverOutput += chunk.toString(); });
