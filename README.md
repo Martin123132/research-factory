@@ -59,7 +59,7 @@ python .github/scripts/verify_public_readiness.py
 python factory/shift_reports/validate_shift_reports.py factory/shift_reports/examples
 python -m unittest discover -s factory/shift_reports/tests -p "test_*.py" -v
 python factory/workbench_standard/generate_station_kits.py --check
-python -m unittest discover -s factory/control_plane/tests -p "test_*.py" -v
+python -m unittest discover -s factory/control_plane/tests -t factory -p "test_*.py" -v
 python -m unittest discover -s factory/workbenches/wb001_lossless_compression/tests -p "test_*.py" -v
 python -m unittest discover -s factory/workbench_standard/tests -p "test_*.py" -v
 cd factory/hangar
