@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If this infrastructure helps your work, cite the repository and the specific contributors and artifacts you used."
+title: "Research Factory: infrastructure for reproducible human-AI research"
+type: software
+authors:
+  - name: "Research Factory contributors"
+repository-code: "https://github.com/Martin123132/research-factory"
+url: "https://github.com/Martin123132/research-factory"
+abstract: >-
+  A construction-stage system of bounded workbenches, deterministic contracts,
+  blind evaluation gates, negative-result retention and independent
+  reproduction for human-AI research.
+keywords:
+  - reproducible research
+  - human-AI collaboration
+  - blind evaluation
+  - scientific infrastructure

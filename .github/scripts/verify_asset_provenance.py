@@ -2,12 +2,15 @@ from __future__ import annotations
 
 import hashlib
 import json
-from pathlib import Path, PurePosixPath
+from pathlib import Path, PurePosixPath, PureWindowsPath
 import subprocess
+
+from jsonschema import Draft202012Validator
 
 
 ROOT = Path(__file__).resolve().parents[2]
 LEDGER = ROOT / "ASSET_PROVENANCE.json"
+SCHEMA = ROOT / ".github" / "schemas" / "asset-provenance-v1.schema.json"
 MEDIA_SUFFIXES = {
     ".gif",
     ".jpeg",
@@ -25,27 +28,53 @@ MEDIA_SUFFIXES = {
     ".woff2",
 }
 ALLOWED_LICENSES = {"CC-BY-4.0", "OFL-1.1"}
+REGULAR_GIT_MODES = {"100644", "100755"}
 
 
-def tracked_media() -> set[str]:
+def load_json_strict(path: Path) -> object:
+    def reject_duplicate_keys(pairs: list[tuple[str, object]]) -> dict[str, object]:
+        document: dict[str, object] = {}
+        for key, value in pairs:
+            if key in document:
+                raise ValueError(f"duplicate JSON object key in {path}: {key!r}")
+            document[key] = value
+        return document
+
+    return json.loads(path.read_text(encoding="utf-8"), object_pairs_hook=reject_duplicate_keys)
+
+
+def tracked_media(root: Path) -> dict[str, str]:
     output = subprocess.run(
-        ["git", "ls-files", "-z"],
-        cwd=ROOT,
+        ["git", "ls-files", "--stage", "-z"],
+        cwd=root,
         check=True,
         capture_output=True,
     ).stdout
-    return {
-        path
-        for path in output.decode("utf-8").split("\0")
-        if path and PurePosixPath(path).suffix.lower() in MEDIA_SUFFIXES
-    }
+    tracked: dict[str, str] = {}
+    for record in output.split(b"\0"):
+        if not record:
+            continue
+        metadata, raw_path = record.split(b"\t", 1)
+        mode = metadata.split(b" ", 1)[0].decode("ascii")
+        path = raw_path.decode("utf-8")
+        if PurePosixPath(path).suffix.lower() in MEDIA_SUFFIXES:
+            tracked[path] = mode
+    return tracked
 
 
 def safe_path(value: object) -> str:
     if not isinstance(value, str) or not value or "\\" in value:
         raise ValueError(f"invalid asset path: {value!r}")
     path = PurePosixPath(value)
-    if path.is_absolute() or ".." in path.parts:
+    windows_path = PureWindowsPath(value)
+    if (
+        path.is_absolute()
+        or windows_path.is_absolute()
+        or windows_path.drive
+        or "." in path.parts
+        or ".." in path.parts
+        or path.as_posix() != value
+    ):
         raise ValueError(f"unsafe asset path: {value!r}")
     return value
 
@@ -58,15 +87,39 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def main() -> int:
-    document = json.loads(LEDGER.read_text(encoding="utf-8"))
-    if document.get("schema_version") != 1 or document.get("hash_algorithm") != "SHA-256":
-        raise ValueError("asset ledger version or hash algorithm is not supported")
+def validate_document(document: object, schema_path: Path) -> dict[str, object]:
+    schema = load_json_strict(schema_path)
+    if not isinstance(schema, dict):
+        raise ValueError("asset ledger schema must be a JSON object")
+    Draft202012Validator.check_schema(schema)
+    validator = Draft202012Validator(schema)
+    errors = sorted(
+        validator.iter_errors(document),
+        key=lambda error: tuple(str(part) for part in error.absolute_path),
+    )
+    if errors:
+        error = errors[0]
+        location = "/".join(str(part) for part in error.absolute_path) or "$"
+        raise ValueError(f"asset ledger schema violation at {location}: {error.message}")
+    if not isinstance(document, dict):
+        raise ValueError("asset ledger must be a JSON object")
+    return document
+
+
+def verify(
+    root: Path = ROOT,
+    ledger_path: Path | None = None,
+    schema_path: Path | None = None,
+    tracked_files: dict[str, str] | None = None,
+) -> int:
+    ledger = ledger_path or root / "ASSET_PROVENANCE.json"
+    schema = schema_path or root / ".github" / "schemas" / "asset-provenance-v1.schema.json"
+    document = validate_document(load_json_strict(ledger), schema)
     groups = document.get("assets")
-    if not isinstance(groups, list) or not groups:
-        raise ValueError("asset ledger needs at least one asset group")
+    assert isinstance(groups, list)
 
     declared: set[str] = set()
+    tracked = tracked_files if tracked_files is not None else tracked_media(root)
     for group in groups:
         if not isinstance(group, dict):
             raise ValueError("asset groups must be JSON objects")
@@ -85,7 +138,10 @@ def main() -> int:
             if relative in declared:
                 raise ValueError(f"asset is declared more than once: {relative}")
             declared.add(relative)
-            target = ROOT / relative
+            mode = tracked.get(relative)
+            if mode is not None and mode not in REGULAR_GIT_MODES:
+                raise ValueError(f"asset has unsafe Git mode {mode}: {relative}")
+            target = root / relative
             if not target.is_file() or target.is_symlink():
                 raise ValueError(f"asset is missing, linked or not a file: {relative}")
             expected = hashes[relative]
@@ -97,13 +153,19 @@ def main() -> int:
                     f"asset hash mismatch for {relative}: expected {expected}, got {actual}"
                 )
 
-    tracked = tracked_media()
-    missing = sorted(tracked - declared)
-    stale = sorted(declared - tracked)
+    tracked_paths = set(tracked)
+    missing = sorted(tracked_paths - declared)
+    stale = sorted(declared - tracked_paths)
     if missing or stale:
         raise ValueError(f"asset ledger coverage differs: missing={missing}, stale={stale}")
 
-    print(f"Asset provenance verified for {len(declared)} tracked media files.")
+    return len(declared)
+
+
+def main() -> int:
+    count = verify()
+
+    print(f"Asset provenance verified for {count} tracked media files.")
     return 0
 
 

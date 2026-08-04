@@ -93,8 +93,9 @@ and arbitrary status writes are rejected.
 
 ## Deployment
 
-`.openai/hosting.json` requests a separate D1 binding named `DB` and no R2
-bucket. Deploy this site privately. The hosting access policy establishes
+The tracked `.openai/hosting.json` contains only the public project identifier,
+requests a separate D1 binding named `DB` and requests no R2 bucket. Deploy this
+site privately. The hosting access policy establishes
 workspace membership; application mutations use the stable
 `oai-authenticated-user-id` header injected by the platform.
 

@@ -6,6 +6,8 @@ result—not the contributor's title.
 
 For a first construction contribution, use
 [`CONTRIBUTOR_QUICKSTART.md`](CONTRIBUTOR_QUICKSTART.md).
+Participation also requires following
+[`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md).
 
 ## Choose the correct scope
 
@@ -74,6 +76,12 @@ Use the narrowest relevant check while developing:
 The full pull-request gate remains:
 
 ```powershell
+python -m pip install -r factory/requirements.lock
+python -m pip install reuse==6.2.0
+reuse lint
+python -m unittest discover -s .github/scripts/tests -p "test_*.py" -v
+python .github/scripts/verify_asset_provenance.py
+python .github/scripts/verify_public_readiness.py
 python factory/workbench_standard/generate_station_kits.py --check
 Push-Location factory
 python -m unittest discover -s control_plane/tests -p "test_*.py" -v
@@ -86,6 +94,10 @@ npm run typecheck
 npm run lint
 npm test
 ```
+
+When citing the infrastructure, identify the exact artifact and contributors
+used rather than treating the repository as the author of a scientific result.
+[`CITATION.cff`](CITATION.cff) provides repository-level metadata.
 
 If a check cannot run, record `UNRUNNABLE` with the environment and exact
 failure. Do not replace missing evidence with an assertion that it probably

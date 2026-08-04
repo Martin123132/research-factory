@@ -1,4 +1,5 @@
 {
+  "$schema": ".github/schemas/asset-provenance-v1.schema.json",
   "schema_version": 1,
   "generated_on": "2026-08-04",
   "hash_algorithm": "SHA-256",

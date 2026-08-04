@@ -14,6 +14,7 @@
 # Windows. Preserve those CRLF bytes while treating the carriage return as EOL
 # rather than trailing whitespace during review.
 LICENSES/*.txt -text whitespace=cr-at-eol
+factory/hangar/package-lock.json -text whitespace=cr-at-eol
 
 # Frozen WB-001 corpus payloads are reviewed by manifest hash, not as source
 # text. Public result JSON preserves its original signed/hash-bound CRLF bytes.

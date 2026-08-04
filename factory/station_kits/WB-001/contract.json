@@ -478,7 +478,7 @@
       {
         "name": "factory_dependency_lock",
         "path": "requirements.lock",
-        "sha256": "4cff9c7492c3679bef29bbbf960fbe54bb0d50837e224d855d038862ce563d24",
+        "sha256": "00e1bc3b138f1151c81e3b5a40fb215004edc6f25bed094243243b1f66bd8968",
         "logical_commitment_sha256": null
       },
       {
@@ -496,7 +496,7 @@
       {
         "name": "pilot_round",
         "path": "rounds/WB001-PILOT-001/round.json",
-        "sha256": "8675fabfa7e511a220da733e3b7c9cf8bdfce3f24adb87c46fbefbcc1b8fc401",
+        "sha256": "da3da345cac5aac735d934c03a74324e132955dd661b8d69e4853fea155b368d",
         "logical_commitment_sha256": null
       },
       {
