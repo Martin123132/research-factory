@@ -1,5 +1,11 @@
 # Factory control plane
 
+For a clean-clone front door, station discovery and portable construction
+packages, start with [`../ENGINE.md`](../ENGINE.md) and `enginectl.py`. Its
+governed lifecycle commands delegate here; there is no second state machine.
+This directory and the legacy `factoryctl.py` wrapper remain pinned by Pilot
+Round 1 and must stay reproducible for that historical round.
+
 This is the working local control plane for the Research Factory. Its canonical
 database is an append-only JSONL event ledger. Every event commits to the prior
 event, so editing, deleting, reordering, or inserting history is detectable.

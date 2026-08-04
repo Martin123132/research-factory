@@ -36,13 +36,15 @@ factory\.venv\Scripts\python.exe factory\workbench_standard\generate_station_kit
 
 Push-Location factory
 .\.venv\Scripts\python.exe -m unittest discover -s control_plane\tests -p "test_*.py" -v
+.\.venv\Scripts\python.exe -m unittest discover -s engine\tests -p "test_*.py" -v
 .\.venv\Scripts\python.exe -m unittest discover -s workbenches\wb001_lossless_compression\tests -p "test_*.py" -v
 .\.venv\Scripts\python.exe -m unittest discover -s workbench_standard\tests -p "test_*.py" -v
 Pop-Location
 ```
 
 The expected construction check is 100 deterministic station kits followed by
-75 passing Python tests. A platform-specific failure is recorded as
+all tests in the declared suites passing. The exact count may grow as the
+factory gains enforceable checks. A platform-specific failure is recorded as
 `UNRUNNABLE`; it is not papered over with a claimed pass.
 
 On Linux or macOS, use `factory/.venv/bin/python` and the corresponding POSIX

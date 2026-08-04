@@ -63,6 +63,10 @@ jobs:
           python -m unittest discover -s shift_reports/tests -p "test_*.py" -v
       - name: Verify deterministic station kits
         run: python workbench_standard/generate_station_kits.py --check
+      - name: Verify provider-neutral factory engine
+        run: |
+          python enginectl.py doctor --json
+          python -m unittest discover -s engine/tests -p "test_*.py" -v
       - name: Verify clean-checkout worker entry gate
         run: >-
           python control_plane/scripts/run_entry_gate.py

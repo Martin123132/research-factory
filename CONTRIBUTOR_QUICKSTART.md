@@ -52,6 +52,10 @@ reuse lint
 python factory/workbench_standard/generate_station_kits.py --check
 python -m unittest discover -s factory/workbench_standard/tests -p "test_*.py" -v
 
+# Local engine and portable evidence work
+python factory/enginectl.py doctor
+python -m unittest discover -s factory/engine/tests -t factory -p "test_*.py" -v
+
 # Hangar work
 cd factory/hangar
 npm.cmd run typecheck
