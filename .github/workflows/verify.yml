@@ -57,6 +57,10 @@ jobs:
         run: |
           python -m pip install pip-audit==2.10.1
           python -m pip_audit -r requirements.lock --progress-spinner off
+      - name: Verify append-only shift-report contract
+        run: |
+          python shift_reports/validate_shift_reports.py shift_reports/examples
+          python -m unittest discover -s shift_reports/tests -p "test_*.py" -v
       - name: Verify deterministic station kits
         run: python workbench_standard/generate_station_kits.py --check
       - name: Verify clean-checkout worker entry gate

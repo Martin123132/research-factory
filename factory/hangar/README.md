@@ -20,6 +20,7 @@ Every work order and event is structurally fixed to:
 scientific_evidence = false
 counts_as_independent_reproduction = false
 eligible_for_promotion = false
+closes_work_order = false
 ```
 
 There are no result, rerun, evidence, holdout, upload, dispatch or promotion
@@ -33,6 +34,8 @@ endpoints. Live research remains in the separate factory control plane.
   guardrails;
 - attributed construction and synthetic-commissioning work orders;
 - command-based, revision-checked work-order transitions;
+- hash-linked, append-only shift reports covering progress, no gain, blocked and
+  unrunnable work without moving or closing the parent order;
 - a registry for non-promotion runner interfaces;
 - append-only operational activity with database triggers rejecting updates and
   deletes;
@@ -63,6 +66,12 @@ SHA-256 9b37a47c265e916cbf460f4dd0120b02b01fa800b104017b117ba2fc40644cd5
 /contribute         Construction-only contributor entrance and licence boundary
 ```
 
+Each active work order also exposes
+`/api/work-orders/:id/shift-reports`. `GET` returns its immutable chain; `POST`
+accepts only the closed draft fields and derives identity, sequence, standing
+flags and report hash on the server. The downloadable contract is
+`/shift-report-v1.schema.json`.
+
 ## Development
 
 Node.js 22.13 or newer is required.
@@ -89,7 +98,8 @@ npm.cmd test
 The test suite builds the site, starts its real local Worker runtime, renders
 representative pages, and exercises negative governance paths. It asserts that
 live research mode, client-supplied promotion fields, promotion-grade runners
-and arbitrary status writes are rejected.
+and arbitrary status writes are rejected. It also files two synthetic shift
+reports and proves that the parent work order does not move or close.
 
 ## Deployment
 

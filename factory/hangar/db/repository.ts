@@ -6,11 +6,14 @@ import type {
   OperatingMode,
   RunnerProfile,
   RunnerTrustClass,
+  ShiftReport,
+  ShiftReportDraft,
   WorkOrder,
   WorkOrderCommand,
   WorkOrderStatus,
 } from "@/lib/factory-types";
 import { nextStatusForCommand } from "@/lib/factory-types";
+import { canonicalJson, sha256Canonical } from "@/lib/canonical-json";
 
 type WorkOrderRow = {
   id: string;
@@ -62,6 +65,11 @@ type ActivityRow = {
   counts_as_independent_reproduction: number;
   eligible_for_promotion: number;
   created_at: string;
+};
+
+type ShiftReportRow = {
+  sequence: number;
+  report_json: string;
 };
 
 export class FactoryRepositoryError extends Error {
@@ -135,6 +143,17 @@ function activityFromRow(row: ActivityRow): ActivityEvent {
     eligibleForPromotion: false,
     createdAt: row.created_at,
   };
+}
+
+function shiftReportFromRow(row: ShiftReportRow): ShiftReport {
+  try {
+    return JSON.parse(row.report_json) as ShiftReport;
+  } catch {
+    throw new FactoryRepositoryError(
+      `Stored shift report at sequence ${row.sequence} is not valid JSON.`,
+      500,
+    );
+  }
 }
 
 function makeId(prefix: string) {
@@ -359,6 +378,164 @@ export async function commandWorkOrder(
   }
 
   return getWorkOrder(id);
+}
+
+export async function listShiftReports(workOrderId: string, limit = 100) {
+  await ensureHangarDatabase();
+  const database = getD1();
+  const result = await database
+    .prepare(
+      `SELECT sequence, report_json FROM shift_reports
+       WHERE work_order_id = ?
+       ORDER BY report_sequence ASC
+       LIMIT ?`,
+    )
+    .bind(workOrderId, Math.min(Math.max(limit, 1), 250))
+    .all<ShiftReportRow>();
+  return result.results.map(shiftReportFromRow);
+}
+
+export async function createShiftReport(
+  workOrderId: string,
+  expectedRevision: number,
+  draft: ShiftReportDraft,
+  actor: Actor,
+) {
+  const current = await getWorkOrder(workOrderId);
+  if (!current) throw new FactoryRepositoryError("Work order not found.", 404);
+  if (current.revision !== expectedRevision) {
+    throw new FactoryRepositoryError(
+      "This order changed since the shift began. Refresh before filing the report.",
+      409,
+    );
+  }
+  if (!(["CLAIMED", "IN_PROGRESS", "BLOCKED"] as const).includes(
+    current.status as "CLAIMED" | "IN_PROGRESS" | "BLOCKED",
+  )) {
+    throw new FactoryRepositoryError(
+      "Shift reports attach only to claimed, in-progress or blocked orders.",
+      409,
+    );
+  }
+  if (!current.assigneeUserId || current.assigneeUserId !== actor.userId) {
+    throw new FactoryRepositoryError(
+      "Only the operator who owns this order can file its shift report.",
+      403,
+    );
+  }
+
+  const database = getD1();
+  const previous = await database
+    .prepare(
+      `SELECT report_sequence, report_sha256 FROM shift_reports
+       WHERE work_order_id = ?
+       ORDER BY report_sequence DESC
+       LIMIT 1`,
+    )
+    .bind(workOrderId)
+    .first<{ report_sequence: number; report_sha256: string }>();
+  const reportSequence = (previous?.report_sequence ?? 0) + 1;
+  const previousReportSha256 = previous?.report_sha256 ?? null;
+  const reportId = makeId("SR");
+  const createdAt = new Date().toISOString();
+  const workOrderStatus = current.status as "CLAIMED" | "IN_PROGRESS" | "BLOCKED";
+  const unsigned: Omit<ShiftReport, "reportSha256"> = {
+    schemaVersion: 1,
+    reportId,
+    workOrderId,
+    reportSequence,
+    previousReportSha256,
+    workbenchId: current.workbenchId,
+    mode: current.mode,
+    workOrderSnapshot: {
+      status: workOrderStatus,
+      revision: current.revision,
+    },
+    outcomeClass: draft.outcomeClass,
+    shift: {
+      startedAt: draft.startedAt,
+      endedAt: draft.endedAt,
+      durationMinutes: draft.durationMinutes,
+    },
+    attemptedWork: draft.attemptedWork,
+    observations: draft.observations,
+    artifactReferences: draft.artifactReferences,
+    blockers: draft.blockers,
+    nextLeads: draft.nextLeads,
+    reporter: {
+      actorUserId: actor.userId,
+      actorDisplay: actor.displayName,
+      identityAssurance: actor.assurance,
+    },
+    boundary: {
+      scope: "HANGAR_OPERATIONS_ONLY",
+      scientificEvidence: false,
+      countsAsIndependentReproduction: false,
+      eligibleForPromotion: false,
+      closesWorkOrder: false,
+      operationalRecordOnly: true,
+    },
+    createdAt,
+  };
+  const report: ShiftReport = {
+    ...unsigned,
+    reportSha256: await sha256Canonical(unsigned),
+  };
+
+  const statement = database
+    .prepare(
+      `INSERT INTO shift_reports (
+        report_id, work_order_id, report_sequence, previous_report_sha256,
+        report_sha256, workbench_id, mode, work_order_revision,
+        work_order_status, outcome_class, report_json, actor_user_id,
+        actor_display, created_at
+      )
+      SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+      FROM work_orders
+      WHERE id = ? AND revision = ? AND assignee_user_id = ?
+        AND status IN ('CLAIMED', 'IN_PROGRESS', 'BLOCKED')`,
+    )
+    .bind(
+      report.reportId,
+      report.workOrderId,
+      report.reportSequence,
+      report.previousReportSha256,
+      report.reportSha256,
+      report.workbenchId,
+      report.mode,
+      report.workOrderSnapshot.revision,
+      report.workOrderSnapshot.status,
+      report.outcomeClass,
+      canonicalJson(report),
+      actor.userId,
+      actor.displayName,
+      createdAt,
+      workOrderId,
+      expectedRevision,
+      actor.userId,
+    );
+
+  let result: D1Result<unknown>;
+  try {
+    result = await statement.run();
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "";
+    if (/shift_reports|unique|constraint|sequence|previous hash/i.test(message)) {
+      throw new FactoryRepositoryError(
+        "Another shift report was filed concurrently. Refresh and submit a new report.",
+        409,
+      );
+    }
+    throw error;
+  }
+  if ((result.meta.changes ?? 0) !== 1) {
+    throw new FactoryRepositoryError(
+      "The work order changed before the report could be attached. Refresh and try again.",
+      409,
+    );
+  }
+
+  return report;
 }
 
 export async function listRunners() {

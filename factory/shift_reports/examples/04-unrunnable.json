@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "reportId": "SR-EXAMPLE00004",
+  "workOrderId": "WO-EXAMPLE00001",
+  "reportSequence": 4,
+  "previousReportSha256": "c57f38e82f46276f7959f3cbb0b3ad1812f7b888d151d6f1462325c8b8064818",
+  "reportSha256": "2f5c18199c56488bdf72846abf62ccf79db12e7a9f93a6523a9b4e1df716783b",
+  "workbenchId": 1,
+  "mode": "SYNTHETIC_COMMISSIONING",
+  "workOrderSnapshot": {
+    "status": "BLOCKED",
+    "revision": 3
+  },
+  "outcomeClass": "UNRUNNABLE",
+  "shift": {
+    "startedAt": "2026-08-07T09:00:00Z",
+    "endedAt": "2026-08-07T09:40:00Z",
+    "durationMinutes": 40
+  },
+  "attemptedWork": [
+    {
+      "approach": "Attempt the documented fallback on hardware without the required instruction set.",
+      "result": "The preflight rejected the environment before executing the synthetic workload.",
+      "decision": "REVISIT_WITH_CONDITION"
+    }
+  ],
+  "observations": [],
+  "artifactReferences": [],
+  "blockers": [
+    {
+      "category": "ENVIRONMENT",
+      "description": "The available machine does not provide the instruction set required by the locked runner.",
+      "retryCondition": "Retry on compatible hardware or after a separately reviewed portable runner is commissioned."
+    }
+  ],
+  "nextLeads": [
+    {
+      "lead": "Record the minimum instruction-set requirement in the starter pack preflight.",
+      "rationale": "Future workers can reject the environment before spending a shift on setup."
+    }
+  ],
+  "reporter": {
+    "actorUserId": "synthetic-operator-001",
+    "actorDisplay": "Synthetic operator",
+    "identityAssurance": "LOCAL_PREVIEW"
+  },
+  "boundary": {
+    "scope": "HANGAR_OPERATIONS_ONLY",
+    "scientificEvidence": false,
+    "countsAsIndependentReproduction": false,
+    "eligibleForPromotion": false,
+    "closesWorkOrder": false,
+    "operationalRecordOnly": true
+  },
+  "createdAt": "2026-08-07T09:41:00Z"
+}

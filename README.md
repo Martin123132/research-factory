@@ -22,6 +22,7 @@ private identity records remain outside Git.
 - 2 adapter-bound stations
 - 3 runnable entry gates
 - 0 live-research stations
+- 1 closed append-only shift-report contract with 4 valid operational outcomes
 
 The first reusable families are exact public-corpus compression and symmetric
 travelling-salesperson optimisation. Each adapter is deliberately narrow: a
@@ -38,6 +39,9 @@ distance convention.
   construction envelopes for all 100 stations.
 - [`factory/control_plane/`](factory/control_plane/) — work orders, blind
   validation states, disputes and append-only evidence plumbing.
+- [`factory/shift_reports/`](factory/shift_reports/) — immutable operational
+  memory for progress, no-gain, blocked and unrunnable shifts; zero scientific
+  standing.
 - [`factory/hangar/`](factory/hangar/) — the construction and commissioning web
   interface.
 - [`research_factory_100_workbenches.json`](research_factory_100_workbenches.json)
@@ -52,6 +56,8 @@ reuse lint
 python -m unittest discover -s .github/scripts/tests -p "test_*.py" -v
 python .github/scripts/verify_asset_provenance.py
 python .github/scripts/verify_public_readiness.py
+python factory/shift_reports/validate_shift_reports.py factory/shift_reports/examples
+python -m unittest discover -s factory/shift_reports/tests -p "test_*.py" -v
 python factory/workbench_standard/generate_station_kits.py --check
 python -m unittest discover -s factory/control_plane/tests -p "test_*.py" -v
 python -m unittest discover -s factory/workbenches/wb001_lossless_compression/tests -p "test_*.py" -v

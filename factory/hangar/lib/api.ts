@@ -7,6 +7,8 @@ export const nonScientificBoundary = {
   scientificEvidence: false,
   countsAsIndependentReproduction: false,
   eligibleForPromotion: false,
+  closesWorkOrder: false,
+  operationalRecordOnly: true,
 } as const;
 
 export function isPlainObject(value: unknown): value is Record<string, unknown> {
