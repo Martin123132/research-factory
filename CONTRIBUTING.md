@@ -84,6 +84,8 @@ python .github/scripts/verify_asset_provenance.py
 python .github/scripts/verify_public_readiness.py
 python factory/workbench_standard/generate_station_kits.py --check
 Push-Location factory
+python shift_reports/validate_shift_reports.py shift_reports/examples
+python -m unittest discover -s shift_reports/tests -p "test_*.py" -v
 python -m unittest discover -s control_plane/tests -p "test_*.py" -v
 python -m unittest discover -s workbenches/wb001_lossless_compression/tests -p "test_*.py" -v
 python -m unittest discover -s workbench_standard/tests -p "test_*.py" -v

@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "reportId": "SR-EXAMPLE00001",
+  "workOrderId": "WO-EXAMPLE00001",
+  "reportSequence": 1,
+  "previousReportSha256": null,
+  "reportSha256": "6dabc42c437f03db9b3df24cc4449277dea9243e29a2d71a77e0ddeee19e397d",
+  "workbenchId": 1,
+  "mode": "SYNTHETIC_COMMISSIONING",
+  "workOrderSnapshot": {
+    "status": "IN_PROGRESS",
+    "revision": 2
+  },
+  "outcomeClass": "PROGRESS",
+  "shift": {
+    "startedAt": "2026-08-04T09:00:00Z",
+    "endedAt": "2026-08-04T13:00:00Z",
+    "durationMinutes": 240
+  },
+  "attemptedWork": [
+    {
+      "approach": "Run the bounded synthetic compression preflight with the locked fixture.",
+      "result": "The construction runner produced a deterministic operational log.",
+      "decision": "CONTINUE"
+    }
+  ],
+  "observations": [
+    "The same fixture path and seed produced the same construction-only output twice."
+  ],
+  "artifactReferences": [
+    {
+      "kind": "REPOSITORY_PATH",
+      "locator": "factory/shift_reports/fixtures/synthetic-output.txt",
+      "sha256": "0a5e16c932bf066eb87de970d50942f2c44a1447ed5890c415d09e2ecca528dc",
+      "mediaType": "text/plain",
+      "purpose": "Public synthetic construction log referenced only for provenance.",
+      "visibility": "PUBLIC",
+      "provenanceOnly": true
+    }
+  ],
+  "blockers": [],
+  "nextLeads": [
+    {
+      "lead": "Exercise the same preflight through the clean-checkout entry command.",
+      "rationale": "This checks that no local cache was required."
+    }
+  ],
+  "reporter": {
+    "actorUserId": "synthetic-operator-001",
+    "actorDisplay": "Synthetic operator",
+    "identityAssurance": "LOCAL_PREVIEW"
+  },
+  "boundary": {
+    "scope": "HANGAR_OPERATIONS_ONLY",
+    "scientificEvidence": false,
+    "countsAsIndependentReproduction": false,
+    "eligibleForPromotion": false,
+    "closesWorkOrder": false,
+    "operationalRecordOnly": true
+  },
+  "createdAt": "2026-08-04T13:01:00Z"
+}

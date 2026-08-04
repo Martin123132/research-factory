@@ -67,6 +67,78 @@ export const workOrders = sqliteTable(
   ],
 );
 
+export const shiftReports = sqliteTable(
+  "shift_reports",
+  {
+    sequence: integer("sequence").primaryKey({ autoIncrement: true }),
+    reportId: text("report_id").notNull().unique(),
+    workOrderId: text("work_order_id")
+      .notNull()
+      .references(() => workOrders.id, { onDelete: "restrict" }),
+    reportSequence: integer("report_sequence").notNull(),
+    previousReportSha256: text("previous_report_sha256"),
+    reportSha256: text("report_sha256").notNull().unique(),
+    workbenchId: integer("workbench_id").notNull(),
+    mode: text("mode").notNull(),
+    workOrderRevision: integer("work_order_revision").notNull(),
+    workOrderStatus: text("work_order_status").notNull(),
+    outcomeClass: text("outcome_class").notNull(),
+    reportJson: text("report_json").notNull(),
+    actorUserId: text("actor_user_id").notNull(),
+    actorDisplay: text("actor_display").notNull(),
+    scientificEvidence: integer("scientific_evidence", { mode: "boolean" })
+      .notNull()
+      .default(false),
+    countsAsIndependentReproduction: integer(
+      "counts_as_independent_reproduction",
+      { mode: "boolean" },
+    )
+      .notNull()
+      .default(false),
+    eligibleForPromotion: integer("eligible_for_promotion", { mode: "boolean" })
+      .notNull()
+      .default(false),
+    closesWorkOrder: integer("closes_work_order", { mode: "boolean" })
+      .notNull()
+      .default(false),
+    createdAt: text("created_at").notNull().default(sql`CURRENT_TIMESTAMP`),
+  },
+  (table) => [
+    check("shift_reports_sequence_check", sql`${table.reportSequence} >= 1`),
+    check("shift_reports_workbench_check", sql`${table.workbenchId} BETWEEN 1 AND 100`),
+    check(
+      "shift_reports_mode_check",
+      sql`${table.mode} IN ('HANGAR_CONSTRUCTION', 'SYNTHETIC_COMMISSIONING')`,
+    ),
+    check(
+      "shift_reports_status_check",
+      sql`${table.workOrderStatus} IN ('CLAIMED', 'IN_PROGRESS', 'BLOCKED')`,
+    ),
+    check(
+      "shift_reports_outcome_check",
+      sql`${table.outcomeClass} IN ('PROGRESS', 'NO_GAIN', 'BLOCKED', 'UNRUNNABLE')`,
+    ),
+    check(
+      "shift_reports_chain_check",
+      sql`((${table.reportSequence} = 1 AND ${table.previousReportSha256} IS NULL) OR (${table.reportSequence} > 1 AND ${table.previousReportSha256} IS NOT NULL))`,
+    ),
+    check("shift_reports_no_evidence_check", sql`${table.scientificEvidence} = 0`),
+    check(
+      "shift_reports_no_reproduction_check",
+      sql`${table.countsAsIndependentReproduction} = 0`,
+    ),
+    check("shift_reports_no_promotion_check", sql`${table.eligibleForPromotion} = 0`),
+    check("shift_reports_no_completion_check", sql`${table.closesWorkOrder} = 0`),
+    uniqueIndex("shift_reports_work_order_sequence_idx").on(
+      table.workOrderId,
+      table.reportSequence,
+    ),
+    index("shift_reports_work_order_idx").on(table.workOrderId),
+    index("shift_reports_outcome_idx").on(table.outcomeClass),
+    index("shift_reports_created_idx").on(table.createdAt),
+  ],
+);
+
 export const runnerProfiles = sqliteTable(
   "runner_profiles",
   {

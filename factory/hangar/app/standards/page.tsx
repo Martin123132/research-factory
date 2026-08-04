@@ -167,6 +167,7 @@ export default function StandardsPage() {
             <a className="button button-secondary" href="/workbench-contract-v1.schema.json">Download JSON schema</a>
             <a className="button button-secondary" href="/rights-and-ip-v1.schema.json">Download rights schema</a>
             <a className="button button-secondary" href="/contribution-ledger-v1.schema.json">Download credit schema</a>
+            <a className="button button-secondary" href="/shift-report-v1.schema.json">Download shift-report schema</a>
           </div>
         </article>
       </section>

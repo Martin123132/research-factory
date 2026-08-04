@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "reportId": "SR-EXAMPLE00002",
+  "workOrderId": "WO-EXAMPLE00001",
+  "reportSequence": 2,
+  "previousReportSha256": "6dabc42c437f03db9b3df24cc4449277dea9243e29a2d71a77e0ddeee19e397d",
+  "reportSha256": "0ba2f4584fe33d84a2481e03e72c19a194720472b6eaf4210c57b537bfa79d5e",
+  "workbenchId": 1,
+  "mode": "SYNTHETIC_COMMISSIONING",
+  "workOrderSnapshot": {
+    "status": "IN_PROGRESS",
+    "revision": 2
+  },
+  "outcomeClass": "NO_GAIN",
+  "shift": {
+    "startedAt": "2026-08-05T09:00:00Z",
+    "endedAt": "2026-08-05T12:30:00Z",
+    "durationMinutes": 210
+  },
+  "attemptedWork": [
+    {
+      "approach": "Replace the deterministic fixture chunk order with a fixed alternate ordering.",
+      "result": "The output was valid but no smaller and took longer to construct.",
+      "decision": "ABANDON"
+    }
+  ],
+  "observations": [
+    "The alternate ordering added overhead without reducing the synthetic payload size."
+  ],
+  "artifactReferences": [],
+  "blockers": [],
+  "nextLeads": [
+    {
+      "lead": "Revisit only if a lower-overhead ordering representation becomes available.",
+      "rationale": "The measured overhead, rather than the ordering idea alone, caused the no-gain result."
+    }
+  ],
+  "reporter": {
+    "actorUserId": "synthetic-operator-001",
+    "actorDisplay": "Synthetic operator",
+    "identityAssurance": "LOCAL_PREVIEW"
+  },
+  "boundary": {
+    "scope": "HANGAR_OPERATIONS_ONLY",
+    "scientificEvidence": false,
+    "countsAsIndependentReproduction": false,
+    "eligibleForPromotion": false,
+    "closesWorkOrder": false,
+    "operationalRecordOnly": true
+  },
+  "createdAt": "2026-08-05T12:31:00Z"
+}

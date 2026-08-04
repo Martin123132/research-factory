@@ -1,0 +1,452 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Martin123132/research-factory/blob/main/factory/shift_reports/shift-report-v1.schema.json",
+  "title": "Research Factory append-only shift report v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "reportId",
+    "workOrderId",
+    "reportSequence",
+    "previousReportSha256",
+    "reportSha256",
+    "workbenchId",
+    "mode",
+    "workOrderSnapshot",
+    "outcomeClass",
+    "shift",
+    "attemptedWork",
+    "observations",
+    "artifactReferences",
+    "blockers",
+    "nextLeads",
+    "reporter",
+    "boundary",
+    "createdAt"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "reportId": {
+      "type": "string",
+      "pattern": "^SR-[A-Z0-9-]{12}$"
+    },
+    "workOrderId": {
+      "type": "string",
+      "pattern": "^WO-[A-Z0-9-]{12}$"
+    },
+    "reportSequence": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "previousReportSha256": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/sha256"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "reportSha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "workbenchId": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100
+    },
+    "mode": {
+      "enum": [
+        "HANGAR_CONSTRUCTION",
+        "SYNTHETIC_COMMISSIONING"
+      ]
+    },
+    "workOrderSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "revision"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "CLAIMED",
+            "IN_PROGRESS",
+            "BLOCKED"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "outcomeClass": {
+      "enum": [
+        "PROGRESS",
+        "NO_GAIN",
+        "BLOCKED",
+        "UNRUNNABLE"
+      ]
+    },
+    "shift": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "startedAt",
+        "endedAt",
+        "durationMinutes"
+      ],
+      "properties": {
+        "startedAt": {
+          "$ref": "#/$defs/utc_timestamp"
+        },
+        "endedAt": {
+          "$ref": "#/$defs/utc_timestamp"
+        },
+        "durationMinutes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1440
+        }
+      }
+    },
+    "attemptedWork": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 20,
+      "items": {
+        "$ref": "#/$defs/attempt"
+      }
+    },
+    "observations": {
+      "type": "array",
+      "maxItems": 20,
+      "items": {
+        "$ref": "#/$defs/short_text"
+      }
+    },
+    "artifactReferences": {
+      "type": "array",
+      "maxItems": 20,
+      "items": {
+        "$ref": "#/$defs/artifact_reference"
+      }
+    },
+    "blockers": {
+      "type": "array",
+      "maxItems": 10,
+      "items": {
+        "$ref": "#/$defs/blocker"
+      }
+    },
+    "nextLeads": {
+      "type": "array",
+      "maxItems": 10,
+      "items": {
+        "$ref": "#/$defs/next_lead"
+      }
+    },
+    "reporter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "actorUserId",
+        "actorDisplay",
+        "identityAssurance"
+      ],
+      "properties": {
+        "actorUserId": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 200
+        },
+        "actorDisplay": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "identityAssurance": {
+          "enum": [
+            "PLATFORM_HEADER",
+            "LOCAL_PREVIEW"
+          ]
+        }
+      }
+    },
+    "boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "scientificEvidence",
+        "countsAsIndependentReproduction",
+        "eligibleForPromotion",
+        "closesWorkOrder",
+        "operationalRecordOnly"
+      ],
+      "properties": {
+        "scope": {
+          "const": "HANGAR_OPERATIONS_ONLY"
+        },
+        "scientificEvidence": {
+          "const": false
+        },
+        "countsAsIndependentReproduction": {
+          "const": false
+        },
+        "eligibleForPromotion": {
+          "const": false
+        },
+        "closesWorkOrder": {
+          "const": false
+        },
+        "operationalRecordOnly": {
+          "const": true
+        }
+      }
+    },
+    "createdAt": {
+      "$ref": "#/$defs/utc_timestamp"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "reportSequence": {
+            "const": 1
+          }
+        },
+        "required": [
+          "reportSequence"
+        ]
+      },
+      "then": {
+        "properties": {
+          "previousReportSha256": {
+            "type": "null"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "previousReportSha256": {
+            "$ref": "#/$defs/sha256"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "outcomeClass": {
+            "enum": [
+              "PROGRESS",
+              "NO_GAIN"
+            ]
+          }
+        },
+        "required": [
+          "outcomeClass"
+        ]
+      },
+      "then": {
+        "properties": {
+          "observations": {
+            "minItems": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "outcomeClass": {
+            "enum": [
+              "BLOCKED",
+              "UNRUNNABLE"
+            ]
+          }
+        },
+        "required": [
+          "outcomeClass"
+        ]
+      },
+      "then": {
+        "properties": {
+          "blockers": {
+            "minItems": 1
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "utc_timestamp": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?Z$"
+    },
+    "short_text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500
+    },
+    "attempt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "approach",
+        "result",
+        "decision"
+      ],
+      "properties": {
+        "approach": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 500
+        },
+        "result": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "decision": {
+          "enum": [
+            "CONTINUE",
+            "PAUSE",
+            "ABANDON",
+            "REVISIT_WITH_CONDITION"
+          ]
+        }
+      }
+    },
+    "artifact_reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "locator",
+        "sha256",
+        "mediaType",
+        "purpose",
+        "visibility",
+        "provenanceOnly"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "REPOSITORY_PATH",
+            "PUBLIC_URL"
+          ]
+        },
+        "locator": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "mediaType": {
+          "type": "string",
+          "pattern": "^[a-z0-9.+-]+/[a-zA-Z0-9.+-]+$",
+          "maxLength": 100
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 300
+        },
+        "visibility": {
+          "const": "PUBLIC"
+        },
+        "provenanceOnly": {
+          "const": true
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "REPOSITORY_PATH"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "locator": {
+                "pattern": "^(?!/)(?![A-Za-z]:)(?!.*\\\\)(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*//)[^\\r\\n]+$"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "locator": {
+                "pattern": "^https://[^\\s]+$"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "blocker": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "category",
+        "description",
+        "retryCondition"
+      ],
+      "properties": {
+        "category": {
+          "enum": [
+            "DEPENDENCY",
+            "ENVIRONMENT",
+            "RESOURCE",
+            "SPECIFICATION",
+            "ACCESS",
+            "OTHER"
+          ]
+        },
+        "description": {
+          "$ref": "#/$defs/short_text"
+        },
+        "retryCondition": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        }
+      }
+    },
+    "next_lead": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "lead",
+        "rationale"
+      ],
+      "properties": {
+        "lead": {
+          "$ref": "#/$defs/short_text"
+        },
+        "rationale": {
+          "$ref": "#/$defs/short_text"
+        }
+      }
+    }
+  }
+}

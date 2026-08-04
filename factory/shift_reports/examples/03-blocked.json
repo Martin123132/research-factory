@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "reportId": "SR-EXAMPLE00003",
+  "workOrderId": "WO-EXAMPLE00001",
+  "reportSequence": 3,
+  "previousReportSha256": "0ba2f4584fe33d84a2481e03e72c19a194720472b6eaf4210c57b537bfa79d5e",
+  "reportSha256": "c57f38e82f46276f7959f3cbb0b3ad1812f7b888d151d6f1462325c8b8064818",
+  "workbenchId": 1,
+  "mode": "SYNTHETIC_COMMISSIONING",
+  "workOrderSnapshot": {
+    "status": "BLOCKED",
+    "revision": 3
+  },
+  "outcomeClass": "BLOCKED",
+  "shift": {
+    "startedAt": "2026-08-06T09:00:00Z",
+    "endedAt": "2026-08-06T10:15:00Z",
+    "durationMinutes": 75
+  },
+  "attemptedWork": [
+    {
+      "approach": "Run the clean-checkout preflight in the documented construction container.",
+      "result": "The pinned container image was unavailable to the synthetic runner.",
+      "decision": "PAUSE"
+    }
+  ],
+  "observations": [],
+  "artifactReferences": [],
+  "blockers": [
+    {
+      "category": "DEPENDENCY",
+      "description": "The documented construction container image cannot currently be resolved.",
+      "retryCondition": "Retry after the image digest is restored or the contract names a reviewed replacement."
+    }
+  ],
+  "nextLeads": [
+    {
+      "lead": "Check the image registry retention log.",
+      "rationale": "It should distinguish an expired artifact from an incorrect digest."
+    }
+  ],
+  "reporter": {
+    "actorUserId": "synthetic-operator-001",
+    "actorDisplay": "Synthetic operator",
+    "identityAssurance": "LOCAL_PREVIEW"
+  },
+  "boundary": {
+    "scope": "HANGAR_OPERATIONS_ONLY",
+    "scientificEvidence": false,
+    "countsAsIndependentReproduction": false,
+    "eligibleForPromotion": false,
+    "closesWorkOrder": false,
+    "operationalRecordOnly": true
+  },
+  "createdAt": "2026-08-06T10:16:00Z"
+}

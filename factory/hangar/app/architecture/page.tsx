@@ -30,7 +30,7 @@ export default function ArchitecturePage() {
           <article><span className="architecture-tag">IDENTITY</span><h3>Server-derived operators</h3><p>Writes use the platform user ID injected by the private workspace. Email and display name are labels, never authority keys.</p></article>
           <article><span className="architecture-tag">STATE</span><h3>Commands, not arbitrary status</h3><p>Claim, start, block, review, and close are explicit commands checked against the current revision.</p></article>
           <article><span className="architecture-tag">RUNNERS</span><h3>Non-promotion trust classes</h3><p>Hangar 01 accepts trusted local code or container commissioning prototypes. It has no execute or upload endpoint.</p></article>
-          <article><span className="architecture-tag">HISTORY</span><h3>Append-only operational events</h3><p>The database rejects event updates and deletes. Every event is prefixed HANGAR_ so it cannot impersonate a scientific control event.</p></article>
+          <article><span className="architecture-tag">HISTORY</span><h3>Append-only operational memory</h3><p>The database rejects event and shift-report updates or deletes. Reports hash-link progress, no-gain, blocked and unrunnable work without changing the parent order.</p></article>
         </div>
       </section>
       <section className="handoff-panel">

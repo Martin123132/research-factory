@@ -26,6 +26,29 @@ const schemaStatements = [
     updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
     completed_at TEXT
   )`,
+  `CREATE TABLE IF NOT EXISTS shift_reports (
+    sequence INTEGER PRIMARY KEY AUTOINCREMENT,
+    report_id TEXT NOT NULL UNIQUE,
+    work_order_id TEXT NOT NULL REFERENCES work_orders(id) ON DELETE RESTRICT,
+    report_sequence INTEGER NOT NULL CHECK (report_sequence >= 1),
+    previous_report_sha256 TEXT,
+    report_sha256 TEXT NOT NULL UNIQUE,
+    workbench_id INTEGER NOT NULL CHECK (workbench_id BETWEEN 1 AND 100),
+    mode TEXT NOT NULL CHECK (mode IN ('HANGAR_CONSTRUCTION', 'SYNTHETIC_COMMISSIONING')),
+    work_order_revision INTEGER NOT NULL,
+    work_order_status TEXT NOT NULL CHECK (work_order_status IN ('CLAIMED', 'IN_PROGRESS', 'BLOCKED')),
+    outcome_class TEXT NOT NULL CHECK (outcome_class IN ('PROGRESS', 'NO_GAIN', 'BLOCKED', 'UNRUNNABLE')),
+    report_json TEXT NOT NULL,
+    actor_user_id TEXT NOT NULL,
+    actor_display TEXT NOT NULL,
+    scientific_evidence INTEGER NOT NULL DEFAULT 0 CHECK (scientific_evidence = 0),
+    counts_as_independent_reproduction INTEGER NOT NULL DEFAULT 0 CHECK (counts_as_independent_reproduction = 0),
+    eligible_for_promotion INTEGER NOT NULL DEFAULT 0 CHECK (eligible_for_promotion = 0),
+    closes_work_order INTEGER NOT NULL DEFAULT 0 CHECK (closes_work_order = 0),
+    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CHECK ((report_sequence = 1 AND previous_report_sha256 IS NULL) OR (report_sequence > 1 AND previous_report_sha256 IS NOT NULL)),
+    UNIQUE (work_order_id, report_sequence)
+  )`,
   `CREATE TABLE IF NOT EXISTS runner_profiles (
     id TEXT PRIMARY KEY NOT NULL,
     label TEXT NOT NULL,
@@ -58,6 +81,9 @@ const schemaStatements = [
   "CREATE INDEX IF NOT EXISTS work_orders_status_idx ON work_orders(status)",
   "CREATE INDEX IF NOT EXISTS work_orders_workbench_idx ON work_orders(workbench_id)",
   "CREATE INDEX IF NOT EXISTS work_orders_mode_idx ON work_orders(mode)",
+  "CREATE INDEX IF NOT EXISTS shift_reports_work_order_idx ON shift_reports(work_order_id)",
+  "CREATE INDEX IF NOT EXISTS shift_reports_outcome_idx ON shift_reports(outcome_class)",
+  "CREATE INDEX IF NOT EXISTS shift_reports_created_idx ON shift_reports(created_at)",
   "CREATE INDEX IF NOT EXISTS runner_profiles_status_idx ON runner_profiles(status)",
   "CREATE INDEX IF NOT EXISTS runner_profiles_owner_idx ON runner_profiles(owner_user_id)",
   "CREATE INDEX IF NOT EXISTS activity_events_type_idx ON activity_events(event_type)",
@@ -71,8 +97,33 @@ const schemaStatements = [
   `CREATE TRIGGER IF NOT EXISTS activity_events_reject_delete
    BEFORE DELETE ON activity_events
    BEGIN SELECT RAISE(ABORT, 'activity_events is append-only'); END`,
+  `CREATE TRIGGER IF NOT EXISTS shift_reports_reject_update
+   BEFORE UPDATE ON shift_reports
+   BEGIN SELECT RAISE(ABORT, 'shift_reports is append-only'); END`,
+  `CREATE TRIGGER IF NOT EXISTS shift_reports_reject_delete
+   BEFORE DELETE ON shift_reports
+   BEGIN SELECT RAISE(ABORT, 'shift_reports is append-only'); END`,
+  `CREATE TRIGGER IF NOT EXISTS shift_reports_enforce_chain
+   BEFORE INSERT ON shift_reports
+   BEGIN
+     SELECT CASE
+       WHEN NEW.report_sequence != COALESCE((
+         SELECT MAX(report_sequence) + 1 FROM shift_reports
+         WHERE work_order_id = NEW.work_order_id
+       ), 1)
+       THEN RAISE(ABORT, 'shift_reports sequence must append')
+     END;
+     SELECT CASE
+       WHEN NEW.previous_report_sha256 IS NOT (
+         SELECT report_sha256 FROM shift_reports
+         WHERE work_order_id = NEW.work_order_id
+         ORDER BY report_sequence DESC LIMIT 1
+       )
+       THEN RAISE(ABORT, 'shift_reports previous hash must match the chain head')
+     END;
+   END`,
   `INSERT INTO schema_metadata (key, value, updated_at)
-   VALUES ('hangar_schema_version', '1', CURRENT_TIMESTAMP)
+   VALUES ('hangar_schema_version', '2', CURRENT_TIMESTAMP)
    ON CONFLICT(key) DO UPDATE SET value = excluded.value, updated_at = CURRENT_TIMESTAMP`,
 ];
 
