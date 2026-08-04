@@ -502,7 +502,7 @@
           {
             "name": "pilot_round",
             "path": "rounds/WB001-PILOT-001/round.json",
-            "sha256": "da3da345cac5aac735d934c03a74324e132955dd661b8d69e4853fea155b368d",
+            "sha256": "2b9b2c0e29df30ef0146f7869cb0a46de8bf83d95ec5bd78d6e62f83b31bbf33",
             "logical_commitment_sha256": null
           },
           {
@@ -28951,5 +28951,5 @@
       }
     }
   ],
-  "bundle_sha256": "43352fd646ab088821208ab3edced6cd2861a8976fc913cca0a490bcfe6ddb09"
+  "bundle_sha256": "e7ae107b073bd2c871ffecdc2618f344deed802d60e17448f9cb473a951dae8c"
 }

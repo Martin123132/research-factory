@@ -18,8 +18,8 @@
       "evidence_lane": "DIGITAL",
       "kit_path": "factory/station_kits/WB-001",
       "contract_path": "factory/station_kits/WB-001/contract.json",
-      "contract_sha256": "e6ecc2352029c40de61173541755f551dc70e436db42f0b2b129aa2509adc0a6",
-      "kit_sha256": "df37be471600a048ed453e3fd6b57f513f65644ddd6d9ce2605b55640f3c209d",
+      "contract_sha256": "a36866d231e2b8af1ec23de8836c2070c9b8bee1fb9878de6ce6d16abc2a9fd0",
+      "kit_sha256": "893454ba8fef30b546150d21bb10a9dc74f470cfd2f446a846bbdf29edd67c0c",
       "readiness_stage": "COMMISSIONING_READY",
       "starter_pack_status": "KNOWN_ANSWER_READY",
       "unresolved_count": 6,
@@ -5968,5 +5968,5 @@
       "eligible_for_promotion": false
     }
   ],
-  "manifest_sha256": "43b291db4596f9f5ab5525d02676f99cf910e91474aae6017084c7bfaef4d8ce"
+  "manifest_sha256": "288acd31140c64d780672f4e75c6eab66c590d07807d85fcd9ffeab73f1b4f9e"
 }
