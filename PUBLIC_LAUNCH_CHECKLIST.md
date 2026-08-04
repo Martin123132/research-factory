@@ -27,20 +27,27 @@ evaluation material, make the Hangar public or create a live-research station.
 
 ## Manual publication decision
 
-- [ ] Repository owner has explicitly accepted publication of the author and
-  committer email already stored in reachable Git history, or has chosen a
-  sanitized fresh-history repository instead.
+- [x] Repository owner explicitly accepted publication of the author and
+  committer email already stored in reachable Git history by publishing the
+  repository on 2026-08-04.
 
 ## Immediately after publication
 
-- [ ] Confirm an unauthenticated clean clone succeeds.
-- [ ] Confirm verification passes from that clean clone.
-- [ ] Protect `main`: require pull requests, conversation resolution and all
-  four verification jobs; block force pushes and deletion.
-- [ ] Enable vulnerability alerts, automated security fixes, private
-  vulnerability reporting and available secret-scanning protections.
-- [ ] Confirm the public repository exposes no hidden evaluator or private
-  Hangar data.
+- [x] An unauthenticated HTTPS clone with credential helpers disabled succeeded
+  at public commit `d5df885c0269cd16d75ac7820c8718f7edf7b347`.
+- [x] The full published verification sequence passed from that clean clone on
+  Python 3.13.13 and Node 24.15.0 with npm 11.12.1.
+- [x] `main` requires pull requests, the latest base, conversation resolution,
+  linear history and all four verification jobs; force pushes and deletion are
+  blocked. Zero approvals and administrator bypass preserve the documented
+  sole-maintainer recovery path until another maintainer joins.
+- [x] Vulnerability alerts, automated security fixes, Dependabot security
+  updates, private vulnerability reporting, secret scanning and push
+  protection are enabled. GitHub Actions defaults to read-only permissions and
+  cannot approve pull requests.
+- [x] The public-boundary verifier passed across 2,058 tracked paths and the
+  provenance verifier accounted for all 16 tracked media files; no hidden
+  evaluator or private Hangar data is exposed.
 
 ## Still deliberately closed
 
