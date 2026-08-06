@@ -52,8 +52,6 @@ BEGIN
       WHERE work_order_id = NEW.work_order_id
     ), 1)
     THEN RAISE(ABORT, 'shift_reports sequence must append')
-  END;
-  SELECT CASE
     WHEN NEW.previous_report_sha256 IS NOT (
       SELECT report_sha256 FROM shift_reports
       WHERE work_order_id = NEW.work_order_id

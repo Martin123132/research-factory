@@ -118,6 +118,21 @@ class HangarShiftReportMigrationTests(unittest.TestCase):
                 ("SR-BADCHAIN0001", "WO-EXAMPLE00001", "b" * 64, "c" * 64),
             )
 
+    def test_database_rejects_a_non_contiguous_sequence(self) -> None:
+        with self.assertRaisesRegex(sqlite3.IntegrityError, "sequence must append"):
+            self.database.execute(
+                """
+                INSERT INTO shift_reports (
+                  report_id, work_order_id, report_sequence,
+                  previous_report_sha256, report_sha256, workbench_id, mode,
+                  work_order_revision, work_order_status, outcome_class,
+                  report_json, actor_user_id, actor_display
+                ) VALUES (?, ?, 3, ?, ?, 1, 'SYNTHETIC_COMMISSIONING', 2,
+                          'IN_PROGRESS', 'NO_GAIN', '{}', 'operator-1', 'Operator 1')
+                """,
+                ("SR-BADSEQUENCE", "WO-EXAMPLE00001", "a" * 64, "d" * 64),
+            )
+
     def test_filing_a_report_does_not_mutate_the_parent_work_order(self) -> None:
         row = self.database.execute(
             "SELECT status, revision, completed_at FROM work_orders WHERE id = ?",
