@@ -12,6 +12,9 @@ The provider-neutral local engine front door is documented in
 [`ENGINE.md`](ENGINE.md). It verifies and navigates the 100 stations without a
 website or hosted account, and delegates governed lifecycle operations to the
 same append-only control plane.
+Universal public-artifact corrections and retractions are implemented in
+[`corrections/`](corrections/README.md). They change derived standing through a
+new hash-linked record while retaining the original artifact bytes.
 The construction and commissioning dashboard is in
 [`hangar/`](hangar/README.md). It maps all 100 stations, schedules hangar work,
 registers non-promotion runner interfaces and keeps a separate append-only
@@ -110,6 +113,20 @@ The normalized report distinguishes separate local identity records from
 separate humans and proves that a diagnostic majority cannot erase a valid
 contradiction. See
 [`commissioning/README.md`](commissioning/README.md).
+
+Commission the separate append-only correction route without changing any
+scientific standing:
+
+```powershell
+Push-Location factory
+.\.venv\Scripts\python.exe -m corrections.run_synthetic_drill `
+  --output state\correction-synthetic-001
+Pop-Location
+```
+
+The drill preserves a deliberately false original fixture, appends a
+corrigendum, appends a retraction and independently re-derives the final
+`RETRACTED` standing from the complete record chain.
 
 `--require-stage COMMISSIONING_READY` is intentionally fail-closed: it rejects
 the present 99 drafts rather than pretending a catalogue brief is runnable.

@@ -9,6 +9,12 @@ from typing import Any
 from control_plane import cli as governed_cli
 from control_plane.common import ControlPlaneError
 from control_plane.workflow import NEGATIVE_CLASSIFICATIONS
+from corrections.ledger import (
+    ALL_STANDINGS,
+    ARTIFACT_CLASSES,
+    CorrectionLedger,
+    load_json_strict as load_correction_draft,
+)
 from quality.verify_quality import verify as verify_factory_quality
 
 from .catalogue import PROFILES, STAGES, StationCatalogue, doctor
@@ -25,6 +31,10 @@ LOCAL_COMMANDS = {
     "package",
     "verify",
     "negative-results",
+    "correction-append",
+    "correction-verify",
+    "correction-history",
+    "correction-export",
 }
 GLOBAL_VALUE_OPTIONS = {
     "--factory-root",
@@ -72,6 +82,10 @@ Explore and verify the factory (no account, website, network, or AI provider req
   package                make a portable, hash-bound construction evidence bundle
   verify                 verify a portable evidence bundle without trusting its author
   negative-results       search retained failed and no-gain experiments read-only
+  correction-append      append one closed correction or retraction record
+  correction-verify      verify the universal correction ledger and current standings
+  correction-history     search original and current artifact standing read-only
+  correction-export      export a read-only public correction index for adapters
 
 Governed append-only lifecycle:
   init, check-in, open-round, complete-entry-gate, claim-work,
@@ -194,6 +208,48 @@ def build_local_parser() -> argparse.ArgumentParser:
     negative_parser.add_argument("--reason-code")
     negative_parser.add_argument("--limit", type=int, default=50)
     negative_parser.add_argument("--json", action="store_true")
+
+    correction_append = sub.add_parser(
+        "correction-append",
+        help="append a hash-linked public-artifact correction or retraction",
+    )
+    correction_append.add_argument("--ledger", type=Path, required=True)
+    correction_append.add_argument("--draft", type=Path, required=True)
+    correction_append.add_argument("--json", action="store_true")
+
+    correction_verify = sub.add_parser(
+        "correction-verify",
+        help="verify an append-only correction ledger and derive current standings",
+    )
+    correction_verify.add_argument("--ledger", type=Path, required=True)
+    correction_verify.add_argument("--json", action="store_true")
+
+    correction_history = sub.add_parser(
+        "correction-history",
+        help="search correction history without changing the ledger",
+    )
+    correction_history.add_argument("--ledger", type=Path, required=True)
+    correction_history.add_argument("--target-sha256")
+    correction_history.add_argument(
+        "--artifact-class",
+        type=str.upper,
+        choices=sorted(ARTIFACT_CLASSES),
+    )
+    correction_history.add_argument(
+        "--standing",
+        type=str.upper,
+        choices=sorted(ALL_STANDINGS),
+    )
+    correction_history.add_argument("--limit", type=int, default=200)
+    correction_history.add_argument("--json", action="store_true")
+
+    correction_export = sub.add_parser(
+        "correction-export",
+        help="export a verified public correction index for read-only adapters",
+    )
+    correction_export.add_argument("--ledger", type=Path, required=True)
+    correction_export.add_argument("--output", type=Path, required=True)
+    correction_export.add_argument("--json", action="store_true")
     return parser
 
 
@@ -327,6 +383,59 @@ def _human_negative_results(value: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
+def _human_correction_record(value: dict[str, Any]) -> str:
+    target = value["target"]
+    return "\n".join(
+        [
+            "CORRECTION APPENDED",
+            f"Record: {value['correction_id']} (sequence {value['sequence']})",
+            f"Target: {target['artifact_class']} / {target['artifact_id']}",
+            f"Standing: {value['standing_before']} -> {value['standing_after']}",
+            f"Record SHA-256: {value['record_sha256']}",
+            "Original bytes preserved: true",
+            "Scientific standing: NONE",
+        ]
+    )
+
+
+def _human_correction_verification(value: dict[str, Any]) -> str:
+    standings = ", ".join(
+        f"{name}={count}" for name, count in value["current_standings"].items()
+    ) or "none"
+    return "\n".join(
+        [
+            "CORRECTION LEDGER VERIFIED",
+            f"Records: {value['records']} across {value['targets']} target(s)",
+            f"Current standings: {standings}",
+            f"Head SHA-256: {value['head_record_sha256']}",
+            "Scientific standing: NONE",
+        ]
+    )
+
+
+def _human_correction_history(value: dict[str, Any]) -> str:
+    if not value["records"]:
+        return "No correction records matched."
+    lines = [f"{value['returned']} of {value['total_matches']} correction record(s)"]
+    for record in value["records"]:
+        lines.extend(
+            [
+                "",
+                f"#{record['sequence']} {record['correction_id']}  {record['action']}",
+                (
+                    f"Target: {record['target']['artifact_class']} / "
+                    f"{record['target']['artifact_id']}"
+                ),
+                (
+                    f"Recorded: {record['standing_before']} -> {record['standing_after']} | "
+                    f"current: {record['current_standing']}"
+                ),
+                f"Reason: {record['reason']['code']} - {record['public_summary']}",
+            ]
+        )
+    return "\n".join(lines)
+
+
 def run_local(args: argparse.Namespace) -> int:
     factory_root = args.factory_root.resolve()
     if args.command == "doctor":
@@ -366,6 +475,37 @@ def run_local(args: argparse.Namespace) -> int:
             limit=args.limit,
         )
         _json(value) if args.json else print(_human_negative_results(value))
+        return 0
+
+    if args.command == "correction-append":
+        ledger = CorrectionLedger(args.ledger)
+        value = ledger.append(load_correction_draft(args.draft))
+        _json(value) if args.json else print(_human_correction_record(value))
+        return 0
+    if args.command == "correction-verify":
+        value = CorrectionLedger(args.ledger).verify()
+        _json(value) if args.json else print(_human_correction_verification(value))
+        return 0
+    if args.command == "correction-history":
+        value = CorrectionLedger(args.ledger).history(
+            target_sha256=args.target_sha256,
+            artifact_class=args.artifact_class,
+            standing=args.standing,
+            limit=args.limit,
+        )
+        _json(value) if args.json else print(_human_correction_history(value))
+        return 0
+    if args.command == "correction-export":
+        value = CorrectionLedger(args.ledger).export_public_index(args.output)
+        if args.json:
+            _json(value)
+        else:
+            print(
+                "CORRECTION INDEX EXPORTED\n"
+                f"Path: {args.output.resolve()}\n"
+                f"Records: {value['returned']}\n"
+                "Scientific standing: NONE"
+            )
         return 0
 
     portable = PortableEvidencePackage(factory_root)

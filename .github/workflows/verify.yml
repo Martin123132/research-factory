@@ -61,6 +61,11 @@ jobs:
         run: |
           python shift_reports/validate_shift_reports.py shift_reports/examples
           python -m unittest discover -s shift_reports/tests -p "test_*.py" -v
+      - name: Verify append-only corrections and retractions
+        run: |
+          python -m unittest discover -s corrections/tests -p "test_*.py" -v
+          python -m corrections.run_synthetic_drill --output state/ci-correction-drill
+          python -m corrections.verify_synthetic_drill state/ci-correction-drill
       - name: Verify catalogue reference provenance
         run: |
           python reference_provenance/verify_reference_provenance.py

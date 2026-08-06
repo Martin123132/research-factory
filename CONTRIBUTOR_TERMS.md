@@ -58,6 +58,10 @@ A contributor must promptly report a material error in their declaration.
 Maintainers may stop distribution, quarantine a package and append a correction
 or retraction. Public hashes, citations and already distributed copies may make
 complete erasure impossible, so contributors must review before submission.
+The closed record and terminal standing rules are defined in
+[`factory/corrections/`](factory/corrections/README.md). A record preserves the
+original bytes, identifies the asserted authority and conflict, and links any
+replacement by SHA-256. Schema validity does not prove legal authority.
 
 ## Contributor sign-off
 

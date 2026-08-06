@@ -1,15 +1,15 @@
 {
   "$schema": "factory-quality-assessment-v1.schema.json",
   "assessment_version": 1,
-  "assessment_id": "RFQ-2026-08-06-INITIAL",
-  "assessed_at_utc": "2026-08-06T13:44:52Z",
+  "assessment_id": "RFQ-2026-08-06-CORRECTIONS",
+  "assessed_at_utc": "2026-08-06T19:28:25Z",
   "standard_version": "1.0.0",
   "standard_path": "factory/quality/factory-quality-standard-v1.json",
   "standard_sha256": "fd0e51f61c87db90ebff64e33b7f262e51c6c88c351e0f9b3d0c40d25258f4f8",
   "subject": {
     "name": "Research Factory",
     "repository": "https://github.com/Martin123132/research-factory",
-    "baseline_revision": "1eaa34611ef8655d2b64ea236ace6fde807ad72a",
+    "baseline_revision": "144189d100b2382d25cf7b53e8cc4a6a284a7a91",
     "baseline_purpose": "LAST_MERGED_REVISION_BEFORE_THIS_ASSESSMENT"
   },
   "scope_boundary": "CONSTRUCTION_AND_SYNTHETIC_COMMISSIONING_ONLY",
@@ -28,8 +28,8 @@
   },
   "summary": {
     "controls": 28,
-    "meets": 18,
-    "partial": 8,
+    "meets": 19,
+    "partial": 7,
     "blocked": 2
   },
   "results": [
@@ -42,7 +42,7 @@
       "evidence": [
         {
           "path": "factory/ENGINE.md",
-          "sha256": "a0e93dab560b9affda6d5a512b910f529bf620e08efcd02a7b15220f1a6bc2f0",
+          "sha256": "6bfe4f8d57b7be51e554172987996b344f99830592e3beb56566d242957a4f62",
           "supports": "Documents the clean-clone core with no hosted account, website, GitHub API or model-provider requirement."
         },
         {
@@ -62,7 +62,7 @@
       "evidence": [
         {
           "path": "GOVERNANCE.md",
-          "sha256": "13fbe4b1ece77999ffcceb2667610e362eeb798d3d7bcd1726f786125ce39216",
+          "sha256": "87e5e6aebc8258c736a5daa9bf30d7324932eed468638bbeb233e16e5b6201f6",
           "supports": "Makes reproducible evidence rather than credentials or reputation the source of authority."
         },
         {
@@ -272,16 +272,26 @@
       "control_id": "MEMORY-03",
       "critical": true,
       "minimum_evidence_level": "ENFORCED",
-      "outcome": "PARTIAL",
-      "evidence_level": "DECLARED",
+      "outcome": "MEETS",
+      "evidence_level": "ENFORCED",
       "evidence": [
         {
-          "path": "CONTRIBUTOR_TERMS.md",
-          "sha256": "d49fb7c67f0d20b8f6e518aff5a4670676048336fad75f58fb4eb4f84e6f9732",
-          "supports": "Requires prompt material corrections and describes quarantine, correction and retraction rather than silent erasure."
+          "path": "factory/corrections/correction-record-v1.schema.json",
+          "sha256": "2575105696221d8950bd2a4450d101db023e3bc91eaf084ce82f2eef835dcc58",
+          "supports": "Closes universal correction records around immutable target identity, authority, replacement evidence, transition and hash-chain fields."
+        },
+        {
+          "path": "factory/corrections/ledger.py",
+          "sha256": "3496d145482a601fb3a5a0c0b3bb2e4819b0f317cf81564add79bba1aadc5d87",
+          "supports": "Appends hash-linked records, preserves original identity, derives current standing and rejects restoration after terminal correction actions."
+        },
+        {
+          "path": "factory/corrections/tests/test_corrections.py",
+          "sha256": "51b57f526cbe6131cbe0529637d903605f703b4f5b85759ce2a4dbe3dfa81da8",
+          "supports": "Exercises append, verification, tamper rejection, terminal transitions, identity rebinding, public-path boundaries and no-overwrite export."
         }
       ],
-      "limitation": "The correction duty is declared, but one closed append-only correction and retraction schema is not yet enforced across every artifact class."
+      "limitation": null
     },
     {
       "control_id": "MEMORY-04",
@@ -307,7 +317,7 @@
       "evidence": [
         {
           "path": "CONTRIBUTOR_TERMS.md",
-          "sha256": "d49fb7c67f0d20b8f6e518aff5a4670676048336fad75f58fb4eb4f84e6f9732",
+          "sha256": "80935c0be00b2eafe6b406e9560139e07f1b8e08890a0ba0eac0437853b983c9",
           "supports": "States that contribution does not assign ownership and explains the path-scoped licence boundary."
         },
         {
@@ -456,7 +466,7 @@
         },
         {
           "path": ".github/workflows/verify.yml",
-          "sha256": "fecf6de2e892d361d3c1cdc7b97be4d54b2ff4e583c2fa1dd3e416cc38178fb4",
+          "sha256": "50d0cc36f9d54cdb61078a33de53dbd9528c3bf614cc1cda117e1752ae170ca3",
           "supports": "Runs the quality verifier and regression tests as a protected repository check."
         }
       ],
