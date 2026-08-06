@@ -45,6 +45,8 @@ distance convention.
 - [`factory/shift_reports/`](factory/shift_reports/) — immutable operational
   memory for progress, no-gain, blocked and unrunnable shifts; zero scientific
   standing.
+- [`factory/reference_provenance/`](factory/reference_provenance/) — dated,
+  hash-bound source and terms checks without committing upstream datasets.
 - [`factory/hangar/`](factory/hangar/) — the construction and commissioning web
   interface.
 - [`research_factory_100_workbenches.json`](research_factory_100_workbenches.json)

@@ -16,6 +16,7 @@ sys.path.insert(0, str(REFERENCE_DIR))
 from verify_reference_provenance import (  # noqa: E402
     CATALOGUE,
     MANIFEST,
+    MANIFESTS,
     SCHEMA,
     load_json_strict,
     verify,
@@ -53,10 +54,20 @@ class ReferenceProvenanceVerifierTests(unittest.TestCase):
             manifest_path=manifest_path,
             schema_path=SCHEMA,
             catalogue_path=catalogue_path,
+            expected_numbers=tuple(range(1, 11)),
         )
 
-    def test_repository_manifest_verifies(self) -> None:
-        self.assertEqual(10, verify())
+    def test_repository_manifests_verify(self) -> None:
+        self.assertEqual(20, verify())
+
+    def test_second_repository_manifest_verifies(self) -> None:
+        self.assertEqual(
+            10,
+            verify(
+                manifest_path=MANIFESTS[1][0],
+                expected_numbers=MANIFESTS[1][1],
+            ),
+        )
 
     def test_station_ids_must_match_catalogue_scope_and_order(self) -> None:
         manifest = copy.deepcopy(self.manifest)
@@ -73,6 +84,13 @@ class ReferenceProvenanceVerifierTests(unittest.TestCase):
         manifest["stations"][0]["catalogue_title"] = "Drifted title"
         with tempfile.TemporaryDirectory() as raw_directory:
             with self.assertRaisesRegex(ValueError, "catalogue_title diverges"):
+                self.verify_manifest(Path(raw_directory), manifest)
+
+    def test_manifest_id_range_must_match_scope(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        manifest["manifest_id"] = "WB011-WB020-2026-08-06"
+        with tempfile.TemporaryDirectory() as raw_directory:
+            with self.assertRaisesRegex(ValueError, "manifest ID range must match"):
                 self.verify_manifest(Path(raw_directory), manifest)
 
     def test_retrieved_response_requires_exact_byte_hash(self) -> None:
@@ -113,6 +131,7 @@ class ReferenceProvenanceVerifierTests(unittest.TestCase):
                     manifest_path=manifest_path,
                     schema_path=SCHEMA,
                     catalogue_path=catalogue_path,
+                    expected_numbers=tuple(range(1, 11)),
                 )
 
     def test_duplicate_json_keys_are_rejected(self) -> None:
