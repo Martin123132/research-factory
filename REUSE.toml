@@ -71,6 +71,7 @@ SPDX-License-Identifier = "CC-BY-4.0"
 path = [
   "factory/control_plane/software.lock.json",
   "factory/hangar/data/workbench-readiness.json",
+  "factory/reference_provenance/WB001-WB010.reference-provenance.2026-08-06.json",
   "factory/rounds/**/*.json",
   "factory/station_kits/**/kit-manifest.json",
   "factory/workbench_standard/commissioning/index.json",
