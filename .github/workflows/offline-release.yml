@@ -1,0 +1,36 @@
+name: Build offline recovery package
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "factory-v*"
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.13"
+      - name: Build and verify the offline package
+        id: release
+        shell: bash
+        run: |
+          release_dir="$RUNNER_TEMP/research-factory-offline-${GITHUB_SHA:0:12}"
+          python factory/release/build_offline_release.py --ref HEAD --output "$release_dir"
+          python factory/release/verify_offline_release.py "$release_dir"
+          echo "release_dir=$release_dir" >> "$GITHUB_OUTPUT"
+      - name: Upload the verified recovery package
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: research-factory-offline-${{ github.sha }}
+          path: ${{ steps.release.outputs.release_dir }}
+          if-no-files-found: error
+          retention-days: 30

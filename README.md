@@ -42,6 +42,8 @@ distance convention.
 - [`factory/engine/`](factory/engine/) — provider-neutral catalogue discovery,
   clean-clone diagnostics and portable construction evidence packaging; start
   with [`factory/ENGINE.md`](factory/ENGINE.md).
+- [`factory/release/`](factory/release/) — verified tracked-source and Git-history
+  recovery packages; see [`OFFLINE_RECOVERY.md`](OFFLINE_RECOVERY.md).
 - [`factory/shift_reports/`](factory/shift_reports/) — immutable operational
   memory for progress, no-gain, blocked and unrunnable shifts; zero scientific
   standing.
@@ -68,6 +70,7 @@ python -m unittest discover -s factory/reference_provenance/tests -p "test_*.py"
 python factory/workbench_standard/generate_station_kits.py --check
 python factory/enginectl.py doctor
 python -m unittest discover -s factory/engine/tests -t factory -p "test_*.py" -v
+python -m unittest discover -s factory/release/tests -p "test_*.py" -v
 python -m unittest discover -s factory/control_plane/tests -t factory -p "test_*.py" -v
 python -m unittest discover -s factory/workbenches/wb001_lossless_compression/tests -p "test_*.py" -v
 python -m unittest discover -s factory/workbench_standard/tests -p "test_*.py" -v
