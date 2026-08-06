@@ -15,6 +15,11 @@ from corrections.ledger import (
     CorrectionLedger,
     load_json_strict as load_correction_draft,
 )
+from dispatch.gate import (
+    PROFILE_DRY_RUN,
+    PROFILE_FROZEN_LOCAL,
+    DispatchBudgetGate,
+)
 from quality.verify_quality import verify as verify_factory_quality
 
 from .catalogue import PROFILES, STAGES, StationCatalogue, doctor
@@ -35,6 +40,10 @@ LOCAL_COMMANDS = {
     "correction-verify",
     "correction-history",
     "correction-export",
+    "dispatch-profiles",
+    "dispatch-budget-verify",
+    "dispatch-preflight",
+    "dispatch-ticket-verify",
 }
 GLOBAL_VALUE_OPTIONS = {
     "--factory-root",
@@ -86,6 +95,10 @@ Explore and verify the factory (no account, website, network, or AI provider req
   correction-verify      verify the universal correction ledger and current standings
   correction-history     search original and current artifact standing read-only
   correction-export      export a read-only public correction index for adapters
+  dispatch-profiles      inspect the built-in runner enforcement profiles
+  dispatch-budget-verify verify one immutable provider-neutral agent budget
+  dispatch-preflight     issue a fail-closed admission or rejection ticket
+  dispatch-ticket-verify recompute a ticket without trusting its conclusion
 
 Governed append-only lifecycle:
   init, check-in, open-round, complete-entry-gate, claim-work,
@@ -250,6 +263,47 @@ def build_local_parser() -> argparse.ArgumentParser:
     correction_export.add_argument("--ledger", type=Path, required=True)
     correction_export.add_argument("--output", type=Path, required=True)
     correction_export.add_argument("--json", action="store_true")
+
+    dispatch_profiles = sub.add_parser(
+        "dispatch-profiles",
+        help="inspect built-in runner enforcement coverage",
+    )
+    dispatch_profiles.add_argument("--json", action="store_true")
+
+    dispatch_budget = sub.add_parser(
+        "dispatch-budget-verify",
+        help="verify one hash-bound provider-neutral agent budget",
+    )
+    dispatch_budget.add_argument("--budget", type=Path, required=True)
+    dispatch_budget.add_argument("--json", action="store_true")
+
+    dispatch_preflight = sub.add_parser(
+        "dispatch-preflight",
+        help="issue an admission ticket only when every budget dimension is enforced",
+    )
+    dispatch_preflight.add_argument("--budget", type=Path, required=True)
+    dispatch_preflight.add_argument(
+        "--profile",
+        choices=[PROFILE_DRY_RUN, PROFILE_FROZEN_LOCAL],
+        required=True,
+    )
+    dispatch_preflight.add_argument("--output", type=Path, required=True)
+    dispatch_preflight.add_argument("--ticket-id")
+    dispatch_preflight.add_argument("--created-at")
+    dispatch_preflight.add_argument(
+        "--require-authorized",
+        action="store_true",
+        help="return a non-zero status when the gate issues a rejection",
+    )
+    dispatch_preflight.add_argument("--json", action="store_true")
+
+    dispatch_ticket = sub.add_parser(
+        "dispatch-ticket-verify",
+        help="recompute a dispatch ticket from its exact budget and profile",
+    )
+    dispatch_ticket.add_argument("--budget", type=Path, required=True)
+    dispatch_ticket.add_argument("--ticket", type=Path, required=True)
+    dispatch_ticket.add_argument("--json", action="store_true")
     return parser
 
 
@@ -436,6 +490,44 @@ def _human_correction_history(value: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
+def _human_dispatch_budget(value: dict[str, Any]) -> str:
+    time_budget = value["time_budget"]
+    compute = value["compute_budget"]
+    return "\n".join(
+        [
+            "DISPATCH BUDGET VERIFIED",
+            f"Budget: {value['budget_id']} / sha256:{value['budget_sha256']}",
+            f"Operator: {value['accountable_human']['operator_id']}",
+            f"Mode: {value['requested_execution_mode']}",
+            (
+                f"Ceilings: wall={time_budget['max_wall_seconds']}s, "
+                f"CPU={compute['max_cpu_seconds']}s, memory={compute['max_memory_bytes']} bytes, "
+                f"spend={value['financial_budget']['max_minor_units']} "
+                f"{value['financial_budget']['currency']} minor units"
+            ),
+            "Agent self-expansion: forbidden",
+            "Scientific standing: NONE",
+        ]
+    )
+
+
+def _human_dispatch_ticket(value: dict[str, Any]) -> str:
+    lines = [
+        "DISPATCH PREFLIGHT AUTHORIZED" if value["authorized"] else "DISPATCH PREFLIGHT REJECTED",
+        f"Ticket: {value['ticket_id']} / sha256:{value['ticket_sha256']}",
+        f"Profile: {value['profile']['profile_id']}",
+        f"Scope: {value['authorization_scope']}",
+        "Human release still required: true",
+    ]
+    if value["violations"]:
+        lines.append("Missing enforcement:")
+        lines.extend(
+            f"- {row['dimension']}: {row['summary']}" for row in value["violations"]
+        )
+    lines.extend(["Scientific standing: NONE", "Promotion eligible: false"])
+    return "\n".join(lines)
+
+
 def run_local(args: argparse.Namespace) -> int:
     factory_root = args.factory_root.resolve()
     if args.command == "doctor":
@@ -506,6 +598,52 @@ def run_local(args: argparse.Namespace) -> int:
                 f"Records: {value['returned']}\n"
                 "Scientific standing: NONE"
             )
+        return 0
+
+    if args.command == "dispatch-profiles":
+        gate = DispatchBudgetGate(factory_root)
+        value = {
+            "profiles": [
+                gate.enforcement_profile(PROFILE_DRY_RUN),
+                gate.enforcement_profile(PROFILE_FROZEN_LOCAL),
+            ],
+            "process_execution_profile_authorized": False,
+            "scientific_standing": "NONE",
+        }
+        if args.json:
+            _json(value)
+        else:
+            for profile in value["profiles"]:
+                enforced = sum(
+                    status == "ENFORCED" for status in profile["capabilities"].values()
+                )
+                print(
+                    f"{profile['profile_id']}  {enforced}/18 enforced  "
+                    f"mode={profile['execution_mode']}"
+                )
+            print("Process execution currently authorized: false")
+        return 0
+    if args.command == "dispatch-budget-verify":
+        value = DispatchBudgetGate(factory_root).load_budget(args.budget)
+        _json(value) if args.json else print(_human_dispatch_budget(value))
+        return 0
+    if args.command == "dispatch-preflight":
+        gate = DispatchBudgetGate(factory_root)
+        budget = gate.load_budget(args.budget)
+        value = gate.write_ticket(
+            budget,
+            profile_id=args.profile,
+            output=args.output,
+            ticket_id=args.ticket_id,
+            created_at=args.created_at,
+        )
+        _json(value) if args.json else print(_human_dispatch_ticket(value))
+        return 3 if args.require_authorized and not value["authorized"] else 0
+    if args.command == "dispatch-ticket-verify":
+        gate = DispatchBudgetGate(factory_root)
+        budget = gate.load_budget(args.budget)
+        value = gate.load_and_validate_ticket(args.ticket, budget=budget)
+        _json(value) if args.json else print(_human_dispatch_ticket(value))
         return 0
 
     portable = PortableEvidencePackage(factory_root)

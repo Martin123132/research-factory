@@ -15,6 +15,10 @@ same append-only control plane.
 Universal public-artifact corrections and retractions are implemented in
 [`corrections/`](corrections/README.md). They change derived standing through a
 new hash-linked record while retaining the original artifact bytes.
+Provider-neutral agent admission is implemented in
+[`dispatch/`](dispatch/README.md). Its immutable budget covers 18 enforcement
+dimensions and rejects every process runner that cannot prove them all; the
+frozen pilot remains unchanged and honestly rejected by this stricter gate.
 The construction and commissioning dashboard is in
 [`hangar/`](hangar/README.md). It maps all 100 stations, schedules hangar work,
 registers non-promotion runner interfaces and keeps a separate append-only
@@ -127,6 +131,19 @@ Pop-Location
 The drill preserves a deliberately false original fixture, appends a
 corrigendum, appends a retraction and independently re-derives the final
 `RETRACTED` standing from the complete record chain.
+
+Commission the universal dispatch-budget gate without starting a process:
+
+```powershell
+Push-Location factory
+.\.venv\Scripts\python.exe -m dispatch.run_synthetic_drill `
+  --output state\dispatch-budget-synthetic-001
+Pop-Location
+```
+
+The drill authorises one zero-resource no-execution preflight, then proves that
+the frozen local process runner is rejected for its 14 missing enforcement
+dimensions. It grants no execution, scientific or promotion authority.
 
 `--require-stage COMMISSIONING_READY` is intentionally fail-closed: it rejects
 the present 99 drafts rather than pretending a catalogue brief is runnable.

@@ -1,0 +1,46 @@
+{
+  "fixture": "SYNTHETIC_COMMISSIONING_ONLY",
+  "drillId": "DISPATCH-BUDGET-SYNTHETIC-001",
+  "reportSha256": "205762d7a1d2330547694ba156106b5d890ff8bea37aaa46af90c91d0c3fb742",
+  "processStarted": false,
+  "dryRun": {
+    "profileId": "profile:no-execution-dry-run-v1",
+    "budgetSha256": "6d05ca5fd0d8a0e01fc2dd61d11e8376c0567171d04abece42cfbaa449f77bb5",
+    "ticketSha256": "e7e6adffdf48112b0a856742e044161ec41411e09916324201756ca57803d29a",
+    "enforcedDimensions": 18,
+    "requiredDimensions": 18,
+    "authorized": true,
+    "authorizationScope": "NO_EXECUTION_PREFLIGHT_ONLY"
+  },
+  "process": {
+    "profileId": "profile:frozen-local-monitored-v1",
+    "budgetSha256": "1dc326c57f36532d59a60b2c3e26036aa97c532efc89dd46e2dedf23a48ba61b",
+    "ticketSha256": "cf3cd0ca10823f247715948d63ded7b55a64bad6c1418704d155bb66a14dc379",
+    "enforcedDimensions": 4,
+    "requiredDimensions": 18,
+    "authorized": false,
+    "authorizationScope": "REJECTED",
+    "missingDimensions": [
+      "ACTIVE_TIME",
+      "IDLE_TIME",
+      "CPU_TIME",
+      "MEMORY",
+      "GPU_TIME",
+      "STORAGE",
+      "PROCESS_COUNT",
+      "FINANCIAL_SPEND",
+      "TOOL_ALLOWLIST",
+      "FILESYSTEM_READ",
+      "FILESYSTEM_WRITE",
+      "NETWORK_EGRESS",
+      "HAZARD_STOP",
+      "STOP_CONDITIONS"
+    ]
+  },
+  "boundary": {
+    "humanReleaseStillRequired": true,
+    "scientificEvidence": false,
+    "countsAsIndependentReproduction": false,
+    "eligibleForPromotion": false
+  }
+}

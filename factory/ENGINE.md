@@ -27,13 +27,16 @@ commands to `control_plane`; it does not maintain a competing database. GitHub
 is useful for distributing source, issues and reviews, but a pull request is not
 a scientific result and GitHub is not the scientific system of record.
 
-Dispatch now fails closed through Work Order Envelope v2. Before an attempt can
-start, an administrator binds its exact local command, working directory,
+The frozen pilot dispatches through Work Order Envelope v2. Before an attempt
+can start, an administrator binds its exact local command, working directory,
 interfaces, wall-time/output/cost limits and stop rules to the work claim; the
-human then releases it with a capability kept out of the public ledger. The
-commissioning executor records a receipt, and only a successful in-envelope
-receipt can enter candidate reruns. `LOCAL_MONITORED_V1` is deliberately marked
-non-promotion because it does not yet isolate network, filesystem or memory.
+human then releases it with a capability kept out of the public ledger.
+
+Every new agent runner also faces the separate universal dispatch-budget gate.
+It admits a runner only if all 18 time, compute, spend, tool, filesystem,
+network, hazard and stop dimensions are enforced. `LOCAL_MONITORED_V1` proves
+only four and is therefore rejected for process execution. The frozen pilot is
+not modified, silently upgraded or made promotion-grade.
 
 ## Start from a clean clone
 
@@ -126,6 +129,35 @@ standing derived from the whole verified chain. Original bytes are never
 rewritten. Identity and authority fields are accountable assertions, not proof
 that an actor is independent or legally entitled to act. Correction records
 carry zero scientific standing and cannot promote an artifact.
+
+## Admit agent work only inside a complete budget
+
+`dispatch-budget-verify` checks a closed, self-hashed budget tied to one work
+order, one accountable human and one retained release capability. The agent
+cannot add tools, broaden paths, change network access, spend more, extend its
+shift or alter its evidence class.
+
+```powershell
+factory\.venv\Scripts\python.exe factory\enginectl.py dispatch-profiles
+
+factory\.venv\Scripts\python.exe factory\enginectl.py dispatch-budget-verify `
+  --budget factory\dispatch\dispatch-budget.example.json
+
+factory\.venv\Scripts\python.exe factory\enginectl.py dispatch-preflight `
+  --budget factory\dispatch\dispatch-budget.example.json `
+  --profile profile:no-execution-dry-run-v1 `
+  --output factory\state\dispatch-dry-run-ticket.json `
+  --require-authorized
+
+factory\.venv\Scripts\python.exe factory\enginectl.py dispatch-ticket-verify `
+  --budget factory\dispatch\dispatch-budget.example.json `
+  --ticket factory\state\dispatch-dry-run-ticket.json
+```
+
+The only currently authorised profile is a no-execution preflight: it grants
+zero time, compute, storage, spend, tools, files and network access. The process
+profile returns a hash-bound rejection naming each unenforced dimension. Neither
+result is scientific evidence, independent reproduction or promotion.
 
 ## Portable construction packages
 

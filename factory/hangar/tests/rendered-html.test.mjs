@@ -87,6 +87,12 @@ test("renders the fail-closed Contract v1 standard and downloadable artifacts", 
   assert.match(html, /The agent cannot start without the separately retained release capability/);
   assert.match(html, /Stopped or over-limit work is retained but cannot enter reruns/);
   assert.match(html, /does not prove network, filesystem, memory or human identity isolation/i);
+  assert.match(html, /Partial enforcement means no process authority/);
+  assert.match(html, /profile:no-execution-dry-run-v1/);
+  assert.match(html, /18<!-- -->\/(?:<!-- -->)?18/);
+  assert.match(html, /profile:frozen-local-monitored-v1/);
+  assert.match(html, /4<!-- -->\/(?:<!-- -->)?18/);
+  assert.match(html, /NO PROCESS EXECUTION \/ NO SCIENTIFIC STANDING/);
   assert.match(html, /The disagreement route is executable/);
   assert.match(html, /diagnostic majority remains blocked from promotion/i);
   assert.match(html, /Records are not people/);
@@ -120,6 +126,7 @@ test("renders worker rights and the honest non-compensating quality profile", as
   assert.match(html, /Certifications<\/dt><dd>0<\/dd>/);
   assert.match(html, /Live stations<\/dt><dd>0<\/dd>/);
   assert.match(html, /Independent validators<\/dt><dd>0<\/dd>/);
+  assert.match(html, /no process runner yet enforces all 18 dimensions/i);
   assert.match(html, /Do not trust this page\./);
 });
 

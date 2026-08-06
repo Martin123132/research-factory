@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ScopeNotice } from "@/components/ScopeNotice";
+import dispatchBudget from "@/data/dispatch-budget-example.json";
 import {
   contractCounts,
   contractGeneratorSha256,
@@ -24,7 +25,7 @@ const invariants = [
   ["05", "Blind before reveal", "Both validators commit conclusions and evidence hashes before either result is revealed. A deterministic split opens diagnosis and human review, never majority promotion."],
   ["06", "Failures remain useful", "Negative and disputed work stays append-only and searchable with its explored region, decisive boundary and conditions for revisiting it."],
   ["07", "Rights without takeover", "Contributors retain the rights they lawfully hold. The Factory records provenance and declarations but cannot certify ownership, inventorship, patentability or freedom to operate."],
-  ["08", "Bounded dispatch", "An attempt needs an administrator-issued Work Order Envelope v2 and a human-retained release capability. Exact command, working directory, interfaces, wall time, output, cost and stop rules are immutable before execution."],
+  ["08", "Bounded dispatch", "Every new runner must pass all 18 universal budget dimensions. Partial monitoring produces a rejection ticket; only the human can release a workload and the agent cannot enlarge its own authority."],
 ] as const;
 
 export default function StandardsPage() {
@@ -102,6 +103,52 @@ export default function StandardsPage() {
             <h3>Locked by design</h3>
             <p>External identity, a central blind evaluator, promotion-grade isolated execution and explicit authorization must all exist before this count can move.</p>
           </article>
+        </div>
+      </section>
+
+      <section className="section-block dispatch-gate-section">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">Universal dispatch budget / verified synthetic projection</p>
+            <h2>Partial enforcement means no process authority.</h2>
+          </div>
+          <p>
+            The preflight checks time, compute, spend, tools, paths, network, hazards and stop
+            authority before a runner can begin. A self-description cannot create enforcement.
+          </p>
+        </div>
+        <div className="dispatch-gate-grid">
+          <article className="dispatch-profile-card dispatch-profile-pass">
+            <div className="card-topline"><span>ADMISSION PASS</span><span className="mono">DRY RUN ONLY</span></div>
+            <h3>No-execution preflight</h3>
+            <p className="mono">{dispatchBudget.dryRun.profileId}</p>
+            <dl>
+              <div><dt>Enforced</dt><dd>{dispatchBudget.dryRun.enforcedDimensions}/{dispatchBudget.dryRun.requiredDimensions}</dd></div>
+              <div><dt>Scope</dt><dd>{dispatchBudget.dryRun.authorizationScope.replaceAll("_", " ")}</dd></div>
+              <div><dt>Process started</dt><dd>{dispatchBudget.processStarted ? "YES" : "NO"}</dd></div>
+            </dl>
+            <p>Zero time, compute, storage, spend, tools, file access and network access are granted.</p>
+          </article>
+          <article className="dispatch-profile-card dispatch-profile-reject">
+            <div className="card-topline"><span>ADMISSION REJECTED</span><span className="mono">PROCESS EXECUTION</span></div>
+            <h3>Frozen local monitored runner</h3>
+            <p className="mono">{dispatchBudget.process.profileId}</p>
+            <dl>
+              <div><dt>Enforced</dt><dd>{dispatchBudget.process.enforcedDimensions}/{dispatchBudget.process.requiredDimensions}</dd></div>
+              <div><dt>Missing</dt><dd>{dispatchBudget.process.missingDimensions.length}</dd></div>
+              <div><dt>Authority</dt><dd>{dispatchBudget.process.authorizationScope}</dd></div>
+            </dl>
+            <ul className="dispatch-missing-list">
+              {dispatchBudget.process.missingDimensions.map((dimension) => (
+                <li key={dimension}>{dimension.replaceAll("_", " ")}</li>
+              ))}
+            </ul>
+          </article>
+        </div>
+        <div className="dispatch-gate-boundary">
+          <strong>NO PROCESS EXECUTION / NO SCIENTIFIC STANDING</strong>
+          <span className="mono">report sha256:{dispatchBudget.reportSha256}</span>
+          <p>Human release is still required. This static panel is not the engine gate or an execution ticket.</p>
         </div>
       </section>
 

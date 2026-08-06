@@ -58,6 +58,12 @@ unrunnable shift should be recorded honestly and can remain useful. The Factory
 must not reward raw attempt volume, compute consumption or overnight endurance
 as substitutes for evidence quality.
 
+The universal dispatch-budget gate fails closed across time, compute, memory,
+storage, process, spend, tool, filesystem, network and hazard controls. A runner
+that cannot enforce every declared dimension receives a rejection, not partial
+execution authority. The current built-in process runner remains rejected by
+that universal gate; only a no-execution synthetic preflight is authorised.
+
 ## Scientific promises
 
 The Factory promises that:
