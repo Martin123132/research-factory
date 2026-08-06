@@ -17,6 +17,13 @@ reference codec through exact round-trip and determinism gates. Its purpose is
 to show that the person and agent can follow the standard method before
 occupying a work or rerun slot.
 
+After the entry gate, an administrator must issue Work Order Envelope v2 for
+the exact work claim. Keep its release capability with the human operator, not
+in an agent-readable file. The attempt will not start without it. The envelope
+freezes the command, working directory, permitted interfaces, wall time,
+combined output, cost ceiling and stop conditions. Extensions require a new
+claim and a new envelope; the original is never widened in place.
+
 ```powershell
 .\.venv\Scripts\python.exe control_plane\scripts\run_entry_gate.py `
   --operator YOUR_OPERATOR_ID `
@@ -72,6 +79,16 @@ Then use `submit-result` or `record-negative-result`. Do not replace the origina
 attempt; append a permitted annotation after blindness ends or create a new
 attempt. The work unit reopens as `OPEN_WITH_HISTORY` so later shifts can avoid
 repeating the same search.
+
+Candidate submission also requires the monitored execution receipt to say the
+run completed inside its envelope. A human-stopped, timed-out or output-limited
+run is not thrown away: record it as `RESOURCE_LIMIT` or `UNRUNNABLE`, or close
+it with `terminate-attempt`. It cannot enter blind reruns.
+
+The included `LOCAL_MONITORED_V1` runner is a synthetic commissioning tool. It
+does not independently isolate network, filesystem, memory or child processes
+and every receipt says `promotion_eligible: false`. Never convert that receipt
+into live scientific evidence by changing a label.
 
 ## Candidate gate
 

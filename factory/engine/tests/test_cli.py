@@ -16,6 +16,9 @@ FACTORY_ROOT = Path(__file__).resolve().parents[2]
 ENGINECTL = FACTORY_ROOT / "enginectl.py"
 ROUND = FACTORY_ROOT / "rounds" / "WB001-PILOT-001" / "round.json"
 ENTRY_GATE = FACTORY_ROOT / "control_plane" / "scripts" / "run_entry_gate.py"
+ENVELOPE_POLICY = (
+    FACTORY_ROOT / "control_plane" / "examples" / "wb001-synthetic-envelope-policy.json"
+)
 
 
 class LocalCliTests(unittest.TestCase):
@@ -156,12 +159,29 @@ class GovernedCliSubprocessTests(unittest.TestCase):
             "--work-unit",
             "wu:preprocess-integers",
         )
+        release_capability = "engine-cli-human-release-capability-123456"
+        issued = self.ctl(
+            "issue-work-envelope",
+            "--actor",
+            "human:admin",
+            "--work-claim",
+            str(claim["payload"]["work_claim_id"]),  # type: ignore[index]
+            "--policy",
+            str(ENVELOPE_POLICY),
+            "--release-capability",
+            release_capability,
+        )
+        envelope_id = issued["event"]["payload"]["envelope"]["envelope_id"]  # type: ignore[index]
         attempt = self.ctl(
             "start-attempt",
             "--operator",
             "human:worker",
             "--work-claim",
             str(claim["payload"]["work_claim_id"]),  # type: ignore[index]
+            "--envelope",
+            str(envelope_id),
+            "--release-capability",
+            release_capability,
             "--attempt-id",
             "attempt:cli-smoke",
         )

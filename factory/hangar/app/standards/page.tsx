@@ -24,6 +24,7 @@ const invariants = [
   ["05", "Blind before reveal", "Both validators commit conclusions and evidence hashes before either result is revealed. A deterministic split opens diagnosis and human review, never majority promotion."],
   ["06", "Failures remain useful", "Negative and disputed work stays append-only and searchable with its explored region, decisive boundary and conditions for revisiting it."],
   ["07", "Rights without takeover", "Contributors retain the rights they lawfully hold. The Factory records provenance and declarations but cannot certify ownership, inventorship, patentability or freedom to operate."],
+  ["08", "Bounded dispatch", "An attempt needs an administrator-issued Work Order Envelope v2 and a human-retained release capability. Exact command, working directory, interfaces, wall time, output, cost and stop rules are immutable before execution."],
 ] as const;
 
 export default function StandardsPage() {
@@ -133,6 +134,29 @@ export default function StandardsPage() {
 
       <section className="section-block standard-flow-section">
         <div className="section-heading">
+          <div><p className="eyebrow">Work Order Envelope v2</p><h2>The worker knows the fence before the clock starts</h2></div>
+        </div>
+        <div className="standard-flow" aria-label="Bounded work dispatch flow">
+          <article><span>1</span><strong>Claim one unit</strong><p>The named operator receives one expiring, exclusive work claim.</p></article>
+          <i>â†’</i>
+          <article><span>2</span><strong>Administrator issues</strong><p>Exact command, interfaces, time, output, zero local cost and stop conditions are hash-bound.</p></article>
+          <i>â†’</i>
+          <article><span>3</span><strong>Human releases</strong><p>The agent cannot start without the separately retained release capability.</p></article>
+          <i>â†’</i>
+          <article><span>4</span><strong>Receipt decides route</strong><p>In-envelope work may submit. Stopped or over-limit work is retained but cannot enter reruns.</p></article>
+        </div>
+        <div className="scope-notice scope-notice-compact">
+          <strong>Commissioning boundary</strong>
+          <p>
+            <span className="mono">LOCAL_MONITORED_V1</span> enforces argv, working directory,
+            wall time and output size. It does not prove network, filesystem, memory or human
+            identity isolation, so every receipt remains explicitly ineligible for promotion.
+          </p>
+        </div>
+      </section>
+
+      <section className="section-block standard-flow-section">
+        <div className="section-heading">
           <div><p className="eyebrow">Replication route</p><h2>A claim cannot inspect its own answer sheet</h2></div>
         </div>
         <div className="standard-flow" aria-label="Blind two-person reproduction flow">
@@ -168,6 +192,7 @@ export default function StandardsPage() {
             <a className="button button-secondary" href="/rights-and-ip-v1.schema.json">Download rights schema</a>
             <a className="button button-secondary" href="/contribution-ledger-v1.schema.json">Download credit schema</a>
             <a className="button button-secondary" href="/shift-report-v1.schema.json">Download shift-report schema</a>
+            <a className="button button-secondary" href="https://github.com/Martin123132/research-factory/tree/main/factory/control_plane/schemas">Inspect envelope schemas</a>
           </div>
         </article>
       </section>

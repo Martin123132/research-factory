@@ -13,6 +13,7 @@ CONTROL_ROOT = FACTORY_ROOT / "control_plane"
 sys.path.insert(0, str(FACTORY_ROOT))
 
 from control_plane.common import canonical_json_bytes, load_json, sha256_bytes  # noqa: E402
+from control_plane.envelope import load_envelope_policy  # noqa: E402
 from control_plane.ledger import EventLedger  # noqa: E402
 from control_plane.workflow import _validate_round_document  # noqa: E402
 
@@ -36,6 +37,10 @@ def main() -> int:
     round_document = load_json(args.round)
     Draft202012Validator(schemas["round.schema.json"]).validate(round_document)
     _validate_round_document(round_document, FACTORY_ROOT)
+    envelope_policy = load_envelope_policy(
+        CONTROL_ROOT / "examples" / "wb001-synthetic-envelope-policy.json",
+        factory_root=FACTORY_ROOT,
+    )
 
     checkpoint_path = args.round.parent / "bootstrap_checkpoint.json"
     checkpoint = None
@@ -74,6 +79,7 @@ def main() -> int:
                 "schemas": len(schemas),
                 "round_id": round_document["round_id"],
                 "round_sha256": round_document["round_sha256"],
+                "envelope_policy_sha256": envelope_policy["policy_sha256"],
                 "ledger_events": event_count,
                 "ledger": ledger_summary,
                 "bootstrap_checkpoint_sha256": (

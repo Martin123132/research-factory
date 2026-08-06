@@ -83,6 +83,10 @@ test("renders the fail-closed Contract v1 standard and downloadable artifacts", 
   assert.match(html, /Factory standard \/ version (?:<!-- -->)?1\.2\.0/);
   assert.match(html, /Contributors retain the rights they lawfully hold/);
   assert.match(html, /commit conclusions and evidence hashes before either result is revealed/i);
+  assert.match(html, /Work Order Envelope v2/);
+  assert.match(html, /The agent cannot start without the separately retained release capability/);
+  assert.match(html, /Stopped or over-limit work is retained but cannot enter reruns/);
+  assert.match(html, /does not prove network, filesystem, memory or human identity isolation/i);
   assert.match(html, /stage-number mono">99</);
   assert.match(html, /DIGITAL_COMPRESSION_V1/);
   assert.match(html, /DIGITAL_OPTIMIZATION_V1/);

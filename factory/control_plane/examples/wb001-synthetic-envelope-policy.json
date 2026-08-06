@@ -1,0 +1,35 @@
+{
+  "schema_version": 2,
+  "policy_type": "WORK_ORDER_ENVELOPE_POLICY",
+  "policy_id": "policy:wb001-synthetic-commissioning-v2",
+  "scope": "SYNTHETIC_COMMISSIONING",
+  "enforcement_profile": "LOCAL_MONITORED_V1",
+  "allowed_command": [
+    "{python}",
+    "-c",
+    "print('Research Factory synthetic envelope: PASS')"
+  ],
+  "working_directory": ".",
+  "allowed_interfaces": [
+    "LOCAL_SUBPROCESS",
+    "STDOUT",
+    "STDERR"
+  ],
+  "network_policy": "NOT_GRANTED_UNVERIFIED_BY_LOCAL_PROFILE",
+  "resource_limits": {
+    "max_wall_seconds": 30,
+    "max_output_bytes": 4096,
+    "max_cost_minor_units": 0,
+    "currency": "GBP"
+  },
+  "stop_conditions": [
+    "HUMAN_STOP_REQUESTED",
+    "WALL_TIME_LIMIT_REACHED",
+    "OUTPUT_LIMIT_REACHED",
+    "PROCESS_EXITED",
+    "PROCESS_LAUNCH_FAILED"
+  ],
+  "extension_policy": "NEW_CLAIM_AND_ENVELOPE_ONLY",
+  "promotion_eligible": false,
+  "policy_sha256": "486f6afe9b61fbe8353b098a3d94cfa0b9bcc2763ea412058e67ac7a27b83b39"
+}

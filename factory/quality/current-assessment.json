@@ -42,7 +42,7 @@
       "evidence": [
         {
           "path": "factory/ENGINE.md",
-          "sha256": "98226884c60f6d75eddaa115fd32386735647e97b90f28f8ffcb929f5d271392",
+          "sha256": "a0e93dab560b9affda6d5a512b910f529bf620e08efcd02a7b15220f1a6bc2f0",
           "supports": "Documents the clean-clone core with no hosted account, website, GitHub API or model-provider requirement."
         },
         {
@@ -108,22 +108,32 @@
       "critical": true,
       "minimum_evidence_level": "ENFORCED",
       "outcome": "PARTIAL",
-      "evidence_level": "DECLARED",
+      "evidence_level": "ENFORCED",
       "evidence": [
         {
           "path": "OPEN_FACTORY_CHARTER.md",
           "sha256": "7417a953dcbff17af5469ef2ca4cc359567082930222a936d34f79130c788553",
           "supports": "Requires scope, duration, resources, stop conditions, hazards and evidence class before dispatch."
+        },
+        {
+          "path": "factory/control_plane/schemas/work-order-envelope-v2.schema.json",
+          "sha256": "5b2d4d1f3908114fcdf3f79373d14c3795cf29fbdcb331c9d80fcd00c4a08b8f",
+          "supports": "Closes commissioning dispatch around one named operator, exact command and interfaces, bounded wall time, output and cost, immutable stop conditions and no in-place extension."
+        },
+        {
+          "path": "factory/control_plane/tests/test_control_plane.py",
+          "sha256": "a631789327c782ea5a3b5f83c07792766ff531c23c0464f10a945af02b40948d",
+          "supports": "Exercises missing-envelope rejection, human release, monitored receipt and stop-retention paths."
         }
       ],
-      "limitation": "Existing work orders and contracts do not yet enforce every time, compute, material, hazard and stop-condition field as a closed dispatch gate."
+      "limitation": "Work Order Envelope v2 enforces the local synthetic command, wall-time, output, zero-cost and stop boundary, but materials and hazards remain declarative and the local profile does not isolate network, filesystem or memory."
     },
     {
       "control_id": "WORK-02",
       "critical": true,
       "minimum_evidence_level": "DECLARED",
       "outcome": "MEETS",
-      "evidence_level": "DECLARED",
+      "evidence_level": "ENFORCED",
       "evidence": [
         {
           "path": "OPEN_FACTORY_CHARTER.md",
@@ -144,9 +154,14 @@
           "path": "OPEN_FACTORY_CHARTER.md",
           "sha256": "7417a953dcbff17af5469ef2ca4cc359567082930222a936d34f79130c788553",
           "supports": "Requires a named human, allowed interfaces, resource ceiling and termination condition for agent dispatch."
+        },
+        {
+          "path": "factory/control_plane/envelope.py",
+          "sha256": "20dc59e02e73c409bab41606407dc599463321536de03c0d666f4064d0042f93",
+          "supports": "Enforces exact local argv and working directory, wall and output ceilings, a human stop callback, immutable receipts and explicit non-promotion status."
         }
       ],
-      "limitation": "The agent-authority rule is declared, but one provider-neutral dispatch envelope does not yet enforce budgets and termination across every runner."
+      "limitation": "The provider-neutral envelope shape is enforced for LOCAL_MONITORED_V1, but not yet by every station runner; network, filesystem, memory and external spend need a promotion-grade isolation adapter."
     },
     {
       "control_id": "WORK-04",
@@ -187,7 +202,7 @@
       "evidence": [
         {
           "path": "factory/control_plane/workflow.py",
-          "sha256": "fcaeaf9d687bd109308efd51d6f19f4a8fc2480f1258877d1460b43a5bba4f54",
+          "sha256": "110edb17393f9ca0bc2969369d7621f570603e904bdd2f26f528ddd8c99c8143",
           "supports": "Implements blind job, rerun, attestation and reveal ordering in the governed state machine."
         }
       ],
@@ -202,7 +217,7 @@
       "evidence": [
         {
           "path": "factory/control_plane/workflow.py",
-          "sha256": "fcaeaf9d687bd109308efd51d6f19f4a8fc2480f1258877d1460b43a5bba4f54",
+          "sha256": "110edb17393f9ca0bc2969369d7621f570603e904bdd2f26f528ddd8c99c8143",
           "supports": "Rejects author reruns and repeated validator identities inside the governed workflow."
         }
       ],
@@ -217,7 +232,7 @@
       "evidence": [
         {
           "path": "factory/control_plane/workflow.py",
-          "sha256": "fcaeaf9d687bd109308efd51d6f19f4a8fc2480f1258877d1460b43a5bba4f54",
+          "sha256": "110edb17393f9ca0bc2969369d7621f570603e904bdd2f26f528ddd8c99c8143",
           "supports": "Routes incompatible reruns to dispute handling and prevents a split result from becoming promotion by majority vote."
         }
       ],
@@ -232,7 +247,7 @@
       "evidence": [
         {
           "path": "factory/control_plane/workflow.py",
-          "sha256": "fcaeaf9d687bd109308efd51d6f19f4a8fc2480f1258877d1460b43a5bba4f54",
+          "sha256": "110edb17393f9ca0bc2969369d7621f570603e904bdd2f26f528ddd8c99c8143",
           "supports": "Records structured negative classifications, reason codes, hypotheses and public summaries in the append-only lifecycle."
         }
       ],

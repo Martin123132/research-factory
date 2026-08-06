@@ -92,8 +92,8 @@
     {
       "name": "control_plane_software_lock",
       "path": "control_plane/software.lock.json",
-      "sha256": "9386b3b14fffe07ca963c15fbe20f95ad04f46b191cbb8b39f3b7bb9c037ae33",
-      "logical_commitment_sha256": "1a028fdeb3a88579b09ba6da62596365281d40f93a2aa5c246d564064320e737"
+      "sha256": "6353fadd1d9a12471166265bd46fea31c0b7c832458081e37bb01d5aaf517674",
+      "logical_commitment_sha256": "61fe7b4f70ea2ef85ec871a6f9486e4e75fccd31dfe752fabd61f86c4518a495"
     },
     {
       "name": "evaluator_software_lock",
@@ -186,5 +186,5 @@
     "BOUNDARY_FOUND",
     "DUPLICATE_DIRECTION"
   ],
-  "round_sha256": "9de2fa9fb5b708ea5fec7fba7240389ac5226720342e3197d226faa0a9bc10fd"
+  "round_sha256": "29be39d29ad10c3894233b130e0615023ef95dc3775e8c003a9c79833e6d362f"
 }
