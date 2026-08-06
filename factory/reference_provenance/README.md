@@ -30,3 +30,8 @@ the closed schema, rejects duplicate JSON keys and catalogue drift, and checks
 retrieval-state consistency. Adding a batch requires registering its path and
 expected numeric range in `verify_reference_provenance.py`; an unregistered JSON
 file does not extend verified coverage.
+
+A small number of canonical catalogue rows name more than one required source
+using the exact `https://… | https://…` notation. Those rows require one ordered
+`catalogue-reference` retrieval for every component. If any component fails,
+the station's dated reference assessment must remain `retrieval-failed`.

@@ -58,7 +58,7 @@ class ReferenceProvenanceVerifierTests(unittest.TestCase):
         )
 
     def test_repository_manifests_verify(self) -> None:
-        self.assertEqual(30, verify())
+        self.assertEqual(40, verify())
 
     def test_second_repository_manifest_verifies(self) -> None:
         self.assertEqual(
@@ -75,6 +75,15 @@ class ReferenceProvenanceVerifierTests(unittest.TestCase):
             verify(
                 manifest_path=MANIFESTS[2][0],
                 expected_numbers=MANIFESTS[2][1],
+            ),
+        )
+
+    def test_fourth_repository_manifest_verifies(self) -> None:
+        self.assertEqual(
+            10,
+            verify(
+                manifest_path=MANIFESTS[3][0],
+                expected_numbers=MANIFESTS[3][1],
             ),
         )
 
@@ -124,6 +133,46 @@ class ReferenceProvenanceVerifierTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as raw_directory:
             with self.assertRaisesRegex(ValueError, "terms URL lacks a retrieval or failure record"):
                 self.verify_manifest(Path(raw_directory), manifest)
+
+    def test_composite_catalogue_reference_requires_each_component_in_order(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        catalogue = copy.deepcopy(self.catalogue)
+        first_url = manifest["stations"][0]["catalogue_reference_url"]
+        second_url = "https://example.test/second-official-reference"
+        composite = f"{first_url} | {second_url}"
+        catalogue["workbenches"][0]["reference_url"] = composite
+        manifest["stations"][0]["catalogue_reference_url"] = composite
+        second_retrieval = copy.deepcopy(manifest["stations"][0]["retrievals"][0])
+        second_retrieval["requested_url"] = second_url
+        second_retrieval["final_url"] = second_url
+        manifest["stations"][0]["retrievals"].insert(1, second_retrieval)
+
+        with tempfile.TemporaryDirectory() as raw_directory:
+            directory = Path(raw_directory)
+            catalogue_path = self.write_json(directory, "catalogue.json", catalogue)
+            manifest["catalogue_sha256"] = hashlib.sha256(catalogue_path.read_bytes()).hexdigest()
+            manifest_path = self.write_json(directory, "manifest.json", manifest)
+            self.assertEqual(
+                10,
+                verify(
+                    root=ROOT,
+                    manifest_path=manifest_path,
+                    schema_path=SCHEMA,
+                    catalogue_path=catalogue_path,
+                    expected_numbers=tuple(range(1, 11)),
+                ),
+            )
+
+            manifest["stations"][0]["retrievals"].pop(1)
+            manifest_path = self.write_json(directory, "missing-component.json", manifest)
+            with self.assertRaisesRegex(ValueError, "must exactly match"):
+                verify(
+                    root=ROOT,
+                    manifest_path=manifest_path,
+                    schema_path=SCHEMA,
+                    catalogue_path=catalogue_path,
+                    expected_numbers=tuple(range(1, 11)),
+                )
 
     def test_catalogue_drift_is_rejected_even_with_updated_catalogue_hash(self) -> None:
         manifest = copy.deepcopy(self.manifest)

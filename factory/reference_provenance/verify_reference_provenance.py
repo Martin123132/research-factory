@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from pathlib import Path
 
 from jsonschema import Draft202012Validator
@@ -20,10 +21,15 @@ MANIFESTS = (
         REFERENCE_DIR / "WB021-WB030.reference-provenance.2026-08-06.json",
         tuple(range(21, 31)),
     ),
+    (
+        REFERENCE_DIR / "WB031-WB040.reference-provenance.2026-08-06.json",
+        tuple(range(31, 41)),
+    ),
 )
 SCHEMA = ROOT / "factory" / "reference_provenance" / "reference-provenance-v1.schema.json"
 CATALOGUE = ROOT / "research_factory_100_workbenches.json"
 EXPECTED_CODES = [f"WB-{number:03d}" for number in range(1, 11)]
+HTTPS_URL_RE = re.compile(r"^https://[^\s]+$")
 
 
 def load_json_strict(path: Path) -> object:
@@ -85,6 +91,19 @@ def canonical_rows(
     if missing:
         raise ValueError(f"canonical catalogue is missing expected workbench ids: {missing}")
     return [by_id[number] for number in expected_numbers]
+
+
+def catalogue_reference_urls(value: object) -> list[str]:
+    """Expand the catalogue's canonical `url | url` notation without guessing."""
+
+    if not isinstance(value, str):
+        raise ValueError("catalogue reference_url must be a string")
+    urls = value.split(" | ")
+    if " | ".join(urls) != value or not urls or any(not HTTPS_URL_RE.fullmatch(url) for url in urls):
+        raise ValueError(f"catalogue reference_url has invalid canonical HTTPS syntax: {value!r}")
+    if len(set(urls)) != len(urls):
+        raise ValueError(f"catalogue reference_url repeats an HTTPS component: {value!r}")
+    return urls
 
 
 def verify_retrieval(retrieval: object, station_code: str) -> None:
@@ -220,10 +239,13 @@ def verify(
             for retrieval in retrievals
             if isinstance(retrieval, dict) and retrieval.get("role") == "catalogue-reference"
         ]
-        if len(catalogue_retrievals) != 1:
-            raise ValueError(f"{code} must contain exactly one catalogue-reference retrieval")
-        if catalogue_retrievals[0].get("requested_url") != row.get("reference_url"):
-            raise ValueError(f"{code} catalogue-reference retrieval URL differs from the catalogue")
+        expected_reference_urls = catalogue_reference_urls(row.get("reference_url"))
+        actual_reference_urls = [retrieval.get("requested_url") for retrieval in catalogue_retrievals]
+        if actual_reference_urls != expected_reference_urls:
+            raise ValueError(
+                f"{code} catalogue-reference retrieval URLs must exactly match the canonical "
+                "catalogue components in order"
+            )
 
         for retrieval in retrievals:
             verify_retrieval(retrieval, code)
@@ -239,12 +261,12 @@ def verify(
         ):
             raise ValueError(f"{code} upstream terms URL lacks a retrieval or failure record")
 
-        catalogue_outcome = catalogue_retrievals[0].get("outcome")
+        catalogue_outcomes = [retrieval.get("outcome") for retrieval in catalogue_retrievals]
         assessment = station.get("reference_assessment")
-        if catalogue_outcome == "failed" and assessment != "retrieval-failed":
-            raise ValueError(f"{code} failed catalogue retrieval is not marked retrieval-failed")
-        if catalogue_outcome == "retrieved" and assessment == "retrieval-failed":
-            raise ValueError(f"{code} successful catalogue retrieval is marked retrieval-failed")
+        if "failed" in catalogue_outcomes and assessment != "retrieval-failed":
+            raise ValueError(f"{code} incomplete catalogue retrieval is not marked retrieval-failed")
+        if all(outcome == "retrieved" for outcome in catalogue_outcomes) and assessment == "retrieval-failed":
+            raise ValueError(f"{code} complete catalogue retrieval is marked retrieval-failed")
 
     return len(stations)
 

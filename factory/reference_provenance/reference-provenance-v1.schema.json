@@ -121,6 +121,10 @@
       "type": "string",
       "pattern": "^https://[^\\s]+$"
     },
+    "catalogue_reference": {
+      "type": "string",
+      "pattern": "^https://[^\\s]+(?: \\| https://[^\\s]+)*$"
+    },
     "sha256": {
       "type": "string",
       "pattern": "^[0-9a-f]{64}$"
@@ -316,7 +320,7 @@
           "minLength": 3
         },
         "catalogue_reference_url": {
-          "$ref": "#/$defs/https_url"
+          "$ref": "#/$defs/catalogue_reference"
         },
         "authority": {
           "$ref": "#/$defs/authority"
