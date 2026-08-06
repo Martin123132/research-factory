@@ -1,0 +1,550 @@
+{
+  "$schema": "reference-provenance-v1.schema.json",
+  "schema_version": 1,
+  "manifest_id": "WB031-WB040-2026-08-06",
+  "generated_at_utc": "2026-08-06T03:19:00Z",
+  "catalogue_path": "research_factory_100_workbenches.json",
+  "catalogue_sha256": "9b37a47c265e916cbf460f4dd0120b02b01fa800b104017b117ba2fc40644cd5",
+  "scope": [
+    "WB-031",
+    "WB-032",
+    "WB-033",
+    "WB-034",
+    "WB-035",
+    "WB-036",
+    "WB-037",
+    "WB-038",
+    "WB-039",
+    "WB-040"
+  ],
+  "hash_algorithm": "SHA-256",
+  "factory_licensing_scope": {
+    "manifest_factual_fields": "CC0-1.0",
+    "upstream_material": "not-relicensed-by-the-research-factory"
+  },
+  "retrieval_method": {
+    "client": "curl 8.13.0 (Windows, Schannel)",
+    "redirect_policy": "follow",
+    "tls_certificate_verification": "required",
+    "hash_scope": "exact response-body bytes emitted by curl after redirects",
+    "user_agent": "Research-Factory-Reference-Audit/1.0 (+https://github.com/Martin123132/research-factory)"
+  },
+  "dataset_files_committed": false,
+  "candidate_artifacts_committed": false,
+  "stations": [
+    {
+      "workbench_code": "WB-031",
+      "catalogue_id": 31,
+      "catalogue_title": "Acoustic machine-fault detection",
+      "benchmark_label": "DCASE 2025 Task 2",
+      "catalogue_reference_url": "https://dcase.community/challenge2025/task-first-shot-unsupervised-anomalous-sound-detection-for-machine-condition-monitoring",
+      "authority": {
+        "organisation": "DCASE Community challenge organisers",
+        "basis": "The official DCASE 2025 task page publishes the anomalous-sound-detection task, datasets, baseline, evaluation metrics, submission conditions and challenge references."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The task page and general challenge rules were retrieved. The task includes multiple machine domains and separately sourced development and evaluation data; the catalogue does not pin the exact archives, hashes, baseline revision, hidden-evaluation access or deployment measurement lane.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://dcase.community/challenge2025/task-first-shot-unsupervised-anomalous-sound-detection-for-machine-condition-monitoring",
+          "retrieved_at_utc": "2026-08-06T03:18:11Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://dcase.community/challenge2025/task-first-shot-unsupervised-anomalous-sound-detection-for-machine-condition-monitoring",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=utf-8",
+          "response_size_bytes": 138664,
+          "response_sha256": "6f0d64ac716637950c883a71cbcc6c857be56ee24cf34d6abaa710c7f2dc6106",
+          "error": null
+        },
+        {
+          "role": "upstream-terms",
+          "requested_url": "https://dcase.community/challenge2025/rules",
+          "retrieved_at_utc": "2026-08-06T03:18:11Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://dcase.community/challenge2025/rules",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=utf-8",
+          "response_size_bytes": 23316,
+          "response_sha256": "f66d12b48c13bc5e52d3b48ea72dc7fd763c0dfcfccda7be3cd53e619b7c51f3",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "competition-rules",
+        "terms_url": "https://dcase.community/challenge2025/rules",
+        "redistribution_status": "not-granted-by-reference",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "DCASE's challenge rules govern participation and result publication, while each task dataset can retain source-specific conditions. A commissioned station must freeze and review every selected archive and licence; no DCASE audio or baseline code is committed."
+      }
+    },
+    {
+      "workbench_code": "WB-032",
+      "catalogue_id": 32,
+      "catalogue_title": "Smartphone sensor denoising",
+      "benchmark_label": "SIDD",
+      "catalogue_reference_url": "https://abdokamel.github.io/sidd/index.html",
+      "authority": {
+        "organisation": "SIDD dataset authors",
+        "basis": "The authors' official SIDD site describes the smartphone image pairs, benchmark tracks, download routes, evaluation servers, code and dataset licence."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The official SIDD page responded and states licence information, but it exposes several dataset sizes and benchmark tracks and notes changes to evaluation access. The catalogue does not freeze an archive hash, raw versus sRGB lane, validation split, submission service or mobile measurement protocol.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://abdokamel.github.io/sidd/index.html",
+          "retrieved_at_utc": "2026-08-06T03:18:11Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://abdokamel.github.io/sidd/index.html",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=utf-8",
+          "response_size_bytes": 26952,
+          "response_sha256": "dc10bb430bb850394b46dccfb076ff04b943738cdf93345dde418c1662cdb2dd",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "source-specific-conditions",
+        "terms_url": "https://abdokamel.github.io/sidd/index.html",
+        "redistribution_status": "conditional-by-upstream-license",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "The official page identifies MIT terms for SIDD and its associated code. Commissioning must still select, download and hash the precise data edition and preserve the upstream notice; no SIDD images or code are committed."
+      }
+    },
+    {
+      "workbench_code": "WB-033",
+      "catalogue_id": 33,
+      "catalogue_title": "Efficient image super-resolution",
+      "benchmark_label": "DIV2K",
+      "catalogue_reference_url": "https://data.vision.ee.ethz.ch/cvl/DIV2K/",
+      "authority": {
+        "organisation": "ETH Zurich Computer Vision Laboratory",
+        "basis": "The cited institutional DIV2K page publishes the high-resolution image benchmark, train and validation divisions, degradation variants, checksums and challenge references."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The institutional benchmark page responded successfully, but it contains several image and degradation archives and does not itself freeze the catalogue's additional LSDIR reference, scoring scripts, crop and colour-space conventions or efficient-hardware lane.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://data.vision.ee.ethz.ch/cvl/DIV2K/",
+          "retrieved_at_utc": "2026-08-06T03:18:11Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://data.vision.ee.ethz.ch/cvl/DIV2K/",
+          "redirect_count": 0,
+          "content_type": "text/html",
+          "response_size_bytes": 14793,
+          "response_sha256": "e23ab442a90f985bd8856ddc04af34f30549e38f05bbdb4d0f6d514773f67723",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "not-stated-on-reference-page",
+        "terms_url": null,
+        "redistribution_status": "not-granted-by-reference",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "The cited download page is not treated as a blanket redistribution licence. A commissioned station must confirm the terms for DIV2K, any added LSDIR material and evaluation code, then freeze exact archive hashes; no images are committed."
+      }
+    },
+    {
+      "workbench_code": "WB-034",
+      "catalogue_id": 34,
+      "catalogue_title": "Road-scene optical flow",
+      "benchmark_label": "KITTI optical-flow benchmark",
+      "catalogue_reference_url": "https://www.cvlibs.net/datasets/kitti/eval_stereo_flow.php?benchmark=flow",
+      "authority": {
+        "organisation": "KITTI Vision Benchmark Suite maintainers",
+        "basis": "The official KITTI page publishes the optical-flow evaluation server, benchmark metrics, development files, result tables and dataset terms."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The official optical-flow page and terms were retrieved, but multiple flow benchmark editions, development downloads and evaluation rules remain available. The catalogue does not freeze one archive set, evaluator snapshot, submission allowance, runtime hardware or energy protocol.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://www.cvlibs.net/datasets/kitti/eval_stereo_flow.php?benchmark=flow",
+          "retrieved_at_utc": "2026-08-06T03:18:12Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://www.cvlibs.net/datasets/kitti/eval_stereo_flow.php?benchmark=flow",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=UTF-8",
+          "response_size_bytes": 150250,
+          "response_sha256": "ab8ab5dbc9bbb88d80baf8a417bd722dd569017e3de6a74d6acd6c9ebe185b44",
+          "error": null
+        },
+        {
+          "role": "upstream-terms",
+          "requested_url": "https://www.cvlibs.net/datasets/kitti/terms_of_service.php",
+          "retrieved_at_utc": "2026-08-06T03:18:12Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://www.cvlibs.net/datasets/kitti/terms_of_service.php",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=UTF-8",
+          "response_size_bytes": 18294,
+          "response_sha256": "9bacef04a8949c58963aded33fed7301cac27b54ad918bf486cb2abc23eb579c",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "source-specific-conditions",
+        "terms_url": "https://www.cvlibs.net/datasets/kitti/terms_of_service.php",
+        "redistribution_status": "not-granted-by-reference",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "KITTI's terms impose conditions on site and dataset use and do not grant the Factory blanket redistribution rights. Validators must obtain their own authorised copies and follow submission conditions; no KITTI files are committed."
+      }
+    },
+    {
+      "workbench_code": "WB-035",
+      "catalogue_id": 35,
+      "catalogue_title": "Visual–inertial navigation",
+      "benchmark_label": "EuRoC MAV dataset",
+      "catalogue_reference_url": "https://projects.asl.ethz.ch/datasets/euroc-mav/",
+      "authority": {
+        "organisation": "ETH Zurich Autonomous Systems Lab",
+        "basis": "The official ASL page describes the EuRoC MAV sensor data, ground truth, sequences, calibration, known issues and migration to the ETH Research Collection."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The primary ASL reference responded, while its cited ETH Research Collection DOI currently redirected to an HTTP 500. The catalogue does not freeze sequence archives, calibration corrections, alignment conventions, evaluator implementation or real-time hardware and power conditions.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://projects.asl.ethz.ch/datasets/euroc-mav/",
+          "retrieved_at_utc": "2026-08-06T03:18:13Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://projects.asl.ethz.ch/datasets/euroc-mav/",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=utf-8",
+          "response_size_bytes": 7184,
+          "response_sha256": "114cac7fc3c3e58ae44a1d33330aeb8ee811eb1181845bfde577a0d2e0b2b7a0",
+          "error": null
+        },
+        {
+          "role": "authoritative-supporting-document",
+          "requested_url": "https://doi.org/10.3929/ethz-b-000690084",
+          "retrieved_at_utc": "2026-08-06T03:18:30Z",
+          "outcome": "failed",
+          "curl_exit_code": 22,
+          "http_status": 500,
+          "final_url": "https://www.research-collection.ethz.ch/handle/20.500.11850/690084",
+          "redirect_count": 1,
+          "content_type": null,
+          "response_size_bytes": null,
+          "response_sha256": null,
+          "error": "curl: (22) The requested URL returned error: 500"
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "not-stated-on-reference-page",
+        "terms_url": null,
+        "redistribution_status": "not-granted-by-reference",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "The ASL page provides public downloads but does not state a blanket licence in the audited response. Commissioning must retrieve the collection record, confirm rights and hash each selected sequence; no EuRoC data are committed."
+      }
+    },
+    {
+      "workbench_code": "WB-036",
+      "catalogue_id": 36,
+      "catalogue_title": "Camera–radar–LiDAR 3D perception",
+      "benchmark_label": "nuScenes",
+      "catalogue_reference_url": "https://www.nuscenes.org/",
+      "authority": {
+        "organisation": "nuScenes dataset maintainers",
+        "basis": "The official nuScenes service publishes dataset access, benchmark tasks, evaluation information, documentation and terms routes for its multimodal driving data."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The official site and commercial-terms route responded, but both returned the site's client application shell and the downloadable dataset requires an account-mediated selection. The catalogue does not freeze dataset version, task, split, devkit revision or subgroup and hardware protocol.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://www.nuscenes.org/",
+          "retrieved_at_utc": "2026-08-06T03:18:31Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://www.nuscenes.org/",
+          "redirect_count": 0,
+          "content_type": "text/html",
+          "response_size_bytes": 6427,
+          "response_sha256": "652650492fabd3303afe59fa4565e2e2d5d660e923ef6dd4918ec3884f9441ec",
+          "error": null
+        },
+        {
+          "role": "upstream-terms",
+          "requested_url": "https://www.nuscenes.org/terms-of-use-commercial",
+          "retrieved_at_utc": "2026-08-06T03:18:31Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://www.nuscenes.org/terms-of-use-commercial",
+          "redirect_count": 0,
+          "content_type": "text/html",
+          "response_size_bytes": 6427,
+          "response_sha256": "652650492fabd3303afe59fa4565e2e2d5d660e923ef6dd4918ec3884f9441ec",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "source-specific-conditions",
+        "terms_url": "https://www.nuscenes.org/terms-of-use-commercial",
+        "redistribution_status": "conditional-by-upstream-license",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "nuScenes publishes use conditions, including separate treatment of commercial use and third-party material. Each participant must accept the applicable terms and acquire authorised copies; no nuScenes data or devkit code are committed."
+      }
+    },
+    {
+      "workbench_code": "WB-037",
+      "catalogue_id": 37,
+      "catalogue_title": "General compiler optimisation",
+      "benchmark_label": "LLVM test-suite guide; SPEC CPU 2026",
+      "catalogue_reference_url": "https://llvm.org/docs/TestSuiteGuide.html | https://www.spec.org/cpu2026/",
+      "authority": {
+        "organisation": "LLVM Project and Standard Performance Evaluation Corporation",
+        "basis": "The two canonical references are the official LLVM test-suite guide and official SPEC CPU 2026 benchmark site named by the catalogue."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "Both official catalogue-reference components and their licensing documents were retrieved. The LLVM suite includes separately licensed external programs, while a major SPEC audit requires licensed materials and governed result publication; exact revisions, workloads, target hardware and metrics remain unpinned.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://llvm.org/docs/TestSuiteGuide.html",
+          "retrieved_at_utc": "2026-08-06T03:18:32Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://llvm.org/docs/TestSuiteGuide.html",
+          "redirect_count": 0,
+          "content_type": "text/html",
+          "response_size_bytes": 94066,
+          "response_sha256": "50079a89ae766c34cad466d2ac2375bdc8596c7daa183c1115d6395d6c0bbe59",
+          "error": null
+        },
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://www.spec.org/cpu2026/",
+          "retrieved_at_utc": "2026-08-06T03:18:33Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://www.spec.org/cpu2026/",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=UTF-8",
+          "response_size_bytes": 53323,
+          "response_sha256": "99713ff81e90178d1f22a033ad9a8731fe68acde14ddf919507838b11abc548a",
+          "error": null
+        },
+        {
+          "role": "upstream-terms",
+          "requested_url": "https://raw.githubusercontent.com/llvm/llvm-test-suite/main/LICENSE.TXT",
+          "retrieved_at_utc": "2026-08-06T03:18:33Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://raw.githubusercontent.com/llvm/llvm-test-suite/main/LICENSE.TXT",
+          "redirect_count": 0,
+          "content_type": "text/plain; charset=utf-8",
+          "response_size_bytes": 19910,
+          "response_sha256": "d110d0b221b92267e6d29a9d0a9b4140b59fed0a1fc3184152b0b20cd9f2df0c",
+          "error": null
+        },
+        {
+          "role": "upstream-terms",
+          "requested_url": "https://www.spec.org/cpu2026/docs/licenses.html",
+          "retrieved_at_utc": "2026-08-06T03:18:33Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://www.spec.org/cpu2026/docs/licenses.html",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=UTF-8",
+          "response_size_bytes": 122414,
+          "response_sha256": "1747c7983ffd56bcb133f7f948982d4f955c68107c0423b190ababed65e2b8f9",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "source-specific-conditions",
+        "terms_url": "https://www.spec.org/cpu2026/docs/licenses.html",
+        "redistribution_status": "not-granted-by-reference",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "LLVM test-suite components carry program-specific notices, and SPEC CPU 2026 materials and result publication are controlled by SPEC licences and rules. The Factory must not redistribute restricted workloads; no suite or SPEC files are committed."
+      }
+    },
+    {
+      "workbench_code": "WB-038",
+      "catalogue_id": 38,
+      "catalogue_title": "Embedded compiler optimisation",
+      "benchmark_label": "Embench",
+      "catalogue_reference_url": "https://www.embench.org/",
+      "authority": {
+        "organisation": "Embench project maintainers",
+        "basis": "The official Embench site documents the open embedded benchmark project and links its maintained source, documentation and working-group resources."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The official site and repository COPYING file were retrieved, but the catalogue does not pin an Embench release, benchmark subset, toolchain, board, clocking and measurement setup or correctness harness. Individual benchmark sources can also carry their own notices.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://www.embench.org/",
+          "retrieved_at_utc": "2026-08-06T03:18:50Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://www.embench.org/",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=utf-8",
+          "response_size_bytes": 6101,
+          "response_sha256": "422fe8cc9623de504f3c0bbef51c20d732240ddda68b7869093dbe67ca7d8a03",
+          "error": null
+        },
+        {
+          "role": "upstream-terms",
+          "requested_url": "https://raw.githubusercontent.com/embench/embench-iot/master/COPYING",
+          "retrieved_at_utc": "2026-08-06T03:18:50Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://raw.githubusercontent.com/embench/embench-iot/master/COPYING",
+          "redirect_count": 0,
+          "content_type": "text/plain; charset=utf-8",
+          "response_size_bytes": 34541,
+          "response_sha256": "3c3099e7c092d71a81f14eae5322365afdb2aae1f3d84ff23a41e4ec0b74176a",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "source-specific-conditions",
+        "terms_url": "https://raw.githubusercontent.com/embench/embench-iot/master/COPYING",
+        "redistribution_status": "conditional-by-upstream-license",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "The repository COPYING file records GPL terms for project material while individual benchmark programs may retain separate licences. Commissioning must pin a revision and preserve every component notice; no Embench source is committed."
+      }
+    },
+    {
+      "workbench_code": "WB-039",
+      "catalogue_id": 39,
+      "catalogue_title": "Transactional database engine",
+      "benchmark_label": "TPC current specifications",
+      "catalogue_reference_url": "https://tpc.org/TPC_Documents_Current_Versions/current_specifications5.asp",
+      "authority": {
+        "organisation": "Transaction Processing Performance Council",
+        "basis": "The official TPC current-specifications page identifies current benchmark specifications and the official EULA governing downloaded TPC materials."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The moving current-specifications index and EULA were retrieved. Although the catalogue gate describes TPC-C, the canonical benchmark label does not pin the TPC-C specification and tools version, scale, implementation class, audit status, pricing date or publication lane.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://tpc.org/TPC_Documents_Current_Versions/current_specifications5.asp",
+          "retrieved_at_utc": "2026-08-06T03:18:50Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://tpc.org/TPC_Documents_Current_Versions/current_specifications5.asp",
+          "redirect_count": 0,
+          "content_type": "text/html",
+          "response_size_bytes": 123317,
+          "response_sha256": "b3d5a73e7ac47c39bd9af6456ce30fa2195c0efddcaa6cb319ec4bd8277c0efc",
+          "error": null
+        },
+        {
+          "role": "upstream-terms",
+          "requested_url": "https://www.tpc.org/TPC_Documents_Current_Versions/txt/EULA_v2.2.0.txt",
+          "retrieved_at_utc": "2026-08-06T03:18:51Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://www.tpc.org/TPC_Documents_Current_Versions/txt/EULA_v2.2.0.txt",
+          "redirect_count": 0,
+          "content_type": "text/plain",
+          "response_size_bytes": 18323,
+          "response_sha256": "017bd9dbc4c332ac433fc0cc018f3691b330f8aca82a05a20274512de423576e",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "source-specific-conditions",
+        "terms_url": "https://www.tpc.org/TPC_Documents_Current_Versions/txt/EULA_v2.2.0.txt",
+        "redistribution_status": "not-granted-by-reference",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "TPC specifications, tools, trademarks, audit status and result publication are governed by TPC terms and benchmark rules. A station must freeze the exact TPC-C package and distinguish comparable audited results from experiments; no TPC material is committed."
+      }
+    },
+    {
+      "workbench_code": "WB-040",
+      "catalogue_id": 40,
+      "catalogue_title": "Ad-hoc analytical SQL engine",
+      "benchmark_label": "TPC-H current specification and tools",
+      "catalogue_reference_url": "https://tpc.org/TPC_Documents_Current_Versions/current_specifications5.asp",
+      "authority": {
+        "organisation": "Transaction Processing Performance Council",
+        "basis": "The official TPC index publishes the current TPC-H specification link, and the official specification and EULA define its governed benchmark materials and use."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The current index, TPC-H 3.0.1 specification and EULA were retrieved. The catalogue still leaves the data-generator and query-tool release, scale factors, power and throughput run details, permitted substitutions, audit status, system pricing and publication lane unpinned.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://tpc.org/TPC_Documents_Current_Versions/current_specifications5.asp",
+          "retrieved_at_utc": "2026-08-06T03:18:52Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://tpc.org/TPC_Documents_Current_Versions/current_specifications5.asp",
+          "redirect_count": 0,
+          "content_type": "text/html",
+          "response_size_bytes": 123317,
+          "response_sha256": "b3d5a73e7ac47c39bd9af6456ce30fa2195c0efddcaa6cb319ec4bd8277c0efc",
+          "error": null
+        },
+        {
+          "role": "authoritative-supporting-document",
+          "requested_url": "https://www.tpc.org/TPC_Documents_Current_Versions/pdf/TPC-H_v3.0.1.pdf",
+          "retrieved_at_utc": "2026-08-06T03:18:53Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://www.tpc.org/TPC_Documents_Current_Versions/pdf/TPC-H_v3.0.1.pdf",
+          "redirect_count": 0,
+          "content_type": "application/pdf",
+          "response_size_bytes": 1773926,
+          "response_sha256": "9274d6ee5cbb2071bbb8a2cf71716e212db01c237e3d6fd2b2e9e9014a1fa3b3",
+          "error": null
+        },
+        {
+          "role": "upstream-terms",
+          "requested_url": "https://www.tpc.org/TPC_Documents_Current_Versions/txt/EULA_v2.2.0.txt",
+          "retrieved_at_utc": "2026-08-06T03:18:56Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://www.tpc.org/TPC_Documents_Current_Versions/txt/EULA_v2.2.0.txt",
+          "redirect_count": 0,
+          "content_type": "text/plain",
+          "response_size_bytes": 18323,
+          "response_sha256": "017bd9dbc4c332ac433fc0cc018f3691b330f8aca82a05a20274512de423576e",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "source-specific-conditions",
+        "terms_url": "https://www.tpc.org/TPC_Documents_Current_Versions/txt/EULA_v2.2.0.txt",
+        "redistribution_status": "not-granted-by-reference",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "TPC-H materials, trademarks, valid-run rules, audit status and result publication are governed by TPC terms. A station must independently acquire and hash the exact specification and tools and label non-audited experiments clearly; no TPC material is committed."
+      }
+    }
+  ]
+}
