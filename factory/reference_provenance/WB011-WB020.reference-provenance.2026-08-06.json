@@ -1,0 +1,480 @@
+{
+  "$schema": "reference-provenance-v1.schema.json",
+  "schema_version": 1,
+  "manifest_id": "WB011-WB020-2026-08-06",
+  "generated_at_utc": "2026-08-06T02:38:00Z",
+  "catalogue_path": "research_factory_100_workbenches.json",
+  "catalogue_sha256": "9b37a47c265e916cbf460f4dd0120b02b01fa800b104017b117ba2fc40644cd5",
+  "scope": [
+    "WB-011",
+    "WB-012",
+    "WB-013",
+    "WB-014",
+    "WB-015",
+    "WB-016",
+    "WB-017",
+    "WB-018",
+    "WB-019",
+    "WB-020"
+  ],
+  "hash_algorithm": "SHA-256",
+  "factory_licensing_scope": {
+    "manifest_factual_fields": "CC0-1.0",
+    "upstream_material": "not-relicensed-by-the-research-factory"
+  },
+  "retrieval_method": {
+    "client": "curl 8.13.0 (Windows, Schannel)",
+    "redirect_policy": "follow",
+    "tls_certificate_verification": "required",
+    "hash_scope": "exact response-body bytes emitted by curl after redirects",
+    "user_agent": "Research-Factory-Provenance-Audit/1.0 (+https://github.com/Martin123132/research-factory)"
+  },
+  "dataset_files_committed": false,
+  "candidate_artifacts_committed": false,
+  "stations": [
+    {
+      "workbench_code": "WB-011",
+      "catalogue_id": 11,
+      "catalogue_title": "Tiny neural-model compression",
+      "benchmark_label": "MLPerf Tiny",
+      "catalogue_reference_url": "https://mlcommons.org/benchmarks/inference-tiny/",
+      "authority": {
+        "organisation": "MLCommons Association",
+        "basis": "MLCommons publishes the official MLPerf Tiny results page, benchmark rules, reference implementation and result-use guidance."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The official page, current rules and repository licence were retrieved, but the catalogue does not pin one MLPerf Tiny release. The page mixes versioned results with moving master-branch rules, and benchmark datasets retain their own upstream terms.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://mlcommons.org/benchmarks/inference-tiny/",
+          "retrieved_at_utc": "2026-08-06T02:35:49.0492258Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://mlcommons.org/benchmarks/inference-tiny/",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=UTF-8",
+          "response_size_bytes": 146774,
+          "response_sha256": "4f92d88ed33af59c17a29f9379b876181e6a5e282c53bf0c6cca4d902b676a3e",
+          "error": null
+        },
+        {
+          "role": "authoritative-supporting-document",
+          "requested_url": "https://raw.githubusercontent.com/mlcommons/tiny/master/benchmark/MLPerfTiny_Rules.adoc",
+          "retrieved_at_utc": "2026-08-06T02:37:13.4623243Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://raw.githubusercontent.com/mlcommons/tiny/master/benchmark/MLPerfTiny_Rules.adoc",
+          "redirect_count": 0,
+          "content_type": "text/plain; charset=utf-8",
+          "response_size_bytes": 19517,
+          "response_sha256": "9072947fba3d9940120c98845b9278d7b8ae4c5f918384faddc200ecf1369d3a",
+          "error": null
+        },
+        {
+          "role": "upstream-terms",
+          "requested_url": "https://raw.githubusercontent.com/mlcommons/tiny/master/LICENSE.md",
+          "retrieved_at_utc": "2026-08-06T02:37:13.9493234Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://raw.githubusercontent.com/mlcommons/tiny/master/LICENSE.md",
+          "redirect_count": 0,
+          "content_type": "text/plain; charset=utf-8",
+          "response_size_bytes": 10174,
+          "response_sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "source-specific-conditions",
+        "terms_url": "https://raw.githubusercontent.com/mlcommons/tiny/master/LICENSE.md",
+        "redistribution_status": "not-granted-by-reference",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "The MLCommons Tiny repository states Apache-2.0 for its code. That repository licence does not relicense CIFAR-10, Speech Commands, Visual Wake Words, ToyADMOS or other benchmark inputs. No code, model or dataset bytes are committed."
+      }
+    },
+    {
+      "workbench_code": "WB-012",
+      "catalogue_id": 12,
+      "catalogue_title": "Storage deduplication and content-defined chunking",
+      "benchmark_label": "SNIA IOTTA trace repository",
+      "catalogue_reference_url": "https://www.snia.org/educational-library/iotta-repository-2019",
+      "authority": {
+        "organisation": "Storage Networking Industry Association (SNIA) IOTTA Technical Work Group",
+        "basis": "SNIA's official library describes the IOTTA repository as its sponsored worldwide collection of storage traces, tools and related information."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The official description responded successfully and calls the repository free of charge, but the catalogue does not select a frozen trace set and the page does not provide a blanket redistribution licence for all contributed traces.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://www.snia.org/educational-library/iotta-repository-2019",
+          "retrieved_at_utc": "2026-08-06T02:35:50.1492817Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://www.snia.org/educational-library/iotta-repository-2019",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=UTF-8",
+          "response_size_bytes": 82772,
+          "response_sha256": "736d75d70bcae8b537122ff03ca4d01fc9701097cee1b71e8b91d86d6ca36ac0",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "not-stated-on-reference-page",
+        "terms_url": null,
+        "redistribution_status": "not-granted-by-reference",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "Free-of-charge access is not treated as a universal redistribution licence. Each selected I/O trace and tool must be checked and frozen separately before commissioning; no repository traces are committed."
+      }
+    },
+    {
+      "workbench_code": "WB-013",
+      "catalogue_id": 13,
+      "catalogue_title": "Travelling-salesperson route kernel",
+      "benchmark_label": "TSPLIB",
+      "catalogue_reference_url": "https://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/index.html",
+      "authority": {
+        "organisation": "Heidelberg University Discrete and Combinatorial Optimization group",
+        "basis": "The official TSPLIB site maintained by the originating group publishes the instance library, problem definitions, documentation and best-known-solution links."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The official index and TSPLIB95 specification were retrieved. The catalogue still does not pin a station instance set, representation subset, exact distance conventions or a dated optimum table, and the site states no blanket redistribution licence.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/index.html",
+          "retrieved_at_utc": "2026-08-06T02:35:50.8680573Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/index.html",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=utf-8",
+          "response_size_bytes": 10334,
+          "response_sha256": "7fafd038edb23278e5351a7578a5c64e43ece155e7a11eab1822c3d0b3b20de5",
+          "error": null
+        },
+        {
+          "role": "authoritative-supporting-document",
+          "requested_url": "https://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/tsp95.pdf",
+          "retrieved_at_utc": "2026-08-06T02:37:14.3293247Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/tsp95.pdf",
+          "redirect_count": 0,
+          "content_type": "application/pdf",
+          "response_size_bytes": 137370,
+          "response_sha256": "4a3c4dd2074301c6aaa31eea1a817fe7edf004f4b805d4f56bb1ce68ed3639d3",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "not-stated-on-reference-page",
+        "terms_url": null,
+        "redistribution_status": "not-granted-by-reference",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "Public instance and specification links are not treated as a licence to redistribute TSPLIB assets. The station must use download-and-hash acquisition or explicit permission; no TSPLIB files are committed."
+      }
+    },
+    {
+      "workbench_code": "WB-014",
+      "catalogue_id": 14,
+      "catalogue_title": "Capacitated fleet routing",
+      "benchmark_label": "CVRPLIB",
+      "catalogue_reference_url": "https://galgos.inf.puc-rio.br/cvrplib/",
+      "authority": {
+        "organisation": "CVRPLib maintainers at PUC-Rio",
+        "basis": "The official CVRPLib service publishes capacitated vehicle-routing instances, best known solutions, a checker and platform terms."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The catalogue URL resolved after a transient DNS failure and redirected to the official instances index. The terms limit use to research, academic or challenge purposes and state that redistribution may depend on each dataset's documentation.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://galgos.inf.puc-rio.br/cvrplib/",
+          "retrieved_at_utc": "2026-08-06T02:37:35.3032354Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://galgos.inf.puc-rio.br/cvrplib/en/instances",
+          "redirect_count": 2,
+          "content_type": "text/html; charset=UTF-8",
+          "response_size_bytes": 1970638,
+          "response_sha256": "ae7237e46be9d3dce9936c309dd3d55278b7d997003e0d76f9207280ae2281ef",
+          "error": null
+        },
+        {
+          "role": "upstream-terms",
+          "requested_url": "https://galgos.inf.puc-rio.br/cvrplib/en/register/terms",
+          "retrieved_at_utc": "2026-08-06T02:37:15.6288849Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://galgos.inf.puc-rio.br/cvrplib/en/register/terms",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=UTF-8",
+          "response_size_bytes": 19287,
+          "response_sha256": "7a0b929160d57c1abaf2fe6befc6d1c5b8d0990ef510e1502b6709d3a3fdb371",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "source-specific-conditions",
+        "terms_url": "https://galgos.inf.puc-rio.br/cvrplib/en/register/terms",
+        "redistribution_status": "not-granted-by-reference",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "CVRPLib describes research-oriented permitted use and warns that instance redistribution may have additional dataset-specific terms. No CVRPLib instances, solutions or account data are committed."
+      }
+    },
+    {
+      "workbench_code": "WB-015",
+      "catalogue_id": 15,
+      "catalogue_title": "Delivery routing with time windows",
+      "benchmark_label": "SINTEF VRPTW",
+      "catalogue_reference_url": "https://www.sintef.no/projectweb/top/vrptw/",
+      "authority": {
+        "organisation": "SINTEF Transportation Optimization Portal",
+        "basis": "SINTEF's official VRPTW portal publishes Solomon and Gehring-Homberger benchmark groupings, solution formats, checked best-known solutions and contact details."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The official portal responded successfully, but its best-known-solution tables are mutable and the catalogue does not freeze instance files, solution-table dates, distance precision or a redistribution basis.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://www.sintef.no/projectweb/top/vrptw/",
+          "retrieved_at_utc": "2026-08-06T02:35:52.1894821Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://www.sintef.no/projectweb/top/vrptw/",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=utf-8",
+          "response_size_bytes": 14200,
+          "response_sha256": "61af0a9ffe19db4ed122816a3c33c27f996bf3f693e06819fd3d73c95be34cca",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "not-stated-on-reference-page",
+        "terms_url": null,
+        "redistribution_status": "not-granted-by-reference",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "The portal's public downloads and checker do not state a blanket licence for benchmark redistribution. A dated acquisition manifest is required before commissioning; no VRPTW assets are committed."
+      }
+    },
+    {
+      "workbench_code": "WB-016",
+      "catalogue_id": 16,
+      "catalogue_title": "Pickup-and-delivery routing with time windows",
+      "benchmark_label": "SINTEF Li & Lim PDPTW",
+      "catalogue_reference_url": "https://www.sintef.no/projectweb/top/pdptw/",
+      "authority": {
+        "organisation": "SINTEF Transportation Optimization Portal",
+        "basis": "SINTEF's official PDPTW portal publishes the Li and Lim benchmark groups, solution documentation, checked best-known solutions and contact details."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The official portal responded successfully, but best-known solutions can change and the catalogue does not freeze exact instance files, hierarchy rules, solution-table dates or redistribution terms.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://www.sintef.no/projectweb/top/pdptw/",
+          "retrieved_at_utc": "2026-08-06T02:35:52.7368539Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://www.sintef.no/projectweb/top/pdptw/",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=utf-8",
+          "response_size_bytes": 13945,
+          "response_sha256": "1e64db8416fcf52833e123efd6ac674a7d590ea939172a59bb3f9dbe35e18d2d",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "not-stated-on-reference-page",
+        "terms_url": null,
+        "redistribution_status": "not-granted-by-reference",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "The portal's public downloads and checked solutions do not establish a blanket redistribution licence. Exact Li and Lim inputs and solution snapshots must be acquired and hashed later; none are committed."
+      }
+    },
+    {
+      "workbench_code": "WB-017",
+      "catalogue_id": 17,
+      "catalogue_title": "Driver-aware last-mile route sequencing",
+      "benchmark_label": "Amazon Last Mile Challenge dataset",
+      "catalogue_reference_url": "https://registry.opendata.aws/amazon-last-mile-challenges/",
+      "authority": {
+        "organisation": "Amazon and the Registry of Open Data on AWS",
+        "basis": "The official registry entry identifies the 2021 Amazon Last Mile Routing Research Challenge dataset, its contents, S3 resource, citation and licence."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The registry responded successfully and states CC BY-NC 4.0 for the challenge material. The non-commercial condition affects deployment, and the catalogue still needs a frozen train/evaluation split and a separate hidden generalisation boundary.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://registry.opendata.aws/amazon-last-mile-challenges/",
+          "retrieved_at_utc": "2026-08-06T02:35:53.5218632Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://registry.opendata.aws/amazon-last-mile-challenges/",
+          "redirect_count": 0,
+          "content_type": "text/html",
+          "response_size_bytes": 16634,
+          "response_sha256": "f207e62d5003e015c97413fbf990180e34a8258f70ba9a91bbe84aaf4f8adbc3",
+          "error": null
+        },
+        {
+          "role": "upstream-terms",
+          "requested_url": "https://creativecommons.org/licenses/by-nc/4.0/legalcode.txt",
+          "retrieved_at_utc": "2026-08-06T02:37:16.2756537Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://creativecommons.org/licenses/by-nc/4.0/legalcode.txt",
+          "redirect_count": 0,
+          "content_type": "text/plain; charset=utf-8",
+          "response_size_bytes": 19347,
+          "response_sha256": "41003d4a74749c0220e33dd415042164b5a1093ed401f36277234f772d22d3d0",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "source-specific-conditions",
+        "terms_url": "https://creativecommons.org/licenses/by-nc/4.0/legalcode.txt",
+        "redistribution_status": "conditional-by-upstream-license",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "Amazon states that the challenge material is available under CC BY-NC 4.0. Any acquisition, redistribution or result use must preserve attribution and the non-commercial restriction; no dataset bytes are committed."
+      }
+    },
+    {
+      "workbench_code": "WB-018",
+      "catalogue_id": 18,
+      "catalogue_title": "Dynamic ride-pooling and taxi dispatch",
+      "benchmark_label": "NYC TLC trip records",
+      "catalogue_reference_url": "https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page",
+      "authority": {
+        "organisation": "New York City Taxi and Limousine Commission",
+        "basis": "The catalogue points to the official TLC publication page for monthly taxi and for-hire-vehicle trip records, metadata and data dictionaries."
+      },
+      "reference_assessment": "retrieval-failed",
+      "assessment_notes": "Verified curl retrievals of both the catalogue page and NYC.gov terms returned HTTP 403. No response body was retained or hashed. The mutable monthly publication also needs a frozen date range before commissioning.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page",
+          "retrieved_at_utc": "2026-08-06T02:35:53.9289810Z",
+          "outcome": "failed",
+          "curl_exit_code": 22,
+          "http_status": 403,
+          "final_url": "https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page",
+          "redirect_count": 0,
+          "content_type": null,
+          "response_size_bytes": null,
+          "response_sha256": null,
+          "error": "curl --fail rejected the HTTP 403 response; no response body was retained or hashed"
+        },
+        {
+          "role": "upstream-terms",
+          "requested_url": "https://www.nyc.gov/main/terms-of-use?browserOnly=true",
+          "retrieved_at_utc": "2026-08-06T02:37:16.5386535Z",
+          "outcome": "failed",
+          "curl_exit_code": 22,
+          "http_status": 403,
+          "final_url": "https://www.nyc.gov/main/terms-of-use?browserOnly=true",
+          "redirect_count": 0,
+          "content_type": null,
+          "response_size_bytes": null,
+          "response_sha256": null,
+          "error": "curl --fail rejected the HTTP 403 response; no response body was retained or hashed"
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "source-specific-conditions",
+        "terms_url": "https://www.nyc.gov/main/terms-of-use?browserOnly=true",
+        "redistribution_status": "not-granted-by-reference",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "The verified local audit could not retrieve the source or terms pages. The factory therefore records no redistribution conclusion, commits no TLC records and requires a later dated acquisition and rights review."
+      }
+    },
+    {
+      "workbench_code": "WB-019",
+      "catalogue_id": 19,
+      "catalogue_title": "One-dimensional bin packing and cutting stock",
+      "benchmark_label": "University of Bologna BPPLIB",
+      "catalogue_reference_url": "https://cris.unibo.it/handle/11585/683159",
+      "authority": {
+        "organisation": "University of Bologna institutional research repository",
+        "basis": "The catalogue URL is a persistent University of Bologna CRIS handle intended to identify the BPPLIB research record and associated material."
+      },
+      "reference_assessment": "retrieval-failed",
+      "assessment_notes": "The institutional repository returned HTTP 403 to the verified curl retrieval. No response body, record metadata, attachment listing, licence statement or hash is claimed by this manifest.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://cris.unibo.it/handle/11585/683159",
+          "retrieved_at_utc": "2026-08-06T02:35:54.4025333Z",
+          "outcome": "failed",
+          "curl_exit_code": 22,
+          "http_status": 403,
+          "final_url": "https://cris.unibo.it/handle/11585/683159",
+          "redirect_count": 0,
+          "content_type": null,
+          "response_size_bytes": null,
+          "response_sha256": null,
+          "error": "curl --fail rejected the HTTP 403 response; no response body was retained or hashed"
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "not-stated-on-reference-page",
+        "terms_url": null,
+        "redistribution_status": "not-granted-by-reference",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "Because the record could not be retrieved, access to a handle is not treated as permission to copy or redistribute BPPLIB. No instances, metadata exports or attached files are committed."
+      }
+    },
+    {
+      "workbench_code": "WB-020",
+      "catalogue_id": 20,
+      "catalogue_title": "Two-dimensional sheet cutting and nesting",
+      "benchmark_label": "PackLib²",
+      "catalogue_reference_url": "https://www.ibr.cs.tu-bs.de/alg/packlib/instances.shtml",
+      "authority": {
+        "organisation": "Technische Universität Braunschweig PackLib² maintainers",
+        "basis": "The official PackLib² instance index describes the library and links XML, ORLib-style, information and article views for benchmark families from the literature."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The official index responded successfully, but it aggregates many two- and three-dimensional instance families from different creators and papers. The catalogue does not pin one two-dimensional subset, geometry convention, kerf rule or rights statement.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://www.ibr.cs.tu-bs.de/alg/packlib/instances.shtml",
+          "retrieved_at_utc": "2026-08-06T02:35:55.0284565Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://www.ibr.cs.tu-bs.de/alg/packlib/instances.shtml",
+          "redirect_count": 0,
+          "content_type": "text/html",
+          "response_size_bytes": 14607,
+          "response_sha256": "f63644ac3b56c37dc9ca05cc3b81be5abb3e715e2d7e13c5d51c19bd16effaa0",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "not-stated-on-reference-page",
+        "terms_url": null,
+        "redistribution_status": "not-granted-by-reference",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "PackLib² gives public access and creator/article attribution for many instance families but no blanket redistribution licence on the index. Each selected family must be reviewed and hashed separately; no instances are committed."
+      }
+    }
+  ]
+}

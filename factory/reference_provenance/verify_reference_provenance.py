@@ -8,11 +8,14 @@ from jsonschema import Draft202012Validator
 
 
 ROOT = Path(__file__).resolve().parents[2]
-MANIFEST = (
-    ROOT
-    / "factory"
-    / "reference_provenance"
-    / "WB001-WB010.reference-provenance.2026-08-06.json"
+REFERENCE_DIR = ROOT / "factory" / "reference_provenance"
+MANIFEST = REFERENCE_DIR / "WB001-WB010.reference-provenance.2026-08-06.json"
+MANIFESTS = (
+    (MANIFEST, tuple(range(1, 11))),
+    (
+        REFERENCE_DIR / "WB011-WB020.reference-provenance.2026-08-06.json",
+        tuple(range(11, 21)),
+    ),
 )
 SCHEMA = ROOT / "factory" / "reference_provenance" / "reference-provenance-v1.schema.json"
 CATALOGUE = ROOT / "research_factory_100_workbenches.json"
@@ -58,7 +61,10 @@ def validate_schema(document: object, schema_path: Path) -> dict[str, object]:
     return document
 
 
-def canonical_rows(catalogue: object) -> list[dict[str, object]]:
+def canonical_rows(
+    catalogue: object,
+    expected_numbers: tuple[int, ...],
+) -> list[dict[str, object]]:
     if not isinstance(catalogue, dict) or not isinstance(catalogue.get("workbenches"), list):
         raise ValueError("canonical catalogue must contain a workbenches array")
 
@@ -71,10 +77,10 @@ def canonical_rows(catalogue: object) -> list[dict[str, object]]:
             raise ValueError(f"duplicate canonical catalogue id: {row_id}")
         by_id[row_id] = value
 
-    missing = [number for number in range(1, 11) if number not in by_id]
+    missing = [number for number in expected_numbers if number not in by_id]
     if missing:
-        raise ValueError(f"canonical catalogue is missing WB-001 through WB-010 ids: {missing}")
-    return [by_id[number] for number in range(1, 11)]
+        raise ValueError(f"canonical catalogue is missing expected workbench ids: {missing}")
+    return [by_id[number] for number in expected_numbers]
 
 
 def verify_retrieval(retrieval: object, station_code: str) -> None:
@@ -129,14 +135,37 @@ def verify(
     manifest_path: Path | None = None,
     schema_path: Path | None = None,
     catalogue_path: Path | None = None,
+    expected_numbers: tuple[int, ...] | None = None,
 ) -> int:
-    manifest = manifest_path or root / "factory" / "reference_provenance" / MANIFEST.name
     schema = schema_path or root / "factory" / "reference_provenance" / SCHEMA.name
     catalogue_file = catalogue_path or root / CATALOGUE.name
 
+    if manifest_path is None:
+        configured_codes: list[str] = []
+        total = 0
+        for configured_manifest, configured_numbers in MANIFESTS:
+            manifest = root / "factory" / "reference_provenance" / configured_manifest.name
+            codes = [f"WB-{number:03d}" for number in configured_numbers]
+            if set(codes) & set(configured_codes):
+                raise ValueError("configured reference-provenance batches overlap")
+            configured_codes.extend(codes)
+            total += verify(
+                root=root,
+                manifest_path=manifest,
+                schema_path=schema,
+                catalogue_path=catalogue_file,
+                expected_numbers=configured_numbers,
+            )
+        return total
+
+    manifest = manifest_path
+    numbers = expected_numbers or tuple(range(1, 11))
+    expected_codes = [f"WB-{number:03d}" for number in numbers]
+    range_label = f"{expected_codes[0]} through {expected_codes[-1]}"
+
     document = validate_schema(load_json_strict(manifest), schema)
     catalogue = load_json_strict(catalogue_file)
-    rows = canonical_rows(catalogue)
+    rows = canonical_rows(catalogue, numbers)
 
     actual_catalogue_hash = sha256(catalogue_file)
     if document.get("catalogue_sha256") != actual_catalogue_hash:
@@ -145,20 +174,23 @@ def verify(
             f"expected {document.get('catalogue_sha256')}, got {actual_catalogue_hash}"
         )
 
-    if document.get("scope") != EXPECTED_CODES:
-        raise ValueError("manifest scope must be exactly WB-001 through WB-010 in order")
+    if document.get("scope") != expected_codes:
+        raise ValueError(f"manifest scope must be exactly {range_label} in order")
     stations = document.get("stations")
     if not isinstance(stations, list):
         raise ValueError("manifest stations must be an array")
     codes = [station.get("workbench_code") for station in stations if isinstance(station, dict)]
-    if codes != EXPECTED_CODES:
-        raise ValueError("manifest station IDs must be exactly WB-001 through WB-010 in order")
+    if codes != expected_codes:
+        raise ValueError(f"manifest station IDs must be exactly {range_label} in order")
 
     manifest_date = str(document.get("manifest_id", ""))[-10:]
+    expected_manifest_prefix = f"WB{numbers[0]:03d}-WB{numbers[-1]:03d}-"
+    if not str(document.get("manifest_id", "")).startswith(expected_manifest_prefix):
+        raise ValueError(f"manifest ID range must match {range_label}")
     if str(document.get("generated_at_utc", ""))[:10] != manifest_date:
         raise ValueError("manifest ID date and generated_at_utc date differ")
 
-    for expected_number, (station, row) in enumerate(zip(stations, rows, strict=True), start=1):
+    for expected_number, station, row in zip(numbers, stations, rows, strict=True):
         if not isinstance(station, dict):
             raise ValueError("manifest station entries must be objects")
         code = f"WB-{expected_number:03d}"
@@ -215,7 +247,10 @@ def verify(
 
 def main() -> int:
     count = verify()
-    print(f"Reference provenance verified for {count} catalogue stations (WB-001 through WB-010).")
+    print(
+        f"Reference provenance verified for {count} catalogue stations "
+        f"across {len(MANIFESTS)} dated manifests (WB-001 through WB-020)."
+    )
     return 0
 
 
