@@ -40,8 +40,9 @@ distance convention.
 - [`factory/control_plane/`](factory/control_plane/) — work orders, blind
   validation states, disputes and append-only evidence plumbing.
 - [`factory/engine/`](factory/engine/) — provider-neutral catalogue discovery,
-  clean-clone diagnostics and portable construction evidence packaging; start
-  with [`factory/ENGINE.md`](factory/ENGINE.md).
+  clean-clone diagnostics, searchable retained negative results and portable
+  construction evidence packaging; start with
+  [`factory/ENGINE.md`](factory/ENGINE.md).
 - [`factory/release/`](factory/release/) — verified tracked-source and Git-history
   recovery packages; see [`OFFLINE_RECOVERY.md`](OFFLINE_RECOVERY.md).
 - [`factory/shift_reports/`](factory/shift_reports/) — immutable operational

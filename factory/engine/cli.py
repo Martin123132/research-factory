@@ -8,13 +8,15 @@ from typing import Any
 
 from control_plane import cli as governed_cli
 from control_plane.common import ControlPlaneError
+from control_plane.workflow import NEGATIVE_CLASSIFICATIONS
 
 from .catalogue import PROFILES, STAGES, StationCatalogue, doctor
+from .negative_results import search_ledger
 from .portable import EVIDENCE_KINDS, OPERATING_MODES, PortableEvidencePackage
 
 
 FACTORY_ROOT = Path(__file__).resolve().parents[1]
-LOCAL_COMMANDS = {"doctor", "list", "inspect", "package", "verify"}
+LOCAL_COMMANDS = {"doctor", "list", "inspect", "package", "verify", "negative-results"}
 GLOBAL_VALUE_OPTIONS = {
     "--factory-root",
     "--ledger",
@@ -59,6 +61,7 @@ Explore and verify the factory (no account, website, network, or AI provider req
   inspect                read one station's objective, gates, and current limits
   package                make a portable, hash-bound construction evidence bundle
   verify                 verify a portable evidence bundle without trusting its author
+  negative-results       search retained failed and no-gain experiments read-only
 
 Governed append-only lifecycle:
   init, check-in, open-round, complete-entry-gate, claim-work, start-attempt,
@@ -152,6 +155,28 @@ def build_local_parser() -> argparse.ArgumentParser:
     verify_parser = sub.add_parser("verify", help="verify a portable evidence package")
     verify_parser.add_argument("package", type=Path)
     verify_parser.add_argument("--json", action="store_true")
+
+    negative_parser = sub.add_parser(
+        "negative-results",
+        help="search the public index of retained failed and no-gain experiments",
+    )
+    negative_parser.add_argument(
+        "--ledger",
+        type=Path,
+        required=True,
+        help="append-only governed ledger to verify and search",
+    )
+    negative_parser.add_argument("--query", help="case-insensitive words matched across public fields")
+    negative_parser.add_argument("--round", dest="round_id")
+    negative_parser.add_argument("--work-unit", dest="work_unit_id")
+    negative_parser.add_argument(
+        "--classification",
+        type=str.upper,
+        choices=sorted(NEGATIVE_CLASSIFICATIONS),
+    )
+    negative_parser.add_argument("--reason-code")
+    negative_parser.add_argument("--limit", type=int, default=50)
+    negative_parser.add_argument("--json", action="store_true")
     return parser
 
 
@@ -232,6 +257,26 @@ def _human_package(value: dict[str, Any], *, verified: bool) -> str:
     return "\n".join(lines)
 
 
+def _human_negative_results(value: dict[str, Any]) -> str:
+    if not value["results"]:
+        return "No retained negative results matched."
+    lines = [
+        f"{value['returned']} of {value['total_matches']} retained negative result(s)"
+    ]
+    for row in value["results"]:
+        lines.extend(
+            [
+                "",
+                f"{row['attempt_id']}  {row['classification']}  {row['reason_code']}",
+                f"Round: {row['round_id']} | work unit: {row['work_unit_id']}",
+                f"Hypothesis: {row['hypothesis']}",
+                f"Finding: {row['public_summary']}",
+                f"Evidence: sha256:{row['evidence_package_sha256']}",
+            ]
+        )
+    return "\n".join(lines)
+
+
 def run_local(args: argparse.Namespace) -> int:
     factory_root = args.factory_root.resolve()
     if args.command == "doctor":
@@ -253,6 +298,19 @@ def run_local(args: argparse.Namespace) -> int:
         catalogue = StationCatalogue(factory_root)
         value = catalogue.inspect(args.workbench)
         _json(value) if args.json else print(_human_inspect(value))
+        return 0
+
+    if args.command == "negative-results":
+        value = search_ledger(
+            args.ledger,
+            query=args.query,
+            round_id=args.round_id,
+            work_unit_id=args.work_unit_id,
+            classification=args.classification,
+            reason_code=args.reason_code,
+            limit=args.limit,
+        )
+        _json(value) if args.json else print(_human_negative_results(value))
         return 0
 
     portable = PortableEvidencePackage(factory_root)
