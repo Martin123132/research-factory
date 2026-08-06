@@ -1,0 +1,223 @@
+from __future__ import annotations
+
+import hashlib
+import json
+from pathlib import Path
+
+from jsonschema import Draft202012Validator
+
+
+ROOT = Path(__file__).resolve().parents[2]
+MANIFEST = (
+    ROOT
+    / "factory"
+    / "reference_provenance"
+    / "WB001-WB010.reference-provenance.2026-08-06.json"
+)
+SCHEMA = ROOT / "factory" / "reference_provenance" / "reference-provenance-v1.schema.json"
+CATALOGUE = ROOT / "research_factory_100_workbenches.json"
+EXPECTED_CODES = [f"WB-{number:03d}" for number in range(1, 11)]
+
+
+def load_json_strict(path: Path) -> object:
+    def reject_duplicate_keys(pairs: list[tuple[str, object]]) -> dict[str, object]:
+        document: dict[str, object] = {}
+        for key, value in pairs:
+            if key in document:
+                raise ValueError(f"duplicate JSON object key in {path}: {key!r}")
+            document[key] = value
+        return document
+
+    return json.loads(path.read_text(encoding="utf-8"), object_pairs_hook=reject_duplicate_keys)
+
+
+def sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def validate_schema(document: object, schema_path: Path) -> dict[str, object]:
+    schema = load_json_strict(schema_path)
+    if not isinstance(schema, dict):
+        raise ValueError("reference-provenance schema must be a JSON object")
+    Draft202012Validator.check_schema(schema)
+    validator = Draft202012Validator(schema)
+    errors = sorted(
+        validator.iter_errors(document),
+        key=lambda error: tuple(str(part) for part in error.absolute_path),
+    )
+    if errors:
+        error = errors[0]
+        location = "/".join(str(part) for part in error.absolute_path) or "$"
+        raise ValueError(f"reference-provenance schema violation at {location}: {error.message}")
+    if not isinstance(document, dict):
+        raise ValueError("reference-provenance manifest must be a JSON object")
+    return document
+
+
+def canonical_rows(catalogue: object) -> list[dict[str, object]]:
+    if not isinstance(catalogue, dict) or not isinstance(catalogue.get("workbenches"), list):
+        raise ValueError("canonical catalogue must contain a workbenches array")
+
+    by_id: dict[int, dict[str, object]] = {}
+    for value in catalogue["workbenches"]:
+        if not isinstance(value, dict) or not isinstance(value.get("id"), int):
+            raise ValueError("every canonical catalogue row must have an integer id")
+        row_id = value["id"]
+        if row_id in by_id:
+            raise ValueError(f"duplicate canonical catalogue id: {row_id}")
+        by_id[row_id] = value
+
+    missing = [number for number in range(1, 11) if number not in by_id]
+    if missing:
+        raise ValueError(f"canonical catalogue is missing WB-001 through WB-010 ids: {missing}")
+    return [by_id[number] for number in range(1, 11)]
+
+
+def verify_retrieval(retrieval: object, station_code: str) -> None:
+    if not isinstance(retrieval, dict):
+        raise ValueError(f"{station_code} retrieval must be an object")
+
+    outcome = retrieval.get("outcome")
+    requested_url = retrieval.get("requested_url")
+    final_url = retrieval.get("final_url")
+    curl_exit = retrieval.get("curl_exit_code")
+    http_status = retrieval.get("http_status")
+    redirects = retrieval.get("redirect_count")
+    content_type = retrieval.get("content_type")
+    size = retrieval.get("response_size_bytes")
+    response_hash = retrieval.get("response_sha256")
+    error = retrieval.get("error")
+
+    if outcome == "retrieved":
+        if curl_exit != 0:
+            raise ValueError(f"{station_code} retrieved response has non-zero curl exit")
+        if not isinstance(http_status, int) or not 200 <= http_status <= 299:
+            raise ValueError(f"{station_code} retrieved response is not HTTP 2xx")
+        if not isinstance(final_url, str) or not final_url.startswith("https://"):
+            raise ValueError(f"{station_code} retrieved response lacks a verified final URL")
+        if not isinstance(content_type, str) or not content_type.strip():
+            raise ValueError(f"{station_code} retrieved response lacks a content type")
+        if not isinstance(size, int) or size < 1:
+            raise ValueError(f"{station_code} retrieved response lacks a positive byte count")
+        if not isinstance(response_hash, str) or len(response_hash) != 64:
+            raise ValueError(f"{station_code} retrieved response lacks an exact-byte SHA-256")
+        if error is not None:
+            raise ValueError(f"{station_code} successful retrieval must not record an error")
+        if redirects == 0 and final_url != requested_url:
+            raise ValueError(
+                f"{station_code} zero-redirect retrieval changed URL: {requested_url!r} -> {final_url!r}"
+            )
+    elif outcome == "failed":
+        if not isinstance(curl_exit, int) or curl_exit == 0:
+            raise ValueError(f"{station_code} failed retrieval must record a non-zero curl exit")
+        if response_hash is not None or size is not None:
+            raise ValueError(f"{station_code} failed retrieval must not claim unverified response bytes")
+        if content_type is not None:
+            raise ValueError(f"{station_code} failed retrieval must not claim a response content type")
+        if not isinstance(error, str) or len(error.strip()) < 10:
+            raise ValueError(f"{station_code} failed retrieval needs a useful error record")
+    else:
+        raise ValueError(f"{station_code} has unsupported retrieval outcome: {outcome!r}")
+
+
+def verify(
+    root: Path = ROOT,
+    manifest_path: Path | None = None,
+    schema_path: Path | None = None,
+    catalogue_path: Path | None = None,
+) -> int:
+    manifest = manifest_path or root / "factory" / "reference_provenance" / MANIFEST.name
+    schema = schema_path or root / "factory" / "reference_provenance" / SCHEMA.name
+    catalogue_file = catalogue_path or root / CATALOGUE.name
+
+    document = validate_schema(load_json_strict(manifest), schema)
+    catalogue = load_json_strict(catalogue_file)
+    rows = canonical_rows(catalogue)
+
+    actual_catalogue_hash = sha256(catalogue_file)
+    if document.get("catalogue_sha256") != actual_catalogue_hash:
+        raise ValueError(
+            "catalogue SHA-256 differs from the exact canonical bytes: "
+            f"expected {document.get('catalogue_sha256')}, got {actual_catalogue_hash}"
+        )
+
+    if document.get("scope") != EXPECTED_CODES:
+        raise ValueError("manifest scope must be exactly WB-001 through WB-010 in order")
+    stations = document.get("stations")
+    if not isinstance(stations, list):
+        raise ValueError("manifest stations must be an array")
+    codes = [station.get("workbench_code") for station in stations if isinstance(station, dict)]
+    if codes != EXPECTED_CODES:
+        raise ValueError("manifest station IDs must be exactly WB-001 through WB-010 in order")
+
+    manifest_date = str(document.get("manifest_id", ""))[-10:]
+    if str(document.get("generated_at_utc", ""))[:10] != manifest_date:
+        raise ValueError("manifest ID date and generated_at_utc date differ")
+
+    for expected_number, (station, row) in enumerate(zip(stations, rows, strict=True), start=1):
+        if not isinstance(station, dict):
+            raise ValueError("manifest station entries must be objects")
+        code = f"WB-{expected_number:03d}"
+        expected = {
+            "catalogue_id": expected_number,
+            "workbench_code": code,
+            "catalogue_title": row.get("workbench"),
+            "benchmark_label": row.get("benchmark"),
+            "catalogue_reference_url": row.get("reference_url"),
+        }
+        for field, value in expected.items():
+            if station.get(field) != value:
+                raise ValueError(
+                    f"{code} {field} diverges from the canonical catalogue: "
+                    f"expected {value!r}, got {station.get(field)!r}"
+                )
+
+        retrievals = station.get("retrievals")
+        if not isinstance(retrievals, list) or not retrievals:
+            raise ValueError(f"{code} must contain at least one retrieval record")
+        catalogue_retrievals = [
+            retrieval
+            for retrieval in retrievals
+            if isinstance(retrieval, dict) and retrieval.get("role") == "catalogue-reference"
+        ]
+        if len(catalogue_retrievals) != 1:
+            raise ValueError(f"{code} must contain exactly one catalogue-reference retrieval")
+        if catalogue_retrievals[0].get("requested_url") != row.get("reference_url"):
+            raise ValueError(f"{code} catalogue-reference retrieval URL differs from the catalogue")
+
+        for retrieval in retrievals:
+            verify_retrieval(retrieval, code)
+            timestamp = retrieval.get("retrieved_at_utc") if isinstance(retrieval, dict) else None
+            if not isinstance(timestamp, str) or timestamp[:10] != manifest_date:
+                raise ValueError(f"{code} retrieval date differs from the dated manifest")
+
+        upstream_terms = station.get("upstream_terms")
+        terms_url = upstream_terms.get("terms_url") if isinstance(upstream_terms, dict) else None
+        if terms_url is not None and not any(
+            isinstance(retrieval, dict) and retrieval.get("requested_url") == terms_url
+            for retrieval in retrievals
+        ):
+            raise ValueError(f"{code} upstream terms URL lacks a retrieval or failure record")
+
+        catalogue_outcome = catalogue_retrievals[0].get("outcome")
+        assessment = station.get("reference_assessment")
+        if catalogue_outcome == "failed" and assessment != "retrieval-failed":
+            raise ValueError(f"{code} failed catalogue retrieval is not marked retrieval-failed")
+        if catalogue_outcome == "retrieved" and assessment == "retrieval-failed":
+            raise ValueError(f"{code} successful catalogue retrieval is marked retrieval-failed")
+
+    return len(stations)
+
+
+def main() -> int:
+    count = verify()
+    print(f"Reference provenance verified for {count} catalogue stations (WB-001 through WB-010).")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

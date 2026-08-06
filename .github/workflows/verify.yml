@@ -61,6 +61,10 @@ jobs:
         run: |
           python shift_reports/validate_shift_reports.py shift_reports/examples
           python -m unittest discover -s shift_reports/tests -p "test_*.py" -v
+      - name: Verify catalogue reference provenance
+        run: |
+          python reference_provenance/verify_reference_provenance.py
+          python -m unittest discover -s reference_provenance/tests -p "test_*.py" -v
       - name: Verify deterministic station kits
         run: python workbench_standard/generate_station_kits.py --check
       - name: Verify provider-neutral factory engine

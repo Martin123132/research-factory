@@ -29,7 +29,38 @@ git switch -c your-name/bounded-task
 Read the task's named files before editing. Do not alter generated station kits
 directly; change their governed source and regenerate them.
 
-## 3. Keep the boundary visible
+## 3. Install the locked construction tools
+
+The common checks require Python 3.11 or newer, Node.js 22.13 or newer and Git.
+Create an isolated Python environment so project tools do not change your
+system Python. Some Linux distributions package virtual-environment support
+separately (for example, `python3-venv`).
+
+Windows PowerShell:
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r factory/requirements.lock
+python -m pip install reuse==6.2.0
+cd factory/hangar
+npm.cmd ci
+cd ../..
+```
+
+Linux or macOS:
+
+```sh
+python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install -r factory/requirements.lock
+python -m pip install reuse==6.2.0
+cd factory/hangar
+npm ci
+cd ../..
+```
+
+## 4. Keep the boundary visible
 
 Public newcomer work is one of:
 
@@ -40,11 +71,11 @@ Public newcomer work is one of:
 
 It is not `LIVE_RESEARCH`, a scientific reproduction or a promotion claim.
 
-## 4. Run the declared checks
+## 5. Run the declared checks
 
 The issue defines its targeted commands. Common checks are:
 
-```powershell
+```text
 # Licence and provenance classification
 reuse lint
 
@@ -58,15 +89,21 @@ python -m unittest discover -s factory/engine/tests -t factory -p "test_*.py" -v
 
 # Hangar work
 cd factory/hangar
+# Windows PowerShell
 npm.cmd run typecheck
 npm.cmd run lint
 npm.cmd test
+
+# Linux or macOS
+npm run typecheck
+npm run lint
+npm test
 ```
 
 If a task is unrunnable in your environment, record the exact command and
 failure. Do not invent a passing result.
 
-## 5. Commit without assigning ownership
+## 6. Commit without assigning ownership
 
 ```powershell
 git add -- path/to/the/files-you-changed
@@ -77,7 +114,7 @@ The `-s` adds a `Signed-off-by` line under the Developer Certificate of Origin.
 You keep your copyright. Your contribution is made available under the standard
 licence assigned to its path in `REUSE.toml`.
 
-## 6. Open a pull request
+## 7. Open a pull request
 
 Link the construction issue and complete the rights, provenance and verification
 sections. A merged construction pull request means the workshop improved. It

@@ -1,0 +1,494 @@
+{
+  "$schema": "reference-provenance-v1.schema.json",
+  "schema_version": 1,
+  "manifest_id": "WB001-WB010-2026-08-06",
+  "generated_at_utc": "2026-08-06T01:35:00Z",
+  "catalogue_path": "research_factory_100_workbenches.json",
+  "catalogue_sha256": "9b37a47c265e916cbf460f4dd0120b02b01fa800b104017b117ba2fc40644cd5",
+  "scope": [
+    "WB-001",
+    "WB-002",
+    "WB-003",
+    "WB-004",
+    "WB-005",
+    "WB-006",
+    "WB-007",
+    "WB-008",
+    "WB-009",
+    "WB-010"
+  ],
+  "hash_algorithm": "SHA-256",
+  "factory_licensing_scope": {
+    "manifest_factual_fields": "CC0-1.0",
+    "upstream_material": "not-relicensed-by-the-research-factory"
+  },
+  "retrieval_method": {
+    "client": "curl 8.13.0 (Windows, Schannel)",
+    "redirect_policy": "follow",
+    "tls_certificate_verification": "required",
+    "hash_scope": "exact response-body bytes emitted by curl after redirects",
+    "user_agent": "Research-Factory-Provenance-Audit/1.0 (+https://github.com/Martin123132/research-factory)"
+  },
+  "dataset_files_committed": false,
+  "candidate_artifacts_committed": false,
+  "stations": [
+    {
+      "workbench_code": "WB-001",
+      "catalogue_id": 1,
+      "catalogue_title": "General-purpose lossless compression",
+      "benchmark_label": "Silesia Corpus",
+      "catalogue_reference_url": "https://data-compression.info/Corpora/SilesiaCorpus/index.html",
+      "authority": {
+        "organisation": "Data Compression Resource / Silesia Corpus maintainers",
+        "basis": "The referenced page identifies the corpus, its author and its originating institution, and provides the corpus download."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The page responded successfully and identifies the intended corpus, but no redistribution licence for the corpus archive was found on the reference page.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://data-compression.info/Corpora/SilesiaCorpus/index.html",
+          "retrieved_at_utc": "2026-08-06T01:34:23.5015020Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://data-compression.info/Corpora/SilesiaCorpus/index.html",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=ISO-8859-1",
+          "response_size_bytes": 32765,
+          "response_sha256": "318183ea52ae7779a4c9c95e18f8de6024f005666a427337dfdf490b51c2cac4",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "not-stated-on-reference-page",
+        "terms_url": null,
+        "redistribution_status": "not-granted-by-reference",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "Public download availability is not treated as permission to redistribute the Silesia Corpus. No corpus bytes are committed by this manifest."
+      }
+    },
+    {
+      "workbench_code": "WB-002",
+      "catalogue_id": 2,
+      "catalogue_title": "Large-text and knowledge-archive compression",
+      "benchmark_label": "Hutter Prize",
+      "catalogue_reference_url": "https://prize.hutter1.net/",
+      "authority": {
+        "organisation": "Hutter Prize organisers",
+        "basis": "The referenced site publishes the prize task, detailed participation rules, records and organiser contacts."
+      },
+      "reference_assessment": "retrieval-failed",
+      "assessment_notes": "A verified local retrieval was refused because the server certificate was expired. TLS verification was not bypassed, so no response bytes or hash are recorded.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://prize.hutter1.net/",
+          "retrieved_at_utc": "2026-08-06T01:34:24.5743973Z",
+          "outcome": "failed",
+          "curl_exit_code": 35,
+          "http_status": 0,
+          "final_url": null,
+          "redirect_count": 0,
+          "content_type": null,
+          "response_size_bytes": null,
+          "response_sha256": null,
+          "error": "schannel: next InitializeSecurityContext failed: SEC_E_CERT_EXPIRED (0x80090328) - The received certificate has expired"
+        },
+        {
+          "role": "upstream-terms",
+          "requested_url": "https://prize.hutter1.net/hrules.htm",
+          "retrieved_at_utc": "2026-08-06T01:43:51.2077944Z",
+          "outcome": "failed",
+          "curl_exit_code": 35,
+          "http_status": 0,
+          "final_url": null,
+          "redirect_count": 0,
+          "content_type": null,
+          "response_size_bytes": null,
+          "response_sha256": null,
+          "error": "schannel: next InitializeSecurityContext failed: SEC_E_CERT_EXPIRED (0x80090328) - The received certificate has expired"
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "competition-rules",
+        "terms_url": "https://prize.hutter1.net/hrules.htm",
+        "redistribution_status": "not-granted-by-reference",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "The prize rules require qualifying entrant source code to use an OSI-approved licence; that requirement does not establish redistribution rights for enwik9. No enwik9 bytes are committed."
+      }
+    },
+    {
+      "workbench_code": "WB-003",
+      "catalogue_id": 3,
+      "catalogue_title": "Genomic alignment compression",
+      "benchmark_label": "HTSlib CRAM benchmarks",
+      "catalogue_reference_url": "https://www.htslib.org/benchmarks/CRAM.html",
+      "authority": {
+        "organisation": "HTSlib and Samtools project",
+        "basis": "The official HTSlib site publishes the CRAM benchmark configurations, profiles, measurements and linked input sources."
+      },
+      "reference_assessment": "available",
+      "assessment_notes": "The official benchmark page responded successfully and was updated for CRAM 3.1 profiles; its linked input datasets remain separately sourced.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://www.htslib.org/benchmarks/CRAM.html",
+          "retrieved_at_utc": "2026-08-06T01:34:25.0008057Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://www.htslib.org/benchmarks/CRAM.html",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=utf-8",
+          "response_size_bytes": 31757,
+          "response_sha256": "d8adb0653f5d6daf97e15b6fb047da388d71e3d57d885168de9a5a2f2923aa69",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "not-stated-on-reference-page",
+        "terms_url": null,
+        "redistribution_status": "not-granted-by-reference",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "The benchmark page links sequencing inputs from several upstream providers. Each input retains its own terms; no sequence or alignment data is committed."
+      }
+    },
+    {
+      "workbench_code": "WB-004",
+      "catalogue_id": 4,
+      "catalogue_title": "Error-bounded scientific-array compression",
+      "benchmark_label": "SDRBench",
+      "catalogue_reference_url": "https://sdrbench.github.io/",
+      "authority": {
+        "organisation": "SDRBench project",
+        "basis": "The project site publishes SDRBench datasets, compressors, metrics, error controls and required citation guidance."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The project page responded successfully, but it states that dataset-source acknowledgement and publication conditions vary by dataset.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://sdrbench.github.io/",
+          "retrieved_at_utc": "2026-08-06T01:34:25.3831649Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://sdrbench.github.io/",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=utf-8",
+          "response_size_bytes": 168657,
+          "response_sha256": "4e14606b95650f1f1945c834c047fab9920ae26d18714cd75ec4d978067d7a18",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "source-specific-conditions",
+        "terms_url": "https://sdrbench.github.io/",
+        "redistribution_status": "not-granted-by-reference",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "SDRBench requests project citation, dataset-source acknowledgement and checks of source-specific publication conditions. No scientific-array datasets are committed."
+      }
+    },
+    {
+      "workbench_code": "WB-005",
+      "catalogue_id": 5,
+      "catalogue_title": "Multispectral and hyperspectral spacecraft-image compression",
+      "benchmark_label": "CCSDS 123.0-B-2",
+      "catalogue_reference_url": "https://ccsds.org/Pubs/123x0b2e1c3_tc2101.pdf",
+      "authority": {
+        "organisation": "Consultative Committee for Space Data Systems (CCSDS)",
+        "basis": "CCSDS is the issuing standards body and maintains the referenced corrigendum and active-publications index."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The catalogue URL is the one-page Technical Corrigendum 3, not the complete CCSDS 123.0-B-2 standard. A complete corrected edition must be pinned before commissioning.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://ccsds.org/Pubs/123x0b2e1c3_tc2101.pdf",
+          "retrieved_at_utc": "2026-08-06T01:34:25.7537721Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://ccsds.org/Pubs/123x0b2e1c3_tc2101.pdf",
+          "redirect_count": 0,
+          "content_type": "application/pdf",
+          "response_size_bytes": 76911,
+          "response_sha256": "864662bec53cd4f73eec2c2db7a07a2795ce6b57c13b18fe1352062c6077e291",
+          "error": null
+        },
+        {
+          "role": "authoritative-supporting-document",
+          "requested_url": "https://ccsds.org/searchpubs/",
+          "retrieved_at_utc": "2026-08-06T01:34:29.6619911Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://ccsds.org/searchpubs/",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=UTF-8",
+          "response_size_bytes": 1145341,
+          "response_sha256": "3ff95d70a83008f72fab0cc827d4e4691f010d501ceda473ed938e0a0e02ad26",
+          "error": null
+        },
+        {
+          "role": "upstream-terms",
+          "requested_url": "https://ccsds.org/publications/bluebooks/",
+          "retrieved_at_utc": "2026-08-06T01:43:51.4885184Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://ccsds.org/publications/bluebooks/",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=UTF-8",
+          "response_size_bytes": 695240,
+          "response_sha256": "577607ca945bdc72048e7dda903220908efecaa6f3b0725ac17005e63cae9853",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "publisher-permission-and-patent-notice",
+        "terms_url": "https://ccsds.org/publications/bluebooks/",
+        "redistribution_status": "not-granted-by-reference",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "CCSDS publishes a reproduction-permission statement and warns that patent licensing may apply. The factory does not relicense the standard or any spacecraft imagery."
+      }
+    },
+    {
+      "workbench_code": "WB-006",
+      "catalogue_id": 6,
+      "catalogue_title": "Still-image rate–distortion compression",
+      "benchmark_label": "CLIC",
+      "catalogue_reference_url": "https://clic2025.compression.cc/",
+      "authority": {
+        "organisation": "Challenge on Learned Image Compression (CLIC) organisers",
+        "basis": "The referenced official challenge site publishes the 2025 tracks, rules, schedule, datasets and submission procedures."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The 2025 challenge page responded successfully. It is a dated edition, and its FAQ says datasets follow the terms of their respective sources or a stated Creative Commons licence.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://clic2025.compression.cc/",
+          "retrieved_at_utc": "2026-08-06T01:34:26.8663458Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://clic2025.compression.cc/",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=utf-8",
+          "response_size_bytes": 12570,
+          "response_sha256": "552c83790e38e88b1215f334870192f1bb360543ef06c11237a73ff9d8e993c0",
+          "error": null
+        },
+        {
+          "role": "upstream-terms",
+          "requested_url": "https://clic2025.compression.cc/faq/",
+          "retrieved_at_utc": "2026-08-06T01:43:58.9394735Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://clic2025.compression.cc/faq/",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=utf-8",
+          "response_size_bytes": 15078,
+          "response_sha256": "63ffe7b6b8a0297a81edbe440e376a14139eef969a759f77fc6e1fa66f444d3e",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "source-specific-conditions",
+        "terms_url": "https://clic2025.compression.cc/faq/",
+        "redistribution_status": "not-granted-by-reference",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "CLIC states that dataset items follow their respective source terms and/or an identified Creative Commons licence. No challenge image data is committed."
+      }
+    },
+    {
+      "workbench_code": "WB-007",
+      "catalogue_id": 7,
+      "catalogue_title": "Video codec efficiency",
+      "benchmark_label": "AOM AV2 Common Test Conditions v9",
+      "catalogue_reference_url": "https://aomedia.org/docs/CWG-G082_AV2_CTC_v9.pdf",
+      "authority": {
+        "organisation": "Alliance for Open Media (AOMedia)",
+        "basis": "AOMedia's official document host publishes the Codec Working Group AV2 Common Test Conditions v9 document."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The versioned CTC PDF responded successfully, but the test sequences referenced by the document have separate acquisition and rights conditions.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://aomedia.org/docs/CWG-G082_AV2_CTC_v9.pdf",
+          "retrieved_at_utc": "2026-08-06T01:34:27.5956885Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://aomedia.org/docs/CWG-G082_AV2_CTC_v9.pdf",
+          "redirect_count": 0,
+          "content_type": "application/pdf",
+          "response_size_bytes": 1811051,
+          "response_sha256": "add44074757837424165e199e9da9a6cd074af1903fa6b7a37fb39f88778361a",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "not-stated-on-reference-page",
+        "terms_url": null,
+        "redistribution_status": "not-granted-by-reference",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "Publication of the CTC PDF is not treated as a licence for its test sequences or other linked materials. No video sequences or candidate bitstreams are committed."
+      }
+    },
+    {
+      "workbench_code": "WB-008",
+      "catalogue_id": 8,
+      "catalogue_title": "3D point-cloud compression",
+      "benchmark_label": "MPEG-I G-PCC",
+      "catalogue_reference_url": "https://www.mpeg.org/standards/MPEG-I/9/",
+      "authority": {
+        "organisation": "Moving Picture Experts Group (MPEG)",
+        "basis": "The official MPEG standards page identifies MPEG-I Part 9 and lists editions, meeting documents, common test conditions and test models."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The official overview responded successfully, but the catalogue does not pin one edition of the common test conditions, anchor results or test model.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://www.mpeg.org/standards/MPEG-I/9/",
+          "retrieved_at_utc": "2026-08-06T01:34:28.0459499Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://www.mpeg.org/standards/MPEG-I/9/",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=UTF-8",
+          "response_size_bytes": 102765,
+          "response_sha256": "0d9a812906e0dc460068d6294f0e37d5305ce9e3e8fae55159c88035cb296503",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "not-stated-on-reference-page",
+        "terms_url": null,
+        "redistribution_status": "not-granted-by-reference",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "The standards overview does not establish rights to redistribute ISO/MPEG documents or point-cloud test content. No standards files or point-cloud datasets are committed."
+      }
+    },
+    {
+      "workbench_code": "WB-009",
+      "catalogue_id": 9,
+      "catalogue_title": "Lossless audio compression",
+      "benchmark_label": "EBU SQAM lossless test material",
+      "catalogue_reference_url": "https://qc.ebu.io/testmaterials/523/",
+      "authority": {
+        "organisation": "European Broadcasting Union (EBU)",
+        "basis": "The EBU QC service publishes the TECH3253_SQAM_FLAC test-material record, metadata, download and use restriction."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The material record responded successfully and states a non-commercial-use restriction except as an R&D tool. The separately linked terms page returned HTTP 403 and remains unresolved.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://qc.ebu.io/testmaterials/523/",
+          "retrieved_at_utc": "2026-08-06T01:34:28.9494905Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://qc.ebu.io/testmaterials/523/",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=utf-8",
+          "response_size_bytes": 86815,
+          "response_sha256": "cfdd29389790cde03cc3f3b2c473828aff680b4399e5e73112a6ca52e20461a9",
+          "error": null
+        },
+        {
+          "role": "upstream-terms",
+          "requested_url": "https://tech.ebu.ch/publications/sqamcd",
+          "retrieved_at_utc": "2026-08-06T01:45:41.2624058Z",
+          "outcome": "failed",
+          "curl_exit_code": 22,
+          "http_status": 403,
+          "final_url": "https://tech.ebu.ch/publications/sqamcd",
+          "redirect_count": 0,
+          "content_type": null,
+          "response_size_bytes": null,
+          "response_sha256": null,
+          "error": "curl --fail rejected the HTTP 403 response; no response body was retained or hashed"
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "source-specific-conditions",
+        "terms_url": "https://tech.ebu.ch/publications/sqamcd",
+        "redistribution_status": "not-granted-by-reference",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "The EBU record requires downloaders not to use the material commercially except as an R&D tool. The linked terms page returned HTTP 403; no SQAM audio is committed."
+      }
+    },
+    {
+      "workbench_code": "WB-010",
+      "catalogue_id": 10,
+      "catalogue_title": "Streaming telemetry compression",
+      "benchmark_label": "CCSDS lossless-data-compression publications",
+      "catalogue_reference_url": "https://ccsds.org/searchpubs/",
+      "authority": {
+        "organisation": "Consultative Committee for Space Data Systems (CCSDS)",
+        "basis": "CCSDS maintains the official publication search and issues the pinned CCSDS 121.0-B-3 Lossless Data Compression Recommended Standard."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The catalogue URL is a mutable publication search rather than a versioned benchmark. CCSDS 121.0-B-3, Issue 3, August 2020 is recorded as a supporting current lossless-data-compression document.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://ccsds.org/searchpubs/",
+          "retrieved_at_utc": "2026-08-06T01:34:29.6619911Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://ccsds.org/searchpubs/",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=UTF-8",
+          "response_size_bytes": 1145341,
+          "response_sha256": "3ff95d70a83008f72fab0cc827d4e4691f010d501ceda473ed938e0a0e02ad26",
+          "error": null
+        },
+        {
+          "role": "authoritative-supporting-document",
+          "requested_url": "https://ccsds.org/Pubs/121x0b3.pdf",
+          "retrieved_at_utc": "2026-08-06T01:34:45.2793964Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://ccsds.org/Pubs/121x0b3.pdf",
+          "redirect_count": 0,
+          "content_type": "application/pdf",
+          "response_size_bytes": 679604,
+          "response_sha256": "d09d41b718dcb13e9ef915b2b505edcf490de87f47603b9a85959e7f0d03dfa4",
+          "error": null
+        },
+        {
+          "role": "upstream-terms",
+          "requested_url": "https://ccsds.org/publications/bluebooks/",
+          "retrieved_at_utc": "2026-08-06T01:43:51.4885184Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://ccsds.org/publications/bluebooks/",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=UTF-8",
+          "response_size_bytes": 695240,
+          "response_sha256": "577607ca945bdc72048e7dda903220908efecaa6f3b0725ac17005e63cae9853",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "publisher-permission-and-patent-notice",
+        "terms_url": "https://ccsds.org/publications/bluebooks/",
+        "redistribution_status": "not-granted-by-reference",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "CCSDS publishes a reproduction-permission statement and warns that patent licensing may apply. The factory does not relicense the standard or telemetry data."
+      }
+    }
+  ]
+}

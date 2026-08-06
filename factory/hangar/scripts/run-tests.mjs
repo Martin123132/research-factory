@@ -37,11 +37,19 @@ try {
   let url = existingUrl;
   if (!url) {
     const port = 4300 + (process.pid % 300);
-    url = `http://localhost:${port}`;
+    const host = "127.0.0.1";
+    url = `http://${host}:${port}`;
     const cli = fileURLToPath(
       new URL("../node_modules/vinext/dist/cli.js", import.meta.url),
     );
-    server = spawn(process.execPath, [cli, "dev", "--port", String(port)], {
+    server = spawn(process.execPath, [
+      cli,
+      "dev",
+      "--hostname",
+      host,
+      "--port",
+      String(port),
+    ], {
       cwd: projectRoot,
       env: process.env,
       stdio: ["ignore", "pipe", "pipe"],
