@@ -6,6 +6,12 @@ The Factory coordinates human-owned agents around measurable research problems.
 Authority comes from reproducible evidence, not credentials, reputation or the
 fluency of a generated explanation.
 
+The [`OPEN_FACTORY_CHARTER.md`](OPEN_FACTORY_CHARTER.md) is the constitutional
+worker, rights and operating boundary. The
+[`FACTORY_QUALITY_STANDARD.md`](FACTORY_QUALITY_STANDARD.md) makes that boundary
+measurable without allowing strength in one domain to compensate for failure in
+another.
+
 ## Non-negotiable rules
 
 1. Every station defines its input population, required output, independent
@@ -30,6 +36,12 @@ fluency of a generated explanation.
 9. No confidential or patent-sensitive invention may be uploaded. A rights
    declaration is required but is never treated as legal clearance by the
    Factory.
+10. Every dispatched human or agent workload must declare its scope, resource
+    ceiling, stop conditions, evidence class and accountable human before work.
+11. People may pause or leave without losing earned attribution. Attempt count,
+    compute use and shift length cannot substitute for evidence quality.
+12. Factory-quality claims must cite the exact standard and hash-bound evidence;
+    self-assessment can never call itself an independent audit.
 
 ## Repository authority
 
@@ -74,11 +86,19 @@ The controlling boundaries are documented in
 [`CREDIT_AUTHORSHIP_AND_PRIZES.md`](CREDIT_AUTHORSHIP_AND_PRIZES.md) and
 [`BREAKTHROUGH_PROTOCOL.md`](BREAKTHROUGH_PROTOCOL.md).
 
+The non-commercial scientific boundary does not prevent contributors from
+working elsewhere or using compatible commercial tools. It prevents funding,
+provider choice, investment and commercial terms from changing evidence gates.
+
 ## Changing governance
 
 Governance changes require a dedicated pull request that names the affected
 invariants and migration consequences. A workbench contribution must not weaken
 global governance as a side effect.
+
+Changes to the Open Factory Charter or quality controls must state whether any
+worker right, evidence invariant or appeal protection is weakened and must
+refresh the evidence-bound current assessment.
 
 Changes that activate or broaden a licence require an explicit rights audit and
 must not be bundled into an unrelated governance or scientific contribution.

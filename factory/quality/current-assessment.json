@@ -1,0 +1,475 @@
+{
+  "$schema": "factory-quality-assessment-v1.schema.json",
+  "assessment_version": 1,
+  "assessment_id": "RFQ-2026-08-06-INITIAL",
+  "assessed_at_utc": "2026-08-06T13:44:52Z",
+  "standard_version": "1.0.0",
+  "standard_path": "factory/quality/factory-quality-standard-v1.json",
+  "standard_sha256": "fd0e51f61c87db90ebff64e33b7f262e51c6c88c351e0f9b3d0c40d25258f4f8",
+  "subject": {
+    "name": "Research Factory",
+    "repository": "https://github.com/Martin123132/research-factory",
+    "baseline_revision": "1eaa34611ef8655d2b64ea236ace6fde807ad72a",
+    "baseline_purpose": "LAST_MERGED_REVISION_BEFORE_THIS_ASSESSMENT"
+  },
+  "scope_boundary": "CONSTRUCTION_AND_SYNTHETIC_COMMISSIONING_ONLY",
+  "profile": "FOUNDATION_ONLY",
+  "certifications": {
+    "operationally_conformant": false,
+    "scientifically_demonstrated": false,
+    "independently_audited": false
+  },
+  "operating_facts": {
+    "catalogue_stations": 100,
+    "live_research_stations": 0,
+    "independent_human_validators_onboarded": 0,
+    "observed_live_two_person_reproductions": 0,
+    "independent_quality_audits": 0
+  },
+  "summary": {
+    "controls": 28,
+    "meets": 18,
+    "partial": 8,
+    "blocked": 2
+  },
+  "results": [
+    {
+      "control_id": "ACCESS-01",
+      "critical": true,
+      "minimum_evidence_level": "ENFORCED",
+      "outcome": "MEETS",
+      "evidence_level": "ENFORCED",
+      "evidence": [
+        {
+          "path": "factory/ENGINE.md",
+          "sha256": "98226884c60f6d75eddaa115fd32386735647e97b90f28f8ffcb929f5d271392",
+          "supports": "Documents the clean-clone core with no hosted account, website, GitHub API or model-provider requirement."
+        },
+        {
+          "path": "factory/engine/tests/test_catalogue.py",
+          "sha256": "afd553b8441b0279b985bf66cbd1808f826231183c669e8a4f7c171569d5b19e",
+          "supports": "Fails if engine diagnostics introduce a hosted provider dependency."
+        }
+      ],
+      "limitation": null
+    },
+    {
+      "control_id": "ACCESS-02",
+      "critical": true,
+      "minimum_evidence_level": "ENFORCED",
+      "outcome": "MEETS",
+      "evidence_level": "ENFORCED",
+      "evidence": [
+        {
+          "path": "GOVERNANCE.md",
+          "sha256": "13fbe4b1ece77999ffcceb2667610e362eeb798d3d7bcd1726f786125ce39216",
+          "supports": "Makes reproducible evidence rather than credentials or reputation the source of authority."
+        },
+        {
+          "path": "factory/workbench_standard/schema/workbench-contract-v1.schema.json",
+          "sha256": "1991ed32b115b6b58d036c0ee240bbe1c72f9567da2300243790dc64ceb60a79",
+          "supports": "Defines station gates without academic, employment or affiliation fields."
+        }
+      ],
+      "limitation": null
+    },
+    {
+      "control_id": "ACCESS-03",
+      "critical": false,
+      "minimum_evidence_level": "ENFORCED",
+      "outcome": "PARTIAL",
+      "evidence_level": "ENFORCED",
+      "evidence": [
+        {
+          "path": "factory/hangar/ACCESSIBILITY_AUDIT.md",
+          "sha256": "bb7fccebf4a1f1f1445d103c1d900a51dc1180692ac4a8239e8edd8a139c498c",
+          "supports": "Records the Hangar keyboard, naming, focus and responsive accessibility audit and regression coverage."
+        }
+      ],
+      "limitation": "The Hangar has enforced regression coverage, but a project-wide accommodation process and non-web accessibility audit are not yet implemented."
+    },
+    {
+      "control_id": "ACCESS-04",
+      "critical": true,
+      "minimum_evidence_level": "ENFORCED",
+      "outcome": "MEETS",
+      "evidence_level": "ENFORCED",
+      "evidence": [
+        {
+          "path": ".github/scripts/verify_public_readiness.py",
+          "sha256": "5bb61f8a7312fcae6b5e92868a4786d9af178fc211edf04092a4ac92521325f6",
+          "supports": "Rejects credential-shaped, private, hidden and unsafe public repository paths and keeps candidate intake closed."
+        }
+      ],
+      "limitation": null
+    },
+    {
+      "control_id": "WORK-01",
+      "critical": true,
+      "minimum_evidence_level": "ENFORCED",
+      "outcome": "PARTIAL",
+      "evidence_level": "DECLARED",
+      "evidence": [
+        {
+          "path": "OPEN_FACTORY_CHARTER.md",
+          "sha256": "7417a953dcbff17af5469ef2ca4cc359567082930222a936d34f79130c788553",
+          "supports": "Requires scope, duration, resources, stop conditions, hazards and evidence class before dispatch."
+        }
+      ],
+      "limitation": "Existing work orders and contracts do not yet enforce every time, compute, material, hazard and stop-condition field as a closed dispatch gate."
+    },
+    {
+      "control_id": "WORK-02",
+      "critical": true,
+      "minimum_evidence_level": "DECLARED",
+      "outcome": "MEETS",
+      "evidence_level": "DECLARED",
+      "evidence": [
+        {
+          "path": "OPEN_FACTORY_CHARTER.md",
+          "sha256": "7417a953dcbff17af5469ef2ca4cc359567082930222a936d34f79130c788553",
+          "supports": "Grants pause, decline and exit without loss of earned attribution or retaliation through scoring or access."
+        }
+      ],
+      "limitation": null
+    },
+    {
+      "control_id": "WORK-03",
+      "critical": true,
+      "minimum_evidence_level": "ENFORCED",
+      "outcome": "PARTIAL",
+      "evidence_level": "DECLARED",
+      "evidence": [
+        {
+          "path": "OPEN_FACTORY_CHARTER.md",
+          "sha256": "7417a953dcbff17af5469ef2ca4cc359567082930222a936d34f79130c788553",
+          "supports": "Requires a named human, allowed interfaces, resource ceiling and termination condition for agent dispatch."
+        }
+      ],
+      "limitation": "The agent-authority rule is declared, but one provider-neutral dispatch envelope does not yet enforce budgets and termination across every runner."
+    },
+    {
+      "control_id": "WORK-04",
+      "critical": false,
+      "minimum_evidence_level": "DECLARED",
+      "outcome": "MEETS",
+      "evidence_level": "DECLARED",
+      "evidence": [
+        {
+          "path": "OPEN_FACTORY_CHARTER.md",
+          "sha256": "7417a953dcbff17af5469ef2ca4cc359567082930222a936d34f79130c788553",
+          "supports": "Forbids using attempt volume, compute consumption or endurance as substitutes for evidence quality."
+        }
+      ],
+      "limitation": null
+    },
+    {
+      "control_id": "SCIENCE-01",
+      "critical": true,
+      "minimum_evidence_level": "ENFORCED",
+      "outcome": "MEETS",
+      "evidence_level": "ENFORCED",
+      "evidence": [
+        {
+          "path": "factory/workbench_standard/schema/workbench-contract-v1.schema.json",
+          "sha256": "1991ed32b115b6b58d036c0ee240bbe1c72f9567da2300243790dc64ceb60a79",
+          "supports": "The closed station contract requires objective, hard gates, metrics, tolerances, resources and practical guardrails."
+        }
+      ],
+      "limitation": null
+    },
+    {
+      "control_id": "SCIENCE-02",
+      "critical": true,
+      "minimum_evidence_level": "ENFORCED",
+      "outcome": "PARTIAL",
+      "evidence_level": "ENFORCED",
+      "evidence": [
+        {
+          "path": "factory/control_plane/workflow.py",
+          "sha256": "fcaeaf9d687bd109308efd51d6f19f4a8fc2480f1258877d1460b43a5bba4f54",
+          "supports": "Implements blind job, rerun, attestation and reveal ordering in the governed state machine."
+        }
+      ],
+      "limitation": "The control plane enforces the synthetic route, but no promotion-grade central evaluator or observed live blind run exists."
+    },
+    {
+      "control_id": "SCIENCE-03",
+      "critical": true,
+      "minimum_evidence_level": "ENFORCED",
+      "outcome": "PARTIAL",
+      "evidence_level": "ENFORCED",
+      "evidence": [
+        {
+          "path": "factory/control_plane/workflow.py",
+          "sha256": "fcaeaf9d687bd109308efd51d6f19f4a8fc2480f1258877d1460b43a5bba4f54",
+          "supports": "Rejects author reruns and repeated validator identities inside the governed workflow."
+        }
+      ],
+      "limitation": "Structural identity separation exists, but external human identity proof is not connected and zero independent validators are onboarded."
+    },
+    {
+      "control_id": "SCIENCE-04",
+      "critical": true,
+      "minimum_evidence_level": "ENFORCED",
+      "outcome": "MEETS",
+      "evidence_level": "ENFORCED",
+      "evidence": [
+        {
+          "path": "factory/control_plane/workflow.py",
+          "sha256": "fcaeaf9d687bd109308efd51d6f19f4a8fc2480f1258877d1460b43a5bba4f54",
+          "supports": "Routes incompatible reruns to dispute handling and prevents a split result from becoming promotion by majority vote."
+        }
+      ],
+      "limitation": null
+    },
+    {
+      "control_id": "MEMORY-01",
+      "critical": false,
+      "minimum_evidence_level": "ENFORCED",
+      "outcome": "MEETS",
+      "evidence_level": "ENFORCED",
+      "evidence": [
+        {
+          "path": "factory/control_plane/workflow.py",
+          "sha256": "fcaeaf9d687bd109308efd51d6f19f4a8fc2480f1258877d1460b43a5bba4f54",
+          "supports": "Records structured negative classifications, reason codes, hypotheses and public summaries in the append-only lifecycle."
+        }
+      ],
+      "limitation": null
+    },
+    {
+      "control_id": "MEMORY-02",
+      "critical": false,
+      "minimum_evidence_level": "ENFORCED",
+      "outcome": "MEETS",
+      "evidence_level": "ENFORCED",
+      "evidence": [
+        {
+          "path": "factory/shift_reports/shift-report-v1.schema.json",
+          "sha256": "8ab1308aa40174b0425cd0c21a46e34b34e3bf7f2dcdb7d935e47c17498f5a02",
+          "supports": "Closes the shift-report shape around ordered, hash-linked operational memory with zero scientific standing."
+        }
+      ],
+      "limitation": null
+    },
+    {
+      "control_id": "MEMORY-03",
+      "critical": true,
+      "minimum_evidence_level": "ENFORCED",
+      "outcome": "PARTIAL",
+      "evidence_level": "DECLARED",
+      "evidence": [
+        {
+          "path": "CONTRIBUTOR_TERMS.md",
+          "sha256": "d49fb7c67f0d20b8f6e518aff5a4670676048336fad75f58fb4eb4f84e6f9732",
+          "supports": "Requires prompt material corrections and describes quarantine, correction and retraction rather than silent erasure."
+        }
+      ],
+      "limitation": "The correction duty is declared, but one closed append-only correction and retraction schema is not yet enforced across every artifact class."
+    },
+    {
+      "control_id": "MEMORY-04",
+      "critical": true,
+      "minimum_evidence_level": "ENFORCED",
+      "outcome": "MEETS",
+      "evidence_level": "ENFORCED",
+      "evidence": [
+        {
+          "path": "factory/engine/negative_results.py",
+          "sha256": "b60112b5cf7ec0be6c8d23436fcf7b0b0abe3aca41a909ad11623ac16fb53f62",
+          "supports": "Verifies the ledger and exposes only bounded public negative-result fields and evidence hashes."
+        }
+      ],
+      "limitation": null
+    },
+    {
+      "control_id": "RIGHTS-01",
+      "critical": true,
+      "minimum_evidence_level": "ENFORCED",
+      "outcome": "MEETS",
+      "evidence_level": "ENFORCED",
+      "evidence": [
+        {
+          "path": "CONTRIBUTOR_TERMS.md",
+          "sha256": "d49fb7c67f0d20b8f6e518aff5a4670676048336fad75f58fb4eb4f84e6f9732",
+          "supports": "States that contribution does not assign ownership and explains the path-scoped licence boundary."
+        },
+        {
+          "path": "factory/workbench_standard/schema/contribution-ledger-v1.schema.json",
+          "sha256": "62383c63e414db55487d808ed7554afb39a2ab07ff63981717d8e3f099f5bbc0",
+          "supports": "Requires the Factory automatic ownership or prize share to be exactly NONE."
+        }
+      ],
+      "limitation": null
+    },
+    {
+      "control_id": "RIGHTS-02",
+      "critical": true,
+      "minimum_evidence_level": "ENFORCED",
+      "outcome": "MEETS",
+      "evidence_level": "ENFORCED",
+      "evidence": [
+        {
+          "path": "factory/workbench_standard/schema/contribution-ledger-v1.schema.json",
+          "sha256": "62383c63e414db55487d808ed7554afb39a2ab07ff63981717d8e3f099f5bbc0",
+          "supports": "Separates detailed contribution roles, validator-only credit, infrastructure credit and inventorship review."
+        }
+      ],
+      "limitation": null
+    },
+    {
+      "control_id": "RIGHTS-03",
+      "critical": true,
+      "minimum_evidence_level": "DECLARED",
+      "outcome": "MEETS",
+      "evidence_level": "DECLARED",
+      "evidence": [
+        {
+          "path": "IP_POLICY.md",
+          "sha256": "9ea1664ee68238b83137dfa52431311b00edc498d0b41eb42cfd6352b5e6cd57",
+          "supports": "Separates measurement, scientific promotion, ownership, credit, prizes and commercial rights."
+        }
+      ],
+      "limitation": null
+    },
+    {
+      "control_id": "RIGHTS-04",
+      "critical": true,
+      "minimum_evidence_level": "ENFORCED",
+      "outcome": "PARTIAL",
+      "evidence_level": "DECLARED",
+      "evidence": [
+        {
+          "path": "CODE_OF_CONDUCT.md",
+          "sha256": "b7f767ca764b61898eb1a82572d7fc70debe0b704c9ebed90327d85f12bd3789",
+          "supports": "Declares private reporting, conflict disclosure and proportionate enforcement expectations."
+        },
+        {
+          "path": "OPEN_FACTORY_CHARTER.md",
+          "sha256": "7417a953dcbff17af5469ef2ca4cc359567082930222a936d34f79130c788553",
+          "supports": "Grants challenge without retaliation and prevents an interested party from solely deciding their own appeal."
+        }
+      ],
+      "limitation": "The appeal and conflict principles are public, but no independent appeal panel, assignment rule or append-only appeal record is yet operating."
+    },
+    {
+      "control_id": "RESILIENCE-01",
+      "critical": true,
+      "minimum_evidence_level": "ENFORCED",
+      "outcome": "MEETS",
+      "evidence_level": "ENFORCED",
+      "evidence": [
+        {
+          "path": "factory/engine/tests/test_catalogue.py",
+          "sha256": "afd553b8441b0279b985bf66cbd1808f826231183c669e8a4f7c171569d5b19e",
+          "supports": "Tests that every declared hosted provider dependency remains false in clean-clone diagnostics."
+        }
+      ],
+      "limitation": null
+    },
+    {
+      "control_id": "RESILIENCE-02",
+      "critical": true,
+      "minimum_evidence_level": "ENFORCED",
+      "outcome": "MEETS",
+      "evidence_level": "ENFORCED",
+      "evidence": [
+        {
+          "path": "OFFLINE_RECOVERY.md",
+          "sha256": "70ee68ac3d3f8238649afcd7d87aa724f9a3a6076b544cde61146df0cf696775",
+          "supports": "Defines the verified tracked-source archive, Git bundle, manifest and restoration procedure."
+        }
+      ],
+      "limitation": null
+    },
+    {
+      "control_id": "RESILIENCE-03",
+      "critical": true,
+      "minimum_evidence_level": "ENFORCED",
+      "outcome": "MEETS",
+      "evidence_level": "ENFORCED",
+      "evidence": [
+        {
+          "path": "factory/engine/schemas/portable-evidence-package-v1.schema.json",
+          "sha256": "eae38e58c9c6490b61eeea603ef5b4d73fd0de2e7bdcd1ee2441af9c97ac4a06",
+          "supports": "Closes portable construction evidence around exact contracts, commands, environment, files and hashes."
+        }
+      ],
+      "limitation": null
+    },
+    {
+      "control_id": "RESILIENCE-04",
+      "critical": true,
+      "minimum_evidence_level": "OBSERVED",
+      "outcome": "BLOCKED",
+      "evidence_level": "NONE",
+      "evidence": [],
+      "limitation": "No second independent maintainer has yet demonstrated complete recovery and critical administration without the founder."
+    },
+    {
+      "control_id": "GOVERNANCE-01",
+      "critical": true,
+      "minimum_evidence_level": "ENFORCED",
+      "outcome": "MEETS",
+      "evidence_level": "ENFORCED",
+      "evidence": [
+        {
+          "path": "factory/quality/factory-quality-standard-v1.schema.json",
+          "sha256": "6cd50f2c7c80c3d6fddf2485582d3201659cf564f254bfa05bd2b44513ed99b5",
+          "supports": "Defines the closed machine-readable shape and exact domain, control, evidence and profile vocabulary."
+        },
+        {
+          "path": "factory/quality/verify_quality.py",
+          "sha256": "525208b20acad49983494158aa6d23af8482184eae29634509c50356f9caa75e",
+          "supports": "Validates the complete standard and rejects duplicate or misfiled controls."
+        }
+      ],
+      "limitation": null
+    },
+    {
+      "control_id": "GOVERNANCE-02",
+      "critical": true,
+      "minimum_evidence_level": "ENFORCED",
+      "outcome": "MEETS",
+      "evidence_level": "ENFORCED",
+      "evidence": [
+        {
+          "path": "factory/quality/verify_quality.py",
+          "sha256": "525208b20acad49983494158aa6d23af8482184eae29634509c50356f9caa75e",
+          "supports": "Rejects changed standard bytes, changed evidence, unsafe paths, incorrect counts and unsupported certification."
+        },
+        {
+          "path": ".github/workflows/verify.yml",
+          "sha256": "e16b849d3d4dd5a8c3224284e3ea82df17558aa8493446f98fa4db86dac9a651",
+          "supports": "Runs the quality verifier and regression tests as a protected repository check."
+        }
+      ],
+      "limitation": null
+    },
+    {
+      "control_id": "GOVERNANCE-03",
+      "critical": false,
+      "minimum_evidence_level": "ENFORCED",
+      "outcome": "PARTIAL",
+      "evidence_level": "DECLARED",
+      "evidence": [
+        {
+          "path": "CONTRIBUTING.md",
+          "sha256": "b91bb595c2211c47d3f378984c3a6e7117639f1dcf76bf38889bd6501d8185ad",
+          "supports": "Requires material sources, collaborators, institutional interests and AI use to be declared."
+        }
+      ],
+      "limitation": "Contribution declarations cover interests and sources, but no closed project-level ledger yet records material funding, compute grants and provider subsidies."
+    },
+    {
+      "control_id": "GOVERNANCE-04",
+      "critical": true,
+      "minimum_evidence_level": "INDEPENDENTLY_AUDITED",
+      "outcome": "BLOCKED",
+      "evidence_level": "NONE",
+      "evidence": [],
+      "limitation": "No conflict-free external reviewer has audited the complete quality profile or published a verifiable finding."
+    }
+  ]
+}

@@ -7,7 +7,10 @@ result—not the contributor's title.
 For a first construction contribution, use
 [`CONTRIBUTOR_QUICKSTART.md`](CONTRIBUTOR_QUICKSTART.md).
 Participation also requires following
-[`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md).
+[`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md). Your working rights, including
+bounded work, provider choice, pause or exit, retained attribution and
+non-retaliation, are stated in
+[`OPEN_FACTORY_CHARTER.md`](OPEN_FACTORY_CHARTER.md).
 
 ## Choose the correct scope
 
@@ -47,6 +50,9 @@ the two reproductions for a scientific claim.
     [`PATENTS_AND_PUBLIC_DISCLOSURE.md`](PATENTS_AND_PUBLIC_DISCLOSURE.md).
 11. Complete the contribution ledger with roles, artifact references and credit
     boundaries; do not turn validation or infrastructure work into solver credit.
+12. For dispatched agent work, state the accountable human, allowed interfaces,
+    compute or material ceiling and stop condition; an agent may not expand its
+    own authority or scientific standing.
 
 For a scientific claim, code review may merge construction support while the
 claim remains unpromoted. Two independent reproductions are recorded separately.
@@ -71,6 +77,7 @@ Use the narrowest relevant check while developing:
 - station contracts or generated kits: the generator check and workbench
   standard tests;
 - control-plane changes: the control-plane tests;
+- Charter or quality changes: the quality verifier and quality tests;
 - Hangar changes: typecheck, lint and Hangar tests.
 
 The full pull-request gate remains:
@@ -82,6 +89,8 @@ reuse lint
 python -m unittest discover -s .github/scripts/tests -p "test_*.py" -v
 python .github/scripts/verify_asset_provenance.py
 python .github/scripts/verify_public_readiness.py
+python factory/quality/verify_quality.py
+python -m unittest discover -s factory/quality/tests -p "test_*.py" -v
 python factory/workbench_standard/generate_station_kits.py --check
 Push-Location factory
 python shift_reports/validate_shift_reports.py shift_reports/examples

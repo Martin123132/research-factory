@@ -1,0 +1,390 @@
+{
+  "$schema": "factory-quality-standard-v1.schema.json",
+  "standard_version": "1.0.0",
+  "status": "ACTIVE",
+  "principle": "NON_COMPENSATING_MANDATORY_GATES",
+  "evidence_levels": [
+    "NONE",
+    "DECLARED",
+    "ENFORCED",
+    "OBSERVED",
+    "INDEPENDENTLY_AUDITED"
+  ],
+  "outcomes": [
+    "MEETS",
+    "PARTIAL",
+    "BLOCKED"
+  ],
+  "domains": [
+    {
+      "domain_id": "ACCESS",
+      "title": "Open access",
+      "gate": "The core participation route is free, credential-neutral, accessible and privacy-preserving.",
+      "controls": [
+        {
+          "control_id": "ACCESS-01",
+          "title": "Free core participation",
+          "requirement": "Core contracts, verifier source, governance and construction participation require no fee or paid hosted account.",
+          "rationale": "A public scientific commons cannot depend on a contributor's ability to buy access to its essential rules.",
+          "mandatory": true,
+          "critical": true,
+          "minimum_evidence_level": "ENFORCED",
+          "machine_enforcement_expected": true
+        },
+        {
+          "control_id": "ACCESS-02",
+          "title": "Credential-neutral entry",
+          "requirement": "Published evidence and safety gates apply without academic, employment, reputation or affiliation prerequisites.",
+          "rationale": "Credentials can inform context but cannot substitute for reproducible evidence or exclude capable contributors.",
+          "mandatory": true,
+          "critical": true,
+          "minimum_evidence_level": "ENFORCED",
+          "machine_enforcement_expected": true
+        },
+        {
+          "control_id": "ACCESS-03",
+          "title": "Accessible participation routes",
+          "requirement": "Core instructions, interfaces and appeal routes provide tested accessibility and a documented accommodation path.",
+          "rationale": "An open licence alone does not create meaningful access when people cannot operate the interface or obtain instructions.",
+          "mandatory": true,
+          "critical": false,
+          "minimum_evidence_level": "ENFORCED",
+          "machine_enforcement_expected": true
+        },
+        {
+          "control_id": "ACCESS-04",
+          "title": "Privacy-minimising public boundary",
+          "requirement": "Public records exclude credentials, private identity evidence, hidden answers, personal data and confidential reports.",
+          "rationale": "Reproducibility needs accountable provenance without turning scientific participation into unnecessary surveillance or disclosure.",
+          "mandatory": true,
+          "critical": true,
+          "minimum_evidence_level": "ENFORCED",
+          "machine_enforcement_expected": true
+        }
+      ]
+    },
+    {
+      "domain_id": "WORK",
+      "title": "Working conditions",
+      "gate": "Human and agent work is bounded, voluntary, stoppable and never judged by raw output volume.",
+      "controls": [
+        {
+          "control_id": "WORK-01",
+          "title": "Bounded work orders",
+          "requirement": "Every dispatched job states scope, duration, compute or material ceiling, hazards, stop conditions and evidence class before work.",
+          "rationale": "Undefined work encourages runaway spending, unsafe improvisation and misleading claims about what a shift attempted.",
+          "mandatory": true,
+          "critical": true,
+          "minimum_evidence_level": "ENFORCED",
+          "machine_enforcement_expected": true
+        },
+        {
+          "control_id": "WORK-02",
+          "title": "Pause and exit without retaliation",
+          "requirement": "A person may pause, decline or leave work without losing earned attribution or being penalised in scientific scoring or access.",
+          "rationale": "Voluntary participation and honest stopping are prerequisites for safe work and trustworthy negative-result reporting.",
+          "mandatory": true,
+          "critical": true,
+          "minimum_evidence_level": "DECLARED",
+          "machine_enforcement_expected": false
+        },
+        {
+          "control_id": "WORK-03",
+          "title": "Human-controlled agent authority",
+          "requirement": "Agent workloads have a named human, allowed interfaces, resource budget and termination rule that the agent cannot expand itself.",
+          "rationale": "Accountability disappears when an automated worker can silently broaden its permissions, spending, duration or research claim.",
+          "mandatory": true,
+          "critical": true,
+          "minimum_evidence_level": "ENFORCED",
+          "machine_enforcement_expected": true
+        },
+        {
+          "control_id": "WORK-04",
+          "title": "No volume-only ranking",
+          "requirement": "Attempt count, compute consumption, shift length and constant availability are not used as substitutes for evidence quality.",
+          "rationale": "Volume-only incentives reward noise, repeated search, exhaustion and expensive theatre rather than useful scientific work.",
+          "mandatory": true,
+          "critical": false,
+          "minimum_evidence_level": "DECLARED",
+          "machine_enforcement_expected": false
+        }
+      ]
+    },
+    {
+      "domain_id": "SCIENCE",
+      "title": "Scientific integrity",
+      "gate": "Claims face predeclared gates, blind evaluation, independent humans and non-majoritarian dispute handling.",
+      "controls": [
+        {
+          "control_id": "SCIENCE-01",
+          "title": "Predeclared gates and tolerances",
+          "requirement": "Inputs, output rules, verifier, hard gates, metrics, tolerances and practical guardrails are frozen before evaluation.",
+          "rationale": "A result is not independently testable when the target or acceptance rule can move after its answer is known.",
+          "mandatory": true,
+          "critical": true,
+          "minimum_evidence_level": "ENFORCED",
+          "machine_enforcement_expected": true
+        },
+        {
+          "control_id": "SCIENCE-02",
+          "title": "Blind commitment before reveal",
+          "requirement": "Validator conclusions and evidence commitments are fixed before the claimed answer or bounded evaluator result is revealed.",
+          "rationale": "Blind commitment reduces conscious and unconscious steering toward the author's expected answer.",
+          "mandatory": true,
+          "critical": true,
+          "minimum_evidence_level": "ENFORCED",
+          "machine_enforcement_expected": true
+        },
+        {
+          "control_id": "SCIENCE-03",
+          "title": "Two other accountable humans",
+          "requirement": "Promotion requires two distinct humans other than the author, and one human cannot occupy both validator identities.",
+          "rationale": "Two agents, accounts or reruns controlled by one person do not provide independent reproduction.",
+          "mandatory": true,
+          "critical": true,
+          "minimum_evidence_level": "ENFORCED",
+          "machine_enforcement_expected": true
+        },
+        {
+          "control_id": "SCIENCE-04",
+          "title": "Diagnosis instead of majority vote",
+          "requirement": "A split or incompatible reproduction opens recorded divergence diagnosis and cannot promote solely through a deciding vote.",
+          "rationale": "Scientific disagreement can reveal different assumptions, environments or valid regimes that a majority result would conceal.",
+          "mandatory": true,
+          "critical": true,
+          "minimum_evidence_level": "ENFORCED",
+          "machine_enforcement_expected": true
+        }
+      ]
+    },
+    {
+      "domain_id": "MEMORY",
+      "title": "Useful memory",
+      "gate": "Progress, failure, disputes and corrections remain traceable without exposing protected evidence.",
+      "controls": [
+        {
+          "control_id": "MEMORY-01",
+          "title": "Negative results are first-class",
+          "requirement": "No-gain, rejected, blocked and unrunnable work can be retained with structured reasons and revisit conditions.",
+          "rationale": "Preserving well-bounded failure prevents people and agents from repeatedly spending resources in the same search region.",
+          "mandatory": true,
+          "critical": false,
+          "minimum_evidence_level": "ENFORCED",
+          "machine_enforcement_expected": true
+        },
+        {
+          "control_id": "MEMORY-02",
+          "title": "Append-only shift memory",
+          "requirement": "Operational handoffs form an immutable ordered record and cannot silently rewrite earlier work or manufacture scientific credit.",
+          "rationale": "Future workers need a trustworthy map of what happened even when a shift produced no promotion-grade result.",
+          "mandatory": true,
+          "critical": false,
+          "minimum_evidence_level": "ENFORCED",
+          "machine_enforcement_expected": true
+        },
+        {
+          "control_id": "MEMORY-03",
+          "title": "Traceable corrections and retractions",
+          "requirement": "Material errors, rights corrections, withdrawn claims and changed credit produce linked append-only corrections rather than silent replacement.",
+          "rationale": "A scientific memory is unreliable when embarrassing or inconvenient history can disappear without explanation.",
+          "mandatory": true,
+          "critical": true,
+          "minimum_evidence_level": "ENFORCED",
+          "machine_enforcement_expected": true
+        },
+        {
+          "control_id": "MEMORY-04",
+          "title": "Search without protected disclosure",
+          "requirement": "Public discovery exposes bounded summaries, classifications and content hashes while withholding private evidence and hidden answers.",
+          "rationale": "Useful shared memory must not become a side channel for benchmark leakage, identity exposure or confidential content.",
+          "mandatory": true,
+          "critical": true,
+          "minimum_evidence_level": "ENFORCED",
+          "machine_enforcement_expected": true
+        }
+      ]
+    },
+    {
+      "domain_id": "RIGHTS",
+      "title": "Rights and credit",
+      "gate": "Ownership stays with lawful rightsholders, credit follows roles and commercial interests cannot alter scientific truth.",
+      "controls": [
+        {
+          "control_id": "RIGHTS-01",
+          "title": "No ownership assignment",
+          "requirement": "Contribution does not require assignment of copyright, invention or other lawful ownership to the factory operator.",
+          "rationale": "A shared evidence system need not confiscate the work it helps people record and reproduce.",
+          "mandatory": true,
+          "critical": true,
+          "minimum_evidence_level": "ENFORCED",
+          "machine_enforcement_expected": true
+        },
+        {
+          "control_id": "RIGHTS-02",
+          "title": "Role-specific credit",
+          "requirement": "Authorship, invention, validation, software, data, review and infrastructure contributions are recorded without conflating their credit.",
+          "rationale": "Different contributions matter, but validation or platform ownership does not make someone the solver or inventor.",
+          "mandatory": true,
+          "critical": true,
+          "minimum_evidence_level": "ENFORCED",
+          "machine_enforcement_expected": true
+        },
+        {
+          "control_id": "RIGHTS-03",
+          "title": "Commercial neutrality of evidence",
+          "requirement": "Patents, licences, prizes, sponsorship and adoption of voluntary pledges cannot change a measurement or scientific gate.",
+          "rationale": "Scientific standing must remain separate from bargaining power, funding relationships and commercial strategy.",
+          "mandatory": true,
+          "critical": true,
+          "minimum_evidence_level": "DECLARED",
+          "machine_enforcement_expected": false
+        },
+        {
+          "control_id": "RIGHTS-04",
+          "title": "Conflict-aware appeal route",
+          "requirement": "Credit, conduct, rights and technical decisions have a recorded appeal path that prevents sole self-review by an interested decision-maker.",
+          "rationale": "An appeal is not meaningful when the original interested party has exclusive authority over its outcome.",
+          "mandatory": true,
+          "critical": true,
+          "minimum_evidence_level": "ENFORCED",
+          "machine_enforcement_expected": true
+        }
+      ]
+    },
+    {
+      "domain_id": "RESILIENCE",
+      "title": "Resilience and portability",
+      "gate": "The factory and its evidence survive provider, website, repository and key-person failure.",
+      "controls": [
+        {
+          "control_id": "RESILIENCE-01",
+          "title": "Provider-neutral core",
+          "requirement": "Core discovery, contracts and verification run without one AI provider, hosted website or proprietary orchestration service.",
+          "rationale": "Scientific infrastructure should not disappear or change its evidence rules when one subscription or vendor is unavailable.",
+          "mandatory": true,
+          "critical": true,
+          "minimum_evidence_level": "ENFORCED",
+          "machine_enforcement_expected": true
+        },
+        {
+          "control_id": "RESILIENCE-02",
+          "title": "Verified offline recovery",
+          "requirement": "A documented package preserves tracked source and reachable history and is rebuilt and verified from an exact revision.",
+          "rationale": "A backup claim is useful only when its contents, history and restoration procedure have actually been verified.",
+          "mandatory": true,
+          "critical": true,
+          "minimum_evidence_level": "ENFORCED",
+          "machine_enforcement_expected": true
+        },
+        {
+          "control_id": "RESILIENCE-03",
+          "title": "Portable hash-bound evidence",
+          "requirement": "Construction evidence can be packaged and verified with exact files, contracts, commands, environments and content commitments.",
+          "rationale": "A result tied to one mutable workspace or opaque service cannot be independently inspected or handed to another worker.",
+          "mandatory": true,
+          "critical": true,
+          "minimum_evidence_level": "ENFORCED",
+          "machine_enforcement_expected": true
+        },
+        {
+          "control_id": "RESILIENCE-04",
+          "title": "Key-person recovery",
+          "requirement": "At least two independent maintainers have demonstrated recovery and critical administration without the founder or sole operator.",
+          "rationale": "Open source files do not remove a bus factor when knowledge, credentials and operational authority remain concentrated in one person.",
+          "mandatory": true,
+          "critical": true,
+          "minimum_evidence_level": "OBSERVED",
+          "machine_enforcement_expected": false
+        }
+      ]
+    },
+    {
+      "domain_id": "GOVERNANCE",
+      "title": "Transparent governance",
+      "gate": "Quality claims are public, evidence-bound, conflict-aware and independently auditable.",
+      "controls": [
+        {
+          "control_id": "GOVERNANCE-01",
+          "title": "Machine-readable public controls",
+          "requirement": "The complete active quality control catalogue is public, versioned, closed-schema and independently executable.",
+          "rationale": "Vague values cannot be compared, tested or protected from quiet reinterpretation after a dispute.",
+          "mandatory": true,
+          "critical": true,
+          "minimum_evidence_level": "ENFORCED",
+          "machine_enforcement_expected": true
+        },
+        {
+          "control_id": "GOVERNANCE-02",
+          "title": "Evidence-bound self-assessment",
+          "requirement": "Every current quality result binds the exact standard and cited repository evidence with cryptographic hashes.",
+          "rationale": "A self-assessment that survives changes to its supposed evidence is marketing copy rather than an auditable claim.",
+          "mandatory": true,
+          "critical": true,
+          "minimum_evidence_level": "ENFORCED",
+          "machine_enforcement_expected": true
+        },
+        {
+          "control_id": "GOVERNANCE-03",
+          "title": "Material support disclosure",
+          "requirement": "Material funding, compute grants, provider subsidies and decision conflicts are disclosed at the affected factory or workbench scope.",
+          "rationale": "Readers and validators need to know when resources or relationships could influence priorities, access or interpretation.",
+          "mandatory": true,
+          "critical": false,
+          "minimum_evidence_level": "ENFORCED",
+          "machine_enforcement_expected": true
+        },
+        {
+          "control_id": "GOVERNANCE-04",
+          "title": "Independent quality audit",
+          "requirement": "A conflict-free external reviewer checks the complete quality profile, evidence hashes, exceptions and certification language.",
+          "rationale": "The highest trust claim cannot be granted solely by the people who designed, operate and benefit from the factory.",
+          "mandatory": true,
+          "critical": true,
+          "minimum_evidence_level": "INDEPENDENTLY_AUDITED",
+          "machine_enforcement_expected": false
+        }
+      ]
+    }
+  ],
+  "certification_profiles": [
+    {
+      "profile_id": "FOUNDATION_ONLY",
+      "is_certification": false,
+      "description": "Policies and construction mechanisms exist, but gaps or missing live operation prevent certification.",
+      "prerequisites": [
+        "The complete assessment verifies against the active standard.",
+        "Operational, scientific and audit certification flags remain false."
+      ]
+    },
+    {
+      "profile_id": "OPERATIONALLY_CONFORMANT",
+      "is_certification": true,
+      "description": "Every mandatory control meets its minimum and required operating mechanisms have retained observed evidence.",
+      "prerequisites": [
+        "Every mandatory control outcome is MEETS.",
+        "No critical exception or unresolved safety boundary is open.",
+        "Required operational controls have evidence level OBSERVED or higher."
+      ]
+    },
+    {
+      "profile_id": "SCIENTIFICALLY_DEMONSTRATED",
+      "is_certification": true,
+      "description": "Operational conformance has been demonstrated by at least one complete live blind two-human reproduction route.",
+      "prerequisites": [
+        "The subject is OPERATIONALLY_CONFORMANT.",
+        "At least one station is explicitly authorised for live research.",
+        "A live claim completed two independent human reproductions and retained its evidence route."
+      ]
+    },
+    {
+      "profile_id": "INDEPENDENTLY_AUDITED",
+      "is_certification": true,
+      "description": "A conflict-free external reviewer has verified the complete scientifically demonstrated quality profile.",
+      "prerequisites": [
+        "The subject is SCIENTIFICALLY_DEMONSTRATED.",
+        "GOVERNANCE-04 is MEETS at INDEPENDENTLY_AUDITED evidence level.",
+        "The audit scope, reviewer identity, evidence and exceptions are public and verifiable."
+      ]
+    }
+  ]
+}
