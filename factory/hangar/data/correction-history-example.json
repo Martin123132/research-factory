@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "fixture": "SYNTHETIC_COMMISSIONING_ONLY",
+  "target": {
+    "artifactClass": "SHIFT_REPORT",
+    "artifactId": "shift-report:synthetic-false-calibration",
+    "artifactSha256": "1d5e93dfe8b518744abfe74c636d1bc4fc8c92a21247ac2eec0642535cb8a752"
+  },
+  "originalStanding": "CURRENT",
+  "currentStanding": "RETRACTED",
+  "originalBytesPreserved": true,
+  "records": [
+    {
+      "sequence": 1,
+      "correctionId": "correction:synthetic-corrigendum",
+      "action": "CORRIGENDUM",
+      "standingBefore": "CURRENT",
+      "standingAfter": "CURRENT_WITH_CORRECTION",
+      "recordSha256": "c4b7597c44091ccd6130750057b61857c9ae7510fc110a76720aa1164846b36a",
+      "recordedAt": "2026-08-06T10:00:00Z",
+      "publicSummary": "Correct the false synthetic calibration statement without replacing its bytes."
+    },
+    {
+      "sequence": 2,
+      "correctionId": "correction:synthetic-retraction",
+      "action": "RETRACTION",
+      "standingBefore": "CURRENT_WITH_CORRECTION",
+      "standingAfter": "RETRACTED",
+      "recordSha256": "27ab1a16dc035c6306c342d7cd4633f2a0350875b2b06390f279637312e06e0e",
+      "recordedAt": "2026-08-06T11:00:00Z",
+      "publicSummary": "Retract the synthetic article while retaining the original and corrigendum."
+    }
+  ],
+  "boundary": {
+    "source": "VERIFIED_STATIC_PROJECTION_OF_LOCAL_SYNTHETIC_DRILL",
+    "scientificEvidence": false,
+    "countsAsIndependentReproduction": false,
+    "eligibleForPromotion": false
+  }
+}

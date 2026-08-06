@@ -4,8 +4,8 @@
   "valid": true,
   "standard_version": "1.0.0",
   "standard_sha256": "fd0e51f61c87db90ebff64e33b7f262e51c6c88c351e0f9b3d0c40d25258f4f8",
-  "assessment_id": "RFQ-2026-08-06-INITIAL",
-  "baseline_revision": "1eaa34611ef8655d2b64ea236ace6fde807ad72a",
+  "assessment_id": "RFQ-2026-08-06-CORRECTIONS",
+  "baseline_revision": "144189d100b2382d25cf7b53e8cc4a6a284a7a91",
   "profile": "FOUNDATION_ONLY",
   "certifications": {
     "operationally_conformant": false,
@@ -14,8 +14,8 @@
   },
   "summary": {
     "controls": 28,
-    "meets": 18,
-    "partial": 8,
+    "meets": 19,
+    "partial": 7,
     "blocked": 2
   },
   "domains": [
@@ -43,8 +43,8 @@
     {
       "domain_id": "MEMORY",
       "title": "Useful memory",
-      "meets": 3,
-      "partial": 1,
+      "meets": 4,
+      "partial": 0,
       "blocked": 0
     },
     {

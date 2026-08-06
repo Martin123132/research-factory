@@ -101,6 +101,27 @@ test("the tracked migration enforces the non-scientific and append-only boundary
   assert.doesNotMatch(shiftSql, /DROP TABLE|RESULT_SUBMITTED|RERUN_SUBMITTED|PROMOTED/);
 });
 
+test("the correction history projection cannot disguise its synthetic boundary", async () => {
+  const value = JSON.parse(
+    await readFile(new URL("../data/correction-history-example.json", import.meta.url), "utf8"),
+  );
+  assert.equal(value.fixture, "SYNTHETIC_COMMISSIONING_ONLY");
+  assert.equal(value.originalStanding, "CURRENT");
+  assert.equal(value.currentStanding, "RETRACTED");
+  assert.equal(value.originalBytesPreserved, true);
+  assert.deepEqual(
+    value.records.map((record) => [record.action, record.standingBefore, record.standingAfter]),
+    [
+      ["CORRIGENDUM", "CURRENT", "CURRENT_WITH_CORRECTION"],
+      ["RETRACTION", "CURRENT_WITH_CORRECTION", "RETRACTED"],
+    ],
+  );
+  assert.ok(value.records.every((record) => /^[0-9a-f]{64}$/.test(record.recordSha256)));
+  assert.equal(value.boundary.scientificEvidence, false);
+  assert.equal(value.boundary.countsAsIndependentReproduction, false);
+  assert.equal(value.boundary.eligibleForPromotion, false);
+});
+
 test("shift reports append a hash chain without moving or closing the work order", async () => {
   const createdResponse = await post("/api/work-orders", {
     workbenchId: 1,

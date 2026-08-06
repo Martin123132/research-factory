@@ -1,0 +1,306 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Martin123132/research-factory/blob/main/factory/corrections/correction-record-v1.schema.json",
+  "title": "Research Factory append-only artifact correction record v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "sequence",
+    "correction_id",
+    "recorded_at",
+    "actor",
+    "authority",
+    "target",
+    "action",
+    "standing_before",
+    "standing_after",
+    "replacement",
+    "reason",
+    "public_summary",
+    "boundary",
+    "previous_record_sha256",
+    "record_sha256"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "sequence": { "type": "integer", "minimum": 1 },
+    "correction_id": { "$ref": "#/$defs/id" },
+    "recorded_at": { "$ref": "#/$defs/utc_timestamp" },
+    "actor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operator_id",
+        "display_name",
+        "identity_assurance",
+        "identity_warning"
+      ],
+      "properties": {
+        "operator_id": { "$ref": "#/$defs/id" },
+        "display_name": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "identity_assurance": {
+          "enum": [
+            "SELF_ASSERTED_LOCAL",
+            "PLATFORM_VERIFIED",
+            "EXTERNALLY_ATTESTED"
+          ]
+        },
+        "identity_warning": { "const": "IDENTITY_RECORD_IS_NOT_PROOF_OF_AUTHORITY" }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "basis",
+        "scope",
+        "conflict_declaration",
+        "authorization_evidence_sha256"
+      ],
+      "properties": {
+        "basis": {
+          "enum": [
+            "AUTHOR",
+            "MAINTAINER",
+            "RIGHTS_HOLDER",
+            "REVIEW_PANEL",
+            "AUTOMATED_INTEGRITY_CHECK"
+          ]
+        },
+        "scope": { "$ref": "#/$defs/short_text" },
+        "conflict_declaration": { "$ref": "#/$defs/short_text" },
+        "authorization_evidence_sha256": {
+          "type": "array",
+          "maxItems": 20,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/sha256" }
+        }
+      }
+    },
+    "target": { "$ref": "#/$defs/artifact_reference" },
+    "action": {
+      "enum": [
+        "CORRIGENDUM",
+        "RIGHTS_CORRECTION",
+        "SUPERSESSION",
+        "INVALIDATION",
+        "RETRACTION"
+      ]
+    },
+    "standing_before": {
+      "enum": ["CURRENT", "CURRENT_WITH_CORRECTION"]
+    },
+    "standing_after": {
+      "enum": [
+        "CURRENT_WITH_CORRECTION",
+        "SUPERSEDED",
+        "INVALIDATED",
+        "RETRACTED"
+      ]
+    },
+    "replacement": {
+      "oneOf": [
+        { "$ref": "#/$defs/artifact_reference" },
+        { "type": "null" }
+      ]
+    },
+    "reason": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "summary", "evidence_references"],
+      "properties": {
+        "code": {
+          "enum": [
+            "MATERIAL_ERROR",
+            "RIGHTS_ERROR",
+            "WITHDRAWN_CLAIM",
+            "CREDIT_CHANGE",
+            "PROVENANCE_ERROR",
+            "DUPLICATE_ARTIFACT",
+            "SUPERSEDED_METHOD",
+            "INTEGRITY_FAILURE",
+            "OTHER"
+          ]
+        },
+        "summary": { "type": "string", "minLength": 8, "maxLength": 2000 },
+        "evidence_references": {
+          "type": "array",
+          "maxItems": 20,
+          "items": { "$ref": "#/$defs/artifact_reference" }
+        }
+      }
+    },
+    "public_summary": { "type": "string", "minLength": 8, "maxLength": 1000 },
+    "boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "append_only",
+        "original_bytes_preserved",
+        "scientific_evidence",
+        "counts_as_independent_reproduction",
+        "eligible_for_promotion",
+        "restores_terminal_standing"
+      ],
+      "properties": {
+        "scope": { "const": "PUBLIC_ARTIFACT_STANDING_ONLY" },
+        "append_only": { "const": true },
+        "original_bytes_preserved": { "const": true },
+        "scientific_evidence": { "const": false },
+        "counts_as_independent_reproduction": { "const": false },
+        "eligible_for_promotion": { "const": false },
+        "restores_terminal_standing": { "const": false }
+      }
+    },
+    "previous_record_sha256": { "$ref": "#/$defs/sha256" },
+    "record_sha256": { "$ref": "#/$defs/sha256" }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "action": {
+            "enum": ["CORRIGENDUM", "RIGHTS_CORRECTION"]
+          }
+        },
+        "required": ["action"]
+      },
+      "then": {
+        "properties": {
+          "standing_after": { "const": "CURRENT_WITH_CORRECTION" },
+          "replacement": { "$ref": "#/$defs/artifact_reference" }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "action": { "const": "SUPERSESSION" } },
+        "required": ["action"]
+      },
+      "then": {
+        "properties": {
+          "standing_after": { "const": "SUPERSEDED" },
+          "replacement": { "$ref": "#/$defs/artifact_reference" }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "action": { "const": "INVALIDATION" } },
+        "required": ["action"]
+      },
+      "then": {
+        "properties": {
+          "standing_after": { "const": "INVALIDATED" },
+          "replacement": { "type": "null" }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "action": { "const": "RETRACTION" } },
+        "required": ["action"]
+      },
+      "then": {
+        "properties": {
+          "standing_after": { "const": "RETRACTED" },
+          "replacement": { "type": "null" }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "action": { "const": "RIGHTS_CORRECTION" } },
+        "required": ["action"]
+      },
+      "then": {
+        "properties": {
+          "reason": {
+            "properties": {
+              "code": { "enum": ["RIGHTS_ERROR", "CREDIT_CHANGE"] }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:@/-]{2,159}$"
+    },
+    "utc_timestamp": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?Z$"
+    },
+    "short_text": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 1000
+    },
+    "artifact_reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_class",
+        "artifact_id",
+        "artifact_sha256",
+        "locator_kind",
+        "locator",
+        "media_type",
+        "visibility"
+      ],
+      "properties": {
+        "artifact_class": {
+          "enum": [
+            "CONTROL_PLANE_EVENT",
+            "SHIFT_REPORT",
+            "PORTABLE_EVIDENCE_PACKAGE",
+            "STATION_CONTRACT",
+            "CONTRIBUTION_LEDGER",
+            "RIGHTS_AND_IP_RECORD",
+            "QUALITY_ASSESSMENT",
+            "CORRECTION_RECORD",
+            "PUBLIC_ARTIFACT"
+          ]
+        },
+        "artifact_id": { "$ref": "#/$defs/id" },
+        "artifact_sha256": { "$ref": "#/$defs/sha256" },
+        "locator_kind": { "enum": ["REPOSITORY_PATH", "PUBLIC_URL"] },
+        "locator": { "type": "string", "minLength": 1, "maxLength": 1000 },
+        "media_type": {
+          "type": "string",
+          "pattern": "^[a-z0-9.+-]+/[A-Za-z0-9.+-]+$",
+          "maxLength": 100
+        },
+        "visibility": { "const": "PUBLIC" }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "locator_kind": { "const": "REPOSITORY_PATH" } },
+            "required": ["locator_kind"]
+          },
+          "then": {
+            "properties": {
+              "locator": {
+                "pattern": "^(?!/)(?![A-Za-z]:)(?!.*\\\\)(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*//)[^\\r\\n]+$"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "locator": { "pattern": "^https://[^\\s]+$" }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

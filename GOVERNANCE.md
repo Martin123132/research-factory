@@ -42,6 +42,10 @@ another.
     compute use and shift length cannot substitute for evidence quality.
 12. Factory-quality claims must cite the exact standard and hash-bound evidence;
     self-assessment can never call itself an independent audit.
+13. A material correction changes current standing only through the universal
+    append-only correction record. Original bytes and earlier standing remain
+    visible; terminal retractions, invalidations and supersessions cannot be
+    silently restored.
 
 ## Repository authority
 

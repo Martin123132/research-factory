@@ -120,7 +120,9 @@ size and social attention are deliberately not quality controls.
 
 The initial assessment is `FOUNDATION_ONLY`. It records strong machine-enforced
 construction in several domains while publishing the unfinished worker-budget,
-appeal, correction, sponsorship, bus-factor and independent-audit controls.
+appeal, sponsorship, bus-factor and independent-audit controls. Its universal
+correction and retraction record is closed and synthetically enforced, but no
+live correction has yet been required.
 Blind and two-human rules exist structurally, but the Factory has not onboarded
 the required independent people or authorised a live station.
 

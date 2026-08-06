@@ -1,0 +1,40 @@
+{
+  "correction_id": "correction:synthetic-example",
+  "actor": {
+    "operator_id": "human:example-operator",
+    "display_name": "Example Operator",
+    "identity_assurance": "SELF_ASSERTED_LOCAL",
+    "identity_warning": "IDENTITY_RECORD_IS_NOT_PROOF_OF_AUTHORITY"
+  },
+  "authority": {
+    "basis": "AUTHOR",
+    "scope": "Visible synthetic construction example only.",
+    "conflict_declaration": "The example operator is correcting their own synthetic artifact.",
+    "authorization_evidence_sha256": []
+  },
+  "target": {
+    "artifact_class": "PUBLIC_ARTIFACT",
+    "artifact_id": "artifact:synthetic-original",
+    "artifact_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "locator_kind": "PUBLIC_URL",
+    "locator": "https://example.invalid/original.json",
+    "media_type": "application/json",
+    "visibility": "PUBLIC"
+  },
+  "action": "CORRIGENDUM",
+  "replacement": {
+    "artifact_class": "PUBLIC_ARTIFACT",
+    "artifact_id": "artifact:synthetic-corrected",
+    "artifact_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "locator_kind": "PUBLIC_URL",
+    "locator": "https://example.invalid/corrected.json",
+    "media_type": "application/json",
+    "visibility": "PUBLIC"
+  },
+  "reason": {
+    "code": "MATERIAL_ERROR",
+    "summary": "A visible known-answer fixture shows that the original synthetic statement was wrong.",
+    "evidence_references": []
+  },
+  "public_summary": "Correct the synthetic statement without deleting or replacing the original bytes."
+}

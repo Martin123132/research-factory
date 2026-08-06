@@ -75,8 +75,8 @@ factory\.venv\Scripts\python.exe factory\enginectl.py quality
 factory\.venv\Scripts\python.exe factory\enginectl.py quality --json
 ```
 
-The current result is `FOUNDATION_ONLY`: 18 controls meet their declared
-minimum, eight remain partial and two are blocked. Operational, scientific and
+The current result is `FOUNDATION_ONLY`: 19 controls meet their declared
+minimum, seven remain partial and two are blocked. Operational, scientific and
 independent-audit certification remain false. Passing the command verifies that
 this self-assessment is internally honest; it does not certify the Factory.
 
@@ -100,6 +100,32 @@ work unit, author, classification, reason, hypothesis or summary. Results are
 newest first and expose content hashes rather than private evidence contents.
 The command verifies the ledger hash chain before searching it and performs no
 writes.
+
+## Correct public artifacts without erasing history
+
+`correction-append` writes a universal correction record to a separate public
+hash chain. Its target is an immutable artifact ID and SHA-256, not a mutable
+database row. Corrigenda, rights corrections and supersessions must name
+different replacement bytes. Invalidations and retractions cannot carry a
+replacement, and terminal standing cannot be restored in v1.
+
+```powershell
+factory\.venv\Scripts\python.exe factory\enginectl.py correction-append `
+  --ledger factory\state\public\corrections.jsonl `
+  --draft factory\corrections\correction-draft.example.json
+
+factory\.venv\Scripts\python.exe factory\enginectl.py correction-verify `
+  --ledger factory\state\public\corrections.jsonl
+
+factory\.venv\Scripts\python.exe factory\enginectl.py correction-history `
+  --ledger factory\state\public\corrections.jsonl
+```
+
+The history view reports the standing recorded at every step and the current
+standing derived from the whole verified chain. Original bytes are never
+rewritten. Identity and authority fields are accountable assertions, not proof
+that an actor is independent or legally entitled to act. Correction records
+carry zero scientific standing and cannot promote an artifact.
 
 ## Portable construction packages
 

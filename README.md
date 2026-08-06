@@ -29,6 +29,7 @@ private identity records remain outside Git.
 - 3 runnable entry gates
 - 0 live-research stations
 - 1 closed append-only shift-report contract with 4 valid operational outcomes
+- 1 universal append-only correction contract with 5 typed standing changes
 - 1 machine-verifiable 28-control quality profile: `FOUNDATION_ONLY`, not certified
 
 The first reusable families are exact public-corpus compression and symmetric
@@ -55,6 +56,9 @@ distance convention.
 - [`factory/shift_reports/`](factory/shift_reports/) — immutable operational
   memory for progress, no-gain, blocked and unrunnable shifts; zero scientific
   standing.
+- [`factory/corrections/`](factory/corrections/) — universal hash-linked
+  corrigenda, rights corrections, supersessions, invalidations and retractions;
+  original bytes remain visible while current standing is derived.
 - [`factory/reference_provenance/`](factory/reference_provenance/) — dated,
   hash-bound source and terms checks without committing upstream datasets.
 - [`factory/quality/`](factory/quality/) — the versioned quality controls,
@@ -78,6 +82,7 @@ python .github/scripts/verify_asset_provenance.py
 python .github/scripts/verify_public_readiness.py
 python factory/shift_reports/validate_shift_reports.py factory/shift_reports/examples
 python -m unittest discover -s factory/shift_reports/tests -p "test_*.py" -v
+python -m unittest discover -s factory/corrections/tests -t factory -p "test_*.py" -v
 python factory/reference_provenance/verify_reference_provenance.py
 python -m unittest discover -s factory/reference_provenance/tests -p "test_*.py" -v
 python factory/quality/verify_quality.py

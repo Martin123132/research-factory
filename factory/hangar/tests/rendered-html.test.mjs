@@ -114,13 +114,29 @@ test("renders worker rights and the honest non-compensating quality profile", as
   assert.match(html, /Pause without penalty/);
   assert.match(html, /No overall score to game/);
   assert.match(html, /Foundation only/i);
-  assert.match(html, /18<\/dd>/);
-  assert.match(html, /8<\/dd>/);
+  assert.match(html, /19<\/dd>/);
+  assert.match(html, /7<\/dd>/);
   assert.match(html, /2<\/dd>/);
   assert.match(html, /Certifications<\/dt><dd>0<\/dd>/);
   assert.match(html, /Live stations<\/dt><dd>0<\/dd>/);
   assert.match(html, /Independent validators<\/dt><dd>0<\/dd>/);
   assert.match(html, /Do not trust this page\./);
+});
+
+test("renders original correction history beside the derived current standing", async () => {
+  const response = await fetch(`${baseUrl}/history`, {
+    headers: { accept: "text/html" },
+  });
+
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /Original history and current standing coexist/);
+  assert.match(html, /CURRENT_WITH_CORRECTION/);
+  assert.match(html, /RETRACTED/);
+  assert.match(html, /correction:synthetic-corrigendum/);
+  assert.match(html, /correction:synthetic-retraction/);
+  assert.match(html, /original bytes and every intermediate conclusion stay visible/i);
+  assert.match(html, /read-only synthetic projection/i);
 });
 
 test("renders the synthetic workflow tutorial with captions and a transcript", async () => {
