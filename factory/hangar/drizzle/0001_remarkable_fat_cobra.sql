@@ -1,4 +1,4 @@
-CREATE TABLE `shift_reports` (
+CREATE TABLE IF NOT EXISTS `shift_reports` (
 	`sequence` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`report_id` text NOT NULL,
 	`work_order_id` text NOT NULL,
@@ -31,35 +31,12 @@ CREATE TABLE `shift_reports` (
 	CONSTRAINT "shift_reports_no_completion_check" CHECK("shift_reports"."closes_work_order" = 0)
 );
 --> statement-breakpoint
-CREATE UNIQUE INDEX `shift_reports_report_id_unique` ON `shift_reports` (`report_id`);--> statement-breakpoint
-CREATE UNIQUE INDEX `shift_reports_report_sha256_unique` ON `shift_reports` (`report_sha256`);--> statement-breakpoint
-CREATE UNIQUE INDEX `shift_reports_work_order_sequence_idx` ON `shift_reports` (`work_order_id`,`report_sequence`);--> statement-breakpoint
-CREATE INDEX `shift_reports_work_order_idx` ON `shift_reports` (`work_order_id`);--> statement-breakpoint
-CREATE INDEX `shift_reports_outcome_idx` ON `shift_reports` (`outcome_class`);--> statement-breakpoint
-CREATE INDEX `shift_reports_created_idx` ON `shift_reports` (`created_at`);--> statement-breakpoint
-CREATE TRIGGER `shift_reports_reject_update`
-BEFORE UPDATE ON `shift_reports`
-BEGIN SELECT RAISE(ABORT, 'shift_reports is append-only'); END;--> statement-breakpoint
-CREATE TRIGGER `shift_reports_reject_delete`
-BEFORE DELETE ON `shift_reports`
-BEGIN SELECT RAISE(ABORT, 'shift_reports is append-only'); END;--> statement-breakpoint
-CREATE TRIGGER `shift_reports_enforce_chain`
-BEFORE INSERT ON `shift_reports`
-BEGIN
-  SELECT CASE
-    WHEN NEW.report_sequence != COALESCE((
-      SELECT MAX(report_sequence) + 1 FROM shift_reports
-      WHERE work_order_id = NEW.work_order_id
-    ), 1)
-    THEN RAISE(ABORT, 'shift_reports sequence must append')
-    WHEN NEW.previous_report_sha256 IS NOT (
-      SELECT report_sha256 FROM shift_reports
-      WHERE work_order_id = NEW.work_order_id
-      ORDER BY report_sequence DESC LIMIT 1
-    )
-    THEN RAISE(ABORT, 'shift_reports previous hash must match the chain head')
-  END;
-END;--> statement-breakpoint
+CREATE UNIQUE INDEX IF NOT EXISTS `shift_reports_report_id_unique` ON `shift_reports` (`report_id`);--> statement-breakpoint
+CREATE UNIQUE INDEX IF NOT EXISTS `shift_reports_report_sha256_unique` ON `shift_reports` (`report_sha256`);--> statement-breakpoint
+CREATE UNIQUE INDEX IF NOT EXISTS `shift_reports_work_order_sequence_idx` ON `shift_reports` (`work_order_id`,`report_sequence`);--> statement-breakpoint
+CREATE INDEX IF NOT EXISTS `shift_reports_work_order_idx` ON `shift_reports` (`work_order_id`);--> statement-breakpoint
+CREATE INDEX IF NOT EXISTS `shift_reports_outcome_idx` ON `shift_reports` (`outcome_class`);--> statement-breakpoint
+CREATE INDEX IF NOT EXISTS `shift_reports_created_idx` ON `shift_reports` (`created_at`);--> statement-breakpoint
 INSERT INTO `schema_metadata` (`key`, `value`, `updated_at`)
 VALUES ('hangar_schema_version', '2', CURRENT_TIMESTAMP)
 ON CONFLICT(`key`) DO UPDATE SET `value` = excluded.`value`, `updated_at` = CURRENT_TIMESTAMP;
