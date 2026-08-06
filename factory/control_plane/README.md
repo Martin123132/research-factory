@@ -24,6 +24,13 @@ right.
 - Every worker completes a standard entry run before claiming research or rerun
   work.
 - Work claims and rerun claims are exclusive, expiring leases.
+- Every attempt requires a Work Order Envelope v2 issued by an administrator
+  and released with a human-retained capability. The envelope freezes exact
+  argv, working directory, interfaces, wall time, output, zero local monetary
+  budget, stop conditions and the no-extension rule before execution.
+- The local monitored runner writes an immutable receipt. Candidate submission
+  fails closed without an in-envelope successful receipt; stopped and
+  over-limit executions can be retained only as negative work or termination.
 - The author cannot rerun their own result.
 - Two rerunners must have different operator IDs and different provider/subject
   identity records from the author and one another, and each makes an explicit
@@ -57,6 +64,13 @@ controls the machine can also read its private state. Public operation requires
 authenticated issuer/subject identities or passkeys and a separate evaluator
 host with KMS-backed sealed storage. The scientific workflow is implemented;
 production identity and secrecy are deliberately not overstated.
+
+`LOCAL_MONITORED_V1` is also a commissioning boundary, not a security sandbox.
+It enforces exact argv and working directory plus wall-time and combined-output
+limits, but it does not independently isolate network, filesystem, memory or
+child-process use. Its schemas set `promotion_eligible` to false. A live runner
+must replace this profile with an independently attested isolation boundary;
+the local receipt must never be relabelled as promotion-grade evidence.
 
 The local entry receipt and public rerun result are hash-checked, but their
 origin is not signed by a remote runner. A host owner could forge a new
@@ -135,9 +149,20 @@ only when a server obtains them from GitHub authentication rather than CLI text.
   --work-unit wu:selector-features
 
 # Start its attempt.
+.\.venv\Scripts\python.exe factoryctl.py issue-work-envelope `
+  --actor local:pilot-admin `
+  --work-claim WORK_CLAIM_ID `
+  --policy control_plane\examples\wb001-synthetic-envelope-policy.json
+
 .\.venv\Scripts\python.exe factoryctl.py start-attempt `
   --operator github:alice `
-  --work-claim WORK_CLAIM_ID
+  --work-claim WORK_CLAIM_ID `
+  --envelope ENVELOPE_ID
+
+# Commission the dispatch and record its non-promotion receipt.
+.\.venv\Scripts\python.exe factoryctl.py execute-attempt `
+  --operator github:alice `
+  --attempt ATTEMPT_ID
 
 # Submit a candidate and its metric-free source package.
 .\.venv\Scripts\python.exe factoryctl.py submit-result `
@@ -149,6 +174,10 @@ only when a server obtains them from GitHub authentication rather than CLI text.
   --artifact-sha256 64_HEX_DIGEST `
   --summary "Deterministic block classifier and selection method."
 ```
+
+Both envelope commands prompt for the same human-retained capability with input
+hidden. Passing `--release-capability` is available for automated commissioning
+tests, but exposes the value to shell history and should not be normal human use.
 
 If the idea did not work, retain it with `record-negative-result` instead. Its
 hypothesis, failure classification, reason code, and evidence hash become part
@@ -198,6 +227,9 @@ economic gates also pass.
 - `ledger.py`: canonical event-chain storage and OS writer lock.
 - `workflow.py`: replayable state machine and transition invariants.
 - `evidence.py`: content-addressed immutable evidence copies.
+- `envelope.py`: v2 policy/envelope/receipt validation and the local monitored
+  commissioning runner.
+- `audit.py`: metric-free public-ledger blindness and identity-separation audit.
 - `sealed.py`: local evaluator-side rerun conclusion commitments.
 - `attestation.py`: Ed25519 holdout-attestation verification and binding.
 - `wb001_adapter.py`: objective result/comparison checks and exact rerun

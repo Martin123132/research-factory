@@ -26,6 +26,13 @@ from .common import (
 from .evidence import EvidenceStore
 from .ledger import EventLedger
 from .sealed import SealedClaimStore, SealedRerunStore
+from .envelope import (
+    build_envelope,
+    execute_local_monitored,
+    load_envelope_policy,
+    validate_envelope,
+    validate_receipt,
+)
 from .attestation import verify_wb001_attestation, verify_wb001_job_token
 from .wb001_adapter import (
     extract_result_observation,
@@ -40,7 +47,12 @@ EVENT_TYPES = {
     "ROUND_OPENED",
     "ENTRY_GATE_COMPLETED",
     "WORK_CLAIMED",
+    "WORK_ENVELOPE_ISSUED",
+    "WORK_ENVELOPE_REVOKED",
     "ATTEMPT_STARTED",
+    "ATTEMPT_STOP_REQUESTED",
+    "ATTEMPT_EXECUTION_RECORDED",
+    "ATTEMPT_TERMINATED",
     "RESULT_SUBMITTED",
     "NEGATIVE_RESULT_RECORDED",
     "RERUN_WORK_CLAIMED",
@@ -78,6 +90,7 @@ def _empty_state() -> dict[str, Any]:
         "rounds": {},
         "entry_gates": {},
         "work_claims": {},
+        "work_envelopes": {},
         "attempts": {},
         "rerun_claims": {},
         "annotations": [],
@@ -134,6 +147,18 @@ def replay(events: list[dict[str, Any]]) -> dict[str, Any]:
                 "claimed_at": event["recorded_at"],
                 "superseded_by": None,
             }
+        elif kind == "WORK_ENVELOPE_ISSUED":
+            envelope = copy.deepcopy(payload["envelope"])
+            envelope["revoked_at"] = None
+            envelope["revocation_reason"] = None
+            state["work_envelopes"][envelope["envelope_id"]] = envelope
+            state["work_claims"][envelope["work_claim_id"]]["envelope_id"] = envelope[
+                "envelope_id"
+            ]
+        elif kind == "WORK_ENVELOPE_REVOKED":
+            envelope = state["work_envelopes"][payload["envelope_id"]]
+            envelope["revoked_at"] = event["recorded_at"]
+            envelope["revocation_reason"] = payload["reason"]
         elif kind == "ATTEMPT_STARTED":
             claim = state["work_claims"][payload["work_claim_id"]]
             state["attempts"][payload["attempt_id"]] = {
@@ -142,6 +167,9 @@ def replay(events: list[dict[str, Any]]) -> dict[str, Any]:
                 "work_unit_id": claim["work_unit_id"],
                 "author_operator_id": event["actor_id"],
                 "started_at": event["recorded_at"],
+                "execution_receipt": None,
+                "stop_request": None,
+                "termination": None,
                 "result": None,
                 "rerun_claim_ids": [],
                 "gate_history": [],
@@ -150,6 +178,22 @@ def replay(events: list[dict[str, Any]]) -> dict[str, Any]:
                 "dispute": None,
             }
             claim["attempt_id"] = payload["attempt_id"]
+        elif kind == "ATTEMPT_STOP_REQUESTED":
+            state["attempts"][payload["attempt_id"]]["stop_request"] = {
+                **copy.deepcopy(payload),
+                "requested_at": event["recorded_at"],
+                "requested_by": event["actor_id"],
+            }
+        elif kind == "ATTEMPT_EXECUTION_RECORDED":
+            state["attempts"][payload["attempt_id"]]["execution_receipt"] = copy.deepcopy(
+                payload["receipt"]
+            )
+        elif kind == "ATTEMPT_TERMINATED":
+            state["attempts"][payload["attempt_id"]]["termination"] = {
+                **copy.deepcopy(payload),
+                "terminated_at": event["recorded_at"],
+                "terminated_by": event["actor_id"],
+            }
         elif kind in {"RESULT_SUBMITTED", "NEGATIVE_RESULT_RECORDED"}:
             state["attempts"][payload["attempt_id"]]["result"] = {
                 **copy.deepcopy(payload),
@@ -216,9 +260,21 @@ def _require_operator(state: dict[str, Any], operator_id: str) -> dict[str, Any]
     return operator
 
 
+def _attempt_is_finished(attempt: dict[str, Any]) -> bool:
+    return attempt["result"] is not None or attempt.get("termination") is not None
+
+
 def _attempt_gate_status(attempt: dict[str, Any], round_document: dict[str, Any]) -> str:
     if attempt["dispute"] is not None:
         return "DISPUTED_REVIEW_REQUIRED"
+    if attempt.get("termination") is not None:
+        return "TERMINATED_RETAINED"
+    if attempt.get("stop_request") is not None and attempt.get("execution_receipt") is None:
+        return "STOP_REQUESTED"
+    if attempt.get("execution_receipt") is not None and attempt["result"] is None:
+        if attempt["execution_receipt"]["within_envelope"]:
+            return "EXECUTION_RECORDED_AWAITING_RESULT"
+        return "EXECUTION_OUTSIDE_ENVELOPE_REQUIRES_RETENTION"
     if attempt["result"] is None:
         return "IN_PROGRESS"
     if attempt["result"]["event_type"] == "NEGATIVE_RESULT_RECORDED":
@@ -573,17 +629,75 @@ class ControlPlane:
                 if row["round_id"] == round_id and row["work_unit_id"] == payload["work_unit_id"]
             ]
             for row in related:
-                if row.get("attempt_id") and state["attempts"][row["attempt_id"]]["result"] is not None:
+                if row.get("attempt_id") and _attempt_is_finished(
+                    state["attempts"][row["attempt_id"]]
+                ):
                     continue
                 if row.get("superseded_by") is None and parse_utc(row["expires_at"]) > now:
                     raise TransitionError("work unit already has an active claim")
             expected_superseded = sorted(
                 row["work_claim_id"] for row in related
-                if not (row.get("attempt_id") and state["attempts"][row["attempt_id"]]["result"] is not None)
+                if not (
+                    row.get("attempt_id")
+                    and _attempt_is_finished(state["attempts"][row["attempt_id"]])
+                )
                 if row.get("superseded_by") is None and parse_utc(row["expires_at"]) <= now
             )
             if sorted(payload.get("supersedes_claim_ids", [])) != expected_superseded:
                 raise TransitionError("expired work-claim supersession set is incorrect")
+            return
+
+        if event_type == "WORK_ENVELOPE_ISSUED":
+            if not _is_admin(state, actor_id):
+                raise TransitionError("only an administrator can issue a work envelope")
+            envelope = payload.get("envelope")
+            if not isinstance(envelope, dict):
+                raise ContractError("envelope must be an object")
+            validate_envelope(envelope, factory_root=self.factory_root)
+            if envelope["envelope_id"] in state["work_envelopes"]:
+                raise TransitionError("envelope_id already exists")
+            claim = state["work_claims"].get(envelope["work_claim_id"])
+            if not claim:
+                raise TransitionError("work envelope requires an existing work claim")
+            if claim.get("envelope_id"):
+                raise TransitionError("work claim already has an immutable envelope")
+            if claim.get("attempt_id"):
+                raise TransitionError("work envelope must be issued before the attempt starts")
+            if claim.get("superseded_by") is not None or parse_utc(claim["expires_at"]) <= now:
+                raise TransitionError("work envelope cannot bind an expired or superseded claim")
+            round_document = state["rounds"][claim["round_id"]]["definition"]
+            expected = {
+                "factory_id": state["factory"]["factory_id"],
+                "round_id": claim["round_id"],
+                "round_sha256": round_document["round_sha256"],
+                "work_unit_id": claim["work_unit_id"],
+                "operator_id": claim["operator_id"],
+                "issued_by": actor_id,
+            }
+            for field, value in expected.items():
+                if envelope.get(field) != value:
+                    raise TransitionError(f"work envelope is not bound to the claim field {field}")
+            issued_at = parse_utc(envelope["issued_at"])
+            if issued_at > now or now - issued_at > timedelta(seconds=1):
+                raise TransitionError("work envelope issued_at must match its ledger event time")
+            if parse_utc(envelope["expires_at"]) > parse_utc(claim["expires_at"]):
+                raise TransitionError("work envelope cannot outlive its work claim")
+            return
+
+        if event_type == "WORK_ENVELOPE_REVOKED":
+            if not _is_admin(state, actor_id):
+                raise TransitionError("only an administrator can revoke a work envelope")
+            validate_id(payload.get("envelope_id"), field="envelope_id")
+            envelope = state["work_envelopes"].get(payload["envelope_id"])
+            if not envelope:
+                raise TransitionError("work envelope does not exist")
+            if envelope.get("revoked_at") is not None:
+                raise TransitionError("work envelope is already revoked")
+            claim = state["work_claims"][envelope["work_claim_id"]]
+            if claim.get("attempt_id"):
+                raise TransitionError("an envelope cannot be revoked after its attempt starts; request stop")
+            if not isinstance(payload.get("reason"), str) or not payload["reason"].strip():
+                raise ContractError("work-envelope revocation requires a reason")
             return
 
         if event_type == "ATTEMPT_STARTED":
@@ -599,6 +713,73 @@ class ControlPlane:
                 raise TransitionError("work claim is expired or superseded")
             if claim.get("attempt_id"):
                 raise TransitionError("work claim already has an attempt")
+            envelope_id = payload.get("envelope_id")
+            validate_id(envelope_id, field="envelope_id")
+            envelope = state["work_envelopes"].get(envelope_id)
+            if not envelope or envelope["work_claim_id"] != claim_id:
+                raise TransitionError("attempt requires the work claim's issued envelope")
+            if envelope.get("revoked_at") is not None or parse_utc(envelope["expires_at"]) <= now:
+                raise TransitionError("work envelope is revoked or expired")
+            if payload.get("envelope_sha256") != envelope["envelope_sha256"]:
+                raise TransitionError("attempt targets a different work-envelope commitment")
+            return
+
+        if event_type == "ATTEMPT_STOP_REQUESTED":
+            validate_id(attempt_id, field="attempt_id")
+            attempt = state["attempts"].get(attempt_id)
+            if not attempt:
+                raise TransitionError("attempt does not exist")
+            if actor_id not in {attempt["author_operator_id"]} and not _is_admin(state, actor_id):
+                raise TransitionError("only the worker or an administrator can stop an attempt")
+            if attempt["result"] is not None or attempt.get("termination") is not None:
+                raise TransitionError("completed or terminated attempts cannot receive a stop request")
+            if attempt.get("stop_request") is not None:
+                raise TransitionError("attempt already has an immutable stop request")
+            if not isinstance(payload.get("reason"), str) or not payload["reason"].strip():
+                raise ContractError("attempt stop requires a reason")
+            return
+
+        if event_type == "ATTEMPT_EXECUTION_RECORDED":
+            validate_id(attempt_id, field="attempt_id")
+            attempt = state["attempts"].get(attempt_id)
+            if not attempt or attempt["author_operator_id"] != actor_id:
+                raise TransitionError("only the attempt author can record its monitored execution")
+            if attempt.get("execution_receipt") is not None:
+                raise TransitionError("attempt already has an immutable execution receipt")
+            if attempt["result"] is not None or attempt.get("termination") is not None:
+                raise TransitionError("completed or terminated attempts cannot record execution")
+            receipt = payload.get("receipt")
+            if not isinstance(receipt, dict):
+                raise ContractError("attempt execution requires a receipt object")
+            envelope = state["work_envelopes"][attempt["envelope_id"]]
+            validate_receipt(
+                receipt,
+                envelope=envelope,
+                attempt_id=attempt_id,
+                factory_root=self.factory_root,
+            )
+            if parse_utc(receipt["started_at"]) < parse_utc(attempt["started_at"]):
+                raise TransitionError("execution receipt predates the attempt")
+            return
+
+        if event_type == "ATTEMPT_TERMINATED":
+            validate_id(attempt_id, field="attempt_id")
+            attempt = state["attempts"].get(attempt_id)
+            if not attempt:
+                raise TransitionError("attempt does not exist")
+            if actor_id not in {attempt["author_operator_id"]} and not _is_admin(state, actor_id):
+                raise TransitionError("only the worker or an administrator can terminate an attempt")
+            if attempt["result"] is not None or attempt.get("termination") is not None:
+                raise TransitionError("attempt is already completed or terminated")
+            receipt = attempt.get("execution_receipt")
+            if receipt is None:
+                raise TransitionError("termination requires an immutable execution receipt")
+            if payload.get("receipt_sha256") != receipt["receipt_sha256"]:
+                raise TransitionError("termination targets a different execution receipt")
+            if receipt["within_envelope"] and attempt.get("stop_request") is None:
+                raise TransitionError("a successful in-envelope execution should submit a result or negative")
+            if not isinstance(payload.get("reason"), str) or not payload["reason"].strip():
+                raise ContractError("attempt termination requires a reason")
             return
 
         if event_type in {"RESULT_SUBMITTED", "NEGATIVE_RESULT_RECORDED"}:
@@ -613,9 +794,16 @@ class ControlPlane:
                 raise TransitionError("a superseded work claim cannot submit a result")
             if parse_utc(claim["expires_at"]) <= now:
                 raise TransitionError("the work claim expired before its result was submitted")
+            if attempt.get("stop_request") is not None or attempt.get("termination") is not None:
+                raise TransitionError("a stopped or terminated attempt cannot submit scientific work")
+            receipt = attempt.get("execution_receipt")
+            if receipt is None:
+                raise TransitionError("scientific work requires an immutable monitored execution receipt")
             validate_sha256(payload.get("evidence_package_sha256"), field="evidence_package_sha256")
             validate_sha256(payload.get("candidate_artifact_sha256"), field="candidate_artifact_sha256")
             if event_type == "RESULT_SUBMITTED":
+                if not receipt["within_envelope"]:
+                    raise TransitionError("out-of-envelope work cannot enter candidate reruns")
                 if payload.get("result_kind") != "CANDIDATE":
                     raise ContractError("result_kind must be CANDIDATE; boundaries belong in retained negatives")
                 for field in (
@@ -633,6 +821,13 @@ class ControlPlane:
             else:
                 if payload.get("classification") not in NEGATIVE_CLASSIFICATIONS:
                     raise ContractError("unknown negative-result classification")
+                if not receipt["within_envelope"] and payload.get("classification") not in {
+                    "RESOURCE_LIMIT",
+                    "UNRUNNABLE",
+                }:
+                    raise TransitionError(
+                        "out-of-envelope work must be retained as RESOURCE_LIMIT or UNRUNNABLE"
+                    )
                 if not isinstance(payload.get("hypothesis"), str) or not payload["hypothesis"].strip():
                     raise ContractError("negative results require the tested hypothesis")
                 if not isinstance(payload.get("reason_code"), str) or not payload["reason_code"].strip():
@@ -1042,7 +1237,10 @@ class ControlPlane:
         superseded = sorted(
             row["work_claim_id"] for row in related
             if row.get("superseded_by") is None
-            and not (row.get("attempt_id") and state["attempts"][row["attempt_id"]]["result"] is not None)
+            and not (
+                row.get("attempt_id")
+                and _attempt_is_finished(state["attempts"][row["attempt_id"]])
+            )
             and parse_utc(row["expires_at"]) <= now
         )
         payload = {
@@ -1059,10 +1257,26 @@ class ControlPlane:
         *,
         operator_id: str,
         work_claim_id: str,
+        envelope_id: str,
+        release_capability: str,
         attempt_id: str | None = None,
         request_id: str | None = None,
     ) -> dict[str, Any]:
-        retry_fields: dict[str, Any] = {"work_claim_id": work_claim_id}
+        if not isinstance(release_capability, str) or len(release_capability) < 32:
+            raise ContractError("envelope release capability must be a saved secret of at least 32 characters")
+        state = self.state()
+        envelope = state["work_envelopes"].get(envelope_id)
+        if not envelope or envelope["work_claim_id"] != work_claim_id:
+            raise TransitionError("attempt requires the work claim's issued envelope")
+        if envelope["release_capability_sha256"] != sha256_bytes(
+            release_capability.encode("utf-8")
+        ):
+            raise TransitionError("envelope release capability is invalid")
+        retry_fields: dict[str, Any] = {
+            "work_claim_id": work_claim_id,
+            "envelope_id": envelope_id,
+            "envelope_sha256": envelope["envelope_sha256"],
+        }
         if attempt_id is not None:
             retry_fields["attempt_id"] = attempt_id
         retry = self._find_retry(
@@ -1076,8 +1290,184 @@ class ControlPlane:
         payload = {
             "attempt_id": attempt_id or f"attempt:{uuid.uuid4().hex}",
             "work_claim_id": work_claim_id,
+            "envelope_id": envelope_id,
+            "envelope_sha256": envelope["envelope_sha256"],
         }
         return self._emit("ATTEMPT_STARTED", operator_id, payload, request_id=request_id)
+
+    def issue_work_envelope(
+        self,
+        *,
+        actor_id: str,
+        work_claim_id: str,
+        policy_path: Path,
+        release_capability: str,
+        envelope_id: str | None = None,
+        request_id: str | None = None,
+    ) -> dict[str, Any]:
+        if not isinstance(release_capability, str) or len(release_capability) < 32:
+            raise ContractError("envelope release capability must be a saved secret of at least 32 characters")
+        policy = load_envelope_policy(policy_path, factory_root=self.factory_root)
+        state = self.state()
+        claim = state["work_claims"].get(work_claim_id)
+        if not claim:
+            raise TransitionError("work claim does not exist")
+        round_document = state["rounds"][claim["round_id"]]["definition"]
+        now_text = utc_text(self._now())
+        requested_id = envelope_id or f"envelope:{uuid.uuid4().hex}"
+        retry = self._find_retry(
+            request_id=request_id,
+            event_type="WORK_ENVELOPE_ISSUED",
+            actor_id=actor_id,
+            payload_fields={},
+        )
+        if retry is not None:
+            existing = retry["payload"]["envelope"]
+            if (
+                existing["work_claim_id"] != work_claim_id
+                or existing["policy_sha256"] != policy["policy_sha256"]
+                or existing["release_capability_sha256"]
+                != sha256_bytes(release_capability.encode("utf-8"))
+            ):
+                raise ContractError("request_id retry supplied different work-envelope arguments")
+            return {"event": retry, "release_capability_retained_by_human": True}
+        envelope = build_envelope(
+            envelope_id=requested_id,
+            policy=policy,
+            factory_id=state["factory"]["factory_id"],
+            round_id=claim["round_id"],
+            round_sha256=round_document["round_sha256"],
+            work_unit_id=claim["work_unit_id"],
+            work_claim_id=work_claim_id,
+            operator_id=claim["operator_id"],
+            issued_by=actor_id,
+            issued_at=now_text,
+            expires_at=claim["expires_at"],
+            release_capability_sha256=sha256_bytes(release_capability.encode("utf-8")),
+        )
+        event = self._emit(
+            "WORK_ENVELOPE_ISSUED",
+            actor_id,
+            {"envelope": envelope},
+            request_id=request_id,
+        )
+        return {"event": event, "release_capability_retained_by_human": True}
+
+    def revoke_work_envelope(
+        self,
+        *,
+        actor_id: str,
+        envelope_id: str,
+        reason: str,
+        request_id: str | None = None,
+    ) -> dict[str, Any]:
+        return self._emit(
+            "WORK_ENVELOPE_REVOKED",
+            actor_id,
+            {"envelope_id": envelope_id, "reason": reason},
+            request_id=request_id,
+        )
+
+    def request_attempt_stop(
+        self,
+        *,
+        actor_id: str,
+        attempt_id: str,
+        reason: str,
+        request_id: str | None = None,
+    ) -> dict[str, Any]:
+        return self._emit(
+            "ATTEMPT_STOP_REQUESTED",
+            actor_id,
+            {"attempt_id": attempt_id, "reason": reason},
+            request_id=request_id,
+        )
+
+    def record_attempt_receipt(
+        self,
+        *,
+        operator_id: str,
+        attempt_id: str,
+        receipt: dict[str, Any],
+        request_id: str | None = None,
+    ) -> dict[str, Any]:
+        return self._emit(
+            "ATTEMPT_EXECUTION_RECORDED",
+            operator_id,
+            {"attempt_id": attempt_id, "receipt": receipt},
+            request_id=request_id,
+        )
+
+    def execute_attempt(
+        self,
+        *,
+        operator_id: str,
+        attempt_id: str,
+        request_id: str | None = None,
+    ) -> dict[str, Any]:
+        state = self.state()
+        attempt = state["attempts"].get(attempt_id)
+        if not attempt or attempt["author_operator_id"] != operator_id:
+            raise TransitionError("only the attempt author can run its envelope")
+        if attempt.get("execution_receipt") is not None:
+            raise TransitionError("attempt already has an immutable execution receipt")
+        if attempt["result"] is not None or attempt.get("termination") is not None:
+            raise TransitionError("completed or terminated attempts cannot execute")
+        if attempt.get("stop_request") is not None:
+            raise TransitionError("a stopped attempt cannot launch its command")
+        envelope = state["work_envelopes"][attempt["envelope_id"]]
+        if (
+            envelope.get("revoked_at") is not None
+            or parse_utc(envelope["expires_at"]) <= self._now()
+        ):
+            raise TransitionError("work envelope is revoked or expired")
+
+        def stopped() -> bool:
+            current = self.state()["attempts"].get(attempt_id)
+            return bool(current and current.get("stop_request"))
+
+        receipt = execute_local_monitored(
+            envelope=envelope,
+            attempt_id=attempt_id,
+            factory_root=self.factory_root,
+            stop_requested=stopped,
+            timestamp_clock=self._now,
+        )
+        event = self.record_attempt_receipt(
+            operator_id=operator_id,
+            attempt_id=attempt_id,
+            receipt=receipt,
+            request_id=request_id,
+        )
+        return {
+            "event": event,
+            "within_envelope": receipt["within_envelope"],
+            "termination_reason": receipt["termination_reason"],
+            "promotion_eligible": False,
+        }
+
+    def terminate_attempt(
+        self,
+        *,
+        actor_id: str,
+        attempt_id: str,
+        reason: str,
+        request_id: str | None = None,
+    ) -> dict[str, Any]:
+        state = self.state()
+        attempt = state["attempts"].get(attempt_id)
+        if not attempt or attempt.get("execution_receipt") is None:
+            raise TransitionError("attempt termination requires a recorded execution receipt")
+        return self._emit(
+            "ATTEMPT_TERMINATED",
+            actor_id,
+            {
+                "attempt_id": attempt_id,
+                "receipt_sha256": attempt["execution_receipt"]["receipt_sha256"],
+                "reason": reason,
+            },
+            request_id=request_id,
+        )
 
     def submit_result(
         self,
@@ -1545,7 +1935,11 @@ class ControlPlane:
                 completed_attempts = [
                     state["attempts"][row["attempt_id"]]
                     for row in claims
-                    if row.get("attempt_id") and state["attempts"][row["attempt_id"]]["result"] is not None
+                    if row.get("attempt_id")
+                    and (
+                        state["attempts"][row["attempt_id"]]["result"] is not None
+                        or state["attempts"][row["attempt_id"]].get("termination") is not None
+                    )
                 ]
                 completed_attempt = completed_attempts[-1] if completed_attempts else None
                 active = next(
@@ -1554,7 +1948,10 @@ class ControlPlane:
                         if row.get("superseded_by") is None
                         and not (
                             row.get("attempt_id")
-                            and state["attempts"][row["attempt_id"]]["result"] is not None
+                            and (
+                                state["attempts"][row["attempt_id"]]["result"] is not None
+                                or state["attempts"][row["attempt_id"]].get("termination") is not None
+                            )
                         )
                         and parse_utc(row["expires_at"]) > now
                     ),
@@ -1596,6 +1993,21 @@ class ControlPlane:
                     "round_id": attempt["round_id"],
                     "work_unit_id": attempt["work_unit_id"],
                     "author_operator_id": attempt["author_operator_id"],
+                    "envelope_id": attempt["envelope_id"],
+                    "enforcement_profile": state["work_envelopes"][attempt["envelope_id"]][
+                        "enforcement_profile"
+                    ],
+                    "execution_receipt_sha256": (
+                        attempt["execution_receipt"]["receipt_sha256"]
+                        if attempt.get("execution_receipt")
+                        else None
+                    ),
+                    "within_envelope": (
+                        attempt["execution_receipt"]["within_envelope"]
+                        if attempt.get("execution_receipt")
+                        else None
+                    ),
+                    "stop_requested": attempt.get("stop_request") is not None,
                     "result_type": attempt["result"]["event_type"] if attempt["result"] else None,
                     "status": _attempt_gate_status(attempt_for_status, round_document),
                     "rerun_commitments": sum(
@@ -1628,7 +2040,13 @@ class ControlPlane:
             "identity_warning": "Distinct provider/subject records are enforced, but this local pilot does not prove distinct humans.",
             "operators": len(state["operators"]),
             "entry_gates_completed": len(state["entry_gates"]),
+            "work_envelopes_issued": len(state["work_envelopes"]),
             "rounds": rounds,
             "attempts": attempts,
             "negative_results": negative_results,
         }
+
+    def audit_blindness(self) -> dict[str, Any]:
+        from .audit import audit_public_ledger_blindness
+
+        return audit_public_ledger_blindness(self.events())

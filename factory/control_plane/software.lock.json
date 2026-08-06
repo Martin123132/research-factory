@@ -11,20 +11,40 @@
       "sha256": "0dcd0aeaa794c99b9c4f66ed264eb1e3e6bda81b3b0e9ac3d8383373ec7b1f9d"
     },
     {
+      "path": "control_plane/audit.py",
+      "sha256": "dee8d8bbf51ed02cebafa5be9261d6cfeda60f8660f80fc0142e2d3e31b6e995"
+    },
+    {
       "path": "control_plane/cli.py",
-      "sha256": "282221a4ed891a68a0e3c1a50c1c41d22dc08560325cc01ac6075ecca8705eda"
+      "sha256": "866bd409693d1f34a44541dac20b8897f25bf9bce904a6c7bd1bac0cd6f1cf76"
     },
     {
       "path": "control_plane/common.py",
       "sha256": "3414e49fe918e2a00184ff7dff2a1bc2da17ff230a62b5096e4dd5d86acdb468"
     },
     {
+      "path": "control_plane/envelope.py",
+      "sha256": "20dc59e02e73c409bab41606407dc599463321536de03c0d666f4064d0042f93"
+    },
+    {
       "path": "control_plane/evidence.py",
       "sha256": "5db89b525c855556ccb1545ce91ec9d62f50f74d22c02d3817197fd4d4ee8144"
     },
     {
+      "path": "control_plane/examples/wb001-synthetic-envelope-policy.json",
+      "sha256": "262c43d378786afc924de01b422e814dde473c66eef989ff0936cdd542ecd19c"
+    },
+    {
       "path": "control_plane/ledger.py",
       "sha256": "e366097fa809d8356964914bcdee833a42f4128724acd4fc0f37dc9b4fce17dd"
+    },
+    {
+      "path": "control_plane/schemas/attempt-receipt-v2.schema.json",
+      "sha256": "2474c037b80c26f8bac0da1606cc8e3fe4ec6efd68fe22962601cd56efdd9098"
+    },
+    {
+      "path": "control_plane/schemas/blind-audit-v1.schema.json",
+      "sha256": "4060f2bf429ed51905a6a00001271ba1049b19fba4b4137156f799066103dd81"
     },
     {
       "path": "control_plane/schemas/checkpoint.schema.json",
@@ -36,11 +56,19 @@
     },
     {
       "path": "control_plane/schemas/event.schema.json",
-      "sha256": "160fe8aacac1b58b23eb6347d2b1f911661f2b3c49bb8ce4246590da22ec0ead"
+      "sha256": "1d79261553e07d7d872ff2913cdd85bfd1a9991bf7286318cc29f60a8fcb1086"
     },
     {
       "path": "control_plane/schemas/round.schema.json",
       "sha256": "0f1cc9a0d3fd4d30cd598128c85ab10cad9f85f0f887591e301434f6514b09c5"
+    },
+    {
+      "path": "control_plane/schemas/work-order-envelope-policy-v2.schema.json",
+      "sha256": "0bdc339582a0a01178a1a8491c2a472c8e0d72df12a53866ffdc2267be003f4d"
+    },
+    {
+      "path": "control_plane/schemas/work-order-envelope-v2.schema.json",
+      "sha256": "5b2d4d1f3908114fcdf3f79373d14c3795cf29fbdcb331c9d80fcd00c4a08b8f"
     },
     {
       "path": "control_plane/scripts/run_entry_gate.py",
@@ -48,7 +76,7 @@
     },
     {
       "path": "control_plane/scripts/validate_control_plane.py",
-      "sha256": "3b0982501e5c6931409685b6f6ac951327b314eb800818829dfea2d336a68c4d"
+      "sha256": "0f2cf81ec8eb76a8ccc1976103f33e02efc55f835686a51d3f5cc73cbebb5122"
     },
     {
       "path": "control_plane/sealed.py",
@@ -60,7 +88,7 @@
     },
     {
       "path": "control_plane/workflow.py",
-      "sha256": "fcaeaf9d687bd109308efd51d6f19f4a8fc2480f1258877d1460b43a5bba4f54"
+      "sha256": "110edb17393f9ca0bc2969369d7621f570603e904bdd2f26f528ddd8c99c8143"
     },
     {
       "path": "factoryctl.py",
@@ -68,8 +96,8 @@
     },
     {
       "path": "rounds/WB001-PILOT-001/STARTER_PACK.md",
-      "sha256": "ccd9b59c42c4009587281be0cc289d402e413f46109feeba92bc87f0fc428b3c"
+      "sha256": "cfeb9a502f63ca73bc54a035e1e2c40b2ba87c04b1df405c06259d0e73be2781"
     }
   ],
-  "software_sha256": "1a028fdeb3a88579b09ba6da62596365281d40f93a2aa5c246d564064320e737"
+  "software_sha256": "61fe7b4f70ea2ef85ec871a6f9486e4e75fccd31dfe752fabd61f86c4518a495"
 }

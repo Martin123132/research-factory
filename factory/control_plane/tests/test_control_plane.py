@@ -12,6 +12,7 @@ from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 
 from control_plane import ContractError, LedgerIntegrityError, TransitionError
 from control_plane.common import canonical_json_bytes, sha256_bytes, sha256_file, write_json
+from control_plane.envelope import build_receipt
 from control_plane.workflow import ControlPlane
 
 
@@ -31,6 +32,9 @@ TEST_EVALUATOR_PUBLIC_KEY = (
     / "tests"
     / "fixtures"
     / "evaluator_test_public_key.json"
+)
+ENVELOPE_POLICY_PATH = (
+    FACTORY_ROOT / "control_plane" / "examples" / "wb001-synthetic-envelope-policy.json"
 )
 
 
@@ -357,6 +361,52 @@ class ControlPlaneTests(unittest.TestCase):
         write_json(path, comparison)
         return path
 
+    def start_enveloped_attempt(
+        self,
+        *,
+        work_claim: dict,
+        attempt_id: str,
+        record_receipt: bool = True,
+    ) -> dict:
+        claim_id = work_claim["payload"]["work_claim_id"]
+        capability = sha256_bytes(f"release\0{claim_id}".encode("utf-8"))
+        envelope_id = f"envelope:{sha256_bytes(claim_id.encode('utf-8'))[:32]}"
+        issued = self.plane.issue_work_envelope(
+            actor_id="local:admin",
+            work_claim_id=claim_id,
+            policy_path=ENVELOPE_POLICY_PATH,
+            release_capability=capability,
+            envelope_id=envelope_id,
+        )
+        event = self.plane.start_attempt(
+            operator_id=work_claim["actor_id"],
+            work_claim_id=claim_id,
+            envelope_id=envelope_id,
+            release_capability=capability,
+            attempt_id=attempt_id,
+        )
+        if record_receipt:
+            envelope = issued["event"]["payload"]["envelope"]
+            moment = self.clock.value.isoformat().replace("+00:00", "Z")
+            receipt = build_receipt(
+                attempt_id=attempt_id,
+                envelope=envelope,
+                started_at=moment,
+                finished_at=moment,
+                exit_code=0,
+                termination_reason="COMPLETED",
+                wall_seconds=0.0,
+                output_bytes=0,
+                stdout_sha256=sha256_bytes(b""),
+                stderr_sha256=sha256_bytes(b""),
+            )
+            self.plane.record_attempt_receipt(
+                operator_id=work_claim["actor_id"],
+                attempt_id=attempt_id,
+                receipt=receipt,
+            )
+        return event
+
     def start_result(
         self,
         *,
@@ -369,9 +419,8 @@ class ControlPlaneTests(unittest.TestCase):
             round_id="WB001-PILOT-001",
             work_unit_id="wu:preprocess-integers",
         )
-        attempt = self.plane.start_attempt(
-            operator_id="local:author",
-            work_claim_id=claim["payload"]["work_claim_id"],
+        attempt = self.start_enveloped_attempt(
+            work_claim=claim,
             attempt_id="attempt:test-one",
         )
         attempt_id = attempt["payload"]["attempt_id"]
@@ -416,9 +465,8 @@ class ControlPlaneTests(unittest.TestCase):
             round_id="WB001-PILOT-001",
             work_unit_id=work_unit_id,
         )
-        event = self.plane.start_attempt(
-            operator_id="local:author",
-            work_claim_id=claim["payload"]["work_claim_id"],
+        event = self.start_enveloped_attempt(
+            work_claim=claim,
             attempt_id=attempt_id,
         )
         return event["payload"]["attempt_id"]
@@ -490,11 +538,137 @@ class ControlPlaneTests(unittest.TestCase):
                 work_unit_id="wu:selector-features",
             )
 
+    def test_attempt_cannot_start_without_issued_envelope(self) -> None:
+        claim = self.plane.claim_work(
+            operator_id="local:author",
+            round_id="WB001-PILOT-001",
+            work_unit_id="wu:selector-features",
+        )
+        with self.assertRaises(TransitionError):
+            self.plane.start_attempt(
+                operator_id="local:author",
+                work_claim_id=claim["payload"]["work_claim_id"],
+                envelope_id="envelope:" + "0" * 32,
+                release_capability="x" * 32,
+            )
+
+    def test_human_release_capability_is_required_to_start(self) -> None:
+        claim = self.plane.claim_work(
+            operator_id="local:author",
+            round_id="WB001-PILOT-001",
+            work_unit_id="wu:selector-features",
+        )
+        claim_id = claim["payload"]["work_claim_id"]
+        issued = self.plane.issue_work_envelope(
+            actor_id="local:admin",
+            work_claim_id=claim_id,
+            policy_path=ENVELOPE_POLICY_PATH,
+            release_capability="correct-human-retained-capability-1234",
+        )
+        with self.assertRaises(TransitionError):
+            self.plane.start_attempt(
+                operator_id="local:author",
+                work_claim_id=claim_id,
+                envelope_id=issued["event"]["payload"]["envelope"]["envelope_id"],
+                release_capability="wrong-human-retained-capability-56789",
+            )
+
+    def test_local_monitored_executor_records_non_promotion_receipt(self) -> None:
+        claim = self.plane.claim_work(
+            operator_id="local:author",
+            round_id="WB001-PILOT-001",
+            work_unit_id="wu:selector-features",
+        )
+        self.start_enveloped_attempt(
+            work_claim=claim,
+            attempt_id="attempt:synthetic-executor",
+            record_receipt=False,
+        )
+        executed = self.plane.execute_attempt(
+            operator_id="local:author",
+            attempt_id="attempt:synthetic-executor",
+        )
+        self.assertTrue(executed["within_envelope"])
+        self.assertFalse(executed["promotion_eligible"])
+        snapshot = self.plane.snapshot()
+        attempt = next(
+            row for row in snapshot["attempts"] if row["attempt_id"] == "attempt:synthetic-executor"
+        )
+        self.assertTrue(attempt["within_envelope"])
+        self.assertEqual(attempt["status"], "EXECUTION_RECORDED_AWAITING_RESULT")
+        with self.assertRaises(TransitionError):
+            self.plane.execute_attempt(
+                operator_id="local:author",
+                attempt_id="attempt:synthetic-executor",
+            )
+
+    def test_human_stopped_execution_is_retained_not_promoted(self) -> None:
+        claim = self.plane.claim_work(
+            operator_id="local:author",
+            round_id="WB001-PILOT-001",
+            work_unit_id="wu:selector-features",
+        )
+        self.start_enveloped_attempt(
+            work_claim=claim,
+            attempt_id="attempt:human-stop",
+            record_receipt=False,
+        )
+        self.plane.request_attempt_stop(
+            actor_id="local:admin",
+            attempt_id="attempt:human-stop",
+            reason="Commissioning stop-control test.",
+        )
+        with self.assertRaises(TransitionError):
+            self.plane.execute_attempt(
+                operator_id="local:author",
+                attempt_id="attempt:human-stop",
+            )
+        state = self.plane.state()
+        attempt = state["attempts"]["attempt:human-stop"]
+        envelope = state["work_envelopes"][attempt["envelope_id"]]
+        moment = self.clock.value.isoformat().replace("+00:00", "Z")
+        receipt = build_receipt(
+            attempt_id="attempt:human-stop",
+            envelope=envelope,
+            started_at=moment,
+            finished_at=moment,
+            exit_code=None,
+            termination_reason="HUMAN_STOP",
+            wall_seconds=0.0,
+            output_bytes=0,
+            stdout_sha256=sha256_bytes(b""),
+            stderr_sha256=sha256_bytes(b""),
+        )
+        self.plane.record_attempt_receipt(
+            operator_id="local:author",
+            attempt_id="attempt:human-stop",
+            receipt=receipt,
+        )
+        self.plane.terminate_attempt(
+            actor_id="local:admin",
+            attempt_id="attempt:human-stop",
+            reason="Stop receipt retained for audit.",
+        )
+        self.assertEqual(
+            self.plane.snapshot()["attempts"][0]["status"],
+            "TERMINATED_RETAINED",
+        )
+
     def test_expired_claim_can_be_superseded_but_old_owner_cannot_start(self) -> None:
         old = self.plane.claim_work(
             operator_id="local:author",
             round_id="WB001-PILOT-001",
             work_unit_id="wu:preprocess-integers",
+        )
+        old_claim_id = old["payload"]["work_claim_id"]
+        capability = sha256_bytes(f"release\0{old_claim_id}".encode("utf-8"))
+        envelope_id = f"envelope:{sha256_bytes(old_claim_id.encode('utf-8'))[:32]}"
+        self.plane.issue_work_envelope(
+            actor_id="local:admin",
+            work_claim_id=old_claim_id,
+            policy_path=ENVELOPE_POLICY_PATH,
+            release_capability=capability,
+            envelope_id=envelope_id,
         )
         self.clock.advance(hours=7)
         new = self.plane.claim_work(
@@ -506,7 +680,9 @@ class ControlPlaneTests(unittest.TestCase):
         with self.assertRaises(TransitionError):
             self.plane.start_attempt(
                 operator_id="local:author",
-                work_claim_id=old["payload"]["work_claim_id"],
+                work_claim_id=old_claim_id,
+                envelope_id=envelope_id,
+                release_capability=capability,
             )
 
     def test_duplicate_canonical_identity_is_rejected(self) -> None:
@@ -559,6 +735,10 @@ class ControlPlaneTests(unittest.TestCase):
         self.assertEqual(gate["payload"]["status"], "RERUN_CONFIRMED_AWAITING_HOLDOUT")
         self.assertTrue(gate["payload"]["individual_conclusions_sealed"])
         self.assertEqual(self.plane.snapshot()["attempts"][0]["status"], "RERUN_CONFIRMED_AWAITING_HOLDOUT")
+        audit = self.plane.audit_blindness()
+        self.assertTrue(audit["valid"])
+        self.assertEqual(audit["sealed_rerun_commitments"], 2)
+        self.assertEqual(audit["violations"], [])
 
     def test_relabelled_result_without_recomputed_hash_cannot_fill_a_rerun_slot(self) -> None:
         attempt_id = self.start_result()
@@ -582,9 +762,8 @@ class ControlPlaneTests(unittest.TestCase):
             round_id="WB001-PILOT-001",
             work_unit_id="wu:selector-policy",
         )
-        attempt = self.plane.start_attempt(
-            operator_id="local:author",
-            work_claim_id=claim["payload"]["work_claim_id"],
+        attempt = self.start_enveloped_attempt(
+            work_claim=claim,
             attempt_id="attempt:bad-comparison",
         )
         result_path = self.make_wb_result("local:author")

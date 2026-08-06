@@ -490,8 +490,8 @@
           {
             "name": "control_plane_software_lock",
             "path": "control_plane/software.lock.json",
-            "sha256": "9386b3b14fffe07ca963c15fbe20f95ad04f46b191cbb8b39f3b7bb9c037ae33",
-            "logical_commitment_sha256": "1a028fdeb3a88579b09ba6da62596365281d40f93a2aa5c246d564064320e737"
+            "sha256": "6353fadd1d9a12471166265bd46fea31c0b7c832458081e37bb01d5aaf517674",
+            "logical_commitment_sha256": "61fe7b4f70ea2ef85ec871a6f9486e4e75fccd31dfe752fabd61f86c4518a495"
           },
           {
             "name": "evaluator_software_lock",
@@ -502,13 +502,13 @@
           {
             "name": "pilot_round",
             "path": "rounds/WB001-PILOT-001/round.json",
-            "sha256": "2b9b2c0e29df30ef0146f7869cb0a46de8bf83d95ec5bd78d6e62f83b31bbf33",
+            "sha256": "29dfd88dd1e6edb8ae5c0c5ecf4a56f8df9a54f87cdbc34de9a6ca1c70c9c52f",
             "logical_commitment_sha256": null
           },
           {
             "name": "four_hour_starter_pack",
             "path": "rounds/WB001-PILOT-001/STARTER_PACK.md",
-            "sha256": "ccd9b59c42c4009587281be0cc289d402e413f46109feeba92bc87f0fc428b3c",
+            "sha256": "cfeb9a502f63ca73bc54a035e1e2c40b2ba87c04b1df405c06259d0e73be2781",
             "logical_commitment_sha256": null
           }
         ],
@@ -28951,5 +28951,5 @@
       }
     }
   ],
-  "bundle_sha256": "e7ae107b073bd2c871ffecdc2618f344deed802d60e17448f9cb473a951dae8c"
+  "bundle_sha256": "f880a02c6685b36aba5608d6ae2cb033d0f6d8062980f195b5dc61eec24a6c84"
 }

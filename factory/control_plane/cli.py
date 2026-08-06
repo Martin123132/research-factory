@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import getpass
 import json
 import sys
 from pathlib import Path
@@ -15,6 +16,13 @@ FACTORY_ROOT = Path(__file__).resolve().parents[1]
 
 def _add_request_id(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--request-id", help="stable idempotency key for a retried command")
+
+
+def _release_capability(args: argparse.Namespace) -> str:
+    supplied = getattr(args, "release_capability", None)
+    if supplied:
+        return supplied
+    return getpass.getpass("Human release capability (input hidden): ")
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -83,11 +91,62 @@ def build_parser() -> argparse.ArgumentParser:
     claim.add_argument("--work-unit", required=True)
     _add_request_id(claim)
 
+    issue = sub.add_parser(
+        "issue-work-envelope",
+        help="bind one claim to exact command, interface, time, output, cost, and stop limits",
+    )
+    issue.add_argument("--actor", required=True, help="administrator issuing the envelope")
+    issue.add_argument("--work-claim", required=True)
+    issue.add_argument("--policy", type=Path, required=True)
+    issue.add_argument(
+        "--release-capability",
+        help="human-retained random secret; omit to enter it through a hidden prompt",
+    )
+    issue.add_argument("--envelope-id")
+    _add_request_id(issue)
+
+    revoke = sub.add_parser(
+        "revoke-work-envelope",
+        help="revoke an envelope before its attempt starts",
+    )
+    revoke.add_argument("--actor", required=True)
+    revoke.add_argument("--envelope", required=True)
+    revoke.add_argument("--reason", required=True)
+    _add_request_id(revoke)
+
     start = sub.add_parser("start-attempt", help="start an immutable attempt under a work claim")
     start.add_argument("--operator", required=True)
     start.add_argument("--work-claim", required=True)
+    start.add_argument("--envelope", required=True)
+    start.add_argument(
+        "--release-capability",
+        help="human-retained random secret; omit to enter it through a hidden prompt",
+    )
     start.add_argument("--attempt-id")
     _add_request_id(start)
+
+    execute = sub.add_parser(
+        "execute-attempt",
+        help="run the exact envelope command under local commissioning limits and record its receipt",
+    )
+    execute.add_argument("--operator", required=True)
+    execute.add_argument("--attempt", required=True)
+    _add_request_id(execute)
+
+    stop = sub.add_parser("request-stop", help="append a worker or administrator stop request")
+    stop.add_argument("--actor", required=True)
+    stop.add_argument("--attempt", required=True)
+    stop.add_argument("--reason", required=True)
+    _add_request_id(stop)
+
+    terminate = sub.add_parser(
+        "terminate-attempt",
+        help="retain an out-of-envelope or human-stopped execution without promoting it",
+    )
+    terminate.add_argument("--actor", required=True)
+    terminate.add_argument("--attempt", required=True)
+    terminate.add_argument("--reason", required=True)
+    _add_request_id(terminate)
 
     result = sub.add_parser("submit-result", help="seal a candidate result and open it for reruns")
     result.add_argument("--operator", required=True)
@@ -192,6 +251,10 @@ def build_parser() -> argparse.ArgumentParser:
     status.add_argument("--json", action="store_true")
 
     sub.add_parser("verify-ledger", help="verify every sequence and hash-chain link")
+    sub.add_parser(
+        "audit-blindness",
+        help="check the public ledger for answer leakage, identity reuse, and majority promotion",
+    )
 
     export = sub.add_parser("export-artifact", help="export a verified metric-free candidate package")
     export.add_argument("--package-sha256", required=True)
@@ -273,11 +336,49 @@ def run(args: argparse.Namespace) -> int:
             work_unit_id=args.work_unit,
             request_id=args.request_id,
         )
+    elif command == "issue-work-envelope":
+        value = plane.issue_work_envelope(
+            actor_id=args.actor,
+            work_claim_id=args.work_claim,
+            policy_path=args.policy,
+            release_capability=_release_capability(args),
+            envelope_id=args.envelope_id,
+            request_id=args.request_id,
+        )
+    elif command == "revoke-work-envelope":
+        value = plane.revoke_work_envelope(
+            actor_id=args.actor,
+            envelope_id=args.envelope,
+            reason=args.reason,
+            request_id=args.request_id,
+        )
     elif command == "start-attempt":
         value = plane.start_attempt(
             operator_id=args.operator,
             work_claim_id=args.work_claim,
+            envelope_id=args.envelope,
+            release_capability=_release_capability(args),
             attempt_id=args.attempt_id,
+            request_id=args.request_id,
+        )
+    elif command == "execute-attempt":
+        value = plane.execute_attempt(
+            operator_id=args.operator,
+            attempt_id=args.attempt,
+            request_id=args.request_id,
+        )
+    elif command == "request-stop":
+        value = plane.request_attempt_stop(
+            actor_id=args.actor,
+            attempt_id=args.attempt,
+            reason=args.reason,
+            request_id=args.request_id,
+        )
+    elif command == "terminate-attempt":
+        value = plane.terminate_attempt(
+            actor_id=args.actor,
+            attempt_id=args.attempt,
+            reason=args.reason,
             request_id=args.request_id,
         )
     elif command == "submit-result":
@@ -362,6 +463,8 @@ def run(args: argparse.Namespace) -> int:
             return 0
     elif command == "verify-ledger":
         value = plane.ledger.verify()
+    elif command == "audit-blindness":
+        value = plane.audit_blindness()
     elif command == "export-artifact":
         value = plane.artifacts.export(args.package_sha256, args.output)
     elif command == "checkpoint":

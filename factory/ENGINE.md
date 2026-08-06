@@ -27,6 +27,14 @@ commands to `control_plane`; it does not maintain a competing database. GitHub
 is useful for distributing source, issues and reviews, but a pull request is not
 a scientific result and GitHub is not the scientific system of record.
 
+Dispatch now fails closed through Work Order Envelope v2. Before an attempt can
+start, an administrator binds its exact local command, working directory,
+interfaces, wall-time/output/cost limits and stop rules to the work claim; the
+human then releases it with a capability kept out of the public ledger. The
+commissioning executor records a receipt, and only a successful in-envelope
+receipt can enter candidate reruns. `LOCAL_MONITORED_V1` is deliberately marked
+non-promotion because it does not yet isolate network, filesystem or memory.
+
 ## Start from a clean clone
 
 From the repository root on Windows PowerShell:

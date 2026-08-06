@@ -1,7 +1,7 @@
 # WB-001 — General-purpose lossless compression
 
 Stage: `COMMISSIONING_READY`  
-Contract SHA-256: `a36866d231e2b8af1ec23de8836c2070c9b8bee1fb9878de6ce6d16abc2a9fd0`
+Contract SHA-256: `34d0d36637ff2a77a1a5ee49f140de73d92a75a252fc92cccbf5daa1f3c8b5ea`
 
 This is a generated construction kit. It records the station's measurable brief, governance and missing commissioning gates without fabricating a benchmark, verifier, runner or result.
 

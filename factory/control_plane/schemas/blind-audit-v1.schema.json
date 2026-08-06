@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://research-factory.invalid/schemas/blind-audit-v1.json",
+  "title": "Research Factory public-ledger blindness audit v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "audit_type",
+    "valid",
+    "events_scanned",
+    "candidate_attempts",
+    "sealed_rerun_commitments",
+    "checks",
+    "violations"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "audit_type": {"const": "PUBLIC_LEDGER_BLINDNESS"},
+    "valid": {"type": "boolean"},
+    "events_scanned": {"type": "integer", "minimum": 0},
+    "candidate_attempts": {"type": "integer", "minimum": 0},
+    "sealed_rerun_commitments": {"type": "integer", "minimum": 0},
+    "checks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "no_plaintext_conclusions",
+        "no_plaintext_metrics",
+        "distinct_identity_records",
+        "contradictions_cannot_majority_promote"
+      ],
+      "properties": {
+        "no_plaintext_conclusions": {"type": "boolean"},
+        "no_plaintext_metrics": {"type": "boolean"},
+        "distinct_identity_records": {"type": "boolean"},
+        "contradictions_cannot_majority_promote": {"type": "boolean"}
+      }
+    },
+    "violations": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1, "maxLength": 512}
+    }
+  }
+}

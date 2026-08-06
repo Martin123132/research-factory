@@ -74,10 +74,11 @@ Explore and verify the factory (no account, website, network, or AI provider req
   negative-results       search retained failed and no-gain experiments read-only
 
 Governed append-only lifecycle:
-  init, check-in, open-round, complete-entry-gate, claim-work, start-attempt,
-  submit-result, record-negative-result, claim-rerun, submit-rerun,
+  init, check-in, open-round, complete-entry-gate, claim-work,
+  issue-work-envelope, start-attempt, execute-attempt, request-stop,
+  terminate-attempt, submit-result, record-negative-result, claim-rerun, submit-rerun,
   evaluate-reruns, record-holdout-job, record-holdout-attestation,
-  escalate-dispute, annotate-attempt, status, verify-ledger, export-artifact,
+  escalate-dispute, annotate-attempt, status, verify-ledger, audit-blindness, export-artifact,
   checkpoint
 
 Run `factoryctl COMMAND --help` for command options. The governed commands retain
