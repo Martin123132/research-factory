@@ -55,6 +55,27 @@ factory\.venv\Scripts\python.exe factory\enginectl.py doctor `
   --ledger factory\state\pilot_events.jsonl
 ```
 
+## Search retained negative results
+
+Failed hypotheses, measured boundaries, no-gain results and unrunnable paths
+are useful factory output. Search their public metadata without opening private
+evidence or changing the append-only ledger:
+
+```powershell
+factory\.venv\Scripts\python.exe factory\enginectl.py negative-results `
+  --ledger factory\state\pilot_events.jsonl `
+  --query "small block header" `
+  --classification HYPOTHESIS_REJECTED
+```
+
+Exact filters are also available for `--round`, `--work-unit` and
+`--reason-code`; use `--json` for machine-readable output. Query words are
+case-insensitive and all must occur somewhere in the public attempt ID, round,
+work unit, author, classification, reason, hypothesis or summary. Results are
+newest first and expose content hashes rather than private evidence contents.
+The command verifies the ledger hash chain before searching it and performs no
+writes.
+
 ## Portable construction packages
 
 The portable package command copies a local evidence file or directory into a
