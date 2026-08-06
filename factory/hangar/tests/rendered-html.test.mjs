@@ -87,6 +87,10 @@ test("renders the fail-closed Contract v1 standard and downloadable artifacts", 
   assert.match(html, /The agent cannot start without the separately retained release capability/);
   assert.match(html, /Stopped or over-limit work is retained but cannot enter reruns/);
   assert.match(html, /does not prove network, filesystem, memory or human identity isolation/i);
+  assert.match(html, /The disagreement route is executable/);
+  assert.match(html, /diagnostic majority remains blocked from promotion/i);
+  assert.match(html, /Records are not people/);
+  assert.match(html, /distinct humans are not proven/i);
   assert.match(html, /stage-number mono">99</);
   assert.match(html, /DIGITAL_COMPRESSION_V1/);
   assert.match(html, /DIGITAL_OPTIMIZATION_V1/);

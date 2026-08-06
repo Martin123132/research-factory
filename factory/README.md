@@ -98,6 +98,19 @@ python factory\enginectl.py doctor
 python -m unittest discover -s factory\engine\tests -t factory -p "test_*.py" -v
 ```
 
+Commission the complete blind-disagreement route without making a scientific
+claim:
+
+```powershell
+python factory\commissioning\run_synthetic_shift.py `
+  --output factory\state\commissioning\wb001-synthetic-dispute-001
+```
+
+The normalized report distinguishes separate local identity records from
+separate humans and proves that a diagnostic majority cannot erase a valid
+contradiction. See
+[`commissioning/README.md`](commissioning/README.md).
+
 `--require-stage COMMISSIONING_READY` is intentionally fail-closed: it rejects
 the present 99 drafts rather than pretending a catalogue brief is runnable.
 

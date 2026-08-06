@@ -222,6 +222,14 @@ hash, attempt ID and confirming rerun-gate event hash. Record it with
 not enter the trusted repository until the frozen promotion-grade runner and
 economic gates also pass.
 
+## Run the complete disagreement drill
+
+[`../commissioning/README.md`](../commissioning/README.md) documents a disposable
+zero-credit shift that exercises this machinery from entry gate through bounded
+execution, two blind reruns, a deliberate split, diagnostic third run, dispute,
+post-blind diagnosis and public-ledger audit. It is a test of the factory, not a
+compression result and not a substitute for two other human operators.
+
 ## Files
 
 - `ledger.py`: canonical event-chain storage and OS writer lock.

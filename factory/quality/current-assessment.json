@@ -456,7 +456,7 @@
         },
         {
           "path": ".github/workflows/verify.yml",
-          "sha256": "e16b849d3d4dd5a8c3224284e3ea82df17558aa8493446f98fa4db86dac9a651",
+          "sha256": "fecf6de2e892d361d3c1cdc7b97be4d54b2ff4e583c2fa1dd3e416cc38178fb4",
           "supports": "Runs the quality verifier and regression tests as a protected repository check."
         }
       ],

@@ -85,6 +85,11 @@ jobs:
           --output state/ci-entry.json
       - name: Test control plane
         run: python -m unittest discover -s control_plane/tests -p "test_*.py" -v
+      - name: Commission the complete synthetic dispute shift
+        run: |
+          python commissioning/run_synthetic_shift.py --output state/ci-synthetic-dispute-shift
+          python commissioning/verify_synthetic_shift.py state/ci-synthetic-dispute-shift
+          python -m unittest discover -s commissioning/tests -p "test_*.py" -v
       - name: Test WB-001 runner
         run: python -m unittest discover -s workbenches/wb001_lossless_compression/tests -p "test_*.py" -v
       - name: Test workbench standard and adapters

@@ -94,7 +94,7 @@ export default function StandardsPage() {
             <span className="stage-number mono">{String(contractCounts.commissioning_ready).padStart(2, "0")}</span>
             <p className="eyebrow">Commissioning ready</p>
             <h3>The plumbing can be tested</h3>
-            <p>WB-001 has frozen public inputs, a verifier, runner protocol, starter gate and local blind workflow. Its timing and identity boundaries are still not promotion-grade.</p>
+            <p>WB-001 has frozen public inputs, a verifier, runner protocol, starter gate and a complete synthetic dispute drill. Its timing and identity boundaries are still not promotion-grade.</p>
           </article>
           <article className="stage-locked">
             <span className="stage-number mono">{String(contractCounts.live_ready).padStart(2, "0")}</span>
@@ -153,6 +153,30 @@ export default function StandardsPage() {
             identity isolation, so every receipt remains explicitly ineligible for promotion.
           </p>
         </div>
+      </section>
+
+      <section className="section-block split-section standards-split">
+        <article className="feature-card feature-card-orange">
+          <p className="eyebrow">Commissioning drill / zero scientific credit</p>
+          <h2>The disagreement route is executable</h2>
+          <p>
+            A disposable WB-001 shift now runs the bounded author attempt, two blind reruns,
+            a deliberate split, one diagnostic rerun, dispute escalation and a public-ledger
+            blindness audit. The diagnostic majority remains blocked from promotion.
+          </p>
+          <a className="text-link" href="https://github.com/Martin123132/research-factory/tree/main/factory/commissioning">
+            Inspect and run the drill &rarr;
+          </a>
+        </article>
+        <article className="feature-card">
+          <p className="eyebrow">Identity boundary</p>
+          <h2>Records are not people</h2>
+          <p>
+            The local drill uses five distinct synthetic provider/subject records so the state
+            machine can be tested. Its schema permanently records that distinct humans are not
+            proven and that every output carries zero promotion credit.
+          </p>
+        </article>
       </section>
 
       <section className="section-block standard-flow-section">
