@@ -58,7 +58,7 @@ class ReferenceProvenanceVerifierTests(unittest.TestCase):
         )
 
     def test_repository_manifests_verify(self) -> None:
-        self.assertEqual(20, verify())
+        self.assertEqual(30, verify())
 
     def test_second_repository_manifest_verifies(self) -> None:
         self.assertEqual(
@@ -66,6 +66,15 @@ class ReferenceProvenanceVerifierTests(unittest.TestCase):
             verify(
                 manifest_path=MANIFESTS[1][0],
                 expected_numbers=MANIFESTS[1][1],
+            ),
+        )
+
+    def test_third_repository_manifest_verifies(self) -> None:
+        self.assertEqual(
+            10,
+            verify(
+                manifest_path=MANIFESTS[2][0],
+                expected_numbers=MANIFESTS[2][1],
             ),
         )
 

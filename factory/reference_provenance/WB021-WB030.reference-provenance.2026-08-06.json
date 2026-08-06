@@ -1,0 +1,480 @@
+{
+  "$schema": "reference-provenance-v1.schema.json",
+  "schema_version": 1,
+  "manifest_id": "WB021-WB030-2026-08-06",
+  "generated_at_utc": "2026-08-06T03:08:00Z",
+  "catalogue_path": "research_factory_100_workbenches.json",
+  "catalogue_sha256": "9b37a47c265e916cbf460f4dd0120b02b01fa800b104017b117ba2fc40644cd5",
+  "scope": [
+    "WB-021",
+    "WB-022",
+    "WB-023",
+    "WB-024",
+    "WB-025",
+    "WB-026",
+    "WB-027",
+    "WB-028",
+    "WB-029",
+    "WB-030"
+  ],
+  "hash_algorithm": "SHA-256",
+  "factory_licensing_scope": {
+    "manifest_factual_fields": "CC0-1.0",
+    "upstream_material": "not-relicensed-by-the-research-factory"
+  },
+  "retrieval_method": {
+    "client": "curl 8.13.0 (Windows, Schannel)",
+    "redirect_policy": "follow",
+    "tls_certificate_verification": "required",
+    "hash_scope": "exact response-body bytes emitted by curl after redirects",
+    "user_agent": "Research-Factory-Provenance-Audit/1.0 (+https://github.com/Martin123132/research-factory)"
+  },
+  "dataset_files_committed": false,
+  "candidate_artifacts_committed": false,
+  "stations": [
+    {
+      "workbench_code": "WB-021",
+      "catalogue_id": 21,
+      "catalogue_title": "Three-dimensional pallet/container loading",
+      "benchmark_label": "PackLib² multidimensional library",
+      "catalogue_reference_url": "https://www.ibr.cs.tu-bs.de/alg/packlib/index.shtml",
+      "authority": {
+        "organisation": "Technische Universität Braunschweig PackLib² maintainers",
+        "basis": "The official PackLib² site maintained at TU Braunschweig publishes multidimensional packing libraries, instance-family links and associated references."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The official index responded successfully, but it spans two- and three-dimensional problem families from several authors. The catalogue does not freeze a three-dimensional subset, orientation and support conventions, load limits, centre-of-mass rules or verified optima.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://www.ibr.cs.tu-bs.de/alg/packlib/index.shtml",
+          "retrieved_at_utc": "2026-08-06T03:07:26.6896140Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://www.ibr.cs.tu-bs.de/alg/packlib/index.shtml",
+          "redirect_count": 0,
+          "content_type": "text/html",
+          "response_size_bytes": 1861,
+          "response_sha256": "b437beeeaff36e5b162f0dfb2c08bbc7327425cfb6be10e2626843b601155ee0",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "not-stated-on-reference-page",
+        "terms_url": null,
+        "redistribution_status": "not-granted-by-reference",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "The public index does not state a blanket licence for all instance families. A commissioned station must select each family and record its source-specific terms; no PackLib² data are committed."
+      }
+    },
+    {
+      "workbench_code": "WB-022",
+      "catalogue_id": 22,
+      "catalogue_title": "Job-shop manufacturing scheduling",
+      "benchmark_label": "JSPLib",
+      "catalogue_reference_url": "https://scheduleopt.github.io/benchmarks/jsplib/",
+      "authority": {
+        "organisation": "ScheduleOpt benchmark maintainers",
+        "basis": "The ScheduleOpt project publishes and maintains the JSPLib instance repository, standardized engine benchmark and best-known-bound archive."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The official benchmark page and repository licence were retrieved. JSPLib aggregates classic and industrial instance families, and its best-known bounds evolve; the catalogue does not pin a repository revision, instance subset, bound snapshot or exact solver-time lane.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://scheduleopt.github.io/benchmarks/jsplib/",
+          "retrieved_at_utc": "2026-08-06T03:07:27.1579761Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://scheduleopt.github.io/benchmarks/jsplib/",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=utf-8",
+          "response_size_bytes": 146311,
+          "response_sha256": "89b91b87f22f8c1908ad47907d86dc8fe1cb0b46cc6700ef9bce3b0e231302d7",
+          "error": null
+        },
+        {
+          "role": "upstream-terms",
+          "requested_url": "https://raw.githubusercontent.com/ScheduleOpt/benchmarks/main/LICENSE",
+          "retrieved_at_utc": "2026-08-06T03:07:27.5967379Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://raw.githubusercontent.com/ScheduleOpt/benchmarks/main/LICENSE",
+          "redirect_count": 0,
+          "content_type": "text/plain; charset=utf-8",
+          "response_size_bytes": 20137,
+          "response_sha256": "23ee78c8bae49cf08ea2f0c84945c66b987ebe4520881fb51b3dad4fb43d07c2",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "source-specific-conditions",
+        "terms_url": "https://raw.githubusercontent.com/ScheduleOpt/benchmarks/main/LICENSE",
+        "redistribution_status": "conditional-by-upstream-license",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "The ScheduleOpt benchmark repository declares CC BY-SA 4.0. Individual classic instance families retain their documented provenance, so commissioning must pin the revision, preserve attribution and check family-specific notices; no JSPLib bytes are committed."
+      }
+    },
+    {
+      "workbench_code": "WB-023",
+      "catalogue_id": 23,
+      "catalogue_title": "Flow-shop/assembly-line sequencing",
+      "benchmark_label": "Taillard scheduling instances",
+      "catalogue_reference_url": "https://mistic.iict-heig-vd.ch/taillard/problemes.dir/ordonnancement.dir/ordonnancement.html",
+      "authority": {
+        "organisation": "Éric Taillard's HEIG-VD research site",
+        "basis": "The cited institutional author page publishes Taillard's scheduling benchmark generators and links for flow-shop and related scheduling problem families."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The cited institutional page responded successfully, but it covers several scheduling problem classes and links generated instances and ancillary programs without a frozen station selection. Exact flow-shop sets, generator conventions, optimum or bound snapshot and evaluation runtime remain unspecified.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://mistic.iict-heig-vd.ch/taillard/problemes.dir/ordonnancement.dir/ordonnancement.html",
+          "retrieved_at_utc": "2026-08-06T03:07:27.9543987Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://mistic.iict-heig-vd.ch/taillard/problemes.dir/ordonnancement.dir/ordonnancement.html",
+          "redirect_count": 0,
+          "content_type": "text/html",
+          "response_size_bytes": 2871,
+          "response_sha256": "347b4400b13e09bce163171d942aeb157cb3792a458a7380d4949ade9b02e6b1",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "not-stated-on-reference-page",
+        "terms_url": null,
+        "redistribution_status": "not-granted-by-reference",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "Public program and data links are not treated as a blanket redistribution licence. The station must use a dated download-and-hash acquisition or obtain permission; no Taillard files are committed."
+      }
+    },
+    {
+      "workbench_code": "WB-024",
+      "catalogue_id": 24,
+      "catalogue_title": "Resource-constrained project scheduling",
+      "benchmark_label": "PSPLIB",
+      "catalogue_reference_url": "https://www.om-db.wi.tum.de/psplib/",
+      "authority": {
+        "organisation": "Technical University of Munich Operations Management database",
+        "basis": "TUM's official PSPLIB service publishes benchmark sets, formats, generators, solutions and library information for project scheduling research."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The official landing page and library description were retrieved. PSPLIB contains single-mode, multi-mode and other project-scheduling variants with changing solution records; the catalogue does not pin exact sets, archive hashes, bound snapshots or a declared problem lane.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://www.om-db.wi.tum.de/psplib/",
+          "retrieved_at_utc": "2026-08-06T03:07:28.3533461Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://www.om-db.wi.tum.de/psplib/",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=UTF-8",
+          "response_size_bytes": 2375,
+          "response_sha256": "ad4344598523d45ead3bc6a0affafe50dbc7c23b6acb53e6f4f20c30971f7ee0",
+          "error": null
+        },
+        {
+          "role": "authoritative-supporting-document",
+          "requested_url": "https://www.om-db.wi.tum.de/psplib/library.php",
+          "retrieved_at_utc": "2026-08-06T03:07:28.9036332Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://www.om-db.wi.tum.de/psplib/library.php",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=UTF-8",
+          "response_size_bytes": 4427,
+          "response_sha256": "bd3a315302fbdf2370d1b3241ac780ebc67a0150222814440da4fa27d7b27e22",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "not-stated-on-reference-page",
+        "terms_url": null,
+        "redistribution_status": "not-granted-by-reference",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "The official page permits researchers to download sets for evaluating solution procedures, but that statement is not treated as a blanket redistribution licence. Exact archives must be acquired and hashed separately; none are committed."
+      }
+    },
+    {
+      "workbench_code": "WB-025",
+      "catalogue_id": 25,
+      "catalogue_title": "Hospital nurse rostering",
+      "benchmark_label": "Nurse Rostering Benchmark Instances",
+      "catalogue_reference_url": "https://www.schedulingbenchmarks.org/nrp/",
+      "authority": {
+        "organisation": "SchedulingBenchmarks.org nurse-rostering maintainers",
+        "basis": "The cited benchmark service publishes nurse-rostering instances, formats, constraint descriptions, verified solution records and references to the originating contributors."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The benchmark page responded successfully and records that reported solutions are verified, but it combines many real and published datasets from different contributors. The catalogue does not pin a subset, version, penalty model, best-known-solution date or source-specific rights.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://www.schedulingbenchmarks.org/nrp/",
+          "retrieved_at_utc": "2026-08-06T03:07:29.2165873Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://www.schedulingbenchmarks.org/nrp/",
+          "redirect_count": 0,
+          "content_type": "text/html",
+          "response_size_bytes": 67639,
+          "response_sha256": "d3d1a9c01b22f37c60f2feeff8cd310c4f4f7022ba187b697b54caf7ad6bce61",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "not-stated-on-reference-page",
+        "terms_url": null,
+        "redistribution_status": "not-granted-by-reference",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "The public download and verification links do not state one licence covering every contributed hospital and publication-derived instance. Each selected family needs a rights check and frozen acquisition manifest; no nurse data are committed."
+      }
+    },
+    {
+      "workbench_code": "WB-026",
+      "catalogue_id": 26,
+      "catalogue_title": "Examination and course timetabling",
+      "benchmark_label": "International Timetabling Competition 2007",
+      "catalogue_reference_url": "https://www.unitime.org/itc2007/",
+      "authority": {
+        "organisation": "UniTime project and ITC 2007 solver authors",
+        "basis": "The cited UniTime page documents the three International Timetabling Competition 2007 tracks and publishes solver descriptions, software, execution guidance and links to track resources."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The cited page responded successfully, but it is a solver and results page spanning examination, post-enrolment and curriculum-based tracks rather than one frozen competition contract. Track data, scoring definitions, time limits, seeds and original official-page snapshots remain to be pinned.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://www.unitime.org/itc2007/",
+          "retrieved_at_utc": "2026-08-06T03:07:29.7653171Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://www.unitime.org/itc2007/",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=UTF-8",
+          "response_size_bytes": 6215,
+          "response_sha256": "0a51c86dd45027e3d9d110c257475821c64ab41b5d9afed89a6ad72bc33ddcd9",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "not-stated-on-reference-page",
+        "terms_url": null,
+        "redistribution_status": "not-granted-by-reference",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "The solver download and competition links do not state a blanket licence for all ITC 2007 track datasets. A station must freeze the original track rules, instances and applicable terms separately; none are committed."
+      }
+    },
+    {
+      "workbench_code": "WB-027",
+      "catalogue_id": 27,
+      "catalogue_title": "Forward-error-correction decoder",
+      "benchmark_label": "AFF3CT",
+      "catalogue_reference_url": "https://aff3ct.github.io/index.html",
+      "authority": {
+        "organisation": "AFF3CT project maintainers",
+        "basis": "The official AFF3CT project site publishes the forward-error-correction simulator, supported code families, pre-simulated BER and FER references, builds, documentation and source repository."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The official site and MIT licence were retrieved, but the catalogue does not select a tagged AFF3CT release, code family, rate, frame size, channel, SNR grid, decoder configuration, reference curve or hardware energy-measurement protocol.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://aff3ct.github.io/index.html",
+          "retrieved_at_utc": "2026-08-06T03:07:30.3451360Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://aff3ct.github.io/index.html",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=utf-8",
+          "response_size_bytes": 28381,
+          "response_sha256": "2ef87b2996462dfa480afdcc41a9f882006e15175612ab924c546041d23e2efb",
+          "error": null
+        },
+        {
+          "role": "upstream-terms",
+          "requested_url": "https://raw.githubusercontent.com/aff3ct/aff3ct/develop/LICENSE",
+          "retrieved_at_utc": "2026-08-06T03:07:30.7773423Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://raw.githubusercontent.com/aff3ct/aff3ct/develop/LICENSE",
+          "redirect_count": 0,
+          "content_type": "text/plain; charset=utf-8",
+          "response_size_bytes": 1067,
+          "response_sha256": "9467d35542b4535b5536347c28f77d11e69e1151517c20168097112b052183cd",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "source-specific-conditions",
+        "terms_url": "https://raw.githubusercontent.com/aff3ct/aff3ct/develop/LICENSE",
+        "redistribution_status": "conditional-by-upstream-license",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "AFF3CT's source repository declares the MIT licence. Commissioning must still pin a release and check notices for any separately sourced reference data or dependencies; no AFF3CT code, builds or reference curves are committed."
+      }
+    },
+    {
+      "workbench_code": "WB-028",
+      "catalogue_id": 28,
+      "catalogue_title": "5G uplink channel estimation and receiver",
+      "benchmark_label": "Sionna 5G NR link-level simulations",
+      "catalogue_reference_url": "https://nvlabs.github.io/sionna/v1.2.2/phy/tutorials/Link_Level_Simulations_with_RT.html",
+      "authority": {
+        "organisation": "NVIDIA Research Sionna project",
+        "basis": "The versioned official Sionna documentation publishes the cited link-level simulation tutorial and the project repository provides its matching release licence."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The exact v1.2.2 tutorial and tagged Apache-2.0 licence were retrieved. The tutorial is a configurable example rather than a frozen benchmark: scene, topology, channel seeds, PUSCH configuration, training split, hardware, latency and power measurement remain undefined.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://nvlabs.github.io/sionna/v1.2.2/phy/tutorials/Link_Level_Simulations_with_RT.html",
+          "retrieved_at_utc": "2026-08-06T03:07:31.0820463Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://nvlabs.github.io/sionna/v1.2.2/phy/tutorials/Link_Level_Simulations_with_RT.html",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=utf-8",
+          "response_size_bytes": 306738,
+          "response_sha256": "d3a69cb9ce965a20daa2e4a67880ff8e3fbbe10ea105e8b3e4e8dc3c1729bb36",
+          "error": null
+        },
+        {
+          "role": "upstream-terms",
+          "requested_url": "https://raw.githubusercontent.com/NVlabs/sionna/v1.2.2/LICENSE",
+          "retrieved_at_utc": "2026-08-06T03:07:31.4837917Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://raw.githubusercontent.com/NVlabs/sionna/v1.2.2/LICENSE",
+          "redirect_count": 0,
+          "content_type": "text/plain; charset=utf-8",
+          "response_size_bytes": 658,
+          "response_sha256": "3a08079f54bfb596a30430ede3cc015a8dffbddf8d7e1f32b41d951d5ed77420",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "source-specific-conditions",
+        "terms_url": "https://raw.githubusercontent.com/NVlabs/sionna/v1.2.2/LICENSE",
+        "redistribution_status": "conditional-by-upstream-license",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "The tagged Sionna v1.2.2 repository declares Apache-2.0 for the software. Third-party scenes, channel inputs and dependencies need their own checks when a station fixture is selected; no Sionna assets are committed."
+      }
+    },
+    {
+      "workbench_code": "WB-029",
+      "catalogue_id": 29,
+      "catalogue_title": "Adaptive-bitrate video streaming",
+      "benchmark_label": "Stanford Puffer data and experiments",
+      "catalogue_reference_url": "https://puffer.stanford.edu/data-description/",
+      "authority": {
+        "organisation": "Stanford Puffer research project",
+        "basis": "The official Puffer service publishes its anonymized experiment-data description, measurement schema and links to the continuously updated result archives."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The official data description responded successfully, but Puffer publishes several gigabytes of new data daily from an ongoing randomized live service. The catalogue does not freeze dates, schemes, exclusions, fake-data checks, replay protocol, metrics or a live-experiment approval boundary.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://puffer.stanford.edu/data-description/",
+          "retrieved_at_utc": "2026-08-06T03:07:31.7815472Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://puffer.stanford.edu/data-description/",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=utf-8",
+          "response_size_bytes": 20172,
+          "response_sha256": "4b7dbb210b78b08402cb62576c6fd59026c0d13e4f422e724f844e5bf4b9d9d7",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "not-stated-on-reference-page",
+        "terms_url": null,
+        "redistribution_status": "not-granted-by-reference",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "Publication for research use and download guidance are not treated as a blanket redistribution licence. A station must use dated acquisition hashes and respect Puffer's service and privacy conditions; no Puffer data are committed."
+      }
+    },
+    {
+      "workbench_code": "WB-030",
+      "catalogue_id": 30,
+      "catalogue_title": "Real-time speech denoising and dereverberation",
+      "benchmark_label": "Microsoft DNS Challenge",
+      "catalogue_reference_url": "https://github.com/microsoft/DNS-Challenge",
+      "authority": {
+        "organisation": "Microsoft DNS Challenge maintainers",
+        "basis": "Microsoft's official repository publishes the DNS Challenge scripts, model resources, dataset acquisition instructions, evaluation criteria, challenge history and detailed licence notices."
+      },
+      "reference_assessment": "available-with-ambiguity",
+      "assessment_notes": "The official repository page, documentation licence and code licence were retrieved. The moving master branch covers multiple challenge editions and tracks, while its component speech, noise and room-response datasets retain many different upstream licences; the catalogue does not pin one edition or corpus manifest.",
+      "retrievals": [
+        {
+          "role": "catalogue-reference",
+          "requested_url": "https://github.com/microsoft/DNS-Challenge",
+          "retrieved_at_utc": "2026-08-06T03:07:32.8672375Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://github.com/microsoft/DNS-Challenge",
+          "redirect_count": 0,
+          "content_type": "text/html; charset=utf-8",
+          "response_size_bytes": 435323,
+          "response_sha256": "72e22c0e65a26005d7e2d80977d4f911cf2de709410c01b935d384b000cdf97d",
+          "error": null
+        },
+        {
+          "role": "upstream-terms",
+          "requested_url": "https://raw.githubusercontent.com/microsoft/DNS-Challenge/master/LICENSE",
+          "retrieved_at_utc": "2026-08-06T03:07:33.7489654Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://raw.githubusercontent.com/microsoft/DNS-Challenge/master/LICENSE",
+          "redirect_count": 0,
+          "content_type": "text/plain; charset=utf-8",
+          "response_size_bytes": 19047,
+          "response_sha256": "d6239afa918961b465b07bf7411cbe34ff6685854f58553db7966f4881a0211f",
+          "error": null
+        },
+        {
+          "role": "upstream-terms",
+          "requested_url": "https://raw.githubusercontent.com/microsoft/DNS-Challenge/master/LICENSE-CODE",
+          "retrieved_at_utc": "2026-08-06T03:07:34.0312278Z",
+          "outcome": "retrieved",
+          "curl_exit_code": 0,
+          "http_status": 200,
+          "final_url": "https://raw.githubusercontent.com/microsoft/DNS-Challenge/master/LICENSE-CODE",
+          "redirect_count": 0,
+          "content_type": "text/plain; charset=utf-8",
+          "response_size_bytes": 1162,
+          "response_sha256": "9906940f61b1f0b533fa7d99baf55178b2808fbe113ea51dfbfad8572ccd5f2b",
+          "error": null
+        }
+      ],
+      "upstream_terms": {
+        "terms_status": "source-specific-conditions",
+        "terms_url": "https://raw.githubusercontent.com/microsoft/DNS-Challenge/master/LICENSE",
+        "redistribution_status": "conditional-by-upstream-license",
+        "factory_license_applies_to_upstream_material": false,
+        "notes": "Microsoft declares CC BY 4.0 for repository documentation and MIT for code, while the README enumerates separate upstream terms for each dataset. Commissioning must pin every component and licence; no DNS code, models or audio are committed."
+      }
+    }
+  ]
+}

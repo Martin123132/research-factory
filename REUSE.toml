@@ -73,6 +73,7 @@ path = [
   "factory/hangar/data/workbench-readiness.json",
   "factory/reference_provenance/WB001-WB010.reference-provenance.2026-08-06.json",
   "factory/reference_provenance/WB011-WB020.reference-provenance.2026-08-06.json",
+  "factory/reference_provenance/WB021-WB030.reference-provenance.2026-08-06.json",
   "factory/rounds/**/*.json",
   "factory/station_kits/**/kit-manifest.json",
   "factory/workbench_standard/commissioning/index.json",

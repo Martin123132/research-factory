@@ -16,6 +16,10 @@ MANIFESTS = (
         REFERENCE_DIR / "WB011-WB020.reference-provenance.2026-08-06.json",
         tuple(range(11, 21)),
     ),
+    (
+        REFERENCE_DIR / "WB021-WB030.reference-provenance.2026-08-06.json",
+        tuple(range(21, 31)),
+    ),
 )
 SCHEMA = ROOT / "factory" / "reference_provenance" / "reference-provenance-v1.schema.json"
 CATALOGUE = ROOT / "research_factory_100_workbenches.json"
@@ -247,9 +251,10 @@ def verify(
 
 def main() -> int:
     count = verify()
+    final_station = MANIFESTS[-1][1][-1]
     print(
         f"Reference provenance verified for {count} catalogue stations "
-        f"across {len(MANIFESTS)} dated manifests (WB-001 through WB-020)."
+        f"across {len(MANIFESTS)} dated manifests (WB-001 through WB-{final_station:03d})."
     )
     return 0
 
