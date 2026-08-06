@@ -46,6 +46,10 @@ another.
     append-only correction record. Original bytes and earlier standing remain
     visible; terminal retractions, invalidations and supersessions cannot be
     silently restored.
+14. No new agent runner receives Factory process-execution authority unless a
+    hash-bound dispatch budget passes every enforcement dimension. Partial
+    monitoring produces a rejection ticket; an agent cannot expand its own
+    scope, interfaces, data access, spending, duration or evidence class.
 
 ## Repository authority
 

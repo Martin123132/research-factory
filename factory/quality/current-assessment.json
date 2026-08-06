@@ -1,8 +1,8 @@
 {
   "$schema": "factory-quality-assessment-v1.schema.json",
   "assessment_version": 1,
-  "assessment_id": "RFQ-2026-08-06-CORRECTIONS",
-  "assessed_at_utc": "2026-08-06T19:28:25Z",
+  "assessment_id": "RFQ-2026-08-07-DISPATCH-BUDGET",
+  "assessed_at_utc": "2026-08-06T23:52:44Z",
   "standard_version": "1.0.0",
   "standard_path": "factory/quality/factory-quality-standard-v1.json",
   "standard_sha256": "fd0e51f61c87db90ebff64e33b7f262e51c6c88c351e0f9b3d0c40d25258f4f8",
@@ -42,7 +42,7 @@
       "evidence": [
         {
           "path": "factory/ENGINE.md",
-          "sha256": "6bfe4f8d57b7be51e554172987996b344f99830592e3beb56566d242957a4f62",
+          "sha256": "19b1c79a30939f9b514fb4d3356d45ecb766ce2071e16581037ffd7f2d2978c1",
           "supports": "Documents the clean-clone core with no hosted account, website, GitHub API or model-provider requirement."
         },
         {
@@ -62,7 +62,7 @@
       "evidence": [
         {
           "path": "GOVERNANCE.md",
-          "sha256": "87e5e6aebc8258c736a5daa9bf30d7324932eed468638bbeb233e16e5b6201f6",
+          "sha256": "24828fd80f82d65ad9571afb073fe93f2f3a1f4296d6d795fcea12f6dfddc64b",
           "supports": "Makes reproducible evidence rather than credentials or reputation the source of authority."
         },
         {
@@ -112,7 +112,7 @@
       "evidence": [
         {
           "path": "OPEN_FACTORY_CHARTER.md",
-          "sha256": "7417a953dcbff17af5469ef2ca4cc359567082930222a936d34f79130c788553",
+          "sha256": "67c0e4d5f6247e5e9ab2abb6fa3b127cbcc0892efd2d429ebcf7a0fa81c2b432",
           "supports": "Requires scope, duration, resources, stop conditions, hazards and evidence class before dispatch."
         },
         {
@@ -137,7 +137,7 @@
       "evidence": [
         {
           "path": "OPEN_FACTORY_CHARTER.md",
-          "sha256": "7417a953dcbff17af5469ef2ca4cc359567082930222a936d34f79130c788553",
+          "sha256": "67c0e4d5f6247e5e9ab2abb6fa3b127cbcc0892efd2d429ebcf7a0fa81c2b432",
           "supports": "Grants pause, decline and exit without loss of earned attribution or retaliation through scoring or access."
         }
       ],
@@ -148,20 +148,25 @@
       "critical": true,
       "minimum_evidence_level": "ENFORCED",
       "outcome": "PARTIAL",
-      "evidence_level": "DECLARED",
+      "evidence_level": "ENFORCED",
       "evidence": [
         {
-          "path": "OPEN_FACTORY_CHARTER.md",
-          "sha256": "7417a953dcbff17af5469ef2ca4cc359567082930222a936d34f79130c788553",
-          "supports": "Requires a named human, allowed interfaces, resource ceiling and termination condition for agent dispatch."
+          "path": "factory/dispatch/dispatch-budget-v1.schema.json",
+          "sha256": "454aea4cfc5f64e9db4eb5ee0ed6a03a3f5b46b778ca5bc5b93b288eae235d73",
+          "supports": "Closes agent authority around one accountable human and fixed time, compute, spend, interface, path, network, hazard and stop budgets."
         },
         {
-          "path": "factory/control_plane/envelope.py",
-          "sha256": "20dc59e02e73c409bab41606407dc599463321536de03c0d666f4064d0042f93",
-          "supports": "Enforces exact local argv and working directory, wall and output ceilings, a human stop callback, immutable receipts and explicit non-promotion status."
+          "path": "factory/dispatch/gate.py",
+          "sha256": "98159a4d6cf53370f9e5ea5b252e47fb6d4270e1b74b0e2dcbd4acd0897cc507",
+          "supports": "Issues an admission ticket only when all 18 dimensions are enforced, rejects the partial frozen runner and forbids agent self-expansion."
+        },
+        {
+          "path": "factory/dispatch/tests/test_gate.py",
+          "sha256": "c840f04407c8ec84046075ca5dea73eaa10351bade776d766ee19abab69586ef",
+          "supports": "Exercises no-execution admission, process rejection, protected paths, expired windows, source drift, tampering and overwrite refusal."
         }
       ],
-      "limitation": "The provider-neutral envelope shape is enforced for LOCAL_MONITORED_V1, but not yet by every station runner; network, filesystem, memory and external spend need a promotion-grade isolation adapter."
+      "limitation": "The universal gate is enforced, but its only complete profile starts no process. The frozen process runner is correctly rejected at 4/18 until a real adapter enforces the remaining dimensions."
     },
     {
       "control_id": "WORK-04",
@@ -172,7 +177,7 @@
       "evidence": [
         {
           "path": "OPEN_FACTORY_CHARTER.md",
-          "sha256": "7417a953dcbff17af5469ef2ca4cc359567082930222a936d34f79130c788553",
+          "sha256": "67c0e4d5f6247e5e9ab2abb6fa3b127cbcc0892efd2d429ebcf7a0fa81c2b432",
           "supports": "Forbids using attempt volume, compute consumption or endurance as substitutes for evidence quality."
         }
       ],
@@ -372,7 +377,7 @@
         },
         {
           "path": "OPEN_FACTORY_CHARTER.md",
-          "sha256": "7417a953dcbff17af5469ef2ca4cc359567082930222a936d34f79130c788553",
+          "sha256": "67c0e4d5f6247e5e9ab2abb6fa3b127cbcc0892efd2d429ebcf7a0fa81c2b432",
           "supports": "Grants challenge without retaliation and prevents an interested party from solely deciding their own appeal."
         }
       ],
@@ -466,7 +471,7 @@
         },
         {
           "path": ".github/workflows/verify.yml",
-          "sha256": "50d0cc36f9d54cdb61078a33de53dbd9528c3bf614cc1cda117e1752ae170ca3",
+          "sha256": "609d56b4b731276e906e29e0312f8270d59cb1d1323f1e56acd38ddb67328dd1",
           "supports": "Runs the quality verifier and regression tests as a protected repository check."
         }
       ],

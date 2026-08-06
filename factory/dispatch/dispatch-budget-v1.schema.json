@@ -1,0 +1,302 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Martin123132/research-factory/blob/main/factory/dispatch/dispatch-budget-v1.schema.json",
+  "title": "Research Factory provider-neutral dispatch budget v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "budget_type",
+    "budget_id",
+    "work_order",
+    "accountable_human",
+    "objective",
+    "requested_execution_mode",
+    "time_budget",
+    "compute_budget",
+    "financial_budget",
+    "interface_budget",
+    "data_budget",
+    "hazard_budget",
+    "stop_conditions",
+    "authority_boundary",
+    "budget_sha256"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "budget_type": { "const": "AGENT_DISPATCH_BUDGET" },
+    "budget_id": { "$ref": "#/$defs/id" },
+    "work_order": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["work_order_id", "work_order_revision", "work_order_sha256", "station_id"],
+      "properties": {
+        "work_order_id": { "$ref": "#/$defs/id" },
+        "work_order_revision": { "type": "integer", "minimum": 1 },
+        "work_order_sha256": { "$ref": "#/$defs/sha256" },
+        "station_id": { "type": "string", "pattern": "^WB-[0-9]{3}$" }
+      }
+    },
+    "accountable_human": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operator_id",
+        "display_name",
+        "identity_assurance",
+        "identity_warning",
+        "release_capability_sha256",
+        "retains_release_control",
+        "may_stop_without_penalty"
+      ],
+      "properties": {
+        "operator_id": { "$ref": "#/$defs/id" },
+        "display_name": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "identity_assurance": {
+          "enum": ["SELF_ASSERTED_LOCAL", "PLATFORM_VERIFIED", "EXTERNALLY_ATTESTED"]
+        },
+        "identity_warning": { "const": "IDENTITY_RECORD_IS_NOT_PROOF_OF_A_DISTINCT_HUMAN" },
+        "release_capability_sha256": { "$ref": "#/$defs/sha256" },
+        "retains_release_control": { "const": true },
+        "may_stop_without_penalty": { "const": true }
+      }
+    },
+    "objective": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["statement", "allowed_tasks", "prohibited_tasks", "evidence_class"],
+      "properties": {
+        "statement": { "type": "string", "minLength": 8, "maxLength": 1000 },
+        "allowed_tasks": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/short_text" }
+        },
+        "prohibited_tasks": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/short_text" }
+        },
+        "evidence_class": {
+          "enum": [
+            "CONSTRUCTION_ONLY",
+            "SYNTHETIC_COMMISSIONING_ONLY",
+            "RESEARCH_CANDIDATE_ONLY"
+          ]
+        }
+      }
+    },
+    "requested_execution_mode": { "enum": ["DRY_RUN_ONLY", "PROCESS_EXECUTION"] },
+    "time_budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "issued_at",
+        "expires_at",
+        "max_wall_seconds",
+        "max_active_seconds",
+        "max_idle_seconds",
+        "max_shift_count",
+        "extension_policy"
+      ],
+      "properties": {
+        "issued_at": { "$ref": "#/$defs/utc_timestamp" },
+        "expires_at": { "$ref": "#/$defs/utc_timestamp" },
+        "max_wall_seconds": { "type": "integer", "minimum": 0, "maximum": 86400 },
+        "max_active_seconds": { "type": "integer", "minimum": 0, "maximum": 86400 },
+        "max_idle_seconds": { "type": "integer", "minimum": 0, "maximum": 86400 },
+        "max_shift_count": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "extension_policy": { "const": "NEW_BUDGET_AND_HUMAN_RELEASE_ONLY" }
+      }
+    },
+    "compute_budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_cpu_seconds",
+        "max_memory_bytes",
+        "max_gpu_seconds",
+        "max_storage_bytes",
+        "max_output_bytes",
+        "max_processes"
+      ],
+      "properties": {
+        "max_cpu_seconds": { "type": "integer", "minimum": 0, "maximum": 31536000 },
+        "max_memory_bytes": { "type": "integer", "minimum": 0 },
+        "max_gpu_seconds": { "type": "integer", "minimum": 0, "maximum": 31536000 },
+        "max_storage_bytes": { "type": "integer", "minimum": 0 },
+        "max_output_bytes": { "type": "integer", "minimum": 0 },
+        "max_processes": { "type": "integer", "minimum": 0, "maximum": 4096 }
+      }
+    },
+    "financial_budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max_minor_units", "currency", "allowed_billable_services"],
+      "properties": {
+        "max_minor_units": { "type": "integer", "minimum": 0, "maximum": 1000000000 },
+        "currency": { "type": "string", "pattern": "^[A-Z]{3}$" },
+        "allowed_billable_services": {
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/id" }
+        }
+      }
+    },
+    "interface_budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "allowed_interfaces",
+        "allowed_tool_manifest_sha256",
+        "shell_policy",
+        "agent_may_add_tools"
+      ],
+      "properties": {
+        "allowed_interfaces": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "PREFLIGHT_ONLY",
+              "LOCAL_SUBPROCESS",
+              "DECLARED_INPUT_FILES",
+              "DECLARED_OUTPUT_FILES",
+              "MODEL_API",
+              "NETWORK_HTTPS"
+            ]
+          }
+        },
+        "allowed_tool_manifest_sha256": {
+          "type": "array",
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/sha256" }
+        },
+        "shell_policy": { "enum": ["FORBIDDEN", "EXACT_COMMAND_ONLY"] },
+        "agent_may_add_tools": { "const": false }
+      }
+    },
+    "data_budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["read_paths", "write_paths", "network_policy", "allowed_domains"],
+      "properties": {
+        "read_paths": {
+          "type": "array",
+          "maxItems": 128,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/repository_path" }
+        },
+        "write_paths": {
+          "type": "array",
+          "maxItems": 128,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/repository_path" }
+        },
+        "network_policy": { "enum": ["DENY_ALL", "DOMAIN_ALLOWLIST"] },
+        "allowed_domains": {
+          "type": "array",
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+[a-z]{2,63}$",
+            "maxLength": 253
+          }
+        }
+      }
+    },
+    "hazard_budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["classification", "human_review_required", "human_review_sha256"],
+      "properties": {
+        "classification": {
+          "enum": ["NONE", "SIMULATION_ONLY", "UNTRUSTED_SOFTWARE", "PHYSICAL_SYSTEM", "BIOLOGICAL_OR_CHEMICAL"]
+        },
+        "human_review_required": { "type": "boolean" },
+        "human_review_sha256": {
+          "oneOf": [
+            { "$ref": "#/$defs/sha256" },
+            { "type": "null" }
+          ]
+        }
+      }
+    },
+    "stop_conditions": {
+      "type": "array",
+      "minItems": 18,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "HUMAN_STOP_REQUESTED",
+          "RELEASE_WITHHELD",
+          "WALL_TIME_LIMIT_REACHED",
+          "ACTIVE_TIME_LIMIT_REACHED",
+          "IDLE_TIME_LIMIT_REACHED",
+          "CPU_LIMIT_REACHED",
+          "MEMORY_LIMIT_REACHED",
+          "GPU_LIMIT_REACHED",
+          "STORAGE_LIMIT_REACHED",
+          "OUTPUT_LIMIT_REACHED",
+          "PROCESS_LIMIT_REACHED",
+          "COST_LIMIT_REACHED",
+          "TOOL_POLICY_VIOLATION",
+          "FILESYSTEM_POLICY_VIOLATION",
+          "NETWORK_POLICY_VIOLATION",
+          "HAZARD_ESCALATED",
+          "PROCESS_EXITED",
+          "PROCESS_LAUNCH_FAILED"
+        ]
+      }
+    },
+    "authority_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "agent_may_expand_scope",
+        "agent_may_expand_budget",
+        "agent_may_change_evidence_class",
+        "agent_may_self_release",
+        "counts_as_scientific_evidence",
+        "counts_as_independent_reproduction",
+        "promotion_eligible"
+      ],
+      "properties": {
+        "agent_may_expand_scope": { "const": false },
+        "agent_may_expand_budget": { "const": false },
+        "agent_may_change_evidence_class": { "const": false },
+        "agent_may_self_release": { "const": false },
+        "counts_as_scientific_evidence": { "const": false },
+        "counts_as_independent_reproduction": { "const": false },
+        "promotion_eligible": { "const": false }
+      }
+    },
+    "budget_sha256": { "$ref": "#/$defs/sha256" }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:@/-]{2,159}$"
+    },
+    "short_text": { "type": "string", "minLength": 3, "maxLength": 500 },
+    "utc_timestamp": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?Z$"
+    },
+    "repository_path": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?!/)(?![A-Za-z]:)(?!.*\\\\)(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*//)[^\\r\\n]+$"
+    }
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "budget_type": "AGENT_DISPATCH_BUDGET",
+  "budget_id": "dispatch-budget:visible-dry-run-example",
+  "work_order": {
+    "work_order_id": "work-order:visible-dry-run-example",
+    "work_order_revision": 1,
+    "work_order_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "station_id": "WB-001"
+  },
+  "accountable_human": {
+    "operator_id": "human:example-operator",
+    "display_name": "Example Operator",
+    "identity_assurance": "SELF_ASSERTED_LOCAL",
+    "identity_warning": "IDENTITY_RECORD_IS_NOT_PROOF_OF_A_DISTINCT_HUMAN",
+    "release_capability_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "retains_release_control": true,
+    "may_stop_without_penalty": true
+  },
+  "objective": {
+    "statement": "Check the universal dispatch-budget gate without starting any process.",
+    "allowed_tasks": [
+      "Validate this visible construction-only budget."
+    ],
+    "prohibited_tasks": [
+      "Start a process, access data, spend money or claim scientific standing."
+    ],
+    "evidence_class": "CONSTRUCTION_ONLY"
+  },
+  "requested_execution_mode": "DRY_RUN_ONLY",
+  "time_budget": {
+    "issued_at": "2026-08-07T00:00:00Z",
+    "expires_at": "2030-01-01T00:00:00Z",
+    "max_wall_seconds": 0,
+    "max_active_seconds": 0,
+    "max_idle_seconds": 0,
+    "max_shift_count": 0,
+    "extension_policy": "NEW_BUDGET_AND_HUMAN_RELEASE_ONLY"
+  },
+  "compute_budget": {
+    "max_cpu_seconds": 0,
+    "max_memory_bytes": 0,
+    "max_gpu_seconds": 0,
+    "max_storage_bytes": 0,
+    "max_output_bytes": 0,
+    "max_processes": 0
+  },
+  "financial_budget": {
+    "max_minor_units": 0,
+    "currency": "GBP",
+    "allowed_billable_services": []
+  },
+  "interface_budget": {
+    "allowed_interfaces": [
+      "PREFLIGHT_ONLY"
+    ],
+    "allowed_tool_manifest_sha256": [],
+    "shell_policy": "FORBIDDEN",
+    "agent_may_add_tools": false
+  },
+  "data_budget": {
+    "read_paths": [],
+    "write_paths": [],
+    "network_policy": "DENY_ALL",
+    "allowed_domains": []
+  },
+  "hazard_budget": {
+    "classification": "NONE",
+    "human_review_required": false,
+    "human_review_sha256": null
+  },
+  "stop_conditions": [
+    "ACTIVE_TIME_LIMIT_REACHED",
+    "COST_LIMIT_REACHED",
+    "CPU_LIMIT_REACHED",
+    "FILESYSTEM_POLICY_VIOLATION",
+    "GPU_LIMIT_REACHED",
+    "HAZARD_ESCALATED",
+    "HUMAN_STOP_REQUESTED",
+    "IDLE_TIME_LIMIT_REACHED",
+    "MEMORY_LIMIT_REACHED",
+    "NETWORK_POLICY_VIOLATION",
+    "OUTPUT_LIMIT_REACHED",
+    "PROCESS_EXITED",
+    "PROCESS_LAUNCH_FAILED",
+    "PROCESS_LIMIT_REACHED",
+    "RELEASE_WITHHELD",
+    "STORAGE_LIMIT_REACHED",
+    "TOOL_POLICY_VIOLATION",
+    "WALL_TIME_LIMIT_REACHED"
+  ],
+  "authority_boundary": {
+    "agent_may_expand_scope": false,
+    "agent_may_expand_budget": false,
+    "agent_may_change_evidence_class": false,
+    "agent_may_self_release": false,
+    "counts_as_scientific_evidence": false,
+    "counts_as_independent_reproduction": false,
+    "promotion_eligible": false
+  },
+  "budget_sha256": "c5cfd58bf275950038f9eeb3c3329f7012a1e649e9646e71db2abf010ee86db8"
+}

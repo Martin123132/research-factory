@@ -2213,6 +2213,100 @@ select {
   font-style: normal;
 }
 
+.dispatch-gate-section {
+  border-top: 1px solid var(--line);
+}
+
+.dispatch-gate-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.dispatch-profile-card {
+  min-width: 0;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-top-width: 4px;
+  background: var(--paper);
+}
+
+.dispatch-profile-pass { border-top-color: var(--green); }
+.dispatch-profile-reject { border-top-color: var(--red); }
+
+.dispatch-profile-card h3 {
+  margin: 18px 0 8px;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(24px, 3vw, 34px);
+}
+
+.dispatch-profile-card > .mono {
+  overflow-wrap: anywhere;
+  color: var(--ink-soft);
+  font-size: 11px;
+}
+
+.dispatch-profile-card dl {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 20px 0;
+}
+
+.dispatch-profile-card dl div {
+  padding: 12px;
+  border: 1px solid var(--line);
+  background: var(--paper-warm);
+}
+
+.dispatch-profile-card dt,
+.dispatch-profile-card dd {
+  margin: 0;
+}
+
+.dispatch-profile-card dt {
+  color: var(--ink-soft);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dispatch-profile-card dd {
+  margin-top: 5px;
+  overflow-wrap: anywhere;
+  font-weight: 700;
+}
+
+.dispatch-missing-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dispatch-missing-list li {
+  padding: 6px 8px;
+  border: 1px solid color-mix(in srgb, var(--red) 35%, var(--line));
+  color: var(--red);
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+}
+
+.dispatch-gate-boundary {
+  display: grid;
+  gap: 7px;
+  margin-top: 18px;
+  padding: 18px 20px;
+  border: 1px solid var(--red);
+  background: color-mix(in srgb, var(--red) 6%, var(--paper));
+}
+
+.dispatch-gate-boundary strong { color: var(--red); }
+.dispatch-gate-boundary span { overflow-wrap: anywhere; font-size: 10px; }
+.dispatch-gate-boundary p { margin: 0; }
+
 .standards-split .feature-card {
   min-height: 420px;
 }
@@ -2646,6 +2740,7 @@ select {
   .charter-rights-grid, .quality-domain-grid, .charter-ladder { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .charter-ladder article:nth-child(3) { border-left: 1px solid var(--line); }
   .standard-flow { grid-template-columns: 1fr; }
+  .dispatch-gate-grid { grid-template-columns: 1fr; }
   .standard-flow > i { min-height: 30px; transform: rotate(90deg); }
   .contributor-flow { grid-template-columns: 1fr; }
   .contributor-flow > i { min-height: 32px; transform: rotate(90deg); }
@@ -2717,6 +2812,7 @@ select {
   .tutorial-chapter-grid { grid-template-columns: 1fr; }
   .standard-invariant-grid, .gate-list { grid-template-columns: 1fr; }
   .charter-rights-grid, .quality-domain-grid, .charter-ladder { grid-template-columns: 1fr; }
+  .dispatch-profile-card dl { grid-template-columns: 1fr; }
   .charter-ladder article + article, .charter-ladder article:nth-child(3) { border-top: 0; border-left: 1px solid var(--line); }
   .charter-artifacts .button-row { grid-template-columns: 1fr; }
   .standard-digest-panel dl div { grid-template-columns: 1fr; gap: 5px; }

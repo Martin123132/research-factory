@@ -66,6 +66,11 @@ jobs:
           python -m unittest discover -s corrections/tests -p "test_*.py" -v
           python -m corrections.run_synthetic_drill --output state/ci-correction-drill
           python -m corrections.verify_synthetic_drill state/ci-correction-drill
+      - name: Verify universal dispatch-budget admission
+        run: |
+          python -m unittest discover -s dispatch/tests -p "test_*.py" -v
+          python -m dispatch.run_synthetic_drill --output state/ci-dispatch-budget-drill
+          python -m dispatch.verify_synthetic_drill state/ci-dispatch-budget-drill
       - name: Verify catalogue reference provenance
         run: |
           python reference_provenance/verify_reference_provenance.py

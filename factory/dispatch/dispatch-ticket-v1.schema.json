@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Martin123132/research-factory/blob/main/factory/dispatch/dispatch-ticket-v1.schema.json",
+  "title": "Research Factory dispatch preflight ticket v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "ticket_type",
+    "ticket_id",
+    "created_at",
+    "budget_id",
+    "budget_sha256",
+    "profile",
+    "required_dimensions",
+    "violations",
+    "authorized",
+    "authorization_scope",
+    "human_release_required",
+    "release_capability_sha256",
+    "scientific_standing",
+    "promotion_eligible",
+    "ticket_sha256"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "ticket_type": { "const": "DISPATCH_PREFLIGHT_TICKET" },
+    "ticket_id": { "$ref": "#/$defs/id" },
+    "created_at": { "$ref": "#/$defs/utc_timestamp" },
+    "budget_id": { "$ref": "#/$defs/id" },
+    "budget_sha256": { "$ref": "#/$defs/sha256" },
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile_id",
+        "runner_name",
+        "execution_mode",
+        "authority",
+        "capabilities",
+        "limitations",
+        "profile_sha256"
+      ],
+      "properties": {
+        "profile_id": { "$ref": "#/$defs/id" },
+        "runner_name": { "type": "string", "minLength": 3, "maxLength": 160 },
+        "execution_mode": { "enum": ["DRY_RUN_ONLY", "PROCESS_EXECUTION"] },
+        "authority": { "enum": ["BUILTIN_NO_EXECUTION_GATE", "FROZEN_SOFTWARE_LOCK_ANALYSIS"] },
+        "capabilities": {
+          "type": "object",
+          "additionalProperties": false,
+          "minProperties": 18,
+          "maxProperties": 18,
+          "patternProperties": {
+            "^[A-Z_]+$": { "enum": ["ENFORCED", "NOT_ENFORCED"] }
+          }
+        },
+        "limitations": {
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 3, "maxLength": 500 }
+        },
+        "profile_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "required_dimensions": {
+      "type": "array",
+      "minItems": 18,
+      "maxItems": 18,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[A-Z_]+$" }
+    },
+    "violations": {
+      "type": "array",
+      "maxItems": 32,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["dimension", "code", "summary"],
+        "properties": {
+          "dimension": { "type": "string", "pattern": "^[A-Z_]+$" },
+          "code": { "enum": ["NOT_ENFORCED", "EXECUTION_MODE_MISMATCH", "BUDGET_NOT_ACTIVE"] },
+          "summary": { "type": "string", "minLength": 8, "maxLength": 500 }
+        }
+      }
+    },
+    "authorized": { "type": "boolean" },
+    "authorization_scope": { "enum": ["NO_EXECUTION_PREFLIGHT_ONLY", "PROCESS_EXECUTION", "REJECTED"] },
+    "human_release_required": { "const": true },
+    "release_capability_sha256": { "$ref": "#/$defs/sha256" },
+    "scientific_standing": { "const": "NONE" },
+    "promotion_eligible": { "const": false },
+    "ticket_sha256": { "$ref": "#/$defs/sha256" }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:@/-]{2,159}$" },
+    "utc_timestamp": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?Z$"
+    }
+  }
+}

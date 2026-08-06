@@ -122,6 +122,30 @@ test("the correction history projection cannot disguise its synthetic boundary",
   assert.equal(value.boundary.eligibleForPromotion, false);
 });
 
+test("the dispatch-budget projection rejects partial process enforcement", async () => {
+  const value = JSON.parse(
+    await readFile(new URL("../data/dispatch-budget-example.json", import.meta.url), "utf8"),
+  );
+  assert.equal(value.fixture, "SYNTHETIC_COMMISSIONING_ONLY");
+  assert.equal(value.processStarted, false);
+  assert.equal(value.dryRun.enforcedDimensions, 18);
+  assert.equal(value.dryRun.requiredDimensions, 18);
+  assert.equal(value.dryRun.authorized, true);
+  assert.equal(value.dryRun.authorizationScope, "NO_EXECUTION_PREFLIGHT_ONLY");
+  assert.equal(value.process.enforcedDimensions, 4);
+  assert.equal(value.process.requiredDimensions, 18);
+  assert.equal(value.process.authorized, false);
+  assert.equal(value.process.authorizationScope, "REJECTED");
+  assert.equal(value.process.missingDimensions.length, 14);
+  assert.ok(value.process.missingDimensions.includes("NETWORK_EGRESS"));
+  assert.ok(value.process.missingDimensions.includes("MEMORY"));
+  assert.match(value.reportSha256, /^[0-9a-f]{64}$/);
+  assert.equal(value.boundary.humanReleaseStillRequired, true);
+  assert.equal(value.boundary.scientificEvidence, false);
+  assert.equal(value.boundary.countsAsIndependentReproduction, false);
+  assert.equal(value.boundary.eligibleForPromotion, false);
+});
+
 test("shift reports append a hash chain without moving or closing the work order", async () => {
   const createdResponse = await post("/api/work-orders", {
     workbenchId: 1,

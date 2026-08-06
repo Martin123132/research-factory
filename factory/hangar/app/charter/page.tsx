@@ -21,7 +21,7 @@ const workerRights = [
 
 const domainCopy: Record<string, string> = {
   ACCESS: "The core path is free and credential-neutral. Broader accommodation and non-web accessibility work remains open.",
-  WORK: "Pause, exit and anti-volume protections are adopted. One closed cross-runner agent-budget envelope is still missing.",
+  WORK: "Pause, exit and anti-volume protections are adopted. The universal budget gate exists, but no process runner yet enforces all 18 dimensions.",
   SCIENCE: "Contracts, blind states and independence rules are enforced synthetically. There are no live validators or live claims.",
   MEMORY: "Negative and shift memory is append-only and searchable. Universal corrections and retractions are closed, hash-linked and synthetically enforced.",
   RIGHTS: "Ownership, roles and commercial neutrality are separated. A conflict-independent appeal panel is not yet operating.",
@@ -147,8 +147,8 @@ export default function CharterPage() {
           <p className="eyebrow">Why certification remains zero</p>
           <h2>The Factory publishes the missing machinery.</h2>
           <p>
-            It still needs a closed agent dispatch budget, conflict-independent appeals,
-            project-level support disclosures, recovery by another
+            It still needs a process runner that passes the universal dispatch budget,
+            conflict-independent appeals, project-level support disclosures, recovery by another
             maintainer, two independent validators, a live two-person reproduction and an external
             quality audit.
           </p>
