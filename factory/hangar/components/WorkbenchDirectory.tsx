@@ -90,7 +90,11 @@ export function WorkbenchDirectory({
             <h2>{item.workbench}</h2>
             <p className="workbench-benchmark"><span>Reference benchmark</span>{item.benchmark}</p>
             <p className="workbench-gate">{item.hard_gate_and_score}</p>
-            <Link className="card-link" href={`/workbenches/${item.id}`}>
+            <Link
+              aria-label={`Open ${workbenchCode(item.id)} station brief: ${item.workbench}`}
+              className="card-link"
+              href={`/workbenches/${item.id}`}
+            >
               Open station brief <span>→</span>
             </Link>
           </article>

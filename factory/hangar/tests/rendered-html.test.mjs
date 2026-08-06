@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 const baseUrl = process.env.HANGAR_TEST_URL;
@@ -116,4 +117,40 @@ test("renders a construction-only contributor entrance", async () => {
   assert.match(html, /Your work stays yours/);
   assert.match(html, /No inherited licence/);
   assert.doesNotMatch(html, /Submit a scientific reproduction/);
+});
+
+test("provides a first-focus skip link on contributor routes", async () => {
+  for (const route of ["/contribute", "/workbenches", "/operations"]) {
+    const response = await fetch(`${baseUrl}${route}`);
+    assert.equal(response.status, 200);
+    const html = await response.text();
+    const skipLink = html.indexOf('class="skip-link" href="#main-content"');
+    const brandLink = html.indexOf('class="brand"');
+
+    assert.ok(skipLink >= 0, `${route} must render the shared skip link`);
+    assert.ok(skipLink < brandLink, `${route} skip link must precede navigation`);
+    assert.match(html, /<main class="site-main" id="main-content" tabindex="-1">/);
+  }
+});
+
+test("gives every station-card destination a unique accessible name", async () => {
+  const response = await fetch(`${baseUrl}/workbenches`);
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  const names = [...html.matchAll(/aria-label="Open (WB-\d{3}) station brief: ([^"]+)"/g)]
+    .map((match) => match[0]);
+
+  assert.equal(names.length, 100);
+  assert.equal(new Set(names).size, 100);
+});
+
+test("retains a non-colour-only focus indicator on station filters", async () => {
+  const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+  const focusRule = css.match(
+    /\.filter-bar input:focus-visible,\s*\.filter-bar select:focus-visible\s*\{([^}]*)\}/,
+  );
+
+  assert.ok(focusRule, "station filters must define a focus-visible rule");
+  assert.match(focusRule[1], /outline:\s*(?!none\b|0\b)[^;]+;/);
+  assert.match(focusRule[1], /box-shadow:\s*(?!none\b)[^;]+;/);
 });

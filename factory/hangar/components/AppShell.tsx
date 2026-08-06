@@ -6,6 +6,7 @@ export async function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="site-shell">
+      <a className="skip-link" href="#main-content">Skip to main content</a>
       <div className="scope-strip">
         <span>Synthetic commissioning — not scientific evidence</span>
         <span>Live research lane locked</span>
@@ -30,7 +31,7 @@ export async function AppShell({ children }: { children: React.ReactNode }) {
           <span><small>Operator</small><strong>{user?.displayName ?? "Local preview"}</strong></span>
         </div>
       </header>
-      <main className="site-main">{children}</main>
+      <main className="site-main" id="main-content" tabIndex={-1}>{children}</main>
       <footer className="site-footer">
         <div><strong>Research Factory / Hangar 01</strong><span>Construction and commissioning workspace</span></div>
         <div className="footer-boundary"><span>Scientific evidence</span><strong>OFFLINE BY DESIGN</strong></div>
