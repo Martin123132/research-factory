@@ -9,6 +9,7 @@ from typing import Any
 from control_plane import cli as governed_cli
 from control_plane.common import ControlPlaneError
 from control_plane.workflow import NEGATIVE_CLASSIFICATIONS
+from quality.verify_quality import verify as verify_factory_quality
 
 from .catalogue import PROFILES, STAGES, StationCatalogue, doctor
 from .negative_results import search_ledger
@@ -16,7 +17,15 @@ from .portable import EVIDENCE_KINDS, OPERATING_MODES, PortableEvidencePackage
 
 
 FACTORY_ROOT = Path(__file__).resolve().parents[1]
-LOCAL_COMMANDS = {"doctor", "list", "inspect", "package", "verify", "negative-results"}
+LOCAL_COMMANDS = {
+    "doctor",
+    "quality",
+    "list",
+    "inspect",
+    "package",
+    "verify",
+    "negative-results",
+}
 GLOBAL_VALUE_OPTIONS = {
     "--factory-root",
     "--ledger",
@@ -57,6 +66,7 @@ usage: factoryctl [GLOBAL OPTIONS] COMMAND [COMMAND OPTIONS]
 
 Explore and verify the factory (no account, website, network, or AI provider required):
   doctor                 verify the engine, 100-station registry, and station kits
+  quality                verify the evidence-bound Open Factory quality profile
   list                   discover workbenches and filter by readiness
   inspect                read one station's objective, gates, and current limits
   package                make a portable, hash-bound construction evidence bundle
@@ -97,6 +107,12 @@ def build_local_parser() -> argparse.ArgumentParser:
         help="optionally verify an existing append-only ledger",
     )
     doctor_parser.add_argument("--json", action="store_true")
+
+    quality_parser = sub.add_parser(
+        "quality",
+        help="verify the non-compensating Open Factory quality profile",
+    )
+    quality_parser.add_argument("--json", action="store_true")
 
     list_parser = sub.add_parser("list", help="list the verified 100-station catalogue")
     list_parser.add_argument("--stage", type=str.upper, choices=sorted(STAGES))
@@ -216,6 +232,39 @@ def _human_list(rows: list[dict[str, Any]]) -> str:
     return "\n".join(lines)
 
 
+def _human_quality(value: dict[str, Any]) -> str:
+    summary = value["summary"]
+    certifications = value["certifications"]
+    profile_note = (
+        "not a certification"
+        if value["profile"] == "FOUNDATION_ONLY"
+        else "certified profile"
+    )
+    return "\n".join(
+        [
+            "FACTORY QUALITY PROFILE VERIFIED",
+            f"Profile: {value['profile']} ({profile_note})",
+            (
+                f"Controls: {summary['controls']} total; {summary['meets']} meet; "
+                f"{summary['partial']} partial; {summary['blocked']} blocked"
+            ),
+            (
+                "Certifications: "
+                f"operational={str(certifications['operationally_conformant']).lower()}, "
+                f"scientific={str(certifications['scientifically_demonstrated']).lower()}, "
+                f"independent-audit={str(certifications['independently_audited']).lower()}"
+            ),
+            (
+                "Operating facts: "
+                f"{value['operating_facts']['live_research_stations']} live stations; "
+                f"{value['operating_facts']['independent_human_validators_onboarded']} "
+                "independent validators onboarded"
+            ),
+            f"Boundary: {value['scope_boundary']}",
+        ]
+    )
+
+
 def _human_inspect(value: dict[str, Any]) -> str:
     row = value["registry"]
     contract = value["contract"]
@@ -282,6 +331,11 @@ def run_local(args: argparse.Namespace) -> int:
     if args.command == "doctor":
         value = doctor(factory_root, ledger=args.ledger)
         print(_human_doctor(value) if not args.json else json.dumps(value, indent=2))
+        return 0
+
+    if args.command == "quality":
+        value = verify_factory_quality(factory_root.parent)
+        _json(value) if args.json else print(_human_quality(value))
         return 0
 
     if args.command == "list":

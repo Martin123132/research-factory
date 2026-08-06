@@ -23,6 +23,7 @@ test("renders the hangar overview without inventing operational data", async () 
   assert.match(html, /Synthetic commissioning[^<]*not scientific evidence/i);
   assert.match(html, /href="\/tutorial"[^>]*>Tutorial</);
   assert.match(html, /href="\/standards"[^>]*>Standards</);
+  assert.match(html, /href="\/charter"[^>]*>Charter</);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton|Your site is taking shape/i);
 });
 
@@ -91,6 +92,27 @@ test("renders the fail-closed Contract v1 standard and downloadable artifacts", 
   assert.match(html, /href="\/workbench-contract-v1\.schema\.json"/);
   assert.match(html, /href="\/rights-and-ip-v1\.schema\.json"/);
   assert.match(html, /href="\/contribution-ledger-v1\.schema\.json"/);
+});
+
+test("renders worker rights and the honest non-compensating quality profile", async () => {
+  const response = await fetch(`${baseUrl}/charter`, {
+    headers: { accept: "text/html" },
+  });
+
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /A better factory is measurable\./);
+  assert.match(html, /People do not become fuel for the loop/);
+  assert.match(html, /Pause without penalty/);
+  assert.match(html, /No overall score to game/);
+  assert.match(html, /Foundation only/i);
+  assert.match(html, /18<\/dd>/);
+  assert.match(html, /8<\/dd>/);
+  assert.match(html, /2<\/dd>/);
+  assert.match(html, /Certifications<\/dt><dd>0<\/dd>/);
+  assert.match(html, /Live stations<\/dt><dd>0<\/dd>/);
+  assert.match(html, /Independent validators<\/dt><dd>0<\/dd>/);
+  assert.match(html, /Do not trust this page\./);
 });
 
 test("renders the synthetic workflow tutorial with captions and a transcript", async () => {

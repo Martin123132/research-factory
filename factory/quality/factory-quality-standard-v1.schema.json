@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Martin123132/research-factory/blob/main/factory/quality/factory-quality-standard-v1.schema.json",
+  "title": "Research Factory Quality Standard v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "standard_version",
+    "status",
+    "principle",
+    "evidence_levels",
+    "outcomes",
+    "domains",
+    "certification_profiles"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "factory-quality-standard-v1.schema.json"
+    },
+    "standard_version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "const": "ACTIVE"
+    },
+    "principle": {
+      "const": "NON_COMPENSATING_MANDATORY_GATES"
+    },
+    "evidence_levels": {
+      "type": "array",
+      "prefixItems": [
+        { "const": "NONE" },
+        { "const": "DECLARED" },
+        { "const": "ENFORCED" },
+        { "const": "OBSERVED" },
+        { "const": "INDEPENDENTLY_AUDITED" }
+      ],
+      "items": false,
+      "minItems": 5,
+      "maxItems": 5
+    },
+    "outcomes": {
+      "type": "array",
+      "prefixItems": [
+        { "const": "MEETS" },
+        { "const": "PARTIAL" },
+        { "const": "BLOCKED" }
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "domains": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "items": { "$ref": "#/$defs/domain" }
+    },
+    "certification_profiles": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": { "$ref": "#/$defs/profile" }
+    }
+  },
+  "$defs": {
+    "evidence_level": {
+      "enum": [
+        "NONE",
+        "DECLARED",
+        "ENFORCED",
+        "OBSERVED",
+        "INDEPENDENTLY_AUDITED"
+      ]
+    },
+    "control": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "control_id",
+        "title",
+        "requirement",
+        "rationale",
+        "mandatory",
+        "critical",
+        "minimum_evidence_level",
+        "machine_enforcement_expected"
+      ],
+      "properties": {
+        "control_id": {
+          "type": "string",
+          "pattern": "^[A-Z]+-[0-9]{2}$"
+        },
+        "title": { "type": "string", "minLength": 5 },
+        "requirement": { "type": "string", "minLength": 20 },
+        "rationale": { "type": "string", "minLength": 20 },
+        "mandatory": { "const": true },
+        "critical": { "type": "boolean" },
+        "minimum_evidence_level": { "$ref": "#/$defs/evidence_level" },
+        "machine_enforcement_expected": { "type": "boolean" }
+      }
+    },
+    "domain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["domain_id", "title", "gate", "controls"],
+      "properties": {
+        "domain_id": {
+          "type": "string",
+          "pattern": "^[A-Z]+$"
+        },
+        "title": { "type": "string", "minLength": 4 },
+        "gate": { "type": "string", "minLength": 20 },
+        "controls": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": { "$ref": "#/$defs/control" }
+        }
+      }
+    },
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["profile_id", "is_certification", "description", "prerequisites"],
+      "properties": {
+        "profile_id": {
+          "enum": [
+            "FOUNDATION_ONLY",
+            "OPERATIONALLY_CONFORMANT",
+            "SCIENTIFICALLY_DEMONSTRATED",
+            "INDEPENDENTLY_AUDITED"
+          ]
+        },
+        "is_certification": { "type": "boolean" },
+        "description": { "type": "string", "minLength": 20 },
+        "prerequisites": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 8 }
+        }
+      }
+    }
+  }
+}

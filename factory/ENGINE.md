@@ -35,6 +35,7 @@ From the repository root on Windows PowerShell:
 python -m venv factory\.venv
 factory\.venv\Scripts\python.exe -m pip install -r factory\requirements.lock
 factory\.venv\Scripts\python.exe factory\enginectl.py doctor
+factory\.venv\Scripts\python.exe factory\enginectl.py quality
 factory\.venv\Scripts\python.exe factory\enginectl.py list --entry-ready
 factory\.venv\Scripts\python.exe factory\enginectl.py inspect WB-013
 ```
@@ -54,6 +55,22 @@ of the same diagnostic, pass it explicitly:
 factory\.venv\Scripts\python.exe factory\enginectl.py doctor `
   --ledger factory\state\pilot_events.jsonl
 ```
+
+## Inspect Factory quality
+
+`quality` verifies the 28-control Open Factory profile, its exact standard,
+every cited evidence hash, derived outcome counts, current station readiness and
+certification prerequisites:
+
+```powershell
+factory\.venv\Scripts\python.exe factory\enginectl.py quality
+factory\.venv\Scripts\python.exe factory\enginectl.py quality --json
+```
+
+The current result is `FOUNDATION_ONLY`: 18 controls meet their declared
+minimum, eight remain partial and two are blocked. Operational, scientific and
+independent-audit certification remain false. Passing the command verifies that
+this self-assessment is internally honest; it does not certify the Factory.
 
 ## Search retained negative results
 

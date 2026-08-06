@@ -25,6 +25,7 @@ path = [
   "research_factory_100_report_artifact.json",
   "research_factory_100_workbenches.json",
   "candidate_artifacts/README.md",
+  "factory/quality/factory-quality-standard-v1.json",
 ]
 precedence = "override"
 SPDX-FileCopyrightText = "2026 Research Factory contributors"
@@ -71,6 +72,8 @@ SPDX-License-Identifier = "CC-BY-4.0"
 path = [
   "factory/control_plane/software.lock.json",
   "factory/hangar/data/workbench-readiness.json",
+  "factory/hangar/data/factory-quality-summary.json",
+  "factory/quality/current-assessment.json",
   "factory/reference_provenance/WB001-WB010.reference-provenance.2026-08-06.json",
   "factory/reference_provenance/WB011-WB020.reference-provenance.2026-08-06.json",
   "factory/reference_provenance/WB021-WB030.reference-provenance.2026-08-06.json",

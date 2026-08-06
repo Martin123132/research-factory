@@ -21,8 +21,10 @@ REQUIRED_PATHS = {
     "CODE_OF_CONDUCT.md",
     "CONTRIBUTING.md",
     "CONTRIBUTOR_QUICKSTART.md",
+    "FACTORY_QUALITY_STANDARD.md",
     "GOVERNANCE.md",
     "LICENSE.md",
+    "OPEN_FACTORY_CHARTER.md",
     "PUBLIC_LAUNCH_CHECKLIST.md",
     "README.md",
     "REUSE.toml",
@@ -30,7 +32,13 @@ REQUIRED_PATHS = {
     "THIRD_PARTY_NOTICES.md",
     "candidate_artifacts/README.md",
     "factory/hangar/.openai/hosting.json",
+    "factory/hangar/data/factory-quality-summary.json",
     "factory/hangar/data/workbench-readiness.json",
+    "factory/quality/current-assessment.json",
+    "factory/quality/factory-quality-assessment-v1.schema.json",
+    "factory/quality/factory-quality-standard-v1.json",
+    "factory/quality/factory-quality-standard-v1.schema.json",
+    "factory/quality/verify_quality.py",
 }
 ALLOWED_STAGES = {"CONTRACT_DRAFT", "COMMISSIONING_READY"}
 GITLEAKS_BASELINE = {

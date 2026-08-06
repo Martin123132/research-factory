@@ -45,6 +45,15 @@ class LocalCliTests(unittest.TestCase):
         self.assertEqual("WB-013", value["registry"]["workbench_code"])
         self.assertFalse(value["live_research_allowed"])
 
+    def test_quality_profile_is_machine_readable_and_not_certified(self) -> None:
+        returncode, stdout, stderr = self.invoke(["quality", "--json"])
+        self.assertEqual(0, returncode, stderr)
+        value = json.loads(stdout)
+        self.assertEqual("FOUNDATION_ONLY", value["profile"])
+        self.assertEqual(28, value["summary"]["controls"])
+        self.assertEqual(0, value["operating_facts"]["live_research_stations"])
+        self.assertFalse(any(value["certifications"].values()))
+
 
 class GovernedCliSubprocessTests(unittest.TestCase):
     def setUp(self) -> None:

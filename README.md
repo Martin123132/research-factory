@@ -9,6 +9,12 @@ The project is currently building the aircraft hangar, not claiming scientific
 breakthroughs. Synthetic commissioning proves that the machinery works; it does
 not count as evidence, independent reproduction or promotion.
 
+The human and agent working conditions are governed by the
+[`OPEN_FACTORY_CHARTER.md`](OPEN_FACTORY_CHARTER.md). Factory quality is measured
+through non-compensating, evidence-bound gates in
+[`FACTORY_QUALITY_STANDARD.md`](FACTORY_QUALITY_STANDARD.md), not by publication,
+investment or breakthrough counts.
+
 The source repository is intended to be public construction infrastructure.
 That does not make the separately hosted Hangar public and does not open
 scientific intake. Candidate artifacts, hidden answers, evaluator secrets and
@@ -23,6 +29,7 @@ private identity records remain outside Git.
 - 3 runnable entry gates
 - 0 live-research stations
 - 1 closed append-only shift-report contract with 4 valid operational outcomes
+- 1 machine-verifiable 28-control quality profile: `FOUNDATION_ONLY`, not certified
 
 The first reusable families are exact public-corpus compression and symmetric
 travelling-salesperson optimisation. Each adapter is deliberately narrow: a
@@ -50,6 +57,8 @@ distance convention.
   standing.
 - [`factory/reference_provenance/`](factory/reference_provenance/) — dated,
   hash-bound source and terms checks without committing upstream datasets.
+- [`factory/quality/`](factory/quality/) — the versioned quality controls,
+  evidence-bound assessment and fail-closed verifier.
 - [`factory/hangar/`](factory/hangar/) — the construction and commissioning web
   interface.
 - [`research_factory_100_workbenches.json`](research_factory_100_workbenches.json)
@@ -68,8 +77,11 @@ python factory/shift_reports/validate_shift_reports.py factory/shift_reports/exa
 python -m unittest discover -s factory/shift_reports/tests -p "test_*.py" -v
 python factory/reference_provenance/verify_reference_provenance.py
 python -m unittest discover -s factory/reference_provenance/tests -p "test_*.py" -v
+python factory/quality/verify_quality.py
+python -m unittest discover -s factory/quality/tests -p "test_*.py" -v
 python factory/workbench_standard/generate_station_kits.py --check
 python factory/enginectl.py doctor
+python factory/enginectl.py quality
 python -m unittest discover -s factory/engine/tests -t factory -p "test_*.py" -v
 python -m unittest discover -s factory/release/tests -p "test_*.py" -v
 python -m unittest discover -s factory/control_plane/tests -t factory -p "test_*.py" -v
@@ -93,7 +105,8 @@ Hidden holdouts, answer sheets, evaluator secrets and private identity records
 are intentionally excluded from this repository. See
 [`VALIDATOR_ONBOARDING.md`](VALIDATOR_ONBOARDING.md),
 [`GOVERNANCE.md`](GOVERNANCE.md), [`CONTRIBUTING.md`](CONTRIBUTING.md) and
-[`SECURITY.md`](SECURITY.md).
+[`SECURITY.md`](SECURITY.md). Worker rights and bounded agent authority are
+defined in [`OPEN_FACTORY_CHARTER.md`](OPEN_FACTORY_CHARTER.md).
 
 Community participation is governed by
 [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md). The publication boundary and manual
