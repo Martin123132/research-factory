@@ -1,0 +1,191 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://research-factory.invalid/schemas/synthetic-shift-report-v1.json",
+  "title": "Research Factory synthetic dispute shift report v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "report_type",
+    "shift_id",
+    "scientific_standing",
+    "round_id",
+    "attempt_id",
+    "commitments",
+    "identities",
+    "execution",
+    "gate_sequence",
+    "final_status",
+    "diagnosis",
+    "checks",
+    "audit",
+    "artifacts",
+    "report_sha256"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "report_type": {"const": "SYNTHETIC_FACTORY_SHIFT"},
+    "shift_id": {"type": "string", "minLength": 1, "maxLength": 128},
+    "scientific_standing": {"const": "NONE_SYNTHETIC_COMMISSIONING_ONLY"},
+    "round_id": {"const": "WB001-PILOT-001"},
+    "attempt_id": {"type": "string", "minLength": 1, "maxLength": 128},
+    "commitments": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "round_sha256",
+        "control_plane_software_sha256",
+        "commissioning_harness_sha256",
+        "report_schema_sha256",
+        "candidate_artifact_package_sha256"
+      ],
+      "properties": {
+        "round_sha256": {"$ref": "#/$defs/sha256"},
+        "control_plane_software_sha256": {"$ref": "#/$defs/sha256"},
+        "commissioning_harness_sha256": {"$ref": "#/$defs/sha256"},
+        "report_schema_sha256": {"$ref": "#/$defs/sha256"},
+        "candidate_artifact_package_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "identities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "registered_operator_records",
+        "rerunner_identity_records",
+        "identity_records_distinct",
+        "identity_assurance",
+        "distinct_humans_proven"
+      ],
+      "properties": {
+        "registered_operator_records": {"const": 5},
+        "rerunner_identity_records": {"const": 3},
+        "identity_records_distinct": {"const": true},
+        "identity_assurance": {"const": "self-asserted-local"},
+        "distinct_humans_proven": {"const": false}
+      }
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["enforcement_profile", "within_envelope", "promotion_eligible"],
+      "properties": {
+        "enforcement_profile": {"const": "LOCAL_MONITORED_V1"},
+        "within_envelope": {"const": true},
+        "promotion_eligible": {"const": false}
+      }
+    },
+    "gate_sequence": {
+      "type": "array",
+      "prefixItems": [
+        {"const": "TIEBREAK_DIAGNOSTIC_REQUIRED"},
+        {"const": "DISPUTED_REVIEW_REQUIRED"}
+      ],
+      "items": false,
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "final_status": {"const": "DISPUTED_REVIEW_REQUIRED"},
+    "diagnosis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["classification", "first_divergence", "action"],
+      "properties": {
+        "classification": {"const": "DELIBERATE_SYNTHETIC_VARIANT"},
+        "first_divergence": {"const": "OUTPUT_FINGERPRINT"},
+        "action": {"const": "RETAIN_CONTRADICTION_AND_BLOCK_PROMOTION"}
+      }
+    },
+    "checks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "exact_work_envelope_executed",
+        "author_self_rerun_rejected",
+        "plaintext_annotation_while_blind_rejected",
+        "two_initial_reruns_committed_blind",
+        "split_opened_diagnostic_route",
+        "diagnostic_majority_did_not_promote",
+        "holdout_blocked_without_unanimous_confirmation",
+        "dispute_escalated",
+        "diagnosis_appended_after_blind_gate",
+        "public_ledger_audit_passed",
+        "no_scientific_credit"
+      ],
+      "properties": {
+        "exact_work_envelope_executed": {"const": true},
+        "author_self_rerun_rejected": {"const": true},
+        "plaintext_annotation_while_blind_rejected": {"const": true},
+        "two_initial_reruns_committed_blind": {"const": true},
+        "split_opened_diagnostic_route": {"const": true},
+        "diagnostic_majority_did_not_promote": {"const": true},
+        "holdout_blocked_without_unanimous_confirmation": {"const": true},
+        "dispute_escalated": {"const": true},
+        "diagnosis_appended_after_blind_gate": {"const": true},
+        "public_ledger_audit_passed": {"const": true},
+        "no_scientific_credit": {"const": true}
+      }
+    },
+    "audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "audit_type",
+        "valid",
+        "events_scanned",
+        "candidate_attempts",
+        "sealed_rerun_commitments",
+        "checks",
+        "violations"
+      ],
+      "properties": {
+        "schema_version": {"const": 1},
+        "audit_type": {"const": "PUBLIC_LEDGER_BLINDNESS"},
+        "valid": {"const": true},
+        "events_scanned": {"const": 25},
+        "candidate_attempts": {"const": 1},
+        "sealed_rerun_commitments": {"const": 3},
+        "checks": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "no_plaintext_conclusions",
+            "no_plaintext_metrics",
+            "distinct_identity_records",
+            "contradictions_cannot_majority_promote"
+          ],
+          "properties": {
+            "no_plaintext_conclusions": {"const": true},
+            "no_plaintext_metrics": {"const": true},
+            "distinct_identity_records": {"const": true},
+            "contradictions_cannot_majority_promote": {"const": true}
+          }
+        },
+        "violations": {"type": "array", "maxItems": 0}
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "public_ledger",
+        "blind_audit",
+        "checkpoint",
+        "metric_free_candidate",
+        "sealed_working_material"
+      ],
+      "properties": {
+        "public_ledger": {"const": "public/events.jsonl"},
+        "blind_audit": {"const": "public/blind-audit.json"},
+        "checkpoint": {"const": "public/checkpoint.json"},
+        "metric_free_candidate": {"const": "public/exported-candidate"},
+        "sealed_working_material": {"const": "private/"}
+      }
+    },
+    "report_sha256": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

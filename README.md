@@ -61,6 +61,9 @@ distance convention.
   evidence-bound assessment and fail-closed verifier.
 - [`factory/hangar/`](factory/hangar/) — the construction and commissioning web
   interface.
+- [`factory/commissioning/`](factory/commissioning/) — a complete zero-credit
+  synthetic shift that forces a blind disagreement, diagnostic rerun and
+  fail-closed dispute audit.
 - [`research_factory_100_workbenches.json`](research_factory_100_workbenches.json)
   — canonical 100-problem catalogue.
 
