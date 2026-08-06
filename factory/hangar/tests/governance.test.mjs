@@ -76,6 +76,10 @@ test("the tracked migration enforces the non-scientific and append-only boundary
     new URL("../drizzle/0001_remarkable_fat_cobra.sql", import.meta.url),
     "utf8",
   );
+  const bootstrapSource = await readFile(
+    new URL("../db/bootstrap.ts", import.meta.url),
+    "utf8",
+  );
   assert.match(initialSql, /scientific_evidence[^\n]+CHECK \(`scientific_evidence` = 0\)/);
   assert.match(initialSql, /counts_as_independent_reproduction[^\n]+CHECK/);
   assert.match(initialSql, /eligible_for_promotion[^\n]+CHECK/);
@@ -83,14 +87,16 @@ test("the tracked migration enforces the non-scientific and append-only boundary
   assert.match(initialSql, /activity_events_reject_delete/);
   assert.match(initialSql, /CREATE UNIQUE INDEX `activity_events_entity_version_idx`/);
   assert.doesNotMatch(initialSql, /RESULT_SUBMITTED|RERUN_SUBMITTED|PROMOTED/);
-  assert.match(shiftSql, /CREATE TABLE `shift_reports`/);
+  assert.match(shiftSql, /CREATE TABLE IF NOT EXISTS `shift_reports`/);
   assert.match(shiftSql, /shift_reports_no_evidence_check/);
   assert.match(shiftSql, /shift_reports_no_reproduction_check/);
   assert.match(shiftSql, /shift_reports_no_promotion_check/);
   assert.match(shiftSql, /shift_reports_no_completion_check/);
-  assert.match(shiftSql, /shift_reports_reject_update/);
-  assert.match(shiftSql, /shift_reports_reject_delete/);
-  assert.match(shiftSql, /shift_reports_enforce_chain/);
+  assert.match(bootstrapSource, /shift_reports_reject_update/);
+  assert.match(bootstrapSource, /shift_reports_reject_delete/);
+  assert.match(bootstrapSource, /shift_reports_enforce_chain/);
+  assert.match(bootstrapSource, /await database\.batch/);
+  assert.doesNotMatch(shiftSql, /CREATE TRIGGER/);
   assert.match(shiftSql, /shift_reports_work_order_sequence_idx/);
   assert.doesNotMatch(shiftSql, /DROP TABLE|RESULT_SUBMITTED|RERUN_SUBMITTED|PROMOTED/);
 });

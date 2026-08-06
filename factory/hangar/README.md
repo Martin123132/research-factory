@@ -39,6 +39,8 @@ endpoints. Live research remains in the separate factory control plane.
 - a registry for non-promotion runner interfaces;
 - append-only operational activity with database triggers rejecting updates and
   deletes;
+- an idempotent hosted schema migration, followed by mandatory runtime
+  bootstrap of the append-only triggers before any repository operation;
 - private-workspace identity from the hosting platform's authenticated user
   headers;
 - a local preview identity restricted to synthetic commissioning;

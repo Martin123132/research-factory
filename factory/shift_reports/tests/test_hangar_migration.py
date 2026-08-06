@@ -1,12 +1,19 @@
 from __future__ import annotations
 
 from pathlib import Path
+import re
 import sqlite3
 import unittest
 
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[3]
 MIGRATIONS = REPOSITORY_ROOT / "factory" / "hangar" / "drizzle"
+BOOTSTRAP = REPOSITORY_ROOT / "factory" / "hangar" / "db" / "bootstrap.ts"
+SHIFT_REPORT_TRIGGERS = (
+    "shift_reports_reject_update",
+    "shift_reports_reject_delete",
+    "shift_reports_enforce_chain",
+)
 
 
 class HangarShiftReportMigrationTests(unittest.TestCase):
@@ -15,6 +22,16 @@ class HangarShiftReportMigrationTests(unittest.TestCase):
         for name in ("0000_glorious_screwball.sql", "0001_remarkable_fat_cobra.sql"):
             sql = (MIGRATIONS / name).read_text(encoding="utf-8")
             self.database.executescript(sql.replace("--> statement-breakpoint", ""))
+
+        bootstrap = BOOTSTRAP.read_text(encoding="utf-8")
+        for trigger_name in SHIFT_REPORT_TRIGGERS:
+            match = re.search(
+                rf"`(CREATE TRIGGER IF NOT EXISTS {trigger_name}\b[^`]*)`,",
+                bootstrap,
+                re.DOTALL,
+            )
+            self.assertIsNotNone(match, f"missing bootstrap trigger {trigger_name}")
+            self.database.execute(match.group(1))
 
         self.database.execute(
             """
@@ -45,7 +62,7 @@ class HangarShiftReportMigrationTests(unittest.TestCase):
     def tearDown(self) -> None:
         self.database.close()
 
-    def test_both_append_only_trigger_pairs_survive_the_additive_migration(self) -> None:
+    def test_migration_and_bootstrap_install_both_append_only_trigger_pairs(self) -> None:
         triggers = {
             row[0]
             for row in self.database.execute(
@@ -145,6 +162,16 @@ class HangarShiftReportMigrationTests(unittest.TestCase):
             "SELECT value FROM schema_metadata WHERE key = 'hangar_schema_version'"
         ).fetchone()
         self.assertEqual(row, ("2",))
+
+    def test_shift_report_schema_migration_is_idempotent(self) -> None:
+        sql = (MIGRATIONS / "0001_remarkable_fat_cobra.sql").read_text(
+            encoding="utf-8"
+        )
+        self.database.executescript(sql.replace("--> statement-breakpoint", ""))
+        row = self.database.execute(
+            "SELECT COUNT(*) FROM sqlite_master WHERE type = 'table' AND name = 'shift_reports'"
+        ).fetchone()
+        self.assertEqual(row, (1,))
 
 
 if __name__ == "__main__":
