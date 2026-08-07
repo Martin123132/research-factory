@@ -37,6 +37,15 @@
       "STOP_CONDITIONS"
     ]
   },
+  "container": {
+    "profileId": "profile:container-commissioning-v1",
+    "enforcedDimensions": 18,
+    "requiredDimensions": 18,
+    "canIssueProcessTicket": true,
+    "hostRunRecordedInThisFixture": false,
+    "runtimeRequirement": "LOCAL_DOCKER_HOST_AND_PRELOADED_DIGEST_PINNED_IMAGE",
+    "scope": "CONTAINER_COMMISSIONING_ONLY"
+  },
   "boundary": {
     "humanReleaseStillRequired": true,
     "scientificEvidence": false,

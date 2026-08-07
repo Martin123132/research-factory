@@ -27,10 +27,12 @@ from corrections.ledger import (
     load_json_strict as load_correction_draft,
 )
 from dispatch.gate import (
+    PROFILE_CONTAINER,
     PROFILE_DRY_RUN,
     PROFILE_FROZEN_LOCAL,
     DispatchBudgetGate,
 )
+from dispatch.container_adapter import inspect_host
 from quality.verify_quality import verify as verify_factory_quality
 
 from .catalogue import PROFILES, STAGES, StationCatalogue, doctor
@@ -63,6 +65,7 @@ LOCAL_COMMANDS = {
     "dispatch-budget-verify",
     "dispatch-preflight",
     "dispatch-ticket-verify",
+    "dispatch-container-host",
 }
 GLOBAL_VALUE_OPTIONS = {
     "--factory-root",
@@ -126,6 +129,7 @@ Explore and verify the factory (no account, website, network, or AI provider req
   dispatch-budget-verify verify one immutable provider-neutral agent budget
   dispatch-preflight     issue a fail-closed admission or rejection ticket
   dispatch-ticket-verify recompute a ticket without trusting its conclusion
+  dispatch-container-host  inspect local Docker prerequisites without starting a process
 
 Governed append-only lifecycle:
   init, check-in, open-round, complete-entry-gate, claim-work,
@@ -375,7 +379,7 @@ def build_local_parser() -> argparse.ArgumentParser:
     dispatch_preflight.add_argument("--budget", type=Path, required=True)
     dispatch_preflight.add_argument(
         "--profile",
-        choices=[PROFILE_DRY_RUN, PROFILE_FROZEN_LOCAL],
+        choices=[PROFILE_DRY_RUN, PROFILE_FROZEN_LOCAL, PROFILE_CONTAINER],
         required=True,
     )
     dispatch_preflight.add_argument("--output", type=Path, required=True)
@@ -395,6 +399,12 @@ def build_local_parser() -> argparse.ArgumentParser:
     dispatch_ticket.add_argument("--budget", type=Path, required=True)
     dispatch_ticket.add_argument("--ticket", type=Path, required=True)
     dispatch_ticket.add_argument("--json", action="store_true")
+
+    dispatch_container_host = sub.add_parser(
+        "dispatch-container-host",
+        help="inspect Docker availability without starting a container",
+    )
+    dispatch_container_host.add_argument("--json", action="store_true")
     return parser
 
 
@@ -811,8 +821,10 @@ def run_local(args: argparse.Namespace) -> int:
             "profiles": [
                 gate.enforcement_profile(PROFILE_DRY_RUN),
                 gate.enforcement_profile(PROFILE_FROZEN_LOCAL),
+                gate.enforcement_profile(PROFILE_CONTAINER),
             ],
-            "process_execution_profile_authorized": False,
+            "process_execution_profile_can_be_authorized": True,
+            "runtime_host_attestation_required": True,
             "scientific_standing": "NONE",
         }
         if args.json:
@@ -826,7 +838,7 @@ def run_local(args: argparse.Namespace) -> int:
                     f"{profile['profile_id']}  {enforced}/18 enforced  "
                     f"mode={profile['execution_mode']}"
                 )
-            print("Process execution currently authorized: false")
+            print("Process execution profile can be authorised: true (runtime host checks still required)")
         return 0
     if args.command == "dispatch-budget-verify":
         value = DispatchBudgetGate(factory_root).load_budget(args.budget)
@@ -849,6 +861,10 @@ def run_local(args: argparse.Namespace) -> int:
         budget = gate.load_budget(args.budget)
         value = gate.load_and_validate_ticket(args.ticket, budget=budget)
         _json(value) if args.json else print(_human_dispatch_ticket(value))
+        return 0
+    if args.command == "dispatch-container-host":
+        value = inspect_host()
+        _json(value) if args.json else print(json.dumps(value, indent=2))
         return 0
 
     portable = PortableEvidencePackage(factory_root)

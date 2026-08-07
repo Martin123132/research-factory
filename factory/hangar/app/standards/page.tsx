@@ -114,8 +114,8 @@ export default function StandardsPage() {
       <section className="section-block dispatch-gate-section">
         <div className="section-heading">
           <div>
-            <p className="eyebrow">Universal dispatch budget / verified synthetic projection</p>
-            <h2>Partial enforcement means no process authority.</h2>
+            <p className="eyebrow">Universal dispatch budget / synthetic fixture and adapter contract</p>
+            <h2>Process authority is conditional on enforcement at the host.</h2>
           </div>
           <p>
             The preflight checks time, compute, spend, tools, paths, network, hazards and stop
@@ -149,11 +149,22 @@ export default function StandardsPage() {
               ))}
             </ul>
           </article>
+          <article className="dispatch-profile-card dispatch-profile-pass">
+            <div className="card-topline"><span>HOST CHECK REQUIRED</span><span className="mono">CONTAINER COMMISSIONING</span></div>
+            <h3>Digest-pinned container adapter</h3>
+            <p className="mono">{dispatchBudget.container.profileId}</p>
+            <dl>
+              <div><dt>Enforced</dt><dd>{dispatchBudget.container.enforcedDimensions}/{dispatchBudget.container.requiredDimensions}</dd></div>
+              <div><dt>Ticket scope</dt><dd>{dispatchBudget.container.canIssueProcessTicket ? "PROCESS EXECUTION" : "REJECTED"}</dd></div>
+              <div><dt>Fixture host run</dt><dd>{dispatchBudget.container.hostRunRecordedInThisFixture ? "RECORDED" : "NOT RECORDED"}</dd></div>
+            </dl>
+            <p>Requires a local Docker host and an already-present digest-pinned image. It remains commissioning-only and cannot promote output.</p>
+          </article>
         </div>
         <div className="dispatch-gate-boundary">
-          <strong>NO PROCESS EXECUTION / NO SCIENTIFIC STANDING</strong>
+          <strong>NO SCIENTIFIC STANDING / NO SELF-PROMOTION</strong>
           <span className="mono">report sha256:{dispatchBudget.reportSha256}</span>
-          <p>Human release is still required. This static panel is not the engine gate or an execution ticket.</p>
+          <p>Human release and a fail-closed local host check are still required. This static panel is not the engine gate, a host attestation or an execution ticket.</p>
         </div>
       </section>
 

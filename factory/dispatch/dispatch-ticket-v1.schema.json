@@ -45,7 +45,7 @@
         "profile_id": { "$ref": "#/$defs/id" },
         "runner_name": { "type": "string", "minLength": 3, "maxLength": 160 },
         "execution_mode": { "enum": ["DRY_RUN_ONLY", "PROCESS_EXECUTION"] },
-        "authority": { "enum": ["BUILTIN_NO_EXECUTION_GATE", "FROZEN_SOFTWARE_LOCK_ANALYSIS"] },
+        "authority": { "enum": ["BUILTIN_NO_EXECUTION_GATE", "FROZEN_SOFTWARE_LOCK_ANALYSIS", "CONTAINER_ADAPTER_SOURCE_LOCK"] },
         "capabilities": {
           "type": "object",
           "additionalProperties": false,

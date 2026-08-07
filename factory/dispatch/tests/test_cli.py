@@ -8,7 +8,7 @@ import unittest
 from pathlib import Path
 
 from control_plane.common import write_json
-from dispatch.gate import PROFILE_DRY_RUN, PROFILE_FROZEN_LOCAL
+from dispatch.gate import PROFILE_CONTAINER, PROFILE_DRY_RUN, PROFILE_FROZEN_LOCAL
 from dispatch.synthetic_drill import _budget
 
 
@@ -44,8 +44,10 @@ class DispatchCliTests(unittest.TestCase):
 
     def test_profiles_budget_preflight_and_ticket_verification(self) -> None:
         profiles = self.ctl("dispatch-profiles")
-        self.assertEqual(2, len(profiles["profiles"]))
-        self.assertFalse(profiles["process_execution_profile_authorized"])
+        self.assertEqual(3, len(profiles["profiles"]))
+        self.assertTrue(profiles["process_execution_profile_can_be_authorized"])
+        self.assertTrue(profiles["runtime_host_attestation_required"])
+        self.assertIn(PROFILE_CONTAINER, [profile["profile_id"] for profile in profiles["profiles"]])  # type: ignore[index]
 
         budget_path = self.root / "dry-budget.json"
         write_json(budget_path, _budget("DRY_RUN_ONLY"))

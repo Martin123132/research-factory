@@ -28,8 +28,10 @@ disposable offline-release drill verifies technical handover, but cannot itself
 prove an independent human maintainer or satisfy the observed resilience gate.
 Provider-neutral agent admission is implemented in
 [`dispatch/`](dispatch/README.md). Its immutable budget covers 18 enforcement
-dimensions and rejects every process runner that cannot prove them all; the
-frozen pilot remains unchanged and honestly rejected by this stricter gate.
+dimensions and rejects every process runner that cannot prove them all. Its
+digest-pinned Docker commissioning adapter requires a second, fail-closed host
+check; the frozen pilot remains unchanged and honestly rejected by this
+stricter gate.
 The construction and commissioning dashboard is in
 [`hangar/`](hangar/README.md). It maps all 100 stations, schedules hangar work,
 registers non-promotion runner interfaces and keeps a separate append-only
