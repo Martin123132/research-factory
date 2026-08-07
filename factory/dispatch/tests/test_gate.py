@@ -8,6 +8,7 @@ from pathlib import Path
 
 from control_plane.common import ContractError, canonical_json_bytes, sha256_bytes
 from dispatch.gate import (
+    PROFILE_CONTAINER,
     PROFILE_DRY_RUN,
     PROFILE_FROZEN_LOCAL,
     REQUIRED_DIMENSIONS,
@@ -155,6 +156,8 @@ class DispatchBudgetGateTests(unittest.TestCase):
         drifted_gate = DispatchBudgetGate(self.root)
         with self.assertRaisesRegex(ContractError, "source drifted"):
             drifted_gate.enforcement_profile(PROFILE_FROZEN_LOCAL)
+        with self.assertRaisesRegex(ContractError, "source drifted"):
+            drifted_gate.enforcement_profile(PROFILE_CONTAINER)
 
     def test_strict_loader_rejects_duplicate_keys(self) -> None:
         path = self.root / "duplicate.json"

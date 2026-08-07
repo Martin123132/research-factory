@@ -23,6 +23,7 @@ from control_plane.common import (
 SCHEMAS = Path(__file__).resolve().parent
 PROFILE_DRY_RUN = "profile:no-execution-dry-run-v1"
 PROFILE_FROZEN_LOCAL = "profile:frozen-local-monitored-v1"
+PROFILE_CONTAINER = "profile:container-commissioning-v1"
 REQUIRED_DIMENSIONS = (
     "HUMAN_RELEASE",
     "HUMAN_STOP",
@@ -79,6 +80,12 @@ FROZEN_LOCAL_SOURCES = {
     ),
     "control_plane/schemas/attempt-receipt-v2.schema.json": (
         "2474c037b80c26f8bac0da1606cc8e3fe4ec6efd68fe22962601cd56efdd9098"
+    ),
+}
+CONTAINER_ADAPTER_SOURCES = {
+    "dispatch/container_adapter.py": "99d41f43d4130f2ab58f752a3fae8088344ce5d63d2dc6beef19cd62872510c3",
+    "dispatch/container-run-request-v1.schema.json": (
+        "2475bba7831885f1685205fafdcf51b910fd74a065f5c185bff5c8304b368485"
     ),
 }
 
@@ -327,6 +334,24 @@ class DispatchBudgetGate:
                     "The frozen pilot does not isolate CPU, memory, GPU, storage or child processes.",
                     "The frozen pilot does not enforce filesystem scope, network egress, tool closure or spend.",
                     "Its partial envelope remains synthetic commissioning only and is not modified here.",
+                ],
+            )
+        if profile_id == PROFILE_CONTAINER:
+            for relative, expected in CONTAINER_ADAPTER_SOURCES.items():
+                path = self.factory_root / relative
+                if not path.is_file() or sha256_file(path) != expected:
+                    raise ContractError(f"container adapter source drifted: {relative}")
+            return _profile(
+                profile_id=PROFILE_CONTAINER,
+                runner_name="Digest-pinned Docker commissioning adapter",
+                execution_mode="PROCESS_EXECUTION",
+                authority="CONTAINER_ADAPTER_SOURCE_LOCK",
+                capabilities={name: "ENFORCED" for name in REQUIRED_DIMENSIONS},
+                limitations=[
+                    "The adapter fails closed unless a local Docker daemon applies its exact no-network, no-GPU, read-only command plan.",
+                    "Only digest-pinned images, allowlisted exact commands, read-only declared inputs and temporary bounded output are accepted.",
+                    "A successful container run remains commissioning-only, has no scientific standing and cannot promote a result.",
+                    "Docker daemon, kernel and host configuration remain trusted computing-base assumptions outside this profile.",
                 ],
             )
         raise ContractError(f"unknown built-in dispatch enforcement profile: {profile_id}")

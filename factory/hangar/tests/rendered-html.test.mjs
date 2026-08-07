@@ -87,12 +87,14 @@ test("renders the fail-closed Contract v1 standard and downloadable artifacts", 
   assert.match(html, /The agent cannot start without the separately retained release capability/);
   assert.match(html, /Stopped or over-limit work is retained but cannot enter reruns/);
   assert.match(html, /does not prove network, filesystem, memory or human identity isolation/i);
-  assert.match(html, /Partial enforcement means no process authority/);
+  assert.match(html, /Process authority is conditional on enforcement at the host/);
   assert.match(html, /profile:no-execution-dry-run-v1/);
   assert.match(html, /18<!-- -->\/(?:<!-- -->)?18/);
   assert.match(html, /profile:frozen-local-monitored-v1/);
   assert.match(html, /4<!-- -->\/(?:<!-- -->)?18/);
-  assert.match(html, /NO PROCESS EXECUTION \/ NO SCIENTIFIC STANDING/);
+  assert.match(html, /profile:container-commissioning-v1/);
+  assert.match(html, /HOST CHECK REQUIRED/);
+  assert.match(html, /NO SCIENTIFIC STANDING \/ NO SELF-PROMOTION/);
   assert.match(html, /Interested people cannot review their own dispute/);
   assert.match(html, /Conflicted reviewer/);
   assert.match(html, /RETURN FOR DIAGNOSIS/);
@@ -131,7 +133,8 @@ test("renders worker rights and the honest non-compensating quality profile", as
   assert.match(html, /Certifications<\/dt><dd>0<\/dd>/);
   assert.match(html, /Live stations<\/dt><dd>0<\/dd>/);
   assert.match(html, /Independent validators<\/dt><dd>0<\/dd>/);
-  assert.match(html, /no process runner yet enforces all 18 dimensions/i);
+  assert.match(html, /digest-pinned container commissioning adapter/i);
+  assert.match(html, /host attestation and promotion-grade execution remain separate unsatisfied requirements/i);
   assert.match(html, /technical handover drill exists/i);
   assert.match(html, /Conflict-excluded procedural appeals are append-only/i);
   assert.match(html, /material-support disclosures verify in CI/i);
