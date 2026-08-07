@@ -66,6 +66,11 @@ jobs:
           python -m unittest discover -s corrections/tests -p "test_*.py" -v
           python -m corrections.run_synthetic_drill --output state/ci-correction-drill
           python -m corrections.verify_synthetic_drill state/ci-correction-drill
+      - name: Verify conflict-independent procedural appeals
+        run: |
+          python -m unittest discover -s appeals/tests -p "test_*.py" -v
+          python -m appeals.run_synthetic_drill --output state/ci-appeal-drill
+          python -m appeals.verify_synthetic_drill state/ci-appeal-drill
       - name: Verify universal dispatch-budget admission
         run: |
           python -m unittest discover -s dispatch/tests -p "test_*.py" -v

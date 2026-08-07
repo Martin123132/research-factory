@@ -4,8 +4,8 @@
   "valid": true,
   "standard_version": "1.0.0",
   "standard_sha256": "fd0e51f61c87db90ebff64e33b7f262e51c6c88c351e0f9b3d0c40d25258f4f8",
-  "assessment_id": "RFQ-2026-08-07-DISPATCH-BUDGET",
-  "baseline_revision": "144189d100b2382d25cf7b53e8cc4a6a284a7a91",
+  "assessment_id": "RFQ-2026-08-07-INDEPENDENT-APPEALS",
+  "baseline_revision": "4bbd9b6b5dd80a14ab172a3a28193d24d83b5781",
   "profile": "FOUNDATION_ONLY",
   "certifications": {
     "operationally_conformant": false,
@@ -14,8 +14,8 @@
   },
   "summary": {
     "controls": 28,
-    "meets": 19,
-    "partial": 7,
+    "meets": 20,
+    "partial": 6,
     "blocked": 2
   },
   "domains": [
@@ -50,8 +50,8 @@
     {
       "domain_id": "RIGHTS",
       "title": "Rights and credit",
-      "meets": 3,
-      "partial": 1,
+      "meets": 4,
+      "partial": 0,
       "blocked": 0
     },
     {

@@ -93,6 +93,10 @@ test("renders the fail-closed Contract v1 standard and downloadable artifacts", 
   assert.match(html, /profile:frozen-local-monitored-v1/);
   assert.match(html, /4<!-- -->\/(?:<!-- -->)?18/);
   assert.match(html, /NO PROCESS EXECUTION \/ NO SCIENTIFIC STANDING/);
+  assert.match(html, /Interested people cannot review their own dispute/);
+  assert.match(html, /Conflicted reviewer/);
+  assert.match(html, /RETURN FOR DIAGNOSIS/);
+  assert.match(html, /Consensus, or back to diagnosis/);
   assert.match(html, /The disagreement route is executable/);
   assert.match(html, /diagnostic majority remains blocked from promotion/i);
   assert.match(html, /Records are not people/);
@@ -120,13 +124,14 @@ test("renders worker rights and the honest non-compensating quality profile", as
   assert.match(html, /Pause without penalty/);
   assert.match(html, /No overall score to game/);
   assert.match(html, /Foundation only/i);
-  assert.match(html, /19<\/dd>/);
-  assert.match(html, /7<\/dd>/);
+  assert.match(html, /20<\/dd>/);
+  assert.match(html, /6<\/dd>/);
   assert.match(html, /2<\/dd>/);
   assert.match(html, /Certifications<\/dt><dd>0<\/dd>/);
   assert.match(html, /Live stations<\/dt><dd>0<\/dd>/);
   assert.match(html, /Independent validators<\/dt><dd>0<\/dd>/);
   assert.match(html, /no process runner yet enforces all 18 dimensions/i);
+  assert.match(html, /Conflict-excluded procedural appeals are append-only/i);
   assert.match(html, /Do not trust this page\./);
 });
 

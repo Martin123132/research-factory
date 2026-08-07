@@ -30,6 +30,7 @@ private identity records remain outside Git.
 - 0 live-research stations
 - 1 closed append-only shift-report contract with 4 valid operational outcomes
 - 1 universal append-only correction contract with 5 typed standing changes
+- 1 conflict-independent procedural appeal ledger with unanimous-or-diagnosis routing
 - 1 universal dispatch-budget gate with 18 mandatory enforcement dimensions
 - 1 machine-verifiable 28-control quality profile: `FOUNDATION_ONLY`, not certified
 
@@ -75,6 +76,10 @@ distance convention.
 - [`research_factory_100_workbenches.json`](research_factory_100_workbenches.json)
   — canonical 100-problem catalogue.
 
+- [`factory/appeals/`](factory/appeals/) — public hash-linked procedural appeal
+  decisions that reject named conflicts, never vote a split away and cannot
+  alter scientific standing automatically.
+
 ## Verify the factory
 
 ```powershell
@@ -87,6 +92,7 @@ python .github/scripts/verify_public_readiness.py
 python factory/shift_reports/validate_shift_reports.py factory/shift_reports/examples
 python -m unittest discover -s factory/shift_reports/tests -p "test_*.py" -v
 python -m unittest discover -s factory/corrections/tests -t factory -p "test_*.py" -v
+python -m unittest discover -s factory/appeals/tests -t factory -p "test_*.py" -v
 python -m unittest discover -s factory/dispatch/tests -t factory -p "test_*.py" -v
 python factory/reference_provenance/verify_reference_provenance.py
 python -m unittest discover -s factory/reference_provenance/tests -p "test_*.py" -v

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ScopeNotice } from "@/components/ScopeNotice";
+import appeal from "@/data/appeal-example.json";
 import dispatchBudget from "@/data/dispatch-budget-example.json";
 import {
   contractCounts,
@@ -26,6 +27,7 @@ const invariants = [
   ["06", "Failures remain useful", "Negative and disputed work stays append-only and searchable with its explored region, decisive boundary and conditions for revisiting it."],
   ["07", "Rights without takeover", "Contributors retain the rights they lawfully hold. The Factory records provenance and declarations but cannot certify ownership, inventorship, patentability or freedom to operate."],
   ["08", "Bounded dispatch", "Every new runner must pass all 18 universal budget dimensions. Partial monitoring produces a rejection ticket; only the human can release a workload and the agent cannot enlarge its own authority."],
+  ["09", "Conflict-independent appeals", "A named involved person cannot sit on the panel. Reviewers commit distinct evidence; a split returns to diagnosis, never a majority vote."],
 ] as const;
 
 export default function StandardsPage() {
@@ -176,6 +178,34 @@ export default function StandardsPage() {
             Passing any of them demonstrates careful procedure only: it creates no scientific
             evidence, independent reproduction or promotion credit.
           </p>
+        </article>
+      </section>
+
+      <section className="section-block split-section standards-split">
+        <article className="feature-card feature-card-orange">
+          <p className="eyebrow">Procedural appeals / verified synthetic projection</p>
+          <h2>Interested people cannot review their own dispute.</h2>
+          <p>
+            The appeal ledger structurally excludes the requester and every named materially
+            involved author, validator or reviewer. Every panel member declares no material
+            conflict and commits a separate evidence hash.
+          </p>
+          <dl className="dispatch-card-dl">
+            <div><dt>Conflicted reviewer</dt><dd>{appeal.conflictedReviewerRejected ? "REJECTED" : "NOT TESTED"}</dd></div>
+            <div><dt>Panel commitments</dt><dd>{appeal.reviewerCount}</dd></div>
+            <div><dt>Split outcome</dt><dd>{appeal.outcome.replaceAll("_", " ")}</dd></div>
+          </dl>
+        </article>
+        <article className="feature-card">
+          <p className="eyebrow">No appeal court for scientific truth</p>
+          <h2>Consensus, or back to diagnosis.</h2>
+          <p>
+            A split cannot be voted away. It returns to a fresh diagnostic run. Even a unanimous
+            procedural uphold only asks for a separate correction or remedy record; it cannot
+            change scientific standing automatically.
+          </p>
+          <p className="mono">appeal record sha256:{appeal.recordSha256}</p>
+          <p>Identity records still do not prove that a named account is a distinct human.</p>
         </article>
       </section>
 
