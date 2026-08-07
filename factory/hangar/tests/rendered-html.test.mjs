@@ -124,14 +124,15 @@ test("renders worker rights and the honest non-compensating quality profile", as
   assert.match(html, /Pause without penalty/);
   assert.match(html, /No overall score to game/);
   assert.match(html, /Foundation only/i);
-  assert.match(html, /20<\/dd>/);
-  assert.match(html, /6<\/dd>/);
+  assert.match(html, /21<\/dd>/);
+  assert.match(html, /5<\/dd>/);
   assert.match(html, /2<\/dd>/);
   assert.match(html, /Certifications<\/dt><dd>0<\/dd>/);
   assert.match(html, /Live stations<\/dt><dd>0<\/dd>/);
   assert.match(html, /Independent validators<\/dt><dd>0<\/dd>/);
   assert.match(html, /no process runner yet enforces all 18 dimensions/i);
   assert.match(html, /Conflict-excluded procedural appeals are append-only/i);
+  assert.match(html, /material-support disclosures verify in CI/i);
   assert.match(html, /Do not trust this page\./);
 });
 

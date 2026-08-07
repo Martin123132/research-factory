@@ -19,6 +19,10 @@ Conflict-independent procedural appeals are implemented in
 [`appeals/`](appeals/README.md). They exclude named involved identities from
 the panel, require separate reviewer commitments and route a split to diagnosis
 rather than a vote; they never change scientific standing automatically.
+Material-support disclosures are implemented in
+[`disclosures/`](disclosures/README.md). Funding, compute credits, provider
+subsidies, donations and decision conflicts are public, append-only facts; they
+cannot alter a measurement, scientific gate, validator requirement or promotion.
 Provider-neutral agent admission is implemented in
 [`dispatch/`](dispatch/README.md). Its immutable budget covers 18 enforcement
 dimensions and rejects every process runner that cannot prove them all; the
@@ -162,6 +166,19 @@ Pop-Location
 The drill rejects a named author placed on the review panel, records a split
 between two otherwise excluded reviewer identities and verifies that the split
 returns to diagnosis instead of being voted away.
+
+Commission a public material-support disclosure without making a scientific
+claim:
+
+```powershell
+Push-Location factory
+.\.venv\Scripts\python.exe -m disclosures.run_synthetic_drill `
+  --output state\support-disclosure-synthetic-001
+Pop-Location
+```
+
+The drill declares and ends a fictional compute credit, checks the append-only
+hash chain and confirms that it confers no scientific standing or promotion.
 
 `--require-stage COMMISSIONING_READY` is intentionally fail-closed: it rejects
 the present 99 drafts rather than pretending a catalogue brief is runnable.

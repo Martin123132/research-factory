@@ -4,8 +4,8 @@
   "valid": true,
   "standard_version": "1.0.0",
   "standard_sha256": "fd0e51f61c87db90ebff64e33b7f262e51c6c88c351e0f9b3d0c40d25258f4f8",
-  "assessment_id": "RFQ-2026-08-07-INDEPENDENT-APPEALS",
-  "baseline_revision": "4bbd9b6b5dd80a14ab172a3a28193d24d83b5781",
+  "assessment_id": "RFQ-2026-08-07-SUPPORT-DISCLOSURES",
+  "baseline_revision": "8a785d15545543602ede5fe738b80a87be4f47df",
   "profile": "FOUNDATION_ONLY",
   "certifications": {
     "operationally_conformant": false,
@@ -14,8 +14,8 @@
   },
   "summary": {
     "controls": 28,
-    "meets": 20,
-    "partial": 6,
+    "meets": 21,
+    "partial": 5,
     "blocked": 2
   },
   "domains": [
@@ -64,8 +64,8 @@
     {
       "domain_id": "GOVERNANCE",
       "title": "Transparent governance",
-      "meets": 2,
-      "partial": 1,
+      "meets": 3,
+      "partial": 0,
       "blocked": 1
     }
   ],

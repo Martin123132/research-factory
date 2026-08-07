@@ -26,7 +26,7 @@ const domainCopy: Record<string, string> = {
   MEMORY: "Negative and shift memory is append-only and searchable. Universal corrections and retractions are closed, hash-linked and synthetically enforced.",
   RIGHTS: "Ownership, roles and commercial neutrality are separated. Conflict-excluded procedural appeals are append-only, tested and unable to alter scientific standing automatically.",
   RESILIENCE: "The engine, packages and recovery route are portable. Key-person recovery by another maintainer has not been observed.",
-  GOVERNANCE: "Controls and evidence hashes verify in CI. Sponsorship disclosure is incomplete and no external audit has occurred.",
+  GOVERNANCE: "Controls, evidence hashes and material-support disclosures verify in CI. No external audit has occurred.",
 };
 
 const certificationSteps = [
@@ -148,8 +148,7 @@ export default function CharterPage() {
           <h2>The Factory publishes the missing machinery.</h2>
           <p>
             It still needs a process runner that passes the universal dispatch budget,
-            project-level support disclosures, recovery by another
-            maintainer, two independent validators, a live two-person reproduction and an external
+            recovery by another maintainer, two independent validators, a live two-person reproduction and an external
             quality audit.
           </p>
         </div>

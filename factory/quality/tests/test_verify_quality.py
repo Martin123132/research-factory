@@ -44,7 +44,7 @@ class FactoryQualityVerifierTests(unittest.TestCase):
         value = verify()
         self.assertEqual("FOUNDATION_ONLY", value["profile"])
         self.assertEqual(
-            {"controls": 28, "meets": 20, "partial": 6, "blocked": 2},
+            {"controls": 28, "meets": 21, "partial": 5, "blocked": 2},
             value["summary"],
         )
         self.assertFalse(any(value["certifications"].values()))

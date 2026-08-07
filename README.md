@@ -32,6 +32,7 @@ private identity records remain outside Git.
 - 1 universal append-only correction contract with 5 typed standing changes
 - 1 conflict-independent procedural appeal ledger with unanimous-or-diagnosis routing
 - 1 universal dispatch-budget gate with 18 mandatory enforcement dimensions
+- 1 public material-support disclosure ledger that cannot influence truth gates
 - 1 machine-verifiable 28-control quality profile: `FOUNDATION_ONLY`, not certified
 
 The first reusable families are exact public-corpus compression and symmetric
@@ -53,6 +54,9 @@ distance convention.
   clean-clone diagnostics, searchable retained negative results and portable
   construction evidence packaging; start with
   [`factory/ENGINE.md`](factory/ENGINE.md).
+- [`factory/disclosures/`](factory/disclosures/) — public append-only records
+  of material support and decision conflicts, structurally separated from
+  measurement, replication and promotion.
 - [`factory/release/`](factory/release/) — verified tracked-source and Git-history
   recovery packages; see [`OFFLINE_RECOVERY.md`](OFFLINE_RECOVERY.md).
 - [`factory/shift_reports/`](factory/shift_reports/) — immutable operational

@@ -1,0 +1,16 @@
+{
+  "fixture": "SYNTHETIC_COMMISSIONING_ONLY",
+  "drillId": "SUPPORT-DISCLOSURE-SYNTHETIC-001",
+  "reportSha256": "e6f23806c6fc96b8982612ec000518caa97a0e52a5a56e0b837cc6901c22cb25",
+  "ledgerSha256": "45fcaf6238b65daae1ec1206169765bf2b1ae7f3b950cb6ed50b444ce28a52d9",
+  "headRecordSha256": "8ac812d898445e6d74fd3177433fd2936b367569b7534ddae46c9333bb7824cd",
+  "records": 2,
+  "endedDisclosure": true,
+  "scientificStanding": "NONE_SYNTHETIC_COMMISSIONING_ONLY",
+  "eligibleForPromotion": false,
+  "boundary": {
+    "scientificGatesChanged": false,
+    "measurementChanged": false,
+    "promotionChanged": false
+  }
+}

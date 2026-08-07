@@ -76,6 +76,7 @@ path = [
   "factory/hangar/data/correction-history-example.json",
   "factory/hangar/data/dispatch-budget-example.json",
   "factory/hangar/data/appeal-example.json",
+  "factory/hangar/data/support-disclosure-example.json",
   "factory/quality/current-assessment.json",
   "factory/reference_provenance/WB001-WB010.reference-provenance.2026-08-06.json",
   "factory/reference_provenance/WB011-WB020.reference-provenance.2026-08-06.json",

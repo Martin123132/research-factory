@@ -1,15 +1,15 @@
 {
   "$schema": "factory-quality-assessment-v1.schema.json",
   "assessment_version": 1,
-  "assessment_id": "RFQ-2026-08-07-INDEPENDENT-APPEALS",
-  "assessed_at_utc": "2026-08-07T10:30:00Z",
+  "assessment_id": "RFQ-2026-08-07-SUPPORT-DISCLOSURES",
+  "assessed_at_utc": "2026-08-07T12:30:00Z",
   "standard_version": "1.0.0",
   "standard_path": "factory/quality/factory-quality-standard-v1.json",
   "standard_sha256": "fd0e51f61c87db90ebff64e33b7f262e51c6c88c351e0f9b3d0c40d25258f4f8",
   "subject": {
     "name": "Research Factory",
     "repository": "https://github.com/Martin123132/research-factory",
-    "baseline_revision": "4bbd9b6b5dd80a14ab172a3a28193d24d83b5781",
+    "baseline_revision": "8a785d15545543602ede5fe738b80a87be4f47df",
     "baseline_purpose": "LAST_MERGED_REVISION_BEFORE_THIS_ASSESSMENT"
   },
   "scope_boundary": "CONSTRUCTION_AND_SYNTHETIC_COMMISSIONING_ONLY",
@@ -28,8 +28,8 @@
   },
   "summary": {
     "controls": 28,
-    "meets": 20,
-    "partial": 6,
+    "meets": 21,
+    "partial": 5,
     "blocked": 2
   },
   "results": [
@@ -42,7 +42,7 @@
       "evidence": [
         {
           "path": "factory/ENGINE.md",
-          "sha256": "575073b699f3e5f6919a2c1f779d9a7550816cff4922448468a11b65b2856d40",
+          "sha256": "1e3a45e5e4c6ed15aef28d98364194edc883ece593e87821c86ef31bebfdd240",
           "supports": "Documents the clean-clone core with no hosted account, website, GitHub API or model-provider requirement."
         },
         {
@@ -62,7 +62,7 @@
       "evidence": [
         {
           "path": "GOVERNANCE.md",
-          "sha256": "e9de67a116d7e8654db0df7150ca9ca21440bba052036f2234a07c7d2a5f5eec",
+          "sha256": "67a38256e0ac108f9f88dd832db7a7719d932f250bee821ab1bce6d1f882d98b",
           "supports": "Makes reproducible evidence rather than credentials or reputation the source of authority."
         },
         {
@@ -112,7 +112,7 @@
       "evidence": [
         {
           "path": "OPEN_FACTORY_CHARTER.md",
-          "sha256": "734e57763379fa90b8cb61dd45e605f027b6dd032846bacee645900bd750e7ff",
+          "sha256": "1c29bc144d3a7fd30ef4172373b88d83715e1e1edebb07d47a84955b3b8d2f29",
           "supports": "Requires scope, duration, resources, stop conditions, hazards and evidence class before dispatch."
         },
         {
@@ -137,7 +137,7 @@
       "evidence": [
         {
           "path": "OPEN_FACTORY_CHARTER.md",
-          "sha256": "734e57763379fa90b8cb61dd45e605f027b6dd032846bacee645900bd750e7ff",
+          "sha256": "1c29bc144d3a7fd30ef4172373b88d83715e1e1edebb07d47a84955b3b8d2f29",
           "supports": "Grants pause, decline and exit without loss of earned attribution or retaliation through scoring or access."
         }
       ],
@@ -177,7 +177,7 @@
       "evidence": [
         {
           "path": "OPEN_FACTORY_CHARTER.md",
-          "sha256": "734e57763379fa90b8cb61dd45e605f027b6dd032846bacee645900bd750e7ff",
+          "sha256": "1c29bc144d3a7fd30ef4172373b88d83715e1e1edebb07d47a84955b3b8d2f29",
           "supports": "Forbids using attempt volume, compute consumption or endurance as substitutes for evidence quality."
         }
       ],
@@ -476,7 +476,7 @@
         },
         {
           "path": ".github/workflows/verify.yml",
-          "sha256": "4d2225f5ed382e489c2eaa2aba942e7f49425b23a6fe9dfc9e9652196c67c0d0",
+          "sha256": "0f206cb1595e3ecb2b93b7826319a4e8d96f6a47e2a631636484e4e3c3121610",
           "supports": "Runs the quality verifier and regression tests as a protected repository check."
         }
       ],
@@ -486,16 +486,26 @@
       "control_id": "GOVERNANCE-03",
       "critical": false,
       "minimum_evidence_level": "ENFORCED",
-      "outcome": "PARTIAL",
-      "evidence_level": "DECLARED",
+      "outcome": "MEETS",
+      "evidence_level": "ENFORCED",
       "evidence": [
         {
-          "path": "CONTRIBUTING.md",
-          "sha256": "b91bb595c2211c47d3f378984c3a6e7117639f1dcf76bf38889bd6501d8185ad",
-          "supports": "Requires material sources, collaborators, institutional interests and AI use to be declared."
+          "path": "factory/disclosures/support-disclosure-v1.schema.json",
+          "sha256": "50719b76e1e0997728e772cd0e2eb13690db8769ddc955e568e1128591907e18",
+          "supports": "Closes public support declarations around the affected scope, declared supporter and support kind, lifecycle state, append-only links and a locked no-influence boundary."
+        },
+        {
+          "path": "factory/disclosures/ledger.py",
+          "sha256": "2ae1aa3b929cf217677cc87d02eae9b349470dffc9c31e7848b5079fc24425ae",
+          "supports": "Rejects lifecycle violations, tampering, duplicate declarations, empty amendments, silent restoration and attempts to alter the non-influence boundary."
+        },
+        {
+          "path": "factory/disclosures/tests/test_disclosures.py",
+          "sha256": "0bcce9790e28917b336dea07d95ce12bb1717e6ce7bbfefbe435bc46ad3106ab",
+          "supports": "Exercises declare/end lifecycle, non-influence-boundary rejection, tampering, no-overwrite export and synthetic commissioning verification."
         }
       ],
-      "limitation": "Contribution declarations cover interests and sources, but no closed project-level ledger yet records material funding, compute grants and provider subsidies."
+      "limitation": null
     },
     {
       "control_id": "GOVERNANCE-04",

@@ -71,6 +71,11 @@ jobs:
           python -m unittest discover -s appeals/tests -p "test_*.py" -v
           python -m appeals.run_synthetic_drill --output state/ci-appeal-drill
           python -m appeals.verify_synthetic_drill state/ci-appeal-drill
+      - name: Verify public material-support disclosures
+        run: |
+          python -m unittest discover -s disclosures/tests -p "test_*.py" -v
+          python -m disclosures.run_synthetic_drill --output state/ci-support-disclosure-drill
+          python -m disclosures.verify_synthetic_drill state/ci-support-disclosure-drill
       - name: Verify universal dispatch-budget admission
         run: |
           python -m unittest discover -s dispatch/tests -p "test_*.py" -v

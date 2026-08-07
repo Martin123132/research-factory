@@ -165,6 +165,31 @@ that a local identity record represents a distinct human, proves impartiality
 or supplies legal authority. Appeal records carry zero scientific standing and
 never automatically change an artifact's standing.
 
+## Disclose material support without changing truth gates
+
+`support-append` records a public factual declaration of funding, compute
+credits, provider subsidies, donated materials, institutional relationships or
+decision conflicts at a Factory, workbench or governance-decision scope.
+
+```powershell
+factory\.venv\Scripts\python.exe factory\enginectl.py support-append `
+  --ledger factory\state\public\support-disclosures.jsonl `
+  --draft factory\disclosures\support-disclosure.example.json
+
+factory\.venv\Scripts\python.exe factory\enginectl.py support-verify `
+  --ledger factory\state\public\support-disclosures.jsonl
+
+factory\.venv\Scripts\python.exe factory\enginectl.py support-history `
+  --ledger factory\state\public\support-disclosures.jsonl `
+  --scope-id research-factory
+```
+
+The ledger is append-only: `DECLARE` opens a relationship, `AMEND` changes a
+material public fact and `END` closes it without deleting history. It stores no
+private contracts or secrets. Its locked boundary says plainly that no record
+changes measurement, scientific gates or promotion; it also cannot establish
+validator independence, authority, legal clearance or scientific validity.
+
 ## Admit agent work only inside a complete budget
 
 `dispatch-budget-verify` checks a closed, self-hashed budget tied to one work

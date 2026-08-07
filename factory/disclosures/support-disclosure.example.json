@@ -1,0 +1,23 @@
+{
+  "event_id": "support-event:example-declare",
+  "disclosure_id": "support:example-compute-credit",
+  "action": "DECLARE",
+  "scope": {"scope_type": "FACTORY_PROJECT", "scope_id": "research-factory"},
+  "declarant": {
+    "operator_id": "human:example-declarant",
+    "display_name": "Example Declarant",
+    "identity_assurance": "SELF_ASSERTED_LOCAL",
+    "identity_warning": "IDENTITY_RECORD_IS_NOT_PROOF_OF_AUTHORITY"
+  },
+  "disclosure": {
+    "supporter_name": "Example Compute Donor",
+    "supporter_kind": "NONPROFIT",
+    "support_kind": "COMPUTE_CREDIT",
+    "relationship": "Example-only public compute credit for construction tests.",
+    "materiality": "MATERIAL",
+    "value_visibility": "NOT_QUANTIFIABLE",
+    "public_description": "Example-only support declaration; it cannot change any scientific gate.",
+    "received_or_expected": "EXPECTED"
+  },
+  "public_summary": "Example-only compute credit disclosure for construction infrastructure."
+}
