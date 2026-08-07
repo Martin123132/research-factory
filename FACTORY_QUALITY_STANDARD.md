@@ -70,7 +70,9 @@ or personal evidence.
 
 The factory does not take ownership. Credit follows recorded roles. Patents,
 prizes, funding and commercial decisions cannot change scientific gates.
-Conflicts and appeals have an accountable route.
+Material support, provider subsidies and decision conflicts have an
+append-only public disclosure route. Conflicts and appeals have an accountable
+route.
 
 ### 6. Resilience and portability
 
@@ -120,7 +122,7 @@ size and social attention are deliberately not quality controls.
 
 The initial assessment is `FOUNDATION_ONLY`. It records strong machine-enforced
 construction in several domains while publishing the unfinished process-grade
-worker-budget adapter, sponsorship, bus-factor and independent-audit controls.
+worker-budget adapter, bus-factor and independent-audit controls.
 Its conflict-independent appeal record is closed, append-only and synthetically
 enforced, but identity records still do not prove distinct real people. Its universal
 correction and retraction record is closed and synthetically enforced, but no

@@ -57,6 +57,34 @@ class LocalCliTests(unittest.TestCase):
         self.assertEqual(0, value["operating_facts"]["live_research_stations"])
         self.assertFalse(any(value["certifications"].values()))
 
+    def test_support_disclosure_commands_are_local_and_non_promotional(self) -> None:
+        with tempfile.TemporaryDirectory() as raw_directory:
+            root = Path(raw_directory)
+            ledger = root / "support-disclosures.jsonl"
+            draft = FACTORY_ROOT / "disclosures" / "support-disclosure.example.json"
+
+            returncode, stdout, stderr = self.invoke(
+                ["support-append", "--ledger", str(ledger), "--draft", str(draft), "--json"]
+            )
+            self.assertEqual(0, returncode, stderr)
+            appended = json.loads(stdout)
+            self.assertEqual("ACTIVE", appended["status_after"])
+            self.assertFalse(appended["boundary"]["scientific_gates_changed"])
+
+            returncode, stdout, stderr = self.invoke(
+                ["support-history", "--ledger", str(ledger), "--support-kind", "compute_credit", "--json"]
+            )
+            self.assertEqual(0, returncode, stderr)
+            history = json.loads(stdout)
+            self.assertEqual(1, history["returned"])
+            self.assertFalse(history["ledger"]["eligible_for_promotion"])
+
+            returncode, stdout, stderr = self.invoke(
+                ["support-export", "--ledger", str(ledger), "--output", str(root / "index.json"), "--json"]
+            )
+            self.assertEqual(0, returncode, stderr)
+            self.assertEqual(1, json.loads(stdout)["returned"])
+
 
 class GovernedCliSubprocessTests(unittest.TestCase):
     def setUp(self) -> None:

@@ -96,6 +96,10 @@ use a preferred provider, accept a commercial licence, waive a right or adopt
 a patent pledge. Material sponsors, compute grants and conflicts of interest
 must be disclosed where they could affect a workbench or decision.
 
+The public disclosure record is append-only and is not a scientific input. It
+cannot change a measurement, satisfy a replication condition, confer validator
+independence, make a result promotable or decide legal ownership.
+
 The project's core contracts, verifier source, governance and construction
 history must remain available under their declared open licences. Upstream
 datasets and restricted benchmarks retain their own terms and are never made

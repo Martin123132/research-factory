@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ScopeNotice } from "@/components/ScopeNotice";
 import appeal from "@/data/appeal-example.json";
 import dispatchBudget from "@/data/dispatch-budget-example.json";
+import supportDisclosure from "@/data/support-disclosure-example.json";
 import {
   contractCounts,
   contractGeneratorSha256,
@@ -28,6 +29,7 @@ const invariants = [
   ["07", "Rights without takeover", "Contributors retain the rights they lawfully hold. The Factory records provenance and declarations but cannot certify ownership, inventorship, patentability or freedom to operate."],
   ["08", "Bounded dispatch", "Every new runner must pass all 18 universal budget dimensions. Partial monitoring produces a rejection ticket; only the human can release a workload and the agent cannot enlarge its own authority."],
   ["09", "Conflict-independent appeals", "A named involved person cannot sit on the panel. Reviewers commit distinct evidence; a split returns to diagnosis, never a majority vote."],
+  ["10", "Public material support", "Funding, credits, subsidies and decision conflicts are append-only public declarations. They cannot change evidence gates, measurement or promotion."],
 ] as const;
 
 export default function StandardsPage() {
@@ -206,6 +208,33 @@ export default function StandardsPage() {
           </p>
           <p className="mono">appeal record sha256:{appeal.recordSha256}</p>
           <p>Identity records still do not prove that a named account is a distinct human.</p>
+        </article>
+      </section>
+
+      <section className="section-block split-section standards-split">
+        <article className="feature-card feature-card-orange">
+          <p className="eyebrow">Material support / verified synthetic projection</p>
+          <h2>Material support cannot buy a pass.</h2>
+          <p>
+            Funding, compute credits, provider subsidies and decision conflicts are public,
+            append-only declarations at the affected scope. The ledger is for a factual public
+            description, never private agreements or a ranking of contributors.
+          </p>
+          <dl className="dispatch-card-dl">
+            <div><dt>Lifecycle records</dt><dd>{supportDisclosure.records}</dd></div>
+            <div><dt>Disclosure ended</dt><dd>{supportDisclosure.endedDisclosure ? "YES" : "NO"}</dd></div>
+            <div><dt>Truth gates changed</dt><dd>{supportDisclosure.boundary.scientificGatesChanged ? "YES" : "NO"}</dd></div>
+          </dl>
+        </article>
+        <article className="feature-card">
+          <p className="eyebrow">Non-influence boundary</p>
+          <h2>Declare it. Do not use it as evidence.</h2>
+          <p>
+            A support record cannot alter measurement, promotion or a validator requirement. It
+            also cannot prove that a person is independent, authorised or legally cleared.
+          </p>
+          <p className="mono">report sha256:{supportDisclosure.reportSha256}</p>
+          <p>{supportDisclosure.scientificStanding.replaceAll("_", " ")} / promotion: {supportDisclosure.eligibleForPromotion ? "ELIGIBLE" : "INELIGIBLE"}</p>
         </article>
       </section>
 

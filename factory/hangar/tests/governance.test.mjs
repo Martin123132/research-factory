@@ -146,6 +146,19 @@ test("the dispatch-budget projection rejects partial process enforcement", async
   assert.equal(value.boundary.eligibleForPromotion, false);
 });
 
+test("the public support-disclosure projection cannot influence scientific gates", async () => {
+  const value = JSON.parse(
+    await readFile(new URL("../data/support-disclosure-example.json", import.meta.url), "utf8"),
+  );
+  assert.equal(value.fixture, "SYNTHETIC_COMMISSIONING_ONLY");
+  assert.equal(value.endedDisclosure, true);
+  assert.equal(value.scientificStanding, "NONE_SYNTHETIC_COMMISSIONING_ONLY");
+  assert.equal(value.eligibleForPromotion, false);
+  assert.equal(value.boundary.scientificGatesChanged, false);
+  assert.equal(value.boundary.measurementChanged, false);
+  assert.equal(value.boundary.promotionChanged, false);
+});
+
 test("shift reports append a hash chain without moving or closing the work order", async () => {
   const createdResponse = await post("/api/work-orders", {
     workbenchId: 1,

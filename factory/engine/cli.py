@@ -12,6 +12,11 @@ from appeals.ledger import (
     AppealLedger,
     load_json_strict as load_appeal_draft,
 )
+from disclosures.ledger import (
+    SUPPORT_KINDS,
+    SupportDisclosureLedger,
+    load_json_strict as load_support_draft,
+)
 from control_plane import cli as governed_cli
 from control_plane.common import ControlPlaneError
 from control_plane.workflow import NEGATIVE_CLASSIFICATIONS
@@ -50,6 +55,10 @@ LOCAL_COMMANDS = {
     "appeal-verify",
     "appeal-history",
     "appeal-export",
+    "support-append",
+    "support-verify",
+    "support-history",
+    "support-export",
     "dispatch-profiles",
     "dispatch-budget-verify",
     "dispatch-preflight",
@@ -109,6 +118,10 @@ Explore and verify the factory (no account, website, network, or AI provider req
   appeal-verify          verify the append-only appeal ledger and panel exclusions
   appeal-history         search public procedural appeal decisions read-only
   appeal-export          export a read-only public appeal index for adapters
+  support-append         append a public material-support disclosure event
+  support-verify         verify the append-only support-disclosure ledger
+  support-history        search public funding, credit and provider disclosures
+  support-export         export a read-only public support-disclosure index
   dispatch-profiles      inspect the built-in runner enforcement profiles
   dispatch-budget-verify verify one immutable provider-neutral agent budget
   dispatch-preflight     issue a fail-closed admission or rejection ticket
@@ -319,6 +332,28 @@ def build_local_parser() -> argparse.ArgumentParser:
     appeal_export.add_argument("--ledger", type=Path, required=True)
     appeal_export.add_argument("--output", type=Path, required=True)
     appeal_export.add_argument("--json", action="store_true")
+
+    support_append = sub.add_parser("support-append", help="append a public material-support disclosure")
+    support_append.add_argument("--ledger", type=Path, required=True)
+    support_append.add_argument("--draft", type=Path, required=True)
+    support_append.add_argument("--json", action="store_true")
+    support_verify = sub.add_parser("support-verify", help="verify a public support-disclosure ledger")
+    support_verify.add_argument("--ledger", type=Path, required=True)
+    support_verify.add_argument("--json", action="store_true")
+    support_history = sub.add_parser("support-history", help="search public support disclosures read-only")
+    support_history.add_argument("--ledger", type=Path, required=True)
+    support_history.add_argument("--scope-id")
+    support_history.add_argument(
+        "--support-kind",
+        type=str.upper,
+        choices=sorted(SUPPORT_KINDS),
+    )
+    support_history.add_argument("--limit", type=int, default=200)
+    support_history.add_argument("--json", action="store_true")
+    support_export = sub.add_parser("support-export", help="export a public support-disclosure index")
+    support_export.add_argument("--ledger", type=Path, required=True)
+    support_export.add_argument("--output", type=Path, required=True)
+    support_export.add_argument("--json", action="store_true")
 
     dispatch_profiles = sub.add_parser(
         "dispatch-profiles",
@@ -590,6 +625,29 @@ def _human_appeal_history(value: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
+def _human_support(value: dict[str, Any]) -> str:
+    return "\n".join(
+        [
+            "SUPPORT DISCLOSURE APPENDED",
+            f"Disclosure: {value['disclosure_id']} / event {value['event_id']}",
+            f"Status: {value['status_before']} -> {value['status_after']}",
+            f"Support: {value['disclosure']['support_kind']} from {value['disclosure']['supporter_name']}",
+            "Scientific gates changed: false",
+        ]
+    )
+
+
+def _human_support_verification(value: dict[str, Any]) -> str:
+    return "\n".join(
+        [
+            "SUPPORT-DISCLOSURE LEDGER VERIFIED",
+            f"Records: {value['records']} across {value['disclosures']} disclosure(s)",
+            f"Active: {value['active_disclosures']}",
+            "Scientific standing: NONE",
+        ]
+    )
+
+
 def _human_dispatch_budget(value: dict[str, Any]) -> str:
     time_budget = value["time_budget"]
     compute = value["compute_budget"]
@@ -728,6 +786,23 @@ def run_local(args: argparse.Namespace) -> int:
                 f"Records: {value['returned']}\n"
                 "Scientific standing: NONE"
             )
+        return 0
+
+    if args.command == "support-append":
+        value = SupportDisclosureLedger(args.ledger).append(load_support_draft(args.draft))
+        _json(value) if args.json else print(_human_support(value))
+        return 0
+    if args.command == "support-verify":
+        value = SupportDisclosureLedger(args.ledger).verify()
+        _json(value) if args.json else print(_human_support_verification(value))
+        return 0
+    if args.command == "support-history":
+        value = SupportDisclosureLedger(args.ledger).history(scope_id=args.scope_id, support_kind=args.support_kind, limit=args.limit)
+        _json(value) if args.json else print(json.dumps(value, indent=2, ensure_ascii=False))
+        return 0
+    if args.command == "support-export":
+        value = SupportDisclosureLedger(args.ledger).export_public_index(args.output)
+        _json(value) if args.json else print(f"SUPPORT-DISCLOSURE INDEX EXPORTED\nRecords: {value['returned']}\nScientific standing: NONE")
         return 0
 
     if args.command == "dispatch-profiles":

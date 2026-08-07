@@ -55,6 +55,10 @@ another.
     authors, validators or reviewers. Their committed evidence hashes must be
     distinct. A split returns to diagnosis; it cannot change standing by
     majority vote, and any correction still requires its own append-only record.
+16. Material funding, compute credits, provider subsidies and decision
+    conflicts must be disclosed at the affected Factory, workbench or
+    governance-decision scope. A disclosure cannot change a measurement,
+    scientific gate, validator requirement or promotion decision.
 
 ## Repository authority
 
@@ -105,6 +109,10 @@ The controlling boundaries are documented in
 The non-commercial scientific boundary does not prevent contributors from
 working elsewhere or using compatible commercial tools. It prevents funding,
 provider choice, investment and commercial terms from changing evidence gates.
+Material support is recorded through the public, append-only
+[`factory/disclosures/`](factory/disclosures/README.md) ledger. It records a
+public factual description, not private agreements, and cannot itself certify
+authority, legal clearance, validator independence or scientific validity.
 
 ## Changing governance
 

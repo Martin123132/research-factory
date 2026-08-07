@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Martin123132/research-factory/blob/main/factory/disclosures/support-disclosure-v1.schema.json",
+  "title": "Research Factory public material support disclosure v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "sequence", "event_id", "recorded_at", "disclosure_id", "action", "status_before", "status_after", "scope", "declarant", "disclosure", "public_summary", "boundary", "previous_record_sha256", "previous_disclosure_event_sha256", "record_sha256"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "sequence": {"type": "integer", "minimum": 1},
+    "event_id": {"$ref": "#/$defs/id"},
+    "recorded_at": {"$ref": "#/$defs/utc"},
+    "disclosure_id": {"$ref": "#/$defs/id"},
+    "action": {"enum": ["DECLARE", "AMEND", "END"]},
+    "status_before": {"enum": ["UNDECLARED", "ACTIVE"]},
+    "status_after": {"enum": ["ACTIVE", "ENDED"]},
+    "scope": {
+      "type": "object", "additionalProperties": false,
+      "required": ["scope_type", "scope_id"],
+      "properties": {
+        "scope_type": {"enum": ["FACTORY_PROJECT", "WORKBENCH", "GOVERNANCE_DECISION"]},
+        "scope_id": {"$ref": "#/$defs/id"}
+      }
+    },
+    "declarant": {"$ref": "#/$defs/identity"},
+    "disclosure": {
+      "type": "object", "additionalProperties": false,
+      "required": ["supporter_name", "supporter_kind", "support_kind", "relationship", "materiality", "value_visibility", "public_description", "received_or_expected"],
+      "properties": {
+        "supporter_name": {"type": "string", "minLength": 2, "maxLength": 200},
+        "supporter_kind": {"enum": ["INDIVIDUAL", "COMPANY", "NONPROFIT", "UNIVERSITY", "GOVERNMENT", "OPEN_SOURCE_PROJECT", "OTHER"]},
+        "support_kind": {"enum": ["FINANCIAL_SUPPORT", "COMPUTE_CREDIT", "TOOL_OR_PROVIDER_SUBSIDY", "DATA_OR_MATERIAL_DONATION", "EMPLOYMENT_OR_INSTITUTIONAL_INTEREST", "GOVERNANCE_INTEREST", "OTHER_MATERIAL_INTEREST"]},
+        "relationship": {"type": "string", "minLength": 8, "maxLength": 1000},
+        "materiality": {"enum": ["MATERIAL", "NONE_DECLARED"]},
+        "value_visibility": {"enum": ["EXACT_PUBLIC", "RANGE_PUBLIC", "NOT_QUANTIFIABLE"]},
+        "public_description": {"type": "string", "minLength": 8, "maxLength": 2000},
+        "received_or_expected": {"enum": ["RECEIVED", "EXPECTED", "ONGOING"]}
+      }
+    },
+    "public_summary": {"type": "string", "minLength": 8, "maxLength": 1000},
+    "boundary": {
+      "type": "object", "additionalProperties": false,
+      "required": ["scope", "append_only", "scientific_gates_changed", "measurement_changed", "promotion_changed", "validator_independence_proven", "legal_clearance_proven"],
+      "properties": {
+        "scope": {"const": "PUBLIC_MATERIAL_SUPPORT_DISCLOSURE_ONLY"},
+        "append_only": {"const": true},
+        "scientific_gates_changed": {"const": false},
+        "measurement_changed": {"const": false},
+        "promotion_changed": {"const": false},
+        "validator_independence_proven": {"const": false},
+        "legal_clearance_proven": {"const": false}
+      }
+    },
+    "previous_record_sha256": {"$ref": "#/$defs/sha256"},
+    "previous_disclosure_event_sha256": {"$ref": "#/$defs/sha256"},
+    "record_sha256": {"$ref": "#/$defs/sha256"}
+  },
+  "allOf": [
+    {"if": {"properties": {"action": {"const": "DECLARE"}}, "required": ["action"]}, "then": {"properties": {"status_before": {"const": "UNDECLARED"}, "status_after": {"const": "ACTIVE"}, "previous_disclosure_event_sha256": {"const": "0000000000000000000000000000000000000000000000000000000000000000"}}}},
+    {"if": {"properties": {"action": {"const": "AMEND"}}, "required": ["action"]}, "then": {"properties": {"status_before": {"const": "ACTIVE"}, "status_after": {"const": "ACTIVE"}}}},
+    {"if": {"properties": {"action": {"const": "END"}}, "required": ["action"]}, "then": {"properties": {"status_before": {"const": "ACTIVE"}, "status_after": {"const": "ENDED"}}}}
+  ],
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:@/-]{2,159}$"},
+    "utc": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?Z$"},
+    "identity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["operator_id", "display_name", "identity_assurance", "identity_warning"],
+      "properties": {
+        "operator_id": {"$ref": "#/$defs/id"},
+        "display_name": {"type": "string", "minLength": 1, "maxLength": 160},
+        "identity_assurance": {"enum": ["SELF_ASSERTED_LOCAL", "PLATFORM_VERIFIED", "EXTERNALLY_ATTESTED"]},
+        "identity_warning": {"const": "IDENTITY_RECORD_IS_NOT_PROOF_OF_AUTHORITY"}
+      }
+    }
+  }
+}
