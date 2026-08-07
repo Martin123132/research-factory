@@ -110,6 +110,7 @@ test("renders the fail-closed Contract v1 standard and downloadable artifacts", 
   assert.match(html, /href="\/workbench-contract-v1\.schema\.json"/);
   assert.match(html, /href="\/rights-and-ip-v1\.schema\.json"/);
   assert.match(html, /href="\/contribution-ledger-v1\.schema\.json"/);
+  assert.match(html, /Software cannot invent a second person\./);
 });
 
 test("renders worker rights and the honest non-compensating quality profile", async () => {
@@ -131,6 +132,7 @@ test("renders worker rights and the honest non-compensating quality profile", as
   assert.match(html, /Live stations<\/dt><dd>0<\/dd>/);
   assert.match(html, /Independent validators<\/dt><dd>0<\/dd>/);
   assert.match(html, /no process runner yet enforces all 18 dimensions/i);
+  assert.match(html, /technical handover drill exists/i);
   assert.match(html, /Conflict-excluded procedural appeals are append-only/i);
   assert.match(html, /material-support disclosures verify in CI/i);
   assert.match(html, /Do not trust this page\./);

@@ -4,8 +4,8 @@
   "valid": true,
   "standard_version": "1.0.0",
   "standard_sha256": "fd0e51f61c87db90ebff64e33b7f262e51c6c88c351e0f9b3d0c40d25258f4f8",
-  "assessment_id": "RFQ-2026-08-07-SUPPORT-DISCLOSURES",
-  "baseline_revision": "8a785d15545543602ede5fe738b80a87be4f47df",
+  "assessment_id": "RFQ-2026-08-07-KEY-PERSON-RECOVERY-DRILL",
+  "baseline_revision": "8fdde2a31cc8d914bc7765a32d2e28184fdd4e73",
   "profile": "FOUNDATION_ONLY",
   "certifications": {
     "operationally_conformant": false,

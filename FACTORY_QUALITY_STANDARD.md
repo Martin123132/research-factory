@@ -123,6 +123,8 @@ size and social attention are deliberately not quality controls.
 The initial assessment is `FOUNDATION_ONLY`. It records strong machine-enforced
 construction in several domains while publishing the unfinished process-grade
 worker-budget adapter, bus-factor and independent-audit controls.
+The key-person recovery drill now verifies the technical handover path, but it
+cannot manufacture the required observation of two independent maintainers.
 Its conflict-independent appeal record is closed, append-only and synthetically
 enforced, but identity records still do not prove distinct real people. Its universal
 correction and retraction record is closed and synthetically enforced, but no

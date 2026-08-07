@@ -59,6 +59,9 @@ distance convention.
   measurement, replication and promotion.
 - [`factory/release/`](factory/release/) — verified tracked-source and Git-history
   recovery packages; see [`OFFLINE_RECOVERY.md`](OFFLINE_RECOVERY.md).
+- [`factory/recovery/`](factory/recovery/) — a disposable, hash-bound
+  key-person recovery drill; it tests technical handover without pretending to
+  prove two independent maintainers.
 - [`factory/shift_reports/`](factory/shift_reports/) — immutable operational
   memory for progress, no-gain, blocked and unrunnable shifts; zero scientific
   standing.
