@@ -1,15 +1,15 @@
 {
   "$schema": "factory-quality-assessment-v1.schema.json",
   "assessment_version": 1,
-  "assessment_id": "RFQ-2026-08-07-DISPATCH-BUDGET",
-  "assessed_at_utc": "2026-08-06T23:52:44Z",
+  "assessment_id": "RFQ-2026-08-07-INDEPENDENT-APPEALS",
+  "assessed_at_utc": "2026-08-07T10:30:00Z",
   "standard_version": "1.0.0",
   "standard_path": "factory/quality/factory-quality-standard-v1.json",
   "standard_sha256": "fd0e51f61c87db90ebff64e33b7f262e51c6c88c351e0f9b3d0c40d25258f4f8",
   "subject": {
     "name": "Research Factory",
     "repository": "https://github.com/Martin123132/research-factory",
-    "baseline_revision": "144189d100b2382d25cf7b53e8cc4a6a284a7a91",
+    "baseline_revision": "4bbd9b6b5dd80a14ab172a3a28193d24d83b5781",
     "baseline_purpose": "LAST_MERGED_REVISION_BEFORE_THIS_ASSESSMENT"
   },
   "scope_boundary": "CONSTRUCTION_AND_SYNTHETIC_COMMISSIONING_ONLY",
@@ -28,8 +28,8 @@
   },
   "summary": {
     "controls": 28,
-    "meets": 19,
-    "partial": 7,
+    "meets": 20,
+    "partial": 6,
     "blocked": 2
   },
   "results": [
@@ -42,7 +42,7 @@
       "evidence": [
         {
           "path": "factory/ENGINE.md",
-          "sha256": "19b1c79a30939f9b514fb4d3356d45ecb766ce2071e16581037ffd7f2d2978c1",
+          "sha256": "575073b699f3e5f6919a2c1f779d9a7550816cff4922448468a11b65b2856d40",
           "supports": "Documents the clean-clone core with no hosted account, website, GitHub API or model-provider requirement."
         },
         {
@@ -62,7 +62,7 @@
       "evidence": [
         {
           "path": "GOVERNANCE.md",
-          "sha256": "24828fd80f82d65ad9571afb073fe93f2f3a1f4296d6d795fcea12f6dfddc64b",
+          "sha256": "e9de67a116d7e8654db0df7150ca9ca21440bba052036f2234a07c7d2a5f5eec",
           "supports": "Makes reproducible evidence rather than credentials or reputation the source of authority."
         },
         {
@@ -112,7 +112,7 @@
       "evidence": [
         {
           "path": "OPEN_FACTORY_CHARTER.md",
-          "sha256": "67c0e4d5f6247e5e9ab2abb6fa3b127cbcc0892efd2d429ebcf7a0fa81c2b432",
+          "sha256": "734e57763379fa90b8cb61dd45e605f027b6dd032846bacee645900bd750e7ff",
           "supports": "Requires scope, duration, resources, stop conditions, hazards and evidence class before dispatch."
         },
         {
@@ -137,7 +137,7 @@
       "evidence": [
         {
           "path": "OPEN_FACTORY_CHARTER.md",
-          "sha256": "67c0e4d5f6247e5e9ab2abb6fa3b127cbcc0892efd2d429ebcf7a0fa81c2b432",
+          "sha256": "734e57763379fa90b8cb61dd45e605f027b6dd032846bacee645900bd750e7ff",
           "supports": "Grants pause, decline and exit without loss of earned attribution or retaliation through scoring or access."
         }
       ],
@@ -177,7 +177,7 @@
       "evidence": [
         {
           "path": "OPEN_FACTORY_CHARTER.md",
-          "sha256": "67c0e4d5f6247e5e9ab2abb6fa3b127cbcc0892efd2d429ebcf7a0fa81c2b432",
+          "sha256": "734e57763379fa90b8cb61dd45e605f027b6dd032846bacee645900bd750e7ff",
           "supports": "Forbids using attempt volume, compute consumption or endurance as substitutes for evidence quality."
         }
       ],
@@ -367,21 +367,26 @@
       "control_id": "RIGHTS-04",
       "critical": true,
       "minimum_evidence_level": "ENFORCED",
-      "outcome": "PARTIAL",
-      "evidence_level": "DECLARED",
+      "outcome": "MEETS",
+      "evidence_level": "ENFORCED",
       "evidence": [
         {
-          "path": "CODE_OF_CONDUCT.md",
-          "sha256": "b7f767ca764b61898eb1a82572d7fc70debe0b704c9ebed90327d85f12bd3789",
-          "supports": "Declares private reporting, conflict disclosure and proportionate enforcement expectations."
+          "path": "factory/appeals/appeal-record-v1.schema.json",
+          "sha256": "28cbe3b0a4061f20686751a425507f46edf841d94c03d7a32039a67395b8d49a",
+          "supports": "Closes every appeal record around public case inputs, conflict-declared panels, reviewer commitments, unanimous-or-diagnosis outcomes and a no-standing-change boundary."
         },
         {
-          "path": "OPEN_FACTORY_CHARTER.md",
-          "sha256": "67c0e4d5f6247e5e9ab2abb6fa3b127cbcc0892efd2d429ebcf7a0fa81c2b432",
-          "supports": "Grants challenge without retaliation and prevents an interested party from solely deciding their own appeal."
+          "path": "factory/appeals/ledger.py",
+          "sha256": "da19f8f58471261b5920d0a09194fd4e1a7dffce181050b925456e8471721658",
+          "supports": "Rejects requester and materially involved identities from the panel, duplicate reviewers or commitments, non-consensus outcomes and tampered append-only records."
+        },
+        {
+          "path": "factory/appeals/tests/test_appeals.py",
+          "sha256": "ddc2caf3e115443ab2b3714ff0c19810833bdfefe5279c5c86cf9e77f1b6aa04",
+          "supports": "Exercises conflict exclusion, duplicate identity and evidence rejection, unanimous mapping, split diagnosis, tampering, no-overwrite export and synthetic commissioning."
         }
       ],
-      "limitation": "The appeal and conflict principles are public, but no independent appeal panel, assignment rule or append-only appeal record is yet operating."
+      "limitation": null
     },
     {
       "control_id": "RESILIENCE-01",
@@ -471,7 +476,7 @@
         },
         {
           "path": ".github/workflows/verify.yml",
-          "sha256": "609d56b4b731276e906e29e0312f8270d59cb1d1323f1e56acd38ddb67328dd1",
+          "sha256": "4d2225f5ed382e489c2eaa2aba942e7f49425b23a6fe9dfc9e9652196c67c0d0",
           "supports": "Runs the quality verifier and regression tests as a protected repository check."
         }
       ],

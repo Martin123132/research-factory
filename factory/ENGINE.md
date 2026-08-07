@@ -38,6 +38,13 @@ network, hazard and stop dimensions are enforced. `LOCAL_MONITORED_V1` proves
 only four and is therefore rejected for process execution. The frozen pilot is
 not modified, silently upgraded or made promotion-grade.
 
+Disputed public decisions can also enter a separate conflict-independent appeal
+ledger. It rejects any named requester, author, validator or materially involved
+reviewer from the panel, requires separate reviewer evidence commitments and
+allows only unanimity or a return to diagnosis. It cannot change scientific
+standing automatically; a correction still requires the separate correction
+ledger.
+
 ## Start from a clean clone
 
 From the repository root on Windows PowerShell:
@@ -78,8 +85,8 @@ factory\.venv\Scripts\python.exe factory\enginectl.py quality
 factory\.venv\Scripts\python.exe factory\enginectl.py quality --json
 ```
 
-The current result is `FOUNDATION_ONLY`: 19 controls meet their declared
-minimum, seven remain partial and two are blocked. Operational, scientific and
+The current result is `FOUNDATION_ONLY`: 20 controls meet their declared
+minimum, six remain partial and two are blocked. Operational, scientific and
 independent-audit certification remain false. Passing the command verifies that
 this self-assessment is internally honest; it does not certify the Factory.
 
@@ -129,6 +136,34 @@ standing derived from the whole verified chain. Original bytes are never
 rewritten. Identity and authority fields are accountable assertions, not proof
 that an actor is independent or legally entitled to act. Correction records
 carry zero scientific standing and cannot promote an artifact.
+
+## Route a disputed decision without self-review
+
+`appeal-append` records a final public procedural appeal only after a
+conflict-exclusion check. The requester and all named materially involved
+authors, validators and reviewers are structurally excluded from the panel.
+Every assigned reviewer declares no material conflict and commits a distinct
+evidence hash. A split returns to diagnosis; it is never turned into a majority
+vote. A unanimous procedural uphold still requires a separate correction or
+remedy record.
+
+```powershell
+factory\.venv\Scripts\python.exe factory\enginectl.py appeal-append `
+  --ledger factory\state\public\appeals.jsonl `
+  --draft factory\appeals\appeal-draft.example.json
+
+factory\.venv\Scripts\python.exe factory\enginectl.py appeal-verify `
+  --ledger factory\state\public\appeals.jsonl
+
+factory\.venv\Scripts\python.exe factory\enginectl.py appeal-history `
+  --ledger factory\state\public\appeals.jsonl `
+  --outcome RETURN_FOR_DIAGNOSIS
+```
+
+The ledger verifies the shape and declared exclusion boundary; it cannot prove
+that a local identity record represents a distinct human, proves impartiality
+or supplies legal authority. Appeal records carry zero scientific standing and
+never automatically change an artifact's standing.
 
 ## Admit agent work only inside a complete budget
 

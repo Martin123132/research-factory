@@ -2311,6 +2311,39 @@ select {
   min-height: 420px;
 }
 
+.feature-card .dispatch-card-dl {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: auto 0 0;
+}
+
+.feature-card .dispatch-card-dl div {
+  padding: 12px;
+  border: 1px solid var(--line);
+  background: var(--paper-warm);
+}
+
+.feature-card .dispatch-card-dl dt,
+.feature-card .dispatch-card-dl dd { margin: 0; }
+
+.feature-card .dispatch-card-dl dt {
+  color: var(--ink-soft);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.feature-card .dispatch-card-dl dd {
+  margin-top: 6px;
+  overflow-wrap: anywhere;
+  color: var(--green);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 11px;
+  font-weight: 750;
+}
+
 .standard-downloads .button-row {
   margin-top: 34px;
 }
@@ -2741,6 +2774,7 @@ select {
   .charter-ladder article:nth-child(3) { border-left: 1px solid var(--line); }
   .standard-flow { grid-template-columns: 1fr; }
   .dispatch-gate-grid { grid-template-columns: 1fr; }
+  .feature-card .dispatch-card-dl { grid-template-columns: 1fr; }
   .standard-flow > i { min-height: 30px; transform: rotate(90deg); }
   .contributor-flow { grid-template-columns: 1fr; }
   .contributor-flow > i { min-height: 32px; transform: rotate(90deg); }

@@ -108,10 +108,14 @@ invariants and migration consequences. No workbench contribution may weaken
 global worker, rights or evidence protections as a side effect.
 
 A person materially involved in a disputed contribution must disclose that
-conflict and must not be the sole decision-maker on their own appeal. Sensitive
-conduct, identity and security reports stay private; the public record should
-state the applicable rule and outcome without unnecessarily exposing a
-reporter.
+conflict and cannot sit on its appeal panel. A final public procedural appeal
+requires at least two distinct named reviewers, one committed finding and one
+distinct evidence hash from each reviewer, and an explicit identity limitation.
+A split returns the case to diagnosis; it is never decided by majority vote.
+An appeal decision cannot silently alter scientific standing: any correction or
+remedy requires its own append-only record. Sensitive conduct, identity and
+security reports stay private; the public record should state the applicable
+rule and outcome without unnecessarily exposing a reporter.
 
 The Factory is currently founder-maintained and has not completed independent
 governance audit or multi-maintainer recovery. Those are published limitations,

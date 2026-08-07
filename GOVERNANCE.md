@@ -50,6 +50,11 @@ another.
     hash-bound dispatch budget passes every enforcement dimension. Partial
     monitoring produces a rejection ticket; an agent cannot expand its own
     scope, interfaces, data access, spending, duration or evidence class.
+15. A final procedural appeal record requires two or more distinct named
+    reviewers who are neither the requester nor named materially involved
+    authors, validators or reviewers. Their committed evidence hashes must be
+    distinct. A split returns to diagnosis; it cannot change standing by
+    majority vote, and any correction still requires its own append-only record.
 
 ## Repository authority
 
@@ -69,10 +74,13 @@ live or that every included experiment is correct.
 - **Validator:** independently runs a locked scientific claim under their own
   accountable identity. The claim author cannot be a validator.
 - **Reviewer:** diagnoses disagreements and records the first material divergence.
+- **Appeal reviewer:** records a conflict declaration and a bounded procedural
+  finding; cannot decide an appeal they requested or materially participated in.
 - **Evaluator operator:** maintains sealed inputs and returns bounded verdicts.
 
 One person may hold several general roles, but never author and validator on the
-same claim, and never both required validator identities.
+same claim, never both required validator identities, and never appeal reviewer
+and materially involved party on the same appeal.
 
 ## Rights, credit and commercial neutrality
 

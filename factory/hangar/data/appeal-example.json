@@ -1,0 +1,16 @@
+{
+  "fixture": "SYNTHETIC_COMMISSIONING_ONLY",
+  "drillId": "APPEAL-SYNTHETIC-001",
+  "reportSha256": "75ace802b2ebfecabd6d3a5d2aa0d85beb96329671ce63c0a89a0560704e2374",
+  "recordSha256": "ab5bb36334e088efc2e6d74168924a7f6f1999c1febffaa4835e4b0969dd2b4e",
+  "conflictedReviewerRejected": true,
+  "splitRoutedToDiagnosis": true,
+  "reviewerCount": 2,
+  "outcome": "RETURN_FOR_DIAGNOSIS",
+  "boundary": {
+    "automaticScientificStandingChange": false,
+    "scientificEvidence": false,
+    "countsAsIndependentReproduction": false,
+    "eligibleForPromotion": false
+  }
+}

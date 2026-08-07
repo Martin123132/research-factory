@@ -6,6 +6,12 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from appeals.ledger import (
+    CASE_KINDS,
+    OUTCOMES,
+    AppealLedger,
+    load_json_strict as load_appeal_draft,
+)
 from control_plane import cli as governed_cli
 from control_plane.common import ControlPlaneError
 from control_plane.workflow import NEGATIVE_CLASSIFICATIONS
@@ -40,6 +46,10 @@ LOCAL_COMMANDS = {
     "correction-verify",
     "correction-history",
     "correction-export",
+    "appeal-append",
+    "appeal-verify",
+    "appeal-history",
+    "appeal-export",
     "dispatch-profiles",
     "dispatch-budget-verify",
     "dispatch-preflight",
@@ -95,6 +105,10 @@ Explore and verify the factory (no account, website, network, or AI provider req
   correction-verify      verify the universal correction ledger and current standings
   correction-history     search original and current artifact standing read-only
   correction-export      export a read-only public correction index for adapters
+  appeal-append          append a conflict-excluded procedural appeal decision
+  appeal-verify          verify the append-only appeal ledger and panel exclusions
+  appeal-history         search public procedural appeal decisions read-only
+  appeal-export          export a read-only public appeal index for adapters
   dispatch-profiles      inspect the built-in runner enforcement profiles
   dispatch-budget-verify verify one immutable provider-neutral agent budget
   dispatch-preflight     issue a fail-closed admission or rejection ticket
@@ -263,6 +277,48 @@ def build_local_parser() -> argparse.ArgumentParser:
     correction_export.add_argument("--ledger", type=Path, required=True)
     correction_export.add_argument("--output", type=Path, required=True)
     correction_export.add_argument("--json", action="store_true")
+
+    appeal_append = sub.add_parser(
+        "appeal-append",
+        help="append a conflict-excluded procedural appeal decision",
+    )
+    appeal_append.add_argument("--ledger", type=Path, required=True)
+    appeal_append.add_argument("--draft", type=Path, required=True)
+    appeal_append.add_argument("--json", action="store_true")
+
+    appeal_verify = sub.add_parser(
+        "appeal-verify",
+        help="verify an append-only appeal ledger and reviewer exclusions",
+    )
+    appeal_verify.add_argument("--ledger", type=Path, required=True)
+    appeal_verify.add_argument("--json", action="store_true")
+
+    appeal_history = sub.add_parser(
+        "appeal-history",
+        help="search public procedural appeal history without changing the ledger",
+    )
+    appeal_history.add_argument("--ledger", type=Path, required=True)
+    appeal_history.add_argument("--target-sha256")
+    appeal_history.add_argument(
+        "--case-kind",
+        type=str.upper,
+        choices=sorted(CASE_KINDS),
+    )
+    appeal_history.add_argument(
+        "--outcome",
+        type=str.upper,
+        choices=sorted(OUTCOMES),
+    )
+    appeal_history.add_argument("--limit", type=int, default=200)
+    appeal_history.add_argument("--json", action="store_true")
+
+    appeal_export = sub.add_parser(
+        "appeal-export",
+        help="export a verified public appeal index for read-only adapters",
+    )
+    appeal_export.add_argument("--ledger", type=Path, required=True)
+    appeal_export.add_argument("--output", type=Path, required=True)
+    appeal_export.add_argument("--json", action="store_true")
 
     dispatch_profiles = sub.add_parser(
         "dispatch-profiles",
@@ -490,6 +546,50 @@ def _human_correction_history(value: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
+def _human_appeal_record(value: dict[str, Any]) -> str:
+    return "\n".join(
+        [
+            "APPEAL DECISION APPENDED",
+            f"Appeal: {value['appeal_id']} (sequence {value['sequence']})",
+            f"Case: {value['case']['case_kind']} / {value['case']['case_id']}",
+            f"Outcome: {value['outcome']} -> {value['follow_up']}",
+            f"Record SHA-256: {value['record_sha256']}",
+            "Automatic scientific standing change: false",
+            "Scientific standing: NONE",
+        ]
+    )
+
+
+def _human_appeal_verification(value: dict[str, Any]) -> str:
+    outcomes = ", ".join(f"{name}={count}" for name, count in value["outcomes"].items()) or "none"
+    return "\n".join(
+        [
+            "APPEAL LEDGER VERIFIED",
+            f"Records: {value['records']} across {value['cases']} case(s)",
+            f"Outcomes: {outcomes}",
+            f"Head SHA-256: {value['head_record_sha256']}",
+            "Scientific standing: NONE",
+        ]
+    )
+
+
+def _human_appeal_history(value: dict[str, Any]) -> str:
+    if not value["records"]:
+        return "No appeal records matched."
+    lines = [f"{value['returned']} of {value['total_matches']} appeal record(s)"]
+    for record in value["records"]:
+        lines.extend(
+            [
+                "",
+                f"#{record['sequence']} {record['appeal_id']}  {record['outcome']}",
+                f"Case: {record['case']['case_kind']} / {record['case']['case_id']}",
+                f"Follow-up: {record['follow_up']}",
+                f"Decision: {record['decision_public_summary']}",
+            ]
+        )
+    return "\n".join(lines)
+
+
 def _human_dispatch_budget(value: dict[str, Any]) -> str:
     time_budget = value["time_budget"]
     compute = value["compute_budget"]
@@ -594,6 +694,36 @@ def run_local(args: argparse.Namespace) -> int:
         else:
             print(
                 "CORRECTION INDEX EXPORTED\n"
+                f"Path: {args.output.resolve()}\n"
+                f"Records: {value['returned']}\n"
+                "Scientific standing: NONE"
+            )
+        return 0
+
+    if args.command == "appeal-append":
+        value = AppealLedger(args.ledger).append(load_appeal_draft(args.draft))
+        _json(value) if args.json else print(_human_appeal_record(value))
+        return 0
+    if args.command == "appeal-verify":
+        value = AppealLedger(args.ledger).verify()
+        _json(value) if args.json else print(_human_appeal_verification(value))
+        return 0
+    if args.command == "appeal-history":
+        value = AppealLedger(args.ledger).history(
+            target_sha256=args.target_sha256,
+            case_kind=args.case_kind,
+            outcome=args.outcome,
+            limit=args.limit,
+        )
+        _json(value) if args.json else print(_human_appeal_history(value))
+        return 0
+    if args.command == "appeal-export":
+        value = AppealLedger(args.ledger).export_public_index(args.output)
+        if args.json:
+            _json(value)
+        else:
+            print(
+                "APPEAL INDEX EXPORTED\n"
                 f"Path: {args.output.resolve()}\n"
                 f"Records: {value['returned']}\n"
                 "Scientific standing: NONE"

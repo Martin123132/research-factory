@@ -15,6 +15,10 @@ same append-only control plane.
 Universal public-artifact corrections and retractions are implemented in
 [`corrections/`](corrections/README.md). They change derived standing through a
 new hash-linked record while retaining the original artifact bytes.
+Conflict-independent procedural appeals are implemented in
+[`appeals/`](appeals/README.md). They exclude named involved identities from
+the panel, require separate reviewer commitments and route a split to diagnosis
+rather than a vote; they never change scientific standing automatically.
 Provider-neutral agent admission is implemented in
 [`dispatch/`](dispatch/README.md). Its immutable budget covers 18 enforcement
 dimensions and rejects every process runner that cannot prove them all; the
@@ -144,6 +148,20 @@ Pop-Location
 The drill authorises one zero-resource no-execution preflight, then proves that
 the frozen local process runner is rejected for its 14 missing enforcement
 dimensions. It grants no execution, scientific or promotion authority.
+
+Commission the conflict-independent appeal route without making a scientific
+claim:
+
+```powershell
+Push-Location factory
+.\.venv\Scripts\python.exe -m appeals.run_synthetic_drill `
+  --output state\appeal-synthetic-001
+Pop-Location
+```
+
+The drill rejects a named author placed on the review panel, records a split
+between two otherwise excluded reviewer identities and verifies that the split
+returns to diagnosis instead of being voted away.
 
 `--require-stage COMMISSIONING_READY` is intentionally fail-closed: it rejects
 the present 99 drafts rather than pretending a catalogue brief is runnable.
