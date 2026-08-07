@@ -23,6 +23,9 @@ Material-support disclosures are implemented in
 [`disclosures/`](disclosures/README.md). Funding, compute credits, provider
 subsidies, donations and decision conflicts are public, append-only facts; they
 cannot alter a measurement, scientific gate, validator requirement or promotion.
+Key-person recovery is prepared in [`recovery/`](recovery/README.md). Its
+disposable offline-release drill verifies technical handover, but cannot itself
+prove an independent human maintainer or satisfy the observed resilience gate.
 Provider-neutral agent admission is implemented in
 [`dispatch/`](dispatch/README.md). Its immutable budget covers 18 enforcement
 dimensions and rejects every process runner that cannot prove them all; the

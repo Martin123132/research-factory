@@ -30,6 +30,7 @@ const invariants = [
   ["08", "Bounded dispatch", "Every new runner must pass all 18 universal budget dimensions. Partial monitoring produces a rejection ticket; only the human can release a workload and the agent cannot enlarge its own authority."],
   ["09", "Conflict-independent appeals", "A named involved person cannot sit on the panel. Reviewers commit distinct evidence; a split returns to diagnosis, never a majority vote."],
   ["10", "Public material support", "Funding, credits, subsidies and decision conflicts are append-only public declarations. They cannot change evidence gates, measurement or promotion."],
+  ["11", "Recoverable stewardship", "A disposable offline-release drill can recreate a clean local branch without credentials or a hosted remote. It cannot prove that two independent maintainers have actually completed the handover."],
 ] as const;
 
 export default function StandardsPage() {
@@ -235,6 +236,28 @@ export default function StandardsPage() {
           </p>
           <p className="mono">report sha256:{supportDisclosure.reportSha256}</p>
           <p>{supportDisclosure.scientificStanding.replaceAll("_", " ")} / promotion: {supportDisclosure.eligibleForPromotion ? "ELIGIBLE" : "INELIGIBLE"}</p>
+        </article>
+      </section>
+
+      <section className="section-block split-section standards-split">
+        <article className="feature-card feature-card-orange">
+          <p className="eyebrow">Key-person recovery / technical drill</p>
+          <h2>The project must survive its own founder.</h2>
+          <p>
+            A maintainer can verify an offline release, recover its history into a clean local
+            branch, remove the bundle origin and check Git object integrity without credentials
+            or upstream write authority.
+          </p>
+        </article>
+        <article className="feature-card">
+          <p className="eyebrow">Observed-human boundary</p>
+          <h2>Software cannot invent a second person.</h2>
+          <p>
+            The drill records that its operator identity and independence are unproven. A real,
+            reviewable two-maintainer handover is still required before the resilience control can
+            move from blocked to observed.
+          </p>
+          <a className="text-link" href="https://github.com/Martin123132/research-factory/tree/main/factory/recovery">Inspect the recovery drill &rarr;</a>
         </article>
       </section>
 

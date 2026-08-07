@@ -25,7 +25,7 @@ const domainCopy: Record<string, string> = {
   SCIENCE: "Contracts, blind states and independence rules are enforced synthetically. There are no live validators or live claims.",
   MEMORY: "Negative and shift memory is append-only and searchable. Universal corrections and retractions are closed, hash-linked and synthetically enforced.",
   RIGHTS: "Ownership, roles and commercial neutrality are separated. Conflict-excluded procedural appeals are append-only, tested and unable to alter scientific standing automatically.",
-  RESILIENCE: "The engine, packages and recovery route are portable. Key-person recovery by another maintainer has not been observed.",
+  RESILIENCE: "The engine, packages and recovery route are portable. A technical handover drill exists, but key-person recovery by another maintainer has not been observed.",
   GOVERNANCE: "Controls, evidence hashes and material-support disclosures verify in CI. No external audit has occurred.",
 };
 

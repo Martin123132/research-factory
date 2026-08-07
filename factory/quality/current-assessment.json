@@ -1,15 +1,15 @@
 {
   "$schema": "factory-quality-assessment-v1.schema.json",
   "assessment_version": 1,
-  "assessment_id": "RFQ-2026-08-07-SUPPORT-DISCLOSURES",
-  "assessed_at_utc": "2026-08-07T12:30:00Z",
+  "assessment_id": "RFQ-2026-08-07-KEY-PERSON-RECOVERY-DRILL",
+  "assessed_at_utc": "2026-08-07T18:00:00Z",
   "standard_version": "1.0.0",
   "standard_path": "factory/quality/factory-quality-standard-v1.json",
   "standard_sha256": "fd0e51f61c87db90ebff64e33b7f262e51c6c88c351e0f9b3d0c40d25258f4f8",
   "subject": {
     "name": "Research Factory",
     "repository": "https://github.com/Martin123132/research-factory",
-    "baseline_revision": "8a785d15545543602ede5fe738b80a87be4f47df",
+    "baseline_revision": "8fdde2a31cc8d914bc7765a32d2e28184fdd4e73",
     "baseline_purpose": "LAST_MERGED_REVISION_BEFORE_THIS_ASSESSMENT"
   },
   "scope_boundary": "CONSTRUCTION_AND_SYNTHETIC_COMMISSIONING_ONLY",
@@ -412,8 +412,8 @@
       "evidence": [
         {
           "path": "OFFLINE_RECOVERY.md",
-          "sha256": "70ee68ac3d3f8238649afcd7d87aa724f9a3a6076b544cde61146df0cf696775",
-          "supports": "Defines the verified tracked-source archive, Git bundle, manifest and restoration procedure."
+          "sha256": "000dac6db9583ee8b69fbcc4b8c2abaec97c6ad166c7c598291b6bc85743c0fb",
+          "supports": "Defines the verified tracked-source archive, Git bundle, manifest, restoration procedure and the bounded key-person recovery drill."
         }
       ],
       "limitation": null
@@ -438,9 +438,25 @@
       "critical": true,
       "minimum_evidence_level": "OBSERVED",
       "outcome": "BLOCKED",
-      "evidence_level": "NONE",
-      "evidence": [],
-      "limitation": "No second independent maintainer has yet demonstrated complete recovery and critical administration without the founder."
+      "evidence_level": "ENFORCED",
+      "evidence": [
+        {
+          "path": "factory/recovery/key-person-recovery-v1.schema.json",
+          "sha256": "d4a3c49269e4d6d2dbaf8d921f50cc1172ecc4cb8f07deb6e6d72eed734ca557",
+          "supports": "Closes a recovery report around the verified release, clean recovered branch, no-remote administration action and explicit no-credit/no-human-proof boundary."
+        },
+        {
+          "path": "factory/recovery/drill.py",
+          "sha256": "9f59bdf359c444311ac2be2b6991df211c10c65be62fc43bad5ed08cd8270966",
+          "supports": "Verifies the offline package, recovers a clean local branch, removes its origin, checks Git integrity and rejects attempts to claim human independence or resilience completion."
+        },
+        {
+          "path": "factory/recovery/tests/test_recovery_drill.py",
+          "sha256": "bc2d5bf575af129fa5ab6c81f02131c7217acf4ff6125d580aeee6a4d024cd54",
+          "supports": "Exercises technical recovery, module commands, fresh verification, no-overwrite output, altered-boundary rejection and malformed-operator rejection."
+        }
+      ],
+      "limitation": "The technical recovery drill is enforced, but no two independent maintainers have yet completed and externally reviewed the actual recovery and critical-administration handover without the founder."
     },
     {
       "control_id": "GOVERNANCE-01",
@@ -476,7 +492,7 @@
         },
         {
           "path": ".github/workflows/verify.yml",
-          "sha256": "0f206cb1595e3ecb2b93b7826319a4e8d96f6a47e2a631636484e4e3c3121610",
+          "sha256": "13adb3f836d215bfc6046342e9ae07a947678ea06fd97b2b653ebf45d6d768e5",
           "supports": "Runs the quality verifier and regression tests as a protected repository check."
         }
       ],

@@ -58,6 +58,32 @@ factory/.venv/Scripts/python.exe factory/enginectl.py doctor
 
 On Linux or macOS, use `factory/.venv/bin/python` instead.
 
+## Exercise a key-person recovery handover
+
+The package verifies bytes and history, but the Factory must also be able to
+survive the loss of the person who normally operates it. A second maintainer can
+exercise the technical recovery route without GitHub, the Hangar, credentials or
+upstream write access:
+
+```powershell
+factory/.venv/Scripts/python.exe -m recovery.run_key_person_recovery_drill `
+  --release work/offline-release `
+  --output factory/state/key-person-recovery-001 `
+  --operator-id human:second-maintainer `
+  --display-name "Second Maintainer"
+
+factory/.venv/Scripts/python.exe -m recovery.verify_key_person_recovery_drill `
+  --release work/offline-release `
+  factory/state/key-person-recovery-001
+```
+
+It verifies the release, recovers a clean local Git branch, removes the bundle
+origin and checks Git object integrity. The report is intentionally explicit:
+it is not scientific evidence and cannot prove a named operator is independent,
+that the founder was absent, that two maintainers participated, or that the
+key-person resilience control is met. Those facts require a real, reviewable
+two-person observation.
+
 ## Publication rule
 
 When a package is copied to removable storage or attached to a release, retain

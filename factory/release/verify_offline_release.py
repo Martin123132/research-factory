@@ -9,7 +9,10 @@ import subprocess
 import tarfile
 import tempfile
 
-from build_offline_release import MANIFEST_NAME, SOURCE_PREFIX
+try:
+    from .build_offline_release import MANIFEST_NAME, SOURCE_PREFIX
+except ImportError:  # Direct script execution from factory/release.
+    from build_offline_release import MANIFEST_NAME, SOURCE_PREFIX
 
 
 TOP_LEVEL_KEYS = {
