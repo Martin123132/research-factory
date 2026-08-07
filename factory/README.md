@@ -158,6 +158,29 @@ The drill authorises one zero-resource no-execution preflight, then proves that
 the frozen local process runner is rejected for its 14 missing enforcement
 dimensions. It grants no execution, scientific or promotion authority.
 
+Commission the digest-pinned container runner on a local Docker host without
+mistaking that engineering exercise for a research result:
+
+```powershell
+Push-Location factory
+.\.venv\Scripts\python.exe -m dispatch.run_container_commissioning_drill prepare `
+  --output state\container-commissioning-001
+.\.venv\Scripts\python.exe -m dispatch.verify_container_commissioning_drill `
+  state\container-commissioning-001 --prepared
+# Inspect the three public, hash-bound inputs, then enter the same retained capability.
+.\.venv\Scripts\python.exe -m dispatch.run_container_commissioning_drill run `
+  --output state\container-commissioning-001
+.\.venv\Scripts\python.exe -m dispatch.verify_container_commissioning_drill `
+  state\container-commissioning-001
+Pop-Location
+```
+
+It records a bounded known-answer container fixture and verifies its preserved
+output later without Docker. It remains synthetic commissioning: no scientific
+standing, independent reproduction or promotion authority is created. See
+[`dispatch/README.md`](dispatch/README.md) for the host, image and secret
+boundaries.
+
 Commission the conflict-independent appeal route without making a scientific
 claim:
 

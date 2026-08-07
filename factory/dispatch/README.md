@@ -138,6 +138,65 @@ Do not put release capabilities into a repository, workflow, prompt log or
 agent-accessible environment. The adapter compares the capability in memory to
 its budget hash and never writes it to the receipt.
 
+## Portable container commissioning drill
+
+The adapter's regular interface expects a prepared budget, ticket and request.
+For a new operator or Docker host, the Factory also supplies one fixed,
+known-answer commissioning fixture. It has three deliberate stages: prepare an
+inspectable package; authorise its one bounded run with the same retained human
+capability; then verify the preserved result later without Docker.
+
+The package is a local engineering check only. It does **not** establish that
+two distinct people reproduced anything, that a person’s identity is proven,
+or that a workbench result has scientific or promotion standing. Docker's
+daemon, kernel and host configuration remain trusted computing bases.
+
+The default fixture uses a locally available digest-pinned Python image. It
+uses `--pull never`: first obtain the exact image through your ordinary local
+Docker workflow, inspect its digest, and never replace the digest in a prepared
+package. The fixture itself has no network access and emits only the known
+answer `container-commissioned` to captured stdout. The commissioning check
+therefore exercises the adapter's bounded preserved-log path; it does not claim
+that a Docker temporary filesystem is durable after a container exits.
+
+From `factory/`, prepare a fresh ignored state directory. The prompt hashes the
+capability but never saves it:
+
+```powershell
+.\.venv\Scripts\python.exe -m dispatch.run_container_commissioning_drill prepare `
+  --output state\container-commissioning-001
+
+.\.venv\Scripts\python.exe -m dispatch.verify_container_commissioning_drill `
+  state\container-commissioning-001 --prepared
+```
+
+Before the next command, inspect `public/budget.json`, `public/ticket.json` and
+`public/request.json`. In particular, check the immutable image digest, exact
+argument list, zero-cost/no-network limits, declared output path and the
+`false` scientific, independent-reproduction and promotion boundary fields.
+The prepared ticket expires after 30 minutes; discard the state directory and
+prepare a new package if it expires or a run fails. A partial directory is
+intentionally never overwritten or reused.
+
+The human holding the same capability can then start exactly that prepared
+fixture. A `human-stop.request` file created in the output directory during the
+run stops it. The run command prompts again rather than reading a secret back
+from the package:
+
+```powershell
+.\.venv\Scripts\python.exe -m dispatch.run_container_commissioning_drill run `
+  --output state\container-commissioning-001
+
+.\.venv\Scripts\python.exe -m dispatch.verify_container_commissioning_drill `
+  state\container-commissioning-001
+```
+
+The completed public package contains the original three artifacts, a
+hash-bound receipt, a closed commissioning report and `runner-output/`. The
+verification command recomputes every binding and the known answer without
+starting a container. It therefore permits a later inspector to check the
+artifact bytes, while honestly remaining local synthetic commissioning.
+
 ## Synthetic commissioning
 
 Run the known-answer gate drill into a fresh ignored directory:
@@ -176,3 +235,12 @@ $env:FACTORY_CONTAINER_E2E = '1'
 
 That local test is engineering evidence for this adapter. It is not a research
 run, external host attestation, independent reproduction, or scientific proof.
+
+The portable drill has ordinary no-Docker contract tests and one opt-in local
+end-to-end check:
+
+```powershell
+$env:FACTORY_CONTAINER_E2E = '1'
+.\.venv\Scripts\python.exe -m unittest `
+  dispatch.tests.test_container_commissioning.ContainerCommissioningTests.test_prepared_package_runs_and_verifies_on_a_local_docker_host -v
+```
