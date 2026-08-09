@@ -30,6 +30,12 @@ SPEC.loader.exec_module(evaluator)
 
 WB013 = REPOSITORY_ROOT / "factory" / "workbenches" / "wb013_travelling_salesperson_route_kernel"
 SUBMISSION_SCHEMA = STANDARD_ROOT / "commissioning" / "digital_optimization_submission.schema.json"
+ENTRY_PACKAGE_PATH = WB013 / "scripts" / "entry_package.py"
+ENTRY_PACKAGE_SPEC = importlib.util.spec_from_file_location("wb013_entry_package", ENTRY_PACKAGE_PATH)
+if ENTRY_PACKAGE_SPEC is None or ENTRY_PACKAGE_SPEC.loader is None:
+    raise RuntimeError("cannot import WB-013 entry package")
+entry_package = importlib.util.module_from_spec(ENTRY_PACKAGE_SPEC)
+ENTRY_PACKAGE_SPEC.loader.exec_module(entry_package)
 
 
 class DigitalOptimizationLaneTests(unittest.TestCase):
@@ -110,6 +116,90 @@ class DigitalOptimizationLaneTests(unittest.TestCase):
             EVALUATOR_PATH,
         ]:
             self.assertIn(path, kits.GENERATOR_SOURCE_PATHS)
+
+    def test_entry_package_is_closed_and_not_eligible_for_evaluator_handoff(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="wb013-package-") as temporary:
+            package = Path(temporary) / "entry-package"
+            entry_package.build_entry_package(output=package)
+            verified = entry_package.verify_entry_package(package)
+            handoff = json.loads((package / "handoff.json").read_text(encoding="utf-8"))
+
+            self.assertTrue(verified["valid"])
+            self.assertEqual("NOT_ELIGIBLE_ENTRY_ONLY", verified["handoff_state"])
+            self.assertFalse(handoff["admission"]["may_contact_evaluator"])
+            self.assertFalse(verified["scientific_evidence"])
+            self.assertFalse(verified["official_tsplib_score"])
+
+    def test_entry_package_rejects_tampered_reference_source(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="wb013-package-") as temporary:
+            package = Path(temporary) / "entry-package"
+            entry_package.build_entry_package(output=package)
+            candidate = package / "candidate" / "candidate.py"
+            candidate.write_text(candidate.read_text(encoding="utf-8") + "# tampered\n", encoding="utf-8")
+
+            with self.assertRaisesRegex(entry_package.ContractError, "payload file does not match"):
+                entry_package.verify_entry_package(package)
+
+    def test_entry_package_rejects_rehashed_handoff_that_grants_access(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="wb013-package-") as temporary:
+            package = Path(temporary) / "entry-package"
+            entry_package.build_entry_package(output=package)
+            package_path = package / "package.json"
+            handoff_path = package / "handoff.json"
+            package_document = json.loads(package_path.read_text(encoding="utf-8"))
+            handoff = json.loads(handoff_path.read_text(encoding="utf-8"))
+            handoff["admission"]["may_contact_evaluator"] = True
+            handoff_unsigned = {key: value for key, value in handoff.items() if key != "handoff_sha256"}
+            handoff["handoff_sha256"] = entry_package.sha256_bytes(
+                entry_package.canonical_bytes(handoff_unsigned)
+            )
+            handoff_path.write_text(json.dumps(handoff, indent=2) + "\n", encoding="utf-8")
+
+            handoff_record = next(
+                row for row in package_document["payload"]["files"] if row["path"] == "handoff.json"
+            )
+            handoff_record["bytes"] = handoff_path.stat().st_size
+            handoff_record["sha256"] = entry_package.sha256_file(handoff_path)
+            package_document["payload"]["total_bytes"] = sum(
+                row["bytes"] for row in package_document["payload"]["files"]
+            )
+            payload_core = {
+                "schema_version": 1,
+                "files": sorted(package_document["payload"]["files"], key=lambda row: row["path"]),
+            }
+            package_document["payload"]["payload_sha256"] = entry_package.sha256_bytes(
+                entry_package.canonical_bytes(payload_core)
+            )
+            package_unsigned = {
+                key: value for key, value in package_document.items() if key != "package_sha256"
+            }
+            package_document["package_sha256"] = entry_package.sha256_bytes(
+                entry_package.canonical_bytes(package_unsigned)
+            )
+            package_path.write_text(json.dumps(package_document, indent=2) + "\n", encoding="utf-8")
+
+            with self.assertRaisesRegex(entry_package.ContractError, "validation failed|evaluator handoff"):
+                entry_package.verify_entry_package(package)
+
+    def test_entry_package_rehearsal_is_demo_reference_only(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="wb013-package-") as temporary:
+            root = Path(temporary)
+            package = root / "entry-package"
+            entry_package.build_entry_package(output=package)
+            receipt = entry_package.rehearse_entry_fixture(
+                package_root=package,
+                operator_id="demo:wb013-clean-clone",
+                output=root / "receipt.json",
+            )
+
+            self.assertTrue(all(receipt["exact_comparisons"].values()))
+            self.assertFalse(receipt["construction_boundary"]["scientific_evidence"])
+            with self.assertRaisesRegex(entry_package.ContractError, "demo: operator identity"):
+                entry_package.rehearse_entry_fixture(
+                    package_root=package,
+                    operator_id="human:pretend-validator",
+                    output=root / "not-written.json",
+                )
 
 
 if __name__ == "__main__":

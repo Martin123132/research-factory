@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "handoff_type", "candidate_payload_sha256", "candidate_artifact_sha256", "entry_fixture_sha256", "admission", "agent_boundary", "scientific_standing", "handoff_sha256"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "handoff_type": { "const": "wb013_entry_fixture_evaluator_handoff" },
+    "candidate_payload_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "candidate_artifact_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "entry_fixture_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "admission": {
+      "type": "object", "additionalProperties": false,
+      "required": ["state", "may_contact_evaluator", "missing_preconditions", "service_status"],
+      "properties": {
+        "state": { "const": "NOT_ELIGIBLE_ENTRY_ONLY" },
+        "may_contact_evaluator": { "const": false },
+        "missing_preconditions": { "type": "array", "minItems": 6, "uniqueItems": true, "items": { "type": "string" } },
+        "service_status": { "const": "CONTRACT_ONLY_NO_EVALUATOR_SERVICE_IS_CLAIMED" }
+      }
+    },
+    "agent_boundary": {
+      "type": "object", "additionalProperties": false,
+      "required": ["agent_may_read_this_contract", "agent_must_not_receive_a_future_evaluator_token", "human_authorizes_any_future_evaluator_submission"],
+      "properties": {
+        "agent_may_read_this_contract": { "const": true },
+        "agent_must_not_receive_a_future_evaluator_token": { "const": true },
+        "human_authorizes_any_future_evaluator_submission": { "const": true }
+      }
+    },
+    "scientific_standing": {
+      "type": "object", "additionalProperties": false,
+      "required": ["scientific_evidence", "counts_as_independent_reproduction", "eligible_for_promotion", "official_tsplib_score"],
+      "properties": {
+        "scientific_evidence": { "const": false },
+        "counts_as_independent_reproduction": { "const": false },
+        "eligible_for_promotion": { "const": false },
+        "official_tsplib_score": { "const": false }
+      }
+    },
+    "handoff_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+  }
+}
