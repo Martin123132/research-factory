@@ -248,6 +248,11 @@ factory\.venv\Scripts\python.exe factory\enginectl.py packet draft-check `
 factory\.venv\Scripts\python.exe factory\enginectl.py packet registration-plan `
   --adapter factory\fixture_packets\adapters\wb002-proposed-fixture.json
 
+# Exercises every registered known-safe fixture. It is construction commissioning only.
+factory\.venv\Scripts\python.exe factory\enginectl.py packet commission-all `
+  --operator demo:local-commissioning `
+  --output state\fixture-packet-commissioning
+
 factory\.venv\Scripts\python.exe factory\enginectl.py packet build `
   --workbench WB-001 `
   --output packages\wb001-reference-fixture

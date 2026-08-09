@@ -96,14 +96,11 @@ jobs:
           python enginectl.py doctor --json
           python -m unittest discover -s engine/tests -p "test_*.py" -v
       - name: Commission allowlisted fixture packets from a clean checkout
-        run: |
-          python enginectl.py packet list --json
-          python enginectl.py packet build --workbench WB-001 --output state/ci-wb001-packet --json
-          python enginectl.py packet verify --workbench WB-001 --package state/ci-wb001-packet --json
-          python enginectl.py packet rehearse --workbench WB-001 --package state/ci-wb001-packet --operator demo:ci-wb001 --output state/ci-wb001-rehearsal.json --json
-          python enginectl.py packet build --workbench WB-013 --output state/ci-wb013-packet --json
-          python enginectl.py packet verify --workbench WB-013 --package state/ci-wb013-packet --json
-          python enginectl.py packet rehearse --workbench WB-013 --package state/ci-wb013-packet --operator demo:ci-wb013 --output state/ci-wb013-rehearsal.json --json
+        run: >-
+          python enginectl.py packet commission-all
+          --operator demo:ci-fixture-packets
+          --output state/ci-fixture-packet-commissioning
+          --json
       - name: Verify offline release and recovery tooling
         run: |
           python -m unittest discover -s release/tests -p "test_*.py" -v

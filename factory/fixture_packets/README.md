@@ -45,3 +45,8 @@ This is a controlled source-integration route, not an automatic trust system.
 Review of the runner and its fixture remains mandatory: a schema and hash can
 prove that declared bytes have not drifted, but cannot prove that newly reviewed
 code is harmless or scientifically valid.
+
+GitHub Actions runs `packet commission-all` from a clean checkout. It discovers
+every registered adapter dynamically, then performs the fixed build → verify →
+demo-only rehearsal path for each one. Adding a registry entry therefore also
+adds that fixture to the protected commissioning drill automatically.
