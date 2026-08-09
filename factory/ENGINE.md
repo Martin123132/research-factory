@@ -219,6 +219,37 @@ zero time, compute, storage, spend, tools, files and network access. The process
 profile returns a hash-bound rejection naming each unenforced dimension. Neither
 result is scientific evidence, independent reproduction or promotion.
 
+## Allowlisted fixture packet adapters
+
+`packet` is the factory-level control plane for the few packets that are safe
+to commission from a clean checkout. It is deliberately an allowlist, not a
+generic command runner: an operator may select `WB-001` or `WB-013`, but cannot
+substitute a script, candidate, dataset or command-line argument. The only
+permitted rehearsals use a `demo:` identity and their checked-in known-safe
+fixtures.
+
+```powershell
+factory\.venv\Scripts\python.exe factory\enginectl.py packet list
+
+factory\.venv\Scripts\python.exe factory\enginectl.py packet build `
+  --workbench WB-001 `
+  --output packages\wb001-reference-fixture
+factory\.venv\Scripts\python.exe factory\enginectl.py packet verify `
+  --workbench WB-001 `
+  --package packages\wb001-reference-fixture
+factory\.venv\Scripts\python.exe factory\enginectl.py packet rehearse `
+  --workbench WB-001 `
+  --package packages\wb001-reference-fixture `
+  --operator demo:alice `
+  --output packages\wb001-reference-fixture-rehearsal.json
+```
+
+The same three commands work for `WB-013`. Every packet response carries a
+construction boundary: it is not scientific evidence, not an independent
+reproduction, not promotion-eligible and not authorisation for live research.
+GitHub Actions runs both checked-in fixtures from a fresh checkout so a broken
+adapter is caught before it is relied upon by a real contributor.
+
 ## Portable construction packages
 
 The portable package command copies a local evidence file or directory into a
