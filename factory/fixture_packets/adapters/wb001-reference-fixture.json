@@ -1,0 +1,50 @@
+{
+  "$schema": "fixture-packet-adapter-v1.schema.json",
+  "schema_version": 1,
+  "adapter_id": "WB001_REFERENCE_FIXTURE_PACKET_V1",
+  "workbench_code": "WB-001",
+  "packet_kind": "CANDIDATE_PACKAGE_COMMISSIONING",
+  "runner": {
+    "script_path": "factory/workbenches/wb001_lossless_compression/runner/candidate_package.py",
+    "script_sha256": "2e9ce2fdd08defa39e0a34ffb1b983c5797c82a1a88711a09573766f7ecdcf91",
+    "build": {
+      "verb": "build",
+      "inputs": [
+        {
+          "option": "--submission",
+          "path": "factory/workbenches/wb001_lossless_compression/examples/zlib_level9/submission.json",
+          "sha256": "0091e6f6bf32069f49df0c4842dfa16a2047aa75a64fbb4a3f7b2e0f3212221f"
+        },
+        {
+          "option": "--result",
+          "path": "factory/workbenches/wb001_lossless_compression/results/qualification_v0_2/candidate_result.json",
+          "sha256": "9772b94fb85248c36febc91615b57dfac167291be7a6b5f6f87287cbd96d9ec3"
+        },
+        {
+          "option": "--comparison",
+          "path": "factory/workbenches/wb001_lossless_compression/results/qualification_v0_2/frontier_comparison.json",
+          "sha256": "08cbc3f53f861480f4e8923a506b8c724b2e354b1f604596d0da22283714d480"
+        }
+      ],
+      "output_option": "--output"
+    },
+    "verify": { "verb": "verify", "package_position": true },
+    "rehearse": {
+      "verb": "rehearse",
+      "package_position": true,
+      "operator_option": "--operator-id",
+      "output_option": "--output"
+    },
+    "maximum_runtime_seconds": 180,
+    "maximum_stdout_bytes": 1048576
+  },
+  "rehearsal_scope": "Known-safe zlib level-9 fixture only; demo identity only.",
+  "handoff_state": "BLOCKED_AWAITING_TWO_OTHER_HUMAN_RERUNS",
+  "construction_boundary": {
+    "scientific_evidence": false,
+    "counts_as_independent_reproduction": false,
+    "eligible_for_promotion": false,
+    "live_research_authorized": false
+  },
+  "adapter_sha256": "a4ac30af2d080a08ceffede6423b4d74b0bad84f5e9d1060fdfa03ed5ff5bf49"
+}

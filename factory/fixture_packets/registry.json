@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "registrations": [
+    {
+      "workbench_code": "WB-001",
+      "adapter_path": "factory/fixture_packets/adapters/wb001-reference-fixture.json",
+      "adapter_file_sha256": "f9c1c1c7a62594235b338e8dcefa436ac6677950d8ba77bcdeae51666a6fd6ae"
+    },
+    {
+      "workbench_code": "WB-013",
+      "adapter_path": "factory/fixture_packets/adapters/wb013-entry-fixture.json",
+      "adapter_file_sha256": "a1092b2ebe15cfbd40f7ea164b217bdd14a6e744284d22c520838b0f89013493"
+    }
+  ],
+  "registry_sha256": "d96b8a403ad6441f8f086b9f148f5d525b798d66d299a49077342fb80281528c"
+}

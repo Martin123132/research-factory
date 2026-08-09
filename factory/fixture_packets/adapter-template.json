@@ -1,0 +1,34 @@
+{
+  "$schema": "fixture-packet-adapter-v1.schema.json",
+  "schema_version": 1,
+  "adapter_id": "REPLACE_WITH_UNIQUE_ADAPTER_ID",
+  "workbench_code": "WB-000",
+  "packet_kind": "REPLACE_WITH_PACKET_KIND",
+  "runner": {
+    "script_path": "factory/workbenches/wb000_example/scripts/packet.py",
+    "script_sha256": "REPLACE_WITH_CURRENT_SCRIPT_SHA256",
+    "build": {
+      "verb": "build",
+      "inputs": [],
+      "output_option": "--output"
+    },
+    "verify": { "verb": "verify", "package_position": true },
+    "rehearse": {
+      "verb": "rehearse",
+      "package_position": true,
+      "operator_option": "--operator-id",
+      "output_option": "--output"
+    },
+    "maximum_runtime_seconds": 180,
+    "maximum_stdout_bytes": 1048576
+  },
+  "rehearsal_scope": "Describe exactly one checked-in known-safe fixture and the construction-only limit.",
+  "handoff_state": "NOT_ELIGIBLE_CONSTRUCTION_ONLY",
+  "construction_boundary": {
+    "scientific_evidence": false,
+    "counts_as_independent_reproduction": false,
+    "eligible_for_promotion": false,
+    "live_research_authorized": false
+  },
+  "adapter_sha256": "REPLACE_WITH_CANONICAL_SHA256_EXCLUDING_THIS_FIELD"
+}

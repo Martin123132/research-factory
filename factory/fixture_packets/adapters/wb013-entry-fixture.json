@@ -1,0 +1,34 @@
+{
+  "$schema": "fixture-packet-adapter-v1.schema.json",
+  "schema_version": 1,
+  "adapter_id": "WB013_ENTRY_FIXTURE_PACKET_V1",
+  "workbench_code": "WB-013",
+  "packet_kind": "ENTRY_FIXTURE_CONSTRUCTION",
+  "runner": {
+    "script_path": "factory/workbenches/wb013_travelling_salesperson_route_kernel/scripts/entry_package.py",
+    "script_sha256": "654596080076868cd5bcf0bbe950cdb7889d912dcbdd8bdad39ad312b5337e41",
+    "build": {
+      "verb": "build",
+      "inputs": [],
+      "output_option": "--output"
+    },
+    "verify": { "verb": "verify", "package_position": true },
+    "rehearse": {
+      "verb": "rehearse",
+      "package_position": true,
+      "operator_option": "--operator-id",
+      "output_option": "--output"
+    },
+    "maximum_runtime_seconds": 180,
+    "maximum_stdout_bytes": 1048576
+  },
+  "rehearsal_scope": "Known-safe 10-node Held-Karp fixture only; demo identity only.",
+  "handoff_state": "NOT_ELIGIBLE_ENTRY_ONLY",
+  "construction_boundary": {
+    "scientific_evidence": false,
+    "counts_as_independent_reproduction": false,
+    "eligible_for_promotion": false,
+    "live_research_authorized": false
+  },
+  "adapter_sha256": "eb9e203707d5ef049610ecaacbff5d45cada007e74406f3dedf821fc1a10281e"
+}

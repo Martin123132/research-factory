@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Research Factory fixture packet adapter v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "adapter_id",
+    "workbench_code",
+    "packet_kind",
+    "runner",
+    "rehearsal_scope",
+    "handoff_state",
+    "construction_boundary",
+    "adapter_sha256"
+  ],
+  "properties": {
+    "$schema": { "const": "fixture-packet-adapter-v1.schema.json" },
+    "schema_version": { "const": 1 },
+    "adapter_id": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9_:-]{2,119}$"
+    },
+    "workbench_code": { "type": "string", "pattern": "^WB-[0-9]{3}$" },
+    "packet_kind": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9_]{2,79}$"
+    },
+    "runner": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "script_path",
+        "script_sha256",
+        "build",
+        "verify",
+        "rehearse",
+        "maximum_runtime_seconds",
+        "maximum_stdout_bytes"
+      ],
+      "properties": {
+        "script_path": { "$ref": "#/$defs/repository_path" },
+        "script_sha256": { "$ref": "#/$defs/sha256" },
+        "build": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["verb", "inputs", "output_option"],
+          "properties": {
+            "verb": { "const": "build" },
+            "inputs": {
+              "type": "array",
+              "maxItems": 12,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["option", "path", "sha256"],
+                "properties": {
+                  "option": { "type": "string", "pattern": "^--[a-z0-9][a-z0-9-]{0,63}$" },
+                  "path": { "$ref": "#/$defs/repository_path" },
+                  "sha256": { "$ref": "#/$defs/sha256" }
+                }
+              }
+            },
+            "output_option": { "const": "--output" }
+          }
+        },
+        "verify": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["verb", "package_position"],
+          "properties": {
+            "verb": { "const": "verify" },
+            "package_position": { "const": true }
+          }
+        },
+        "rehearse": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["verb", "package_position", "operator_option", "output_option"],
+          "properties": {
+            "verb": { "const": "rehearse" },
+            "package_position": { "const": true },
+            "operator_option": { "const": "--operator-id" },
+            "output_option": { "const": "--output" }
+          }
+        },
+        "maximum_runtime_seconds": { "type": "integer", "minimum": 1, "maximum": 300 },
+        "maximum_stdout_bytes": { "type": "integer", "minimum": 1024, "maximum": 1048576 }
+      }
+    },
+    "rehearsal_scope": { "type": "string", "minLength": 20, "maxLength": 500 },
+    "handoff_state": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9_]{2,119}$"
+    },
+    "construction_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scientific_evidence",
+        "counts_as_independent_reproduction",
+        "eligible_for_promotion",
+        "live_research_authorized"
+      ],
+      "properties": {
+        "scientific_evidence": { "const": false },
+        "counts_as_independent_reproduction": { "const": false },
+        "eligible_for_promotion": { "const": false },
+        "live_research_authorized": { "const": false }
+      }
+    },
+    "adapter_sha256": { "$ref": "#/$defs/sha256" }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "repository_path": {
+      "type": "string",
+      "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\)[A-Za-z0-9._/-]+$"
+    }
+  }
+}
