@@ -42,7 +42,7 @@
       "evidence": [
         {
           "path": "factory/ENGINE.md",
-          "sha256": "78180e1ec8890b3541b925c8c376c99722409ce0503f2f5fde059c263b9bb957",
+          "sha256": "bd2eeeeb4ac427996a1c77ee3299cb26ae73ee33866588a03be85e61e14c83f8",
           "supports": "Documents the clean-clone core with no hosted account, website, GitHub API or model-provider requirement."
         },
         {

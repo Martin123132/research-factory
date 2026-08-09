@@ -239,6 +239,10 @@ subject to normal source review.
 ```powershell
 factory\.venv\Scripts\python.exe factory\enginectl.py packet list
 
+# Validates a prospective manifest; it neither registers nor runs it.
+factory\.venv\Scripts\python.exe factory\enginectl.py packet draft-check `
+  --adapter factory\fixture_packets\adapters\wb001-reference-fixture.json
+
 factory\.venv\Scripts\python.exe factory\enginectl.py packet build `
   --workbench WB-001 `
   --output packages\wb001-reference-fixture

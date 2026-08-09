@@ -241,6 +241,12 @@ def build_local_parser() -> argparse.ArgumentParser:
     packet_sub = packet_parser.add_subparsers(dest="packet_action", required=True)
     packet_list = packet_sub.add_parser("list", help="list the fixed fixture packet adapters")
     packet_list.add_argument("--json", action="store_true")
+    packet_draft = packet_sub.add_parser(
+        "draft-check",
+        help="validate a prospective adapter without registering or running it",
+    )
+    packet_draft.add_argument("--adapter", type=Path, required=True)
+    packet_draft.add_argument("--json", action="store_true")
     packet_build = packet_sub.add_parser("build", help="build an allowlisted fixture packet")
     packet_build.add_argument("--workbench", required=True)
     packet_build.add_argument("--output", type=Path, required=True)
@@ -562,6 +568,21 @@ def _human_fixture_packet(value: dict[str, Any]) -> str:
         lines.extend(["", "Scientific standing: NONE", "Live research authorized: false"])
         return "\n".join(lines)
 
+    if value.get("diagnostic_type") == "RESEARCH_FACTORY_FIXTURE_PACKET_DRAFT_CHECK":
+        adapter = value["adapter"]
+        status = value["registry_status"]
+        return "\n".join(
+            [
+                "FIXTURE PACKET DRAFT VALIDATED",
+                f"Workbench: {adapter['workbench_code']}",
+                f"Adapter: {adapter['adapter_id']}",
+                f"Already registered exactly: {str(status['exact_adapter_registered']).lower()}",
+                "Runner executed: false",
+                "Scientific standing: NONE",
+                "Promotion eligibility: false",
+            ]
+        )
+
     adapter = value["adapter"]
     result = value["result"]
     lines = [
@@ -796,6 +817,8 @@ def run_local(args: argparse.Namespace) -> int:
                     "live_research_authorized": False,
                 },
             }
+        elif args.packet_action == "draft-check":
+            value = controller.validate_draft(args.adapter)
         else:
             value = controller.execute(
                 args.packet_action,
