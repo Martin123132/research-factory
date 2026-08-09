@@ -48,6 +48,45 @@ The trusted public evaluator is:
 
 Do not run unknown submissions with that command.
 
+## Candidate package and clean-clone rehearsal
+
+`candidate_package.py` makes a closed, hash-checked packet from one submission,
+its recorded public result and its frozen frontier decision. It copies the
+declared source, frozen baseline pack, public corpus commitment, evaluator lock,
+holdout commitment and public evaluator key. The corpus bytes remain in the
+clean Factory checkout and are checked against that included commitment. Its
+`handoff.json` is deliberately **blocked** until two other accountable humans
+rerun the same locked artifact in the isolated boundary; it does not claim a
+public sealed-evaluator service exists.
+
+Build and inspect the checked-in reference-fixture packet from the `factory`
+directory:
+
+```powershell
+.\.venv\Scripts\python.exe workbenches/wb001_lossless_compression/runner/candidate_package.py build `
+  --submission workbenches/wb001_lossless_compression/examples/zlib_level9/submission.json `
+  --result workbenches/wb001_lossless_compression/results/qualification_v0_2/candidate_result.json `
+  --comparison workbenches/wb001_lossless_compression/results/qualification_v0_2/frontier_comparison.json `
+  --output state/wb001-reference-candidate-package
+
+.\.venv\Scripts\python.exe workbenches/wb001_lossless_compression/runner/candidate_package.py verify `
+  state/wb001-reference-candidate-package
+```
+
+The optional rehearsal command executes only that known-safe zlib reference
+fixture, accepts only a `demo:` identity and compares exact compressed hashes.
+It is a single-operator commissioning test, not an independent rerun:
+
+```powershell
+.\.venv\Scripts\python.exe workbenches/wb001_lossless_compression/runner/candidate_package.py rehearse `
+  state/wb001-reference-candidate-package `
+  --operator-id demo:clean-clone `
+  --output state/wb001-reference-candidate-package-rehearsal.json
+```
+
+The rehearsal refuses any other candidate source or non-demo identity. A future
+real candidate stays on the isolated evaluator route described below.
+
 ## Isolated evaluator
 
 `isolation/Dockerfile` builds a fixed Python runtime. The generated image lock

@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "WB-001 sealed evaluator handoff v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "handoff_type",
+    "candidate_payload_sha256",
+    "candidate_artifact_sha256",
+    "admission",
+    "scientific_standing",
+    "handoff_sha256"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "handoff_type": { "const": "wb001_sealed_evaluator_handoff" },
+    "candidate_payload_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "candidate_artifact_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "recorded_public_result_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "frontier_comparison_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "public_corpus_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "sealed_holdout": {
+      "type": "object",
+      "required": ["commitment_sha256", "corpus_sha256", "evaluator_key_id", "contains_holdout_data"],
+      "properties": {
+        "commitment_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "corpus_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "evaluator_key_id": { "type": "string", "minLength": 1 },
+        "contains_holdout_data": { "const": false }
+      },
+      "additionalProperties": false
+    },
+    "admission": {
+      "type": "object",
+      "required": ["state", "may_contact_evaluator", "missing_preconditions", "service_status"],
+      "properties": {
+        "state": { "const": "BLOCKED_AWAITING_TWO_OTHER_HUMAN_RERUNS" },
+        "may_contact_evaluator": { "const": false },
+        "missing_preconditions": { "type": "array", "minItems": 4, "uniqueItems": true, "items": { "type": "string" } },
+        "service_status": { "const": "CONTRACT_ONLY_NO_PUBLIC_EVALUATOR_SERVICE_IS_CLAIMED" }
+      },
+      "additionalProperties": false
+    },
+    "agent_boundary": {
+      "type": "object",
+      "required": ["agent_may_read_this_contract", "agent_must_not_receive_a_future_one_use_token", "human_authorizes_any_future_evaluator_submission"],
+      "properties": {
+        "agent_may_read_this_contract": { "const": true },
+        "agent_must_not_receive_a_future_one_use_token": { "const": true },
+        "human_authorizes_any_future_evaluator_submission": { "const": true }
+      },
+      "additionalProperties": false
+    },
+    "scientific_standing": {
+      "type": "object",
+      "required": ["scientific_evidence", "counts_as_independent_reproduction", "eligible_for_promotion"],
+      "properties": {
+        "scientific_evidence": { "const": false },
+        "counts_as_independent_reproduction": { "const": false },
+        "eligible_for_promotion": { "const": false }
+      },
+      "additionalProperties": false
+    },
+    "handoff_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+  },
+  "additionalProperties": false
+}

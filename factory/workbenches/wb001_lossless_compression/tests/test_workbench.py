@@ -20,10 +20,16 @@ from common import (  # noqa: E402
     load_json,
     load_workbench_config,
     sha256_bytes,
+    sha256_file,
     verify_commitment_hash,
     write_json,
 )
 from compare_frontier import compare_to_frontier  # noqa: E402
+from candidate_package import (  # noqa: E402
+    build_candidate_package,
+    rehearse_clean_clone,
+    verify_candidate_package,
+)
 from evaluate_isolated import build_docker_command, load_policy, verify_image_lock  # noqa: E402
 from evaluate_local import evaluate_submission  # noqa: E402
 from signing import sign_document, verify_signed_document  # noqa: E402
@@ -34,6 +40,9 @@ from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 BASELINE_SUBMISSION = (
     WORKBENCH_ROOT / "baselines" / "reference_pack" / "zlib-6.submission.json"
 )
+EXAMPLE_SUBMISSION = WORKBENCH_ROOT / "examples" / "zlib_level9" / "submission.json"
+QUALIFICATION_RESULT = WORKBENCH_ROOT / "results" / "qualification_v0_2" / "candidate_result.json"
+QUALIFICATION_COMPARISON = WORKBENCH_ROOT / "results" / "qualification_v0_2" / "frontier_comparison.json"
 
 
 class WorkbenchTests(unittest.TestCase):
@@ -302,6 +311,95 @@ class WorkbenchTests(unittest.TestCase):
         self.assertGreaterEqual(len(schemas), 8)
         for schema in schemas:
             self.assertIsInstance(json.loads(schema.read_text(encoding="utf-8")), dict)
+
+    def build_candidate_package(self, root: Path) -> Path:
+        output = root / "candidate-package"
+        build_candidate_package(
+            submission_path=EXAMPLE_SUBMISSION,
+            result_path=QUALIFICATION_RESULT,
+            comparison_path=QUALIFICATION_COMPARISON,
+            output=output,
+        )
+        return output
+
+    def test_candidate_package_is_closed_and_handoff_is_blocked(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            package = self.build_candidate_package(Path(temporary))
+            verified = verify_candidate_package(package)
+            handoff = load_json(package / "handoff.json")
+
+            self.assertTrue(verified["valid"])
+            self.assertEqual(
+                "BLOCKED_AWAITING_TWO_OTHER_HUMAN_RERUNS",
+                verified["handoff_state"],
+            )
+            self.assertFalse(handoff["admission"]["may_contact_evaluator"])
+            self.assertFalse(verified["scientific_evidence"])
+            self.assertFalse(verified["counts_as_independent_reproduction"])
+
+    def test_candidate_package_rejects_tampered_candidate_source(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            package = self.build_candidate_package(Path(temporary))
+            candidate = package / "artifact" / "candidate.py"
+            candidate.write_text(candidate.read_text(encoding="utf-8") + "# tampered\n", encoding="utf-8")
+
+            with self.assertRaisesRegex(ContractError, "payload file does not match"):
+                verify_candidate_package(package)
+
+    def test_candidate_package_rejects_rehashed_handoff_that_grants_access(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            package = self.build_candidate_package(Path(temporary))
+            package_path = package / "package.json"
+            handoff_path = package / "handoff.json"
+            package_document = load_json(package_path)
+            handoff = load_json(handoff_path)
+            handoff["admission"]["may_contact_evaluator"] = True
+            handoff_unsigned = {key: value for key, value in handoff.items() if key != "handoff_sha256"}
+            handoff["handoff_sha256"] = sha256_bytes(canonical_json_bytes(handoff_unsigned))
+            write_json(handoff_path, handoff)
+
+            handoff_record = next(
+                row for row in package_document["payload"]["files"] if row["path"] == "handoff.json"
+            )
+            handoff_record["bytes"] = handoff_path.stat().st_size
+            handoff_record["sha256"] = sha256_file(handoff_path)
+            package_document["payload"]["total_bytes"] = sum(
+                row["bytes"] for row in package_document["payload"]["files"]
+            )
+            payload_core = {
+                "schema_version": 1,
+                "files": sorted(package_document["payload"]["files"], key=lambda row: row["path"]),
+            }
+            package_document["payload"]["payload_sha256"] = sha256_bytes(
+                canonical_json_bytes(payload_core)
+            )
+            package_unsigned = {
+                key: value for key, value in package_document.items() if key != "package_sha256"
+            }
+            package_document["package_sha256"] = sha256_bytes(canonical_json_bytes(package_unsigned))
+            write_json(package_path, package_document)
+
+            with self.assertRaisesRegex(ContractError, "validation failed|incorrectly grants evaluator access"):
+                verify_candidate_package(package)
+
+    def test_clean_clone_rehearsal_is_limited_to_demo_reference_fixture(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            package = self.build_candidate_package(root)
+            receipt = rehearse_clean_clone(
+                package_root=package,
+                operator_id="demo:clean-clone",
+                output=root / "rehearsal-receipt.json",
+            )
+
+            self.assertTrue(all(receipt["exact_comparisons"].values()))
+            self.assertFalse(receipt["construction_boundary"]["scientific_evidence"])
+            with self.assertRaisesRegex(ContractError, "demo: operator identity"):
+                rehearse_clean_clone(
+                    package_root=package,
+                    operator_id="human:pretend-validator",
+                    output=root / "not-written.json",
+                )
 
 
 if __name__ == "__main__":
