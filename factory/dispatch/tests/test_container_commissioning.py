@@ -91,8 +91,8 @@ class ContainerCommissioningTests(unittest.TestCase):
             )
             self.assertTrue(result["valid"])
             self.assertEqual("COMMISSIONED", result["state"])
-            stdout = output / "public" / "runner-output" / "stdout.log"
-            stdout.write_text("tampered\n", encoding="utf-8")
+            artifact = output / "public" / "runner-output" / "stdout-artifact.bin"
+            artifact.write_text("tampered\n", encoding="utf-8")
             with self.assertRaises(ContractError):
                 verify_container_commissioning_drill(output, factory_root=FACTORY_ROOT)
         finally:

@@ -83,9 +83,9 @@ FROZEN_LOCAL_SOURCES = {
     ),
 }
 CONTAINER_ADAPTER_SOURCES = {
-    "dispatch/container_adapter.py": "99d41f43d4130f2ab58f752a3fae8088344ce5d63d2dc6beef19cd62872510c3",
+    "dispatch/container_adapter.py": "db3845de9ea8da2d4c73ed33b91cb766f00e9b34be0463dbb47670fc73740e92",
     "dispatch/container-run-request-v1.schema.json": (
-        "2475bba7831885f1685205fafdcf51b910fd74a065f5c185bff5c8304b368485"
+        "6aeacc1ebfd0cb63cc7dd1d5d870775441ee826c0e21d3028febcea28770ea98"
     ),
 }
 

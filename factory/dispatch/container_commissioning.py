@@ -25,6 +25,8 @@ from control_plane.common import (
 )
 
 from .container_adapter import (
+    OUTPUT_PROTOCOL_STDOUT_ARTIFACT,
+    STDOUT_ARTIFACT_FILENAME,
     inspect_host,
     load_request,
     run_container,
@@ -41,7 +43,10 @@ DEFAULT_IMAGE_REF = (
 FIXTURE_ARGV = [
     "python",
     "-c",
-    "print('container-commissioned')",
+    (
+        "import base64; print('FACTORY_STDOUT_ARTIFACT_V1:' "
+        "+ base64.b64encode(b'container-commissioned\\n').decode('ascii'))"
+    ),
 ]
 PREPARED_FILES = {"budget.json", "ticket.json", "request.json"}
 FINAL_FILES = {*PREPARED_FILES, "receipt.json", "report.json", "runner-output"}
@@ -91,7 +96,11 @@ def _relative_state_output(output: Path, *, factory_root: Path) -> tuple[Path, s
 
 
 def _manifest(image_ref: str) -> dict[str, Any]:
-    return {"image_ref": image_ref, "argv": FIXTURE_ARGV}
+    return {
+        "image_ref": image_ref,
+        "argv": FIXTURE_ARGV,
+        "output_protocol": OUTPUT_PROTOCOL_STDOUT_ARTIFACT,
+    }
 
 
 def _build_budget(
@@ -201,6 +210,7 @@ def _build_request(
         "ticket_sha256": ticket["ticket_sha256"],
         "image_ref": image_ref,
         "argv": FIXTURE_ARGV,
+        "output_protocol": OUTPUT_PROTOCOL_STDOUT_ARTIFACT,
         "output_path": f"{output_relative}/public/runner-output",
     }
     return {**unsigned, "request_sha256": sha256_bytes(canonical_json_bytes(unsigned))}
@@ -349,7 +359,7 @@ def run_prepared_container_commissioning_drill(
         "counts_as_independent_reproduction": False,
         "eligible_for_promotion": False,
         "host_boundary": "LOCAL_DOCKER_DAEMON_KERNEL_AND_HOST_CONFIGURATION_REMAIN_TRUSTED_COMPUTING_BASES",
-        "fixture_output_scope": "CAPTURED_STDOUT_ONLY_NO_DURABLE_CONTAINER_WORK_FILES_CLAIMED",
+        "fixture_output_scope": "DURABLE_HASH_BOUND_STDOUT_ARTIFACT_NO_DURABLE_CONTAINER_WORK_FILES_CLAIMED",
     }
     report = {
         **report_unsigned,
@@ -391,7 +401,7 @@ def verify_container_commissioning_drill(
         "counts_as_independent_reproduction": False,
         "eligible_for_promotion": False,
         "host_boundary": "LOCAL_DOCKER_DAEMON_KERNEL_AND_HOST_CONFIGURATION_REMAIN_TRUSTED_COMPUTING_BASES",
-        "fixture_output_scope": "CAPTURED_STDOUT_ONLY_NO_DURABLE_CONTAINER_WORK_FILES_CLAIMED",
+        "fixture_output_scope": "DURABLE_HASH_BOUND_STDOUT_ARTIFACT_NO_DURABLE_CONTAINER_WORK_FILES_CLAIMED",
     }
     for field, expected in expected_report.items():
         if report[field] != expected:
@@ -409,8 +419,10 @@ def verify_container_commissioning_drill(
     if report["output_sha256"] != receipt["output_sha256"]:
         raise ContractError("container commissioning report is bound to a different output")
     runner_output = public / "runner-output"
-    if b"container-commissioned" not in (runner_output / "stdout.log").read_bytes():
-        raise ContractError("container commissioning fixture stdout is not the expected known answer")
+    if (runner_output / STDOUT_ARTIFACT_FILENAME).read_bytes() != b"container-commissioned\n":
+        raise ContractError("container commissioning fixture artifact is not the expected known answer")
+    if b"FACTORY_STDOUT_ARTIFACT_V1_CAPTURED" not in (runner_output / "stdout.log").read_bytes():
+        raise ContractError("container commissioning fixture did not preserve the capture marker")
     if (runner_output / "stderr.log").read_bytes():
         raise ContractError("container commissioning fixture unexpectedly wrote stderr")
     return {

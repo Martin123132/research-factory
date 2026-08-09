@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import base64
 import os
 import shutil
 import tempfile
@@ -11,6 +12,9 @@ from pathlib import Path
 
 from control_plane.common import ContractError, canonical_json_bytes, sha256_bytes
 from dispatch.container_adapter import (
+    OUTPUT_PROTOCOL_STDOUT_ARTIFACT,
+    OUTPUT_PROTOCOL_WORKDIR_COPY,
+    _decode_stdout_artifact,
     build_docker_command,
     inspect_host,
     run_container,
@@ -40,6 +44,7 @@ def request_for(budget: dict[str, object], ticket: dict[str, object]) -> dict[st
         "ticket_sha256": ticket["ticket_sha256"],
         "image_ref": image,
         "argv": ["python", "-c", "print('commissioning')"],
+        "output_protocol": OUTPUT_PROTOCOL_WORKDIR_COPY,
         "output_path": "state/dispatch-synthetic/container-unit-test-output",
     }
     return {**unsigned, "request_sha256": sha256_bytes(canonical_json_bytes(unsigned))}
@@ -51,7 +56,15 @@ class ContainerAdapterTests(unittest.TestCase):
         image = "example.invalid/factory/commissioning@sha256:" + "a" * 64
         argv = ["python", "-c", "print('commissioning')"]
         budget["interface_budget"]["allowed_tool_manifest_sha256"] = [  # type: ignore[index]
-            sha256_bytes(canonical_json_bytes({"image_ref": image, "argv": argv}))
+            sha256_bytes(
+                canonical_json_bytes(
+                    {
+                        "image_ref": image,
+                        "argv": argv,
+                        "output_protocol": OUTPUT_PROTOCOL_WORKDIR_COPY,
+                    }
+                )
+            )
         ]
         budget["data_budget"]["read_paths"] = ["dispatch/tests"]  # type: ignore[index]
         resign(budget)
@@ -109,6 +122,16 @@ class ContainerAdapterTests(unittest.TestCase):
         with self.assertRaisesRegex(ContractError, "not allowlisted"):
             validate_request(changed, budget=budget, ticket=ticket, factory_root=FACTORY_ROOT)
 
+        changed_protocol = copy.deepcopy(request)
+        changed_protocol["output_protocol"] = OUTPUT_PROTOCOL_STDOUT_ARTIFACT
+        changed_protocol["request_sha256"] = sha256_bytes(
+            canonical_json_bytes(
+                {key: value for key, value in changed_protocol.items() if key != "request_sha256"}
+            )
+        )
+        with self.assertRaisesRegex(ContractError, "not allowlisted"):
+            validate_request(changed_protocol, budget=budget, ticket=ticket, factory_root=FACTORY_ROOT)
+
     def test_adapter_rejects_external_costs_network_gpu_and_unbounded_output_location(self) -> None:
         budget, ticket = self.process_budget_and_ticket()
         request = request_for(budget, ticket)
@@ -134,6 +157,17 @@ class ContainerAdapterTests(unittest.TestCase):
         network_request = request_for(network, network_ticket)
         with self.assertRaisesRegex(ContractError, "three declared local container interfaces"):
             validate_request(network_request, budget=network, ticket=network_ticket, factory_root=FACTORY_ROOT)
+
+    def test_stdout_artifact_protocol_is_framed_and_bounded(self) -> None:
+        payload = b"durable artifact\x00bytes"
+        packet = b"FACTORY_STDOUT_ARTIFACT_V1:" + base64.b64encode(payload) + b"\n"
+        self.assertEqual(payload, _decode_stdout_artifact(packet, artifact_limit=len(payload)))
+        with self.assertRaisesRegex(ContractError, "framed"):
+            _decode_stdout_artifact(b"log\n" + packet, artifact_limit=100)
+        with self.assertRaisesRegex(ContractError, "valid base64"):
+            _decode_stdout_artifact(b"FACTORY_STDOUT_ARTIFACT_V1:not-base64!\n", artifact_limit=100)
+        with self.assertRaisesRegex(ContractError, "ceiling"):
+            _decode_stdout_artifact(packet, artifact_limit=len(payload) - 1)
 
     def test_host_probe_is_non_executing_and_explicit(self) -> None:
         value = inspect_host()
@@ -178,7 +212,15 @@ class ContainerAdapterTests(unittest.TestCase):
         budget["data_budget"]["read_paths"] = ["dispatch/tests"]  # type: ignore[index]
         budget["accountable_human"]["release_capability_sha256"] = sha256_bytes(release.encode("utf-8"))  # type: ignore[index]
         budget["interface_budget"]["allowed_tool_manifest_sha256"] = [  # type: ignore[index]
-            sha256_bytes(canonical_json_bytes({"image_ref": image, "argv": argv}))
+            sha256_bytes(
+                canonical_json_bytes(
+                    {
+                        "image_ref": image,
+                        "argv": argv,
+                        "output_protocol": OUTPUT_PROTOCOL_WORKDIR_COPY,
+                    }
+                )
+            )
         ]
         resign(budget)
         gate = DispatchBudgetGate(FACTORY_ROOT)
@@ -197,6 +239,7 @@ class ContainerAdapterTests(unittest.TestCase):
             "ticket_sha256": ticket["ticket_sha256"],
             "image_ref": image,
             "argv": argv,
+            "output_protocol": OUTPUT_PROTOCOL_WORKDIR_COPY,
             "output_path": output_path,
         }
         request = {**unsigned, "request_sha256": sha256_bytes(canonical_json_bytes(unsigned))}

@@ -13,6 +13,7 @@ untrusted Docker daemon.  Those boundaries remain outside this adapter.
 
 from __future__ import annotations
 
+import base64
 import json
 import os
 import shutil
@@ -47,6 +48,10 @@ REQUIRED_INTERFACES = {
     "DECLARED_INPUT_FILES",
     "DECLARED_OUTPUT_FILES",
 }
+OUTPUT_PROTOCOL_WORKDIR_COPY = "WORKDIR_COPY_V1"
+OUTPUT_PROTOCOL_STDOUT_ARTIFACT = "STDOUT_ARTIFACT_V1"
+STDOUT_ARTIFACT_PREFIX = b"FACTORY_STDOUT_ARTIFACT_V1:"
+STDOUT_ARTIFACT_FILENAME = "stdout-artifact.bin"
 RECEIPT_KEYS = {
     "schema_version",
     "receipt_type",
@@ -62,6 +67,9 @@ RECEIPT_KEYS = {
     "output_bytes",
     "work_bytes",
     "log_bytes",
+    "output_protocol",
+    "artifact_bytes",
+    "artifact_sha256",
     "output_path",
     "output_sha256",
     "scientific_standing",
@@ -192,8 +200,63 @@ def _tree_sha256(path: Path) -> str:
     return sha256_bytes(canonical_json_bytes(rows))
 
 
-def _command_manifest(image_ref: str, argv: Sequence[str]) -> dict[str, Any]:
-    return {"image_ref": image_ref, "argv": list(argv)}
+def _command_manifest(
+    image_ref: str,
+    argv: Sequence[str],
+    output_protocol: str,
+) -> dict[str, Any]:
+    return {
+        "image_ref": image_ref,
+        "argv": list(argv),
+        "output_protocol": output_protocol,
+    }
+
+
+def _work_output_limit(budget: dict[str, Any]) -> int:
+    return min(
+        budget["compute_budget"]["max_storage_bytes"],
+        budget["compute_budget"]["max_output_bytes"] // 2,
+    )
+
+
+def _stdout_artifact_raw_limit(artifact_limit: int) -> int:
+    """Bound one ASCII base64 packet plus its fixed prefix and newline."""
+
+    return len(STDOUT_ARTIFACT_PREFIX) + 4 * ((artifact_limit + 2) // 3) + 1
+
+
+def _decode_stdout_artifact(stdout: bytes, *, artifact_limit: int) -> bytes:
+    if not stdout.startswith(STDOUT_ARTIFACT_PREFIX) or not stdout.endswith(b"\n"):
+        raise ContractError("stdout artifact must be one framed FACTORY_STDOUT_ARTIFACT_V1 packet")
+    encoded = stdout[len(STDOUT_ARTIFACT_PREFIX) : -1]
+    if not encoded or b"\n" in encoded or b"\r" in encoded:
+        raise ContractError("stdout artifact packet must contain one non-empty base64 line")
+    try:
+        artifact = base64.b64decode(encoded, validate=True)
+    except ValueError as exc:
+        raise ContractError("stdout artifact packet is not valid base64") from exc
+    if not artifact or len(artifact) > artifact_limit:
+        raise ContractError("stdout artifact exceeds its immutable bounded artifact ceiling")
+    return artifact
+
+
+def _capture_stdout_artifact(
+    stdout_path: Path,
+    destination: Path,
+    *,
+    artifact_limit: int,
+) -> tuple[int, str]:
+    artifact = _decode_stdout_artifact(stdout_path.read_bytes(), artifact_limit=artifact_limit)
+    artifact_path = destination / STDOUT_ARTIFACT_FILENAME
+    with artifact_path.open("xb") as handle:
+        handle.write(artifact)
+    artifact_sha256 = sha256_bytes(artifact)
+    stdout_path.write_bytes(
+        f"FACTORY_STDOUT_ARTIFACT_V1_CAPTURED sha256:{artifact_sha256} bytes:{len(artifact)}\n".encode(
+            "ascii"
+        )
+    )
+    return len(artifact), artifact_sha256
 
 
 def validate_request(
@@ -227,7 +290,11 @@ def validate_request(
         raise ContractError("container adapter requires EXACT_COMMAND_ONLY")
     if not budget["interface_budget"]["allowed_tool_manifest_sha256"]:
         raise ContractError("container adapter requires an allowlisted exact-command manifest")
-    manifest_hash = sha256_bytes(canonical_json_bytes(_command_manifest(request["image_ref"], request["argv"])))
+    manifest_hash = sha256_bytes(
+        canonical_json_bytes(
+            _command_manifest(request["image_ref"], request["argv"], request["output_protocol"])
+        )
+    )
     if manifest_hash not in budget["interface_budget"]["allowed_tool_manifest_sha256"]:
         raise ContractError("container exact-command manifest is not allowlisted by the budget")
 
@@ -257,6 +324,11 @@ def validate_request(
         raise ContractError("UNTRUSTED_SOFTWARE requires the budget's hash-bound human review")
     if budget["time_budget"]["max_shift_count"] != 1:
         raise ContractError("container adapter executes exactly one bounded shift")
+    if request["output_protocol"] not in {
+        OUTPUT_PROTOCOL_WORKDIR_COPY,
+        OUTPUT_PROTOCOL_STDOUT_ARTIFACT,
+    }:
+        raise ContractError("container adapter received an unknown output protocol")
 
     output = _safe_repository_path(request["output_path"], field="output_path")
     write_paths = budget["data_budget"]["write_paths"]
@@ -462,9 +534,11 @@ def run_container(
     command = build_docker_command(
         request, budget=budget, factory_root=root, container_name=container_name
     )
-    log_limit = budget["compute_budget"]["max_output_bytes"] - min(
-        budget["compute_budget"]["max_storage_bytes"],
-        budget["compute_budget"]["max_output_bytes"] // 2,
+    work_limit = _work_output_limit(budget)
+    log_limit = (
+        _stdout_artifact_raw_limit(work_limit)
+        if request["output_protocol"] == OUTPUT_PROTOCOL_STDOUT_ARTIFACT
+        else budget["compute_budget"]["max_output_bytes"] - work_limit
     )
     stop_reasons: list[str] = []
     started = False
@@ -502,13 +576,24 @@ def run_container(
             exit_code = process.wait(timeout=20)
         if not stop_reasons:
             stop_reasons.append("PROCESS_EXITED")
+        if _file_size(stdout_path) + _file_size(stderr_path) > log_limit:
+            raise ContractError("container raw output exceeded the immutable output ceiling")
 
         destination.mkdir()
-        _copy_container_work(container_name, destination)
+        artifact_bytes: int | None = None
+        artifact_sha256: str | None = None
+        if request["output_protocol"] == OUTPUT_PROTOCOL_WORKDIR_COPY:
+            _copy_container_work(container_name, destination)
+        else:
+            artifact_bytes, artifact_sha256 = _capture_stdout_artifact(
+                stdout_path,
+                destination,
+                artifact_limit=work_limit,
+            )
         work_bytes = _directory_size(destination)
         log_bytes = _file_size(stdout_path) + _file_size(stderr_path)
         output_bytes = work_bytes + log_bytes
-        if work_bytes > min(budget["compute_budget"]["max_storage_bytes"], budget["compute_budget"]["max_output_bytes"] // 2):
+        if work_bytes > work_limit:
             raise ContractError("container work output exceeded the bounded tmpfs allocation")
         if output_bytes > budget["compute_budget"]["max_output_bytes"]:
             raise ContractError("container output exceeded the immutable output ceiling")
@@ -530,6 +615,9 @@ def run_container(
             "output_bytes": output_bytes,
             "work_bytes": work_bytes,
             "log_bytes": log_bytes,
+            "output_protocol": request["output_protocol"],
+            "artifact_bytes": artifact_bytes,
+            "artifact_sha256": artifact_sha256,
             "output_path": request["output_path"],
             "output_sha256": output_sha256,
             "scientific_standing": "NONE_CONTAINER_COMMISSIONING_ONLY",
@@ -581,6 +669,7 @@ def verify_receipt(
         "budget_sha256": budget["budget_sha256"],
         "ticket_sha256": ticket["ticket_sha256"],
         "output_path": request["output_path"],
+        "output_protocol": request["output_protocol"],
     }
     for field, value in expected.items():
         if receipt[field] != value:
@@ -601,6 +690,14 @@ def verify_receipt(
         raise ContractError("container receipt output accounting is inconsistent")
     if receipt["output_bytes"] > budget["compute_budget"]["max_output_bytes"]:
         raise ContractError("container receipt exceeds its immutable output ceiling")
+    if receipt["output_protocol"] == OUTPUT_PROTOCOL_STDOUT_ARTIFACT:
+        artifact = output / STDOUT_ARTIFACT_FILENAME
+        if not artifact.is_file() or artifact.stat().st_size != receipt["artifact_bytes"]:
+            raise ContractError("container stdout artifact is missing or has the wrong byte count")
+        if sha256_bytes(artifact.read_bytes()) != receipt["artifact_sha256"]:
+            raise ContractError("container stdout artifact hash no longer matches")
+    elif receipt["artifact_bytes"] is not None or receipt["artifact_sha256"] is not None:
+        raise ContractError("workdir-copy receipt cannot claim a stdout artifact")
     return {
         "valid": True,
         "receipt_sha256": receipt["receipt_sha256"],
