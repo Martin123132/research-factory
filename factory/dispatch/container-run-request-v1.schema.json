@@ -12,6 +12,7 @@
     "ticket_sha256",
     "image_ref",
     "argv",
+    "output_protocol",
     "output_path",
     "request_sha256"
   ],
@@ -32,6 +33,10 @@
       "minItems": 1,
       "maxItems": 64,
       "items": { "type": "string", "minLength": 1, "maxLength": 4096 }
+    },
+    "output_protocol": {
+      "type": "string",
+      "enum": ["WORKDIR_COPY_V1", "STDOUT_ARTIFACT_V1"]
     },
     "output_path": { "$ref": "#/$defs/repository_path" },
     "request_sha256": { "$ref": "#/$defs/sha256" }

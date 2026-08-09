@@ -157,26 +157,26 @@
         },
         {
           "path": "factory/dispatch/gate.py",
-          "sha256": "af60c3cedd6c39f14b7405cf70495e861c16116779b32c80aa1a87deee718b4c",
-          "supports": "Issues an admission ticket only when all 18 dimensions are enforced, rejects the partial frozen runner, source-locks the container adapter and forbids agent self-expansion."
+          "sha256": "442a0bbfc539ba79fb9dcb3ee513f912269f629ce33df7b27c4c87d221f0471e",
+          "supports": "Issues an admission ticket only when all 18 dimensions are enforced, rejects the partial frozen runner, source-locks the explicit-protocol container adapter and forbids agent self-expansion."
         },
         {
           "path": "factory/dispatch/container_adapter.py",
-          "sha256": "99d41f43d4130f2ab58f752a3fae8088344ce5d63d2dc6beef19cd62872510c3",
-          "supports": "Fails closed around digest-pinned exact commands, no network or GPU, bounded Docker resources, readonly declared inputs, human stop and non-promotional receipts."
+          "sha256": "db3845de9ea8da2d4c73ed33b91cb766f00e9b34be0463dbb47670fc73740e92",
+          "supports": "Fails closed around digest-pinned exact commands, no network or GPU, bounded Docker resources, readonly declared inputs, human stop, durable hash-bound stdout artifacts and non-promotional receipts."
         },
         {
           "path": "factory/dispatch/container-run-request-v1.schema.json",
-          "sha256": "2475bba7831885f1685205fafdcf51b910fd74a065f5c185bff5c8304b368485",
-          "supports": "Closes the container request to a self-hashed budget and ticket binding, digest-pinned image, exact argv and declared output path."
+          "sha256": "6aeacc1ebfd0cb63cc7dd1d5d870775441ee826c0e21d3028febcea28770ea98",
+          "supports": "Closes the container request to a self-hashed budget and ticket binding, digest-pinned image, exact argv, explicit output protocol and declared output path."
         },
         {
           "path": "factory/dispatch/tests/test_container_adapter.py",
-          "sha256": "d941f87861f30e673e13b693b395e4138c450a7990bdcadeb3328d2992ddd101",
-          "supports": "Exercises full profile admission, exact-manifest closure, network and path rejection, host probing and an opt-in local digest-pinned Docker commissioning run."
+          "sha256": "21e722c963be50ef0eb9b7c0a1a7a42865e658127e906192db0b14d7254fbe1e",
+          "supports": "Exercises full profile admission, exact-manifest and output-protocol closure, framed artifact rejection, network and path rejection, host probing and an opt-in local digest-pinned Docker commissioning run."
         }
       ],
-      "limitation": "The container adapter is commissioning-only and depends on a local Docker trusted computing base. Its end-to-end check is opt-in local engineering evidence, not an independently attested host, human-identity proof or promotion-grade execution environment."
+      "limitation": "The container adapter is commissioning-only and depends on a local Docker trusted computing base. Its portable durable channel is an exact stdout artifact packet; arbitrary temporary /work files are not durable on every Docker host. Its end-to-end check is opt-in local engineering evidence, not an independently attested host, human-identity proof or promotion-grade execution environment."
     },
     {
       "control_id": "WORK-04",

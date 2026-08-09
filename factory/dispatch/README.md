@@ -52,8 +52,9 @@ Docker with a read-only root, no network, no GPU flag, dropped capabilities,
 `no-new-privileges`, a non-root user, a PID limit, memory limit, CPU ulimit,
 bounded tmpfs work directory, and read-only mounts for every declared input.
 The runner itself captures stdout and stderr, applies wall/active/idle/output
-stops, gives the human a stop-file control, and copies bounded output only to a
-previously empty declared write location.
+stops, gives the human a stop-file control, and writes receipts only to a
+previously empty declared location. A request must explicitly select either a
+best-effort temporary-work copy or a durable stdout-artifact channel.
 
 This is deliberately a **commissioning adapter**, not a claim that containers
 are magic. An authorised ticket is necessary but not sufficient: an unavailable
@@ -95,7 +96,7 @@ that human release is required and has no scientific or promotion standing.
 The adapter does not accept an arbitrary script, tag such as `python:latest`,
 or an `sh -c` string. A human must prepare a hash-bound
 `CONTAINER_DISPATCH_REQUEST` whose `image_ref`, `argv`, `budget_sha256`,
-`ticket_sha256`, and empty declared `output_path` are all exact. The
+`ticket_sha256`, `output_protocol`, and empty declared `output_path` are all exact. The
 command-manifest hash is canonical JSON for:
 
 ```json
@@ -108,6 +109,18 @@ That hash must already appear in the budget's
 `DENY_ALL` networking, zero GPU seconds, zero external-service spend, and one
 bounded shift. The image must already exist in the local Docker image store;
 the adapter passes `--pull never` and will not fetch it.
+
+`WORKDIR_COPY_V1` asks the adapter to copy the bounded temporary `/work`
+directory after the command exits. That is useful only where the Docker host
+preserves that temporary filesystem after exit; it is not durable on every
+host. `STDOUT_ARTIFACT_V1` is the portable durable channel. Its exact command
+must write exactly one line of the form
+`FACTORY_STDOUT_ARTIFACT_V1:<base64 bytes>`. The adapter validates the framing,
+decodes at most the budgeted work-output ceiling, writes `stdout-artifact.bin`,
+then replaces the raw encoded stdout with a small hash-and-byte-count capture
+marker. Any extra stdout text, invalid base64, empty packet or over-limit
+artifact fails closed. The selected protocol is part of the allowlisted
+command-manifest hash and receipt.
 
 After generating and independently inspecting the budget, ticket and request,
 the human with the release capability can run:
@@ -154,10 +167,11 @@ daemon, kernel and host configuration remain trusted computing bases.
 The default fixture uses a locally available digest-pinned Python image. It
 uses `--pull never`: first obtain the exact image through your ordinary local
 Docker workflow, inspect its digest, and never replace the digest in a prepared
-package. The fixture itself has no network access and emits only the known
-answer `container-commissioned` to captured stdout. The commissioning check
-therefore exercises the adapter's bounded preserved-log path; it does not claim
-that a Docker temporary filesystem is durable after a container exits.
+package. The fixture itself has no network access and emits the known answer
+`container-commissioned` through the hash-bound stdout-artifact protocol. The
+adapter writes that packet as a durable local `stdout-artifact.bin`, so the
+commissioning check exercises a preserved artifact path even when Docker drops
+its temporary filesystem after the container exits.
 
 From `factory/`, prepare a fresh ignored state directory. The prompt hashes the
 capability but never saves it:
