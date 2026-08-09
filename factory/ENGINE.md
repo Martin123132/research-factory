@@ -243,6 +243,11 @@ factory\.venv\Scripts\python.exe factory\enginectl.py packet list
 factory\.venv\Scripts\python.exe factory\enginectl.py packet draft-check `
   --adapter factory\fixture_packets\adapters\wb001-reference-fixture.json
 
+# After validating a new unregistered adapter, produce a registry entry only.
+# The planner refuses replacements and writes nothing.
+factory\.venv\Scripts\python.exe factory\enginectl.py packet registration-plan `
+  --adapter factory\fixture_packets\adapters\wb002-proposed-fixture.json
+
 factory\.venv\Scripts\python.exe factory\enginectl.py packet build `
   --workbench WB-001 `
   --output packages\wb001-reference-fixture

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 import json
 import tempfile
 import unittest
@@ -93,6 +94,44 @@ class FixturePacketControllerTests(unittest.TestCase):
         self.assertFalse(result["registry_status"]["registration_changed"])
         self.assertFalse(result["runner_execution"]["executed"])
         self.assertFalse(result["construction_boundary"]["scientific_evidence"])
+
+    def test_registration_plan_is_read_only_and_requires_an_unregistered_workbench(self) -> None:
+        adapter = (
+            FACTORY_ROOT
+            / "fixture_packets"
+            / "adapters"
+            / "wb001-reference-fixture.json"
+        )
+        registry_path = FACTORY_ROOT / "fixture_packets" / "registry.json"
+        registry_before = registry_path.read_bytes()
+        with self.assertRaisesRegex(ControlPlaneError, "already has a registered fixture packet adapter"):
+            self.controller.plan_registration(adapter)
+        self.assertEqual(registry_before, registry_path.read_bytes())
+
+        unregistered_registry = copy.deepcopy(self.controller.registry_document)
+        unregistered_registry["registrations"] = [
+            row
+            for row in unregistered_registry["registrations"]
+            if row["workbench_code"] != "WB-001"
+        ]
+        unsigned = {
+            key: value for key, value in unregistered_registry.items() if key != "registry_sha256"
+        }
+        unregistered_registry["registry_sha256"] = sha256_bytes(canonical_json_bytes(unsigned))
+        self.controller.registry_document = unregistered_registry
+        self.controller.adapters.pop("WB-001")
+
+        plan = self.controller.plan_registration(adapter)
+
+        self.assertTrue(plan["valid"])
+        self.assertEqual("ADD_AFTER_HUMAN_REVIEW", plan["registration_plan"]["operation"])
+        self.assertFalse(plan["registration_plan"]["registry_mutated"])
+        self.assertEqual(
+            "factory/fixture_packets/adapters/wb001-reference-fixture.json",
+            plan["registration_plan"]["proposed_registration"]["adapter_path"],
+        )
+        self.assertFalse(plan["runner_execution"]["executed"])
+        self.assertEqual(registry_before, registry_path.read_bytes())
 
     def test_unknown_workbench_is_not_a_general_runner(self) -> None:
         with self.assertRaisesRegex(ControlPlaneError, "no allowlisted fixture packet adapter"):

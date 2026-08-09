@@ -247,6 +247,12 @@ def build_local_parser() -> argparse.ArgumentParser:
     )
     packet_draft.add_argument("--adapter", type=Path, required=True)
     packet_draft.add_argument("--json", action="store_true")
+    packet_plan = packet_sub.add_parser(
+        "registration-plan",
+        help="produce a read-only registry addition plan for a validated adapter",
+    )
+    packet_plan.add_argument("--adapter", type=Path, required=True)
+    packet_plan.add_argument("--json", action="store_true")
     packet_build = packet_sub.add_parser("build", help="build an allowlisted fixture packet")
     packet_build.add_argument("--workbench", required=True)
     packet_build.add_argument("--output", type=Path, required=True)
@@ -583,6 +589,22 @@ def _human_fixture_packet(value: dict[str, Any]) -> str:
             ]
         )
 
+    if value.get("diagnostic_type") == "RESEARCH_FACTORY_FIXTURE_PACKET_REGISTRATION_PLAN":
+        adapter = value["adapter"]
+        plan = value["registration_plan"]
+        return "\n".join(
+            [
+                "FIXTURE PACKET REGISTRATION PLAN",
+                f"Workbench: {adapter['workbench_code']}",
+                f"Adapter: {adapter['adapter_id']}",
+                f"Registry entry SHA-256: {plan['proposed_registration']['adapter_file_sha256']}",
+                f"Proposed registry SHA-256: {plan['proposed_registry_sha256']}",
+                "Registry mutated: false",
+                "Runner executed: false",
+                "Scientific standing: NONE",
+            ]
+        )
+
     adapter = value["adapter"]
     result = value["result"]
     lines = [
@@ -819,6 +841,8 @@ def run_local(args: argparse.Namespace) -> int:
             }
         elif args.packet_action == "draft-check":
             value = controller.validate_draft(args.adapter)
+        elif args.packet_action == "registration-plan":
+            value = controller.plan_registration(args.adapter)
         else:
             value = controller.execute(
                 args.packet_action,

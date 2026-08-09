@@ -30,11 +30,15 @@ locks each adapter file by its exact bytes.
 4. Run `python factory/enginectl.py packet draft-check --adapter path/to/adapter.json`.
    It validates the schema, self-hash, runner and input locks without executing
    the runner or changing the registry.
-5. Put the completed document under `adapters/`, add its exact file SHA-256 to
-   `registry.json`, then calculate `registry_sha256` the same way.
-6. Add a test that demonstrates the complete build → verify → rehearsal path
+5. Move the reviewed document under `adapters/` and run
+   `python factory/enginectl.py packet registration-plan --adapter path/to/adapter.json`.
+   It prints the exact registration entry and resulting registry hash, but does
+   not write either file. Existing workbench adapters cannot be replaced here.
+6. Apply that reviewed entry to `registry.json`, then calculate
+   `registry_sha256` from the proposed registry bytes.
+7. Add a test that demonstrates the complete build → verify → rehearsal path
    and proves every construction-boundary field remains `false`.
-7. Run `python factory/enginectl.py packet list` and the Factory checks before
+8. Run `python factory/enginectl.py packet list` and the Factory checks before
    review.
 
 This is a controlled source-integration route, not an automatic trust system.
