@@ -228,6 +228,14 @@ substitute a script, candidate, dataset or command-line argument. The only
 permitted rehearsals use a `demo:` identity and their checked-in known-safe
 fixtures.
 
+The two initial adapters live in the hash-bound
+[`fixture_packets/`](fixture_packets/) registry. A future workbench joins by
+copying its versioned adapter template, locking its reviewed runner and inputs,
+adding that manifest to the registry and proving the complete fixture path in a
+test; it does not require an engine-code change. The registry format accepts
+only the fixed `build`, `verify` and `rehearse` command grammar, and it is still
+subject to normal source review.
+
 ```powershell
 factory\.venv\Scripts\python.exe factory\enginectl.py packet list
 

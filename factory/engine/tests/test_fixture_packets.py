@@ -3,8 +3,10 @@ from __future__ import annotations
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from control_plane.common import ControlPlaneError
+from engine import fixture_packets
 from engine.fixture_packets import FixturePacketController
 
 
@@ -24,8 +26,49 @@ class FixturePacketControllerTests(unittest.TestCase):
         packets = self.controller.list()
 
         self.assertEqual(["WB-001", "WB-013"], [row["workbench_code"] for row in packets])
+        self.assertEqual(
+            ["WB001_REFERENCE_FIXTURE_PACKET_V1", "WB013_ENTRY_FIXTURE_PACKET_V1"],
+            [row["adapter_id"] for row in packets],
+        )
         self.assertTrue(all(row["scientific_standing"] == "NONE" for row in packets))
         self.assertTrue(all(row["live_research_authorized"] is False for row in packets))
+
+    def test_registry_rejects_a_changed_adapter_file_before_execution(self) -> None:
+        with patch.object(fixture_packets, "sha256_file", return_value="0" * 64):
+            with self.assertRaisesRegex(ControlPlaneError, "adapter_file SHA-256 differs"):
+                FixturePacketController(FACTORY_ROOT)
+
+    def test_registry_locks_runner_and_build_input_bytes(self) -> None:
+        locked_targets = (
+            (
+                FACTORY_ROOT
+                / "workbenches"
+                / "wb001_lossless_compression"
+                / "runner"
+                / "candidate_package.py",
+                "runner.script SHA-256 differs",
+            ),
+            (
+                FACTORY_ROOT
+                / "workbenches"
+                / "wb001_lossless_compression"
+                / "examples"
+                / "zlib_level9"
+                / "submission.json",
+                "runner.build_input SHA-256 differs",
+            ),
+        )
+        actual_sha256_file = fixture_packets.sha256_file
+        for target, expected_error in locked_targets:
+            with self.subTest(target=target.name):
+                def tampered_sha256(path: Path) -> str:
+                    if path.resolve() == target.resolve():
+                        return "0" * 64
+                    return actual_sha256_file(path)
+
+                with patch.object(fixture_packets, "sha256_file", side_effect=tampered_sha256):
+                    with self.assertRaisesRegex(ControlPlaneError, expected_error):
+                        FixturePacketController(FACTORY_ROOT)
 
     def test_unknown_workbench_is_not_a_general_runner(self) -> None:
         with self.assertRaisesRegex(ControlPlaneError, "no allowlisted fixture packet adapter"):
