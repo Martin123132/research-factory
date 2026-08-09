@@ -48,6 +48,14 @@ class LocalCliTests(unittest.TestCase):
         self.assertEqual("WB-013", value["registry"]["workbench_code"])
         self.assertFalse(value["live_research_allowed"])
 
+    def test_packet_adapters_are_visible_but_not_live_research(self) -> None:
+        returncode, stdout, stderr = self.invoke(["packet", "list", "--json"])
+        self.assertEqual(0, returncode, stderr)
+        value = json.loads(stdout)
+        self.assertEqual(["WB-001", "WB-013"], [row["workbench_code"] for row in value["packets"]])
+        self.assertFalse(value["construction_boundary"]["scientific_evidence"])
+        self.assertFalse(value["construction_boundary"]["live_research_authorized"])
+
     def test_quality_profile_is_machine_readable_and_not_certified(self) -> None:
         returncode, stdout, stderr = self.invoke(["quality", "--json"])
         self.assertEqual(0, returncode, stderr)

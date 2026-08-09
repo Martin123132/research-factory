@@ -36,6 +36,7 @@ from dispatch.container_adapter import inspect_host
 from quality.verify_quality import verify as verify_factory_quality
 
 from .catalogue import PROFILES, STAGES, StationCatalogue, doctor
+from .fixture_packets import FixturePacketController
 from .negative_results import search_ledger
 from .portable import EVIDENCE_KINDS, OPERATING_MODES, PortableEvidencePackage
 
@@ -48,6 +49,7 @@ LOCAL_COMMANDS = {
     "inspect",
     "package",
     "verify",
+    "packet",
     "negative-results",
     "correction-append",
     "correction-verify",
@@ -112,6 +114,7 @@ Explore and verify the factory (no account, website, network, or AI provider req
   inspect                read one station's objective, gates, and current limits
   package                make a portable, hash-bound construction evidence bundle
   verify                 verify a portable evidence bundle without trusting its author
+  packet                 operate an allowlisted known-safe fixture packet adapter
   negative-results       search retained failed and no-gain experiments read-only
   correction-append      append one closed correction or retraction record
   correction-verify      verify the universal correction ledger and current standings
@@ -230,6 +233,31 @@ def build_local_parser() -> argparse.ArgumentParser:
     verify_parser = sub.add_parser("verify", help="verify a portable evidence package")
     verify_parser.add_argument("package", type=Path)
     verify_parser.add_argument("--json", action="store_true")
+
+    packet_parser = sub.add_parser(
+        "packet",
+        help="build, verify, or rehearse only allowlisted known-safe fixture packets",
+    )
+    packet_sub = packet_parser.add_subparsers(dest="packet_action", required=True)
+    packet_list = packet_sub.add_parser("list", help="list the fixed fixture packet adapters")
+    packet_list.add_argument("--json", action="store_true")
+    packet_build = packet_sub.add_parser("build", help="build an allowlisted fixture packet")
+    packet_build.add_argument("--workbench", required=True)
+    packet_build.add_argument("--output", type=Path, required=True)
+    packet_build.add_argument("--json", action="store_true")
+    packet_verify = packet_sub.add_parser("verify", help="verify an allowlisted fixture packet")
+    packet_verify.add_argument("--workbench", required=True)
+    packet_verify.add_argument("--package", type=Path, required=True)
+    packet_verify.add_argument("--json", action="store_true")
+    packet_rehearse = packet_sub.add_parser(
+        "rehearse",
+        help="rehearse an allowlisted packet with a demo: operator identity only",
+    )
+    packet_rehearse.add_argument("--workbench", required=True)
+    packet_rehearse.add_argument("--package", type=Path, required=True)
+    packet_rehearse.add_argument("--operator", required=True)
+    packet_rehearse.add_argument("--output", type=Path, required=True)
+    packet_rehearse.add_argument("--json", action="store_true")
 
     negative_parser = sub.add_parser(
         "negative-results",
@@ -518,6 +546,38 @@ def _human_package(value: dict[str, Any], *, verified: bool) -> str:
     return "\n".join(lines)
 
 
+def _human_fixture_packet(value: dict[str, Any]) -> str:
+    if "packets" in value:
+        lines = ["ALLOWLISTED FIXTURE PACKETS"]
+        for packet in value["packets"]:
+            lines.extend(
+                [
+                    "",
+                    f"{packet['workbench_code']} - {packet['title']}",
+                    f"Kind: {packet['packet_kind']}",
+                    f"Scope: {packet['rehearsal_scope']}",
+                    f"Handoff: {packet['handoff_state']}",
+                ]
+            )
+        lines.extend(["", "Scientific standing: NONE", "Live research authorized: false"])
+        return "\n".join(lines)
+
+    adapter = value["adapter"]
+    result = value["result"]
+    lines = [
+        f"FIXTURE PACKET {value['action']}",
+        f"Workbench: {adapter['workbench_code']}",
+        f"Kind: {adapter['packet_kind']}",
+        f"Handoff: {adapter['handoff_state']}",
+    ]
+    if "path" in result:
+        lines.append(f"Path: {result['path']}")
+    if "package_sha256" in result:
+        lines.append(f"Package SHA-256: {result['package_sha256']}")
+    lines.extend(["Scientific standing: NONE", "Promotion eligibility: false"])
+    return "\n".join(lines)
+
+
 def _human_negative_results(value: dict[str, Any]) -> str:
     if not value["results"]:
         return "No retained negative results matched."
@@ -722,6 +782,29 @@ def run_local(args: argparse.Namespace) -> int:
         catalogue = StationCatalogue(factory_root)
         value = catalogue.inspect(args.workbench)
         _json(value) if args.json else print(_human_inspect(value))
+        return 0
+
+    if args.command == "packet":
+        controller = FixturePacketController(factory_root)
+        if args.packet_action == "list":
+            value = {
+                "packets": controller.list(),
+                "construction_boundary": {
+                    "scientific_evidence": False,
+                    "counts_as_independent_reproduction": False,
+                    "eligible_for_promotion": False,
+                    "live_research_authorized": False,
+                },
+            }
+        else:
+            value = controller.execute(
+                args.packet_action,
+                workbench=args.workbench,
+                output=getattr(args, "output", None),
+                package=getattr(args, "package", None),
+                operator_id=getattr(args, "operator", None),
+            )
+        _json(value) if args.json else print(_human_fixture_packet(value))
         return 0
 
     if args.command == "negative-results":
