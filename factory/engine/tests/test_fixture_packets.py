@@ -141,39 +141,23 @@ class FixturePacketControllerTests(unittest.TestCase):
                 output=self.root / "unexpected-packet",
             )
 
-    def test_rehearsal_requires_a_demo_identity(self) -> None:
+    def test_commissioning_requires_a_demo_identity(self) -> None:
         with self.assertRaisesRegex(ControlPlaneError, "demo: operator identity"):
-            self.controller.execute(
-                "rehearse",
-                workbench="WB-001",
-                package=self.root / "not-used",
-                output=self.root / "not-used-receipt.json",
+            self.controller.commission_all(
+                output=self.root / "not-used",
                 operator_id="human:alice",
             )
 
-    def test_build_verify_and_rehearse_each_known_safe_fixture(self) -> None:
-        for workbench in ("WB-001", "WB-013"):
-            with self.subTest(workbench=workbench):
-                package = self.root / f"{workbench.lower()}-packet"
-                receipt = self.root / f"{workbench.lower()}-rehearsal.json"
+    def test_commission_all_rehearses_every_registered_known_safe_fixture(self) -> None:
+        output = self.root / "complete-commissioning"
+        result = self.controller.commission_all(output=output, operator_id="demo:factory-test")
 
-                built = self.controller.execute("build", workbench=workbench, output=package)
-                self.assertEqual("BUILD", built["action"])
-                self.assertFalse(built["construction_boundary"]["scientific_evidence"])
-
-                verified = self.controller.execute("verify", workbench=workbench, package=package)
-                self.assertTrue(verified["result"]["valid"])
-                self.assertFalse(verified["construction_boundary"]["eligible_for_promotion"])
-
-                rehearsed = self.controller.execute(
-                    "rehearse",
-                    workbench=workbench,
-                    package=package,
-                    output=receipt,
-                    operator_id=f"demo:{workbench.lower()}-test",
-                )
-                self.assertTrue(receipt.is_file())
-                self.assertFalse(rehearsed["construction_boundary"]["counts_as_independent_reproduction"])
+        self.assertEqual(["WB-001", "WB-013"], [row["workbench_code"] for row in result["fixtures"]])
+        self.assertTrue(all(row["verify"]["valid"] for row in result["fixtures"]))
+        self.assertTrue((output / "commissioning-report.json").is_file())
+        self.assertTrue(result["runner_execution"]["executed"])
+        self.assertFalse(result["construction_boundary"]["scientific_evidence"])
+        self.assertFalse(result["construction_boundary"]["eligible_for_promotion"])
 
 
 if __name__ == "__main__":

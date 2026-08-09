@@ -10,7 +10,13 @@ from typing import Any
 from jsonschema import Draft202012Validator
 from jsonschema.exceptions import SchemaError, ValidationError
 
-from control_plane.common import ContractError, canonical_json_bytes, sha256_bytes, sha256_file
+from control_plane.common import (
+    ContractError,
+    canonical_json_bytes,
+    sha256_bytes,
+    sha256_file,
+    write_json,
+)
 
 from .catalogue import StationCatalogue, _is_link_like, _load_json_strict, _safe_repository_path
 
@@ -439,3 +445,63 @@ class FixturePacketController:
             "result": result,
             "construction_boundary": adapter.construction_boundary,
         }
+
+    def commission_all(self, *, output: Path, operator_id: str) -> dict[str, Any]:
+        """Commission every registry-declared known-safe fixture from one clone."""
+
+        if not operator_id.lower().startswith("demo:"):
+            raise ContractError("fixture packet commissioning only accepts a demo: operator identity")
+        root = output.resolve()
+        if root.exists():
+            raise ContractError("fixture packet commissioning output must not already exist")
+        root.mkdir(parents=True)
+
+        fixtures: list[dict[str, Any]] = []
+        for workbench_code in sorted(self.adapters):
+            station_root = root / workbench_code.lower().replace("-", "")
+            package = station_root / "packet"
+            receipt = station_root / "rehearsal.json"
+            station_operator = f"{operator_id}:{workbench_code.lower()}"
+            built = self.execute("build", workbench=workbench_code, output=package)
+            verified = self.execute("verify", workbench=workbench_code, package=package)
+            rehearsed = self.execute(
+                "rehearse",
+                workbench=workbench_code,
+                package=package,
+                output=receipt,
+                operator_id=station_operator,
+            )
+            fixtures.append(
+                {
+                    "workbench_code": workbench_code,
+                    "adapter_id": self.adapters[workbench_code].adapter_id,
+                    "build": built["result"],
+                    "verify": verified["result"],
+                    "rehearse": rehearsed["result"],
+                }
+            )
+
+        boundary = {
+            "scientific_evidence": False,
+            "counts_as_independent_reproduction": False,
+            "eligible_for_promotion": False,
+            "live_research_authorized": False,
+        }
+        unsigned = {
+            "schema_version": 1,
+            "diagnostic_type": "RESEARCH_FACTORY_FIXTURE_PACKET_COMMISSIONING_DRILL",
+            "operator_id": operator_id,
+            "fixtures": fixtures,
+            "runner_execution": {
+                "executed": True,
+                "scope": "registry-declared known-safe fixtures only",
+            },
+            "construction_boundary": boundary,
+        }
+        report = {
+            **unsigned,
+            "report_sha256": sha256_bytes(canonical_json_bytes(unsigned)),
+        }
+        report_path = root / "commissioning-report.json"
+        write_json(report_path, report)
+        return {**report, "path": str(root), "report_path": str(report_path)}

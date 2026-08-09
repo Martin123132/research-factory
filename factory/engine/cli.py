@@ -253,6 +253,13 @@ def build_local_parser() -> argparse.ArgumentParser:
     )
     packet_plan.add_argument("--adapter", type=Path, required=True)
     packet_plan.add_argument("--json", action="store_true")
+    packet_commission = packet_sub.add_parser(
+        "commission-all",
+        help="build, verify, and rehearse every registry-declared safe fixture",
+    )
+    packet_commission.add_argument("--operator", required=True)
+    packet_commission.add_argument("--output", type=Path, required=True)
+    packet_commission.add_argument("--json", action="store_true")
     packet_build = packet_sub.add_parser("build", help="build an allowlisted fixture packet")
     packet_build.add_argument("--workbench", required=True)
     packet_build.add_argument("--output", type=Path, required=True)
@@ -605,6 +612,18 @@ def _human_fixture_packet(value: dict[str, Any]) -> str:
             ]
         )
 
+    if value.get("diagnostic_type") == "RESEARCH_FACTORY_FIXTURE_PACKET_COMMISSIONING_DRILL":
+        return "\n".join(
+            [
+                "FIXTURE PACKET COMMISSIONING DRILL COMPLETE",
+                f"Fixtures: {len(value['fixtures'])}",
+                f"Report: {value['report_path']}",
+                f"Report SHA-256: {value['report_sha256']}",
+                "Scientific standing: NONE",
+                "Promotion eligibility: false",
+            ]
+        )
+
     adapter = value["adapter"]
     result = value["result"]
     lines = [
@@ -843,6 +862,8 @@ def run_local(args: argparse.Namespace) -> int:
             value = controller.validate_draft(args.adapter)
         elif args.packet_action == "registration-plan":
             value = controller.plan_registration(args.adapter)
+        elif args.packet_action == "commission-all":
+            value = controller.commission_all(output=args.output, operator_id=args.operator)
         else:
             value = controller.execute(
                 args.packet_action,

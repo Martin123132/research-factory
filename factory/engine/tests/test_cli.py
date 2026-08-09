@@ -77,6 +77,16 @@ class LocalCliTests(unittest.TestCase):
         self.assertEqual("", stdout)
         self.assertIn("already has a registered fixture packet adapter", stderr)
 
+    def test_packet_commission_all_refuses_a_non_demo_operator(self) -> None:
+        with tempfile.TemporaryDirectory() as raw_directory:
+            output = Path(raw_directory) / "commissioning"
+            returncode, stdout, stderr = self.invoke(
+                ["packet", "commission-all", "--operator", "human:alice", "--output", str(output)]
+            )
+        self.assertEqual(2, returncode)
+        self.assertEqual("", stdout)
+        self.assertIn("demo: operator identity", stderr)
+
     def test_quality_profile_is_machine_readable_and_not_certified(self) -> None:
         returncode, stdout, stderr = self.invoke(["quality", "--json"])
         self.assertEqual(0, returncode, stderr)
