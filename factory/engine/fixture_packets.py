@@ -47,6 +47,7 @@ class FixturePacketController:
         self.factory_root = factory_root.resolve()
         self.repository_root = self.factory_root.parent
         self.catalogue = StationCatalogue(self.factory_root)
+        self.registry_document: dict[str, Any] = {}
         self.adapters = self._load_adapters()
 
     def _validator(self, relative_path: str, *, label: str) -> Draft202012Validator:
@@ -140,6 +141,7 @@ class FixturePacketController:
         }
         if sha256_bytes(canonical_json_bytes(unsigned_registry)) != registry_document["registry_sha256"]:
             raise ContractError("fixture packet registry self-hash does not match")
+        self.registry_document = registry_document
 
         adapters_root = _safe_repository_path(
             self.repository_root, ADAPTERS_RELATIVE_DIRECTORY, field="fixture packet adapter directory"
@@ -255,6 +257,62 @@ class FixturePacketController:
                 "reason": "draft-check validates metadata and hash locks only",
             },
             "construction_boundary": document["construction_boundary"],
+        }
+
+    def plan_registration(self, adapter_path: Path) -> dict[str, Any]:
+        """Produce a read-only registry addition plan for one validated draft."""
+
+        draft = self.validate_draft(adapter_path)
+        adapter = draft["adapter"]
+        adapters_root = _safe_repository_path(
+            self.repository_root,
+            ADAPTERS_RELATIVE_DIRECTORY,
+            field="fixture packet adapter directory",
+        )
+        source = adapter_path.resolve()
+        if not source.is_relative_to(adapters_root) or source.suffix != ".json":
+            raise ContractError(
+                "registration planning requires an adapter JSON file under factory/fixture_packets/adapters"
+            )
+        adapter_relative_path = source.relative_to(self.repository_root).as_posix()
+        registrations = [dict(row) for row in self.registry_document["registrations"]]
+        if any(row["workbench_code"] == adapter["workbench_code"] for row in registrations):
+            raise ContractError(
+                f"{adapter['workbench_code']} already has a registered fixture packet adapter; "
+                "replacement requires a separate reviewed change"
+            )
+        if any(row["adapter_path"] == adapter_relative_path for row in registrations):
+            raise ContractError("adapter path is already registered")
+        if any(item.adapter_id == adapter["adapter_id"] for item in self.adapters.values()):
+            raise ContractError(f"adapter ID is already registered: {adapter['adapter_id']}")
+
+        proposed_registration = {
+            "workbench_code": adapter["workbench_code"],
+            "adapter_path": adapter_relative_path,
+            "adapter_file_sha256": sha256_file(source),
+        }
+        proposed_registrations = sorted(
+            [*registrations, proposed_registration], key=lambda row: row["workbench_code"]
+        )
+        unsigned_registry = {
+            "schema_version": self.registry_document["schema_version"],
+            "registrations": proposed_registrations,
+        }
+        proposed_registry_sha256 = sha256_bytes(canonical_json_bytes(unsigned_registry))
+        return {
+            "schema_version": 1,
+            "diagnostic_type": "RESEARCH_FACTORY_FIXTURE_PACKET_REGISTRATION_PLAN",
+            "valid": True,
+            "adapter": adapter,
+            "registration_plan": {
+                "operation": "ADD_AFTER_HUMAN_REVIEW",
+                "registry_path": REGISTRY_RELATIVE_PATH,
+                "registry_mutated": False,
+                "proposed_registration": proposed_registration,
+                "proposed_registry_sha256": proposed_registry_sha256,
+            },
+            "runner_execution": draft["runner_execution"],
+            "construction_boundary": draft["construction_boundary"],
         }
 
     def _adapter(self, workbench: str) -> FixturePacketAdapter:

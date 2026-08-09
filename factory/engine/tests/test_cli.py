@@ -68,6 +68,15 @@ class LocalCliTests(unittest.TestCase):
         self.assertFalse(value["runner_execution"]["executed"])
         self.assertFalse(value["construction_boundary"]["eligible_for_promotion"])
 
+    def test_packet_registration_plan_refuses_a_replacement(self) -> None:
+        adapter = FACTORY_ROOT / "fixture_packets" / "adapters" / "wb001-reference-fixture.json"
+        returncode, stdout, stderr = self.invoke(
+            ["packet", "registration-plan", "--adapter", str(adapter), "--json"]
+        )
+        self.assertEqual(2, returncode)
+        self.assertEqual("", stdout)
+        self.assertIn("already has a registered fixture packet adapter", stderr)
+
     def test_quality_profile_is_machine_readable_and_not_certified(self) -> None:
         returncode, stdout, stderr = self.invoke(["quality", "--json"])
         self.assertEqual(0, returncode, stderr)
