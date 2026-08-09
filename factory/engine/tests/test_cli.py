@@ -56,6 +56,18 @@ class LocalCliTests(unittest.TestCase):
         self.assertFalse(value["construction_boundary"]["scientific_evidence"])
         self.assertFalse(value["construction_boundary"]["live_research_authorized"])
 
+    def test_packet_draft_check_does_not_execute_or_register_an_adapter(self) -> None:
+        adapter = FACTORY_ROOT / "fixture_packets" / "adapters" / "wb001-reference-fixture.json"
+        returncode, stdout, stderr = self.invoke(
+            ["packet", "draft-check", "--adapter", str(adapter), "--json"]
+        )
+        self.assertEqual(0, returncode, stderr)
+        value = json.loads(stdout)
+        self.assertTrue(value["valid"])
+        self.assertTrue(value["registry_status"]["exact_adapter_registered"])
+        self.assertFalse(value["runner_execution"]["executed"])
+        self.assertFalse(value["construction_boundary"]["eligible_for_promotion"])
+
     def test_quality_profile_is_machine_readable_and_not_certified(self) -> None:
         returncode, stdout, stderr = self.invoke(["quality", "--json"])
         self.assertEqual(0, returncode, stderr)

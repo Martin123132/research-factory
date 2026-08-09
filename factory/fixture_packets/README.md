@@ -27,11 +27,14 @@ locks each adapter file by its exact bytes.
    known-safe fixture.
 3. Lock the script and build-input SHA-256 values. Calculate
    `adapter_sha256` from canonical JSON with that field omitted.
-4. Put the completed document under `adapters/`, add its exact file SHA-256 to
+4. Run `python factory/enginectl.py packet draft-check --adapter path/to/adapter.json`.
+   It validates the schema, self-hash, runner and input locks without executing
+   the runner or changing the registry.
+5. Put the completed document under `adapters/`, add its exact file SHA-256 to
    `registry.json`, then calculate `registry_sha256` the same way.
-5. Add a test that demonstrates the complete build → verify → rehearsal path
+6. Add a test that demonstrates the complete build → verify → rehearsal path
    and proves every construction-boundary field remains `false`.
-6. Run `python factory/enginectl.py packet list` and the Factory checks before
+7. Run `python factory/enginectl.py packet list` and the Factory checks before
    review.
 
 This is a controlled source-integration route, not an automatic trust system.

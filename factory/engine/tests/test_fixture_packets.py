@@ -1,11 +1,12 @@
 from __future__ import annotations
 
+import json
 import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from control_plane.common import ControlPlaneError
+from control_plane.common import ControlPlaneError, canonical_json_bytes, sha256_bytes
 from engine import fixture_packets
 from engine.fixture_packets import FixturePacketController
 
@@ -69,6 +70,29 @@ class FixturePacketControllerTests(unittest.TestCase):
                 with patch.object(fixture_packets, "sha256_file", side_effect=tampered_sha256):
                     with self.assertRaisesRegex(ControlPlaneError, expected_error):
                         FixturePacketController(FACTORY_ROOT)
+
+    def test_draft_check_validates_an_unregistered_adapter_without_execution(self) -> None:
+        source = (
+            FACTORY_ROOT
+            / "fixture_packets"
+            / "adapters"
+            / "wb001-reference-fixture.json"
+        )
+        draft = json.loads(source.read_text(encoding="utf-8"))
+        draft["adapter_id"] = "WB001_LOCAL_DRAFT_PACKET_V1"
+        unsigned = {key: value for key, value in draft.items() if key != "adapter_sha256"}
+        draft["adapter_sha256"] = sha256_bytes(canonical_json_bytes(unsigned))
+        draft_path = self.root / "wb001-local-draft.json"
+        draft_path.write_text(json.dumps(draft, indent=2) + "\n", encoding="utf-8")
+
+        result = self.controller.validate_draft(draft_path)
+
+        self.assertTrue(result["valid"])
+        self.assertTrue(result["registry_status"]["workbench_has_registered_adapter"])
+        self.assertFalse(result["registry_status"]["exact_adapter_registered"])
+        self.assertFalse(result["registry_status"]["registration_changed"])
+        self.assertFalse(result["runner_execution"]["executed"])
+        self.assertFalse(result["construction_boundary"]["scientific_evidence"])
 
     def test_unknown_workbench_is_not_a_general_runner(self) -> None:
         with self.assertRaisesRegex(ControlPlaneError, "no allowlisted fixture packet adapter"):

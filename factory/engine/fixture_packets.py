@@ -211,6 +211,52 @@ class FixturePacketController:
             )
         return rows
 
+    def validate_draft(self, adapter_path: Path) -> dict[str, Any]:
+        """Validate a prospective adapter without registering or running it."""
+
+        document = _load_json_strict(adapter_path)
+        adapter_validator = self._validator(
+            ADAPTER_SCHEMA_RELATIVE_PATH, label="fixture packet adapter"
+        )
+        self._validate_document(adapter_validator, document, label="fixture packet adapter draft")
+        unsigned_adapter = {
+            key: value for key, value in document.items() if key != "adapter_sha256"
+        }
+        if sha256_bytes(canonical_json_bytes(unsigned_adapter)) != document["adapter_sha256"]:
+            raise ContractError("fixture packet draft adapter self-hash does not match")
+
+        catalogue_row = self.catalogue.resolve(document["workbench_code"])
+        self._validate_runner_assets(document, registry=catalogue_row)
+        registered = self.adapters.get(document["workbench_code"])
+        exact_adapter_registered = (
+            registered is not None
+            and registered.adapter_id == document["adapter_id"]
+            and registered.adapter_sha256 == document["adapter_sha256"]
+        )
+        return {
+            "schema_version": 1,
+            "diagnostic_type": "RESEARCH_FACTORY_FIXTURE_PACKET_DRAFT_CHECK",
+            "valid": True,
+            "adapter": {
+                "adapter_id": document["adapter_id"],
+                "adapter_sha256": document["adapter_sha256"],
+                "workbench_code": document["workbench_code"],
+                "packet_kind": document["packet_kind"],
+                "rehearsal_scope": document["rehearsal_scope"],
+                "handoff_state": document["handoff_state"],
+            },
+            "registry_status": {
+                "workbench_has_registered_adapter": registered is not None,
+                "exact_adapter_registered": exact_adapter_registered,
+                "registration_changed": False,
+            },
+            "runner_execution": {
+                "executed": False,
+                "reason": "draft-check validates metadata and hash locks only",
+            },
+            "construction_boundary": document["construction_boundary"],
+        }
+
     def _adapter(self, workbench: str) -> FixturePacketAdapter:
         try:
             workbench_code = self.catalogue.resolve(workbench)["workbench_code"]
