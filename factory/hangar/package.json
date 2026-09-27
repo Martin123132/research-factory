@@ -39,7 +39,7 @@
     "typescript": "6.0.3",
     "vinext": "0.2.1",
     "vite": "8.2.2",
-    "wrangler": "4.127.1"
+    "wrangler": "4.139.0"
   },
   "overrides": {
     "undici": "7.29.0"
