@@ -24,9 +24,20 @@ updates:
       - hangar-construction
     open-pull-requests-limit: 5
     groups:
-      # These runtime packages must be upgraded and checked together.
+      # Keep runtime packages and their matching type definitions together.
       react-runtime:
         patterns:
           - react
           - react-dom
           - react-server-dom-webpack
+          - "@types/react"
+          - "@types/react-dom"
+      cloudflare-toolchain:
+        patterns:
+          - "@cloudflare/vite-plugin"
+          - "@cloudflare/workers-types"
+          - wrangler
+      next-framework:
+        patterns:
+          - next
+          - eslint-config-next
