@@ -33,7 +33,7 @@
     "@vitejs/plugin-rsc": "0.5.35",
     "drizzle-kit": "0.31.11",
     "eslint": "9.39.4",
-    "eslint-config-next": "16.3.0",
+    "eslint-config-next": "16.3.7",
     "react-server-dom-webpack": "19.3.0",
     "tailwindcss": "4.3.3",
     "typescript": "6.0.3",
