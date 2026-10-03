@@ -23,3 +23,10 @@ updates:
     labels:
       - hangar-construction
     open-pull-requests-limit: 5
+    groups:
+      # These runtime packages must be upgraded and checked together.
+      react-runtime:
+        patterns:
+          - react
+          - react-dom
+          - react-server-dom-webpack

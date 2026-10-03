@@ -17,24 +17,24 @@
     "contracts:verify": "node scripts/verify-station-kits.mjs"
   },
   "dependencies": {
-    "drizzle-orm": "0.45.2",
-    "next": "16.3.4",
-    "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "drizzle-orm": "0.45.3",
+    "next": "16.3.8",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "1.61.0",
     "@cloudflare/workers-types": "5.20260927.1",
     "@tailwindcss/postcss": "4.3.3",
-    "@types/node": "26.4.1",
+    "@types/node": "26.6.3",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.7",
     "@vitejs/plugin-react": "6.1.0",
-    "@vitejs/plugin-rsc": "0.5.34",
-    "drizzle-kit": "0.31.10",
+    "@vitejs/plugin-rsc": "0.5.35",
+    "drizzle-kit": "0.31.11",
     "eslint": "9.39.4",
     "eslint-config-next": "16.3.0",
-    "react-server-dom-webpack": "19.2.8",
+    "react-server-dom-webpack": "19.3.0",
     "tailwindcss": "4.3.3",
     "typescript": "6.0.3",
     "vinext": "0.2.1",
@@ -42,7 +42,7 @@
     "wrangler": "4.142.0"
   },
   "overrides": {
-    "undici": "7.29.0"
+    "undici": "7.29.1"
   },
   "type": "module"
 }
