@@ -37,12 +37,17 @@ from quality.verify_quality import verify as verify_factory_quality
 
 from .catalogue import PROFILES, STAGES, StationCatalogue, doctor
 from .fixture_packets import FixturePacketController
+from .environments import (
+    LEGACY_PROFILE, EnvironmentProfileError, check_runtime,
+    inspect_profiles, rehearse, require_runtime,
+)
 from .negative_results import search_ledger
 from .portable import EVIDENCE_KINDS, OPERATING_MODES, PortableEvidencePackage
 
 
 FACTORY_ROOT = Path(__file__).resolve().parents[1]
 LOCAL_COMMANDS = {
+    "environment",
     "doctor",
     "quality",
     "list",
@@ -108,6 +113,7 @@ def _print_help() -> None:
 usage: factoryctl [GLOBAL OPTIONS] COMMAND [COMMAND OPTIONS]
 
 Explore and verify the factory (no account, website, network, or AI provider required):
+  environment            inspect/check versioned dependency profiles or run a tiny synthetic fixture
   doctor                 verify the engine, 100-station registry, and station kits
   quality                verify the evidence-bound Open Factory quality profile
   list                   discover workbenches and filter by readiness
@@ -161,6 +167,11 @@ def build_local_parser() -> argparse.ArgumentParser:
         help="factory directory containing station_kits and workbench_standard",
     )
     sub = parser.add_subparsers(dest="command", required=True)
+
+    environment_parser = sub.add_parser("environment", help="versioned dependency profiles; no scientific standing")
+    environment_parser.add_argument("action", choices=["list", "check", "rehearse"])
+    environment_parser.add_argument("--profile")
+    environment_parser.add_argument("--json", action="store_true")
 
     doctor_parser = sub.add_parser("doctor", help="verify a clean clone and its catalogue")
     doctor_parser.add_argument(
@@ -820,6 +831,15 @@ def _human_dispatch_ticket(value: dict[str, Any]) -> str:
 
 def run_local(args: argparse.Namespace) -> int:
     factory_root = args.factory_root.resolve()
+    if args.command == "environment":
+        if args.action == "list":
+            value = inspect_profiles(factory_root)
+        else:
+            if not args.profile:
+                raise EnvironmentProfileError("check/rehearse requires an explicit --profile")
+            value = (check_runtime if args.action == "check" else rehearse)(factory_root, args.profile)
+        _json(value)
+        return 0 if value.get("matches", True) else 2
     if args.command == "doctor":
         value = doctor(factory_root, ledger=args.ledger)
         print(_human_doctor(value) if not args.json else json.dumps(value, indent=2))
@@ -1049,12 +1069,18 @@ def main(argv: list[str] | None = None) -> int:
         _print_help()
         return 0
     if command not in LOCAL_COMMANDS:
-        return governed_cli.main(actual)
+        try:
+            if not any(item in {"-h", "--help"} for item in actual):
+                require_runtime(FACTORY_ROOT, LEGACY_PROFILE)
+            return governed_cli.main(actual)
+        except EnvironmentProfileError as exc:
+            print(f"factoryctl: {exc}", file=sys.stderr)
+            return 2
     parser = build_local_parser()
     args = parser.parse_args(actual)
     try:
         return run_local(args)
-    except ControlPlaneError as exc:
+    except (ControlPlaneError, EnvironmentProfileError) as exc:
         print(f"factoryctl: {exc}", file=sys.stderr)
         return 2
 

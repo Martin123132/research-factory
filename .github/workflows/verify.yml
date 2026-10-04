@@ -38,6 +38,12 @@ jobs:
           python .github/scripts/verify_dco.py
           --base ${{ github.event.pull_request.base.sha }}
           --head ${{ github.event.pull_request.head.sha }}
+      - name: Reject rewrites of existing environment versions
+        if: github.event_name == 'pull_request'
+        run: >-
+          python .github/scripts/verify_python_lock.py
+          --base ${{ github.event.pull_request.base.sha }}
+          --head ${{ github.event.pull_request.head.sha }}
 
   contracts-and-runners:
     runs-on: ubuntu-latest
@@ -124,6 +130,38 @@ jobs:
         run: python -m unittest discover -s workbenches/wb001_lossless_compression/tests -p "test_*.py" -v
       - name: Test workbench standard and adapters
         run: python -m unittest discover -s workbench_standard/tests -p "test_*.py" -v
+
+  engine-environments:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: factory
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.13"
+      - name: Create separate frozen and maintenance environments
+        run: |
+          python -m venv state/environment-ci/legacy/.venv
+          python -m venv state/environment-ci/engine/.venv
+          state/environment-ci/legacy/.venv/bin/python -m pip install -r requirements.lock
+          state/environment-ci/engine/.venv/bin/python -m pip install -r environments/versions/engine-v1/requirements.lock
+      - name: Verify and audit maintenance pins
+        run: |
+          python ../.github/scripts/verify_python_lock.py
+          python -m pip install pip-audit==2.10.1
+          python -m pip_audit -r environments/versions/engine-v1/requirements.lock --progress-spinner off
+      - name: Test maintenance environment and local engine commands
+        run: |
+          state/environment-ci/engine/.venv/bin/python -m unittest engine.tests.test_environments engine.tests.test_cli.LocalCliTests -v
+          state/environment-ci/engine/.venv/bin/python enginectl.py doctor --json
+      - name: Rehearse both profiles and reject the wrong interpreter
+        run: >-
+          python environments/run_synthetic_drill.py
+          --legacy-python state/environment-ci/legacy/.venv/bin/python
+          --engine-python state/environment-ci/engine/.venv/bin/python
+          --output state/environment-ci/evidence
 
   hangar:
     runs-on: ubuntu-latest

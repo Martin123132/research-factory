@@ -19,6 +19,7 @@ from control_plane.common import (
 )
 
 from .catalogue import StationCatalogue, _is_link_like, _load_json_strict, _safe_repository_path
+from .environments import LEGACY_PROFILE, require_runtime
 
 
 REGISTRY_RELATIVE_PATH = "factory/fixture_packets/registry.json"
@@ -381,6 +382,8 @@ class FixturePacketController:
         raise ContractError(f"unsupported fixture packet action: {action}")
 
     def _run(self, adapter: FixturePacketAdapter, command: list[str]) -> dict[str, Any]:
+        # Existing adapters retain their frozen interpreter dependencies.
+        require_runtime(self.factory_root, LEGACY_PROFILE)
         try:
             completed = subprocess.run(
                 command,
