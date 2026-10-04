@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "environment_id": "engine-v1",
+  "role": "ENGINE_MAINTENANCE",
+  "python_minimum": [
+    3,
+    11
+  ],
+  "lock": {
+    "path": "environments/versions/engine-v1/requirements.lock",
+    "sha256": "845bc6ebbfc061092647e5c3099ccd32e48328e5ba94d639601fc6435d6f402c"
+  },
+  "round_binding": null
+}

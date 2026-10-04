@@ -47,6 +47,13 @@ ledger.
 
 ## Start from a clean clone
 
+The examples below retain the frozen pilot environment for compatibility.
+Updated engine maintenance has its own versioned dependency profile; follow
+[`environments/README.md`](environments/README.md) to set up separate interpreters.
+Do not update `factory/requirements.lock` in place. The engine checks the frozen
+profile before governed workflow or existing fixture execution; maintenance
+updates do not silently change a round's environment.
+
 From the repository root on Windows PowerShell:
 
 ```powershell

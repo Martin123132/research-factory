@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "current_engine": "engine-v1",
+  "profiles": [
+    {
+      "environment_id": "wb001-pilot-001-v1",
+      "path": "environments/versions/wb001-pilot-001-v1/manifest.json",
+      "sha256": "9450de2bf215320678e1deb00f41882fc0d419fe7133695090f8ccaada176d8e"
+    },
+    {
+      "environment_id": "engine-v1",
+      "path": "environments/versions/engine-v1/manifest.json",
+      "sha256": "e606da4d77f30542d833931d1f9efadeee6729b269476587f1ad49bc0fb6bb95"
+    }
+  ]
+}

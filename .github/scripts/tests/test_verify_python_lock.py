@@ -3,6 +3,7 @@ from __future__ import annotations
 import importlib.util
 import tempfile
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 
@@ -52,6 +53,22 @@ class VerifyPythonLockTests(unittest.TestCase):
     def test_rejects_empty_direct_dependencies(self):
         with self.assertRaisesRegex(ValueError, "must not be empty"):
             self.check_fixture("", "cffi==2.1.0\n")
+
+    def test_environment_history_allows_additions_but_rejects_edits_and_deletions(self):
+        for status in ("A", "M", "D"):
+            with self.subTest(status=status), patch.object(verifier.subprocess, "check_output", return_value=f"{status}\tfactory/environments/versions/old/manifest.json\n"):
+                if status == "A":
+                    verifier.verify_append_only("a" * 40, "b" * 40)
+                else:
+                    with self.assertRaisesRegex(ValueError, "append-only"):
+                        verifier.verify_append_only("a" * 40, "b" * 40)
+
+    def test_history_ref_cannot_be_an_option(self):
+        with self.assertRaisesRegex(ValueError, "commit SHAs"):
+            verifier.verify_append_only("--other", "b" * 40)
+
+    def test_current_maintenance_lock_agrees_with_project(self):
+        self.assertEqual(5, verifier.verify())
 
 
 if __name__ == "__main__":
