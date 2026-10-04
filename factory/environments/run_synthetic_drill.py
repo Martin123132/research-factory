@@ -12,9 +12,15 @@ from pathlib import Path
 FACTORY = Path(__file__).resolve().parents[1]
 
 
+def interpreter_path(python: Path) -> str:
+    # POSIX venv executables are symlinks. Resolving one selects the base Python
+    # and loses the venv; make the caller's path absolute without dereferencing.
+    return str(python.absolute())
+
+
 def run_report(python: Path, profile: str) -> dict:
     completed = subprocess.run(
-        [str(python.resolve()), str(FACTORY / "enginectl.py"), "environment", "rehearse", "--profile", profile, "--json"],
+        [interpreter_path(python), str(FACTORY / "enginectl.py"), "environment", "rehearse", "--profile", profile, "--json"],
         cwd=FACTORY, capture_output=True, text=True, encoding="utf-8", timeout=30, check=True,
     )
     report = json.loads(completed.stdout)
@@ -43,7 +49,7 @@ def main() -> int:
         raise ValueError("synthetic fixture outputs diverged; do not claim equivalence")
     # The maintenance interpreter must refuse the old profile, not silently run it.
     rejected = subprocess.run(
-        [str(args.engine_python.resolve()), str(FACTORY / "enginectl.py"), "environment", "check", "--profile", "wb001-pilot-001-v1", "--json"],
+        [interpreter_path(args.engine_python), str(FACTORY / "enginectl.py"), "environment", "check", "--profile", "wb001-pilot-001-v1", "--json"],
         cwd=FACTORY, capture_output=True, text=True, encoding="utf-8", timeout=30,
     )
     mismatch = json.loads(rejected.stdout)

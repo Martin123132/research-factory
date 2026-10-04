@@ -12,6 +12,7 @@ from io import StringIO
 from pathlib import Path
 from unittest.mock import patch
 
+from environments import run_synthetic_drill as drill
 from engine import environments as env
 from engine.cli import main
 from engine.fixture_packets import FixturePacketController
@@ -30,6 +31,13 @@ class ProfileTests(unittest.TestCase):
         destination = self.root / "rounds/WB001-PILOT-001"
         destination.mkdir(parents=True)
         shutil.copyfile(ROOT / "rounds/WB001-PILOT-001/round.json", destination / "round.json")
+
+    def test_drill_preserves_the_virtual_environment_interpreter_path(self):
+        python = Path("some-environment/.venv/bin/python")
+        expected = str(python.absolute())
+        # This check also runs on Windows, where venv executables are not links.
+        with patch.object(Path, "resolve", side_effect=AssertionError("must not dereference the venv Python")):
+            self.assertEqual(expected, drill.interpreter_path(python))
 
     def write_index(self, value):
         (self.root / "environments/index.json").write_text(json.dumps(value), encoding="utf-8")
