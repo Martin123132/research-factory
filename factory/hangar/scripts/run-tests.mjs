@@ -40,15 +40,16 @@ try {
     const host = "127.0.0.1";
     url = `http://${host}:${port}`;
     const cli = fileURLToPath(
-      new URL("../node_modules/vinext/dist/cli.js", import.meta.url),
+      new URL("../node_modules/vite/bin/vite.js", import.meta.url),
     );
     server = spawn(process.execPath, [
       cli,
       "dev",
-      "--hostname",
+      "--host",
       host,
       "--port",
       String(port),
+      "--strictPort",
     ], {
       cwd: projectRoot,
       env: process.env,
