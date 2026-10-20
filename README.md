@@ -89,6 +89,11 @@ distance convention.
 
 ## Verify the factory
 
+For a complete website-independent construction shift, see
+[`Engine-only shifts`](factory/engine/SHIFTS.md): choose a reviewed fixture,
+clock in, retain the outcome, and hand over a verifiable package. This does not
+open live research or replace two-person independent reproduction.
+
 ```powershell
 python -m pip install -r factory/requirements.lock
 python -m pip install reuse==6.2.0

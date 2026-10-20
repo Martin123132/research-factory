@@ -43,10 +43,12 @@ from .environments import (
 )
 from .negative_results import search_ledger
 from .portable import EVIDENCE_KINDS, OPERATING_MODES, PortableEvidencePackage
+from .shifts import OUTCOMES as SHIFT_OUTCOMES, ShiftWorkflow, display as display_shift
 
 
 FACTORY_ROOT = Path(__file__).resolve().parents[1]
 LOCAL_COMMANDS = {
+    "shift",
     "environment",
     "doctor",
     "quality",
@@ -121,6 +123,7 @@ Explore and verify the factory (no account, website, network, or AI provider req
   package                make a portable, hash-bound construction evidence bundle
   verify                 verify a portable evidence bundle without trusting its author
   packet                 operate an allowlisted known-safe fixture packet adapter
+  shift                  clock in, run a safe fixture, clock out and hand over without a website
   negative-results       search retained failed and no-gain experiments read-only
   correction-append      append one closed correction or retraction record
   correction-verify      verify the universal correction ledger and current standings
@@ -167,6 +170,31 @@ def build_local_parser() -> argparse.ArgumentParser:
         help="factory directory containing station_kits and workbench_standard",
     )
     sub = parser.add_subparsers(dest="command", required=True)
+
+    shift = sub.add_parser("shift", help="local construction shifts; no live research or exclusive claims")
+    actions = shift.add_subparsers(dest="shift_action", required=True)
+    for name in ("tasks", "start", "run", "finish", "inspect", "export", "verify", "resume"):
+        action = actions.add_parser(name)
+        action.add_argument("--json", action="store_true")
+        if name in {"run", "finish", "inspect", "export"}:
+            action.add_argument("--session", type=Path, required=True)
+        if name in {"start", "resume", "export"}:
+            action.add_argument("--output", type=Path, required=True)
+        if name in {"start", "resume"}:
+            action.add_argument("--operator", required=True)
+        if name == "start":
+            action.add_argument("--workbench", required=True)
+        if name == "run":
+            action.add_argument("--acknowledge-fixture-only", action="store_true", required=True,
+                                help="explicitly run only this reviewed fixture; not arbitrary agent code")
+        if name == "finish":
+            action.add_argument("--outcome", choices=SHIFT_OUTCOMES, required=True)
+            action.add_argument("--summary", required=True)
+            action.add_argument("--next-lead", required=True)
+            action.add_argument("--blocker")
+            action.add_argument("--ended-at", help="honestly recorded UTC finish when filing a report later")
+        if name in {"verify", "resume"}:
+            action.add_argument("--package", type=Path, required=True)
 
     environment_parser = sub.add_parser("environment", help="versioned dependency profiles; no scientific standing")
     environment_parser.add_argument("action", choices=["list", "check", "rehearse"])
@@ -831,6 +859,30 @@ def _human_dispatch_ticket(value: dict[str, Any]) -> str:
 
 def run_local(args: argparse.Namespace) -> int:
     factory_root = args.factory_root.resolve()
+    if args.command == "shift":
+        workflow = ShiftWorkflow(factory_root)
+        try:
+            if args.shift_action == "tasks":
+                value = workflow.tasks()
+            elif args.shift_action == "start":
+                value = workflow.start(output=args.output, operator=args.operator, workbench=args.workbench)
+            elif args.shift_action == "resume":
+                value = workflow.start(output=args.output, operator=args.operator, previous=args.package)
+            elif args.shift_action == "run":
+                value = workflow.run(args.session)
+            elif args.shift_action == "finish":
+                value = workflow.finish(args.session, outcome=args.outcome, summary=args.summary,
+                                        next_lead=args.next_lead, blocker=args.blocker, ended_at=args.ended_at)
+            elif args.shift_action == "inspect":
+                value = workflow.inspect(args.session)
+            elif args.shift_action == "verify":
+                value = workflow.verify_handover(args.package)
+            else:
+                value = workflow.export(args.session, args.output)
+        except (OSError, ValueError, KeyError, TypeError) as exc:
+            raise ControlPlaneError(f"local shift rejected: {exc}") from exc
+        _json(value) if args.json else print(display_shift(value))
+        return 2 if args.shift_action == "run" and value["run_state"] != "PASSED" else 0
     if args.command == "environment":
         if args.action == "list":
             value = inspect_profiles(factory_root)

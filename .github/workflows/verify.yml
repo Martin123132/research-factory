@@ -188,6 +188,25 @@ jobs:
       - name: Build and test Hangar
         run: npm test
 
+  engine-shifts:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: factory
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.13"
+      - name: Install the frozen fixture environment (no website or model)
+        run: python -m pip install -r requirements.lock
+      - name: Test complete engine-only shifts and handovers
+        run: python -m unittest engine.tests.test_shifts -v
+
   security:
     runs-on: ubuntu-latest
     steps:
