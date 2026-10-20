@@ -42,7 +42,7 @@
       "evidence": [
         {
           "path": "factory/ENGINE.md",
-          "sha256": "dab642f7798089e572b63ee8103af5c0624886b220edd0e7cec98800e3584b1c",
+          "sha256": "57d5d85fc99ef288e492b909f712de6589f0a07da74cc2d96b87706fb4ff5416",
           "supports": "Documents the clean-clone core with no hosted account, website, GitHub API or model-provider requirement."
         },
         {
@@ -502,7 +502,7 @@
         },
         {
           "path": ".github/workflows/verify.yml",
-          "sha256": "5a7a526652374aad42140026675fa310f3bad9aa8ada9a0d184c402cc0407371",
+          "sha256": "3ece6df03efae0abc59a1452c06b96c176055133408f9818205308a88ccb152b",
           "supports": "Runs the quality verifier and regression tests as a protected repository check."
         }
       ],

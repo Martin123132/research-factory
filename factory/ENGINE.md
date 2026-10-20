@@ -92,8 +92,8 @@ factory\.venv\Scripts\python.exe factory\enginectl.py quality
 factory\.venv\Scripts\python.exe factory\enginectl.py quality --json
 ```
 
-The current result is `FOUNDATION_ONLY`: 20 controls meet their declared
-minimum, six remain partial and two are blocked. Operational, scientific and
+The current result is `FOUNDATION_ONLY`: 21 controls meet their declared
+minimum, five remain partial and two are blocked. Operational, scientific and
 independent-audit certification remain false. Passing the command verifies that
 this self-assessment is internally honest; it does not certify the Factory.
 
@@ -221,10 +221,12 @@ factory\.venv\Scripts\python.exe factory\enginectl.py dispatch-ticket-verify `
   --ticket factory\state\dispatch-dry-run-ticket.json
 ```
 
-The only currently authorised profile is a no-execution preflight: it grants
-zero time, compute, storage, spend, tools, files and network access. The process
-profile returns a hash-bound rejection naming each unenforced dimension. Neither
-result is scientific evidence, independent reproduction or promotion.
+The dry-run profile grants no execution. The frozen local process profile
+returns a hash-bound rejection naming each unenforced dimension. A separate
+container-commissioning profile can issue a ticket, subject to the adapter's
+additional host checks and explicit human release; see
+[`dispatch/README.md`](dispatch/README.md). None of these profiles grants
+scientific evidence, independent reproduction or promotion standing.
 
 ## Allowlisted fixture packet adapters
 
@@ -278,6 +280,19 @@ construction boundary: it is not scientific evidence, not an independent
 reproduction, not promotion-eligible and not authorisation for live research.
 GitHub Actions runs both checked-in fixtures from a fresh checkout so a broken
 adapter is caught before it is relied upon by a real contributor.
+
+## Clock in and hand over without the website
+
+`enginectl.py shift` joins the registered fixtures, environment checks,
+existing shift-report contract and portable packages into a local construction
+journey: `tasks`, `start`, `run`, `finish`, `inspect`, `export`, `verify`, `resume`.
+Start with [`engine/SHIFTS.md`](engine/SHIFTS.md) for commands and recovery limits.
+
+This is not a new scientific state machine or an exclusive work queue. It offers
+only the reviewed WB-001 and WB-013 fixtures, preserves failed/interrupted work,
+and keeps every scientific/promotion field false. Another operator can inspect
+and resume the verified handover without the Hangar or an AI provider. Different
+demo labels never establish two independent humans.
 
 ## Portable construction packages
 
