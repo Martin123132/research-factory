@@ -179,6 +179,8 @@ jobs:
         run: npm ci
       - name: Audit deployable Hangar dependencies
         run: npm audit --omit=dev --audit-level=high
+      - name: Verify local mitigation and audit development dependencies
+        run: npm run security:audit
       - name: Typecheck
         run: npm run typecheck
       - name: Lint

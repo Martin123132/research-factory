@@ -6,11 +6,17 @@
     "node": ">=22.13.0"
   },
   "scripts": {
+    "postinstall": "node scripts/guard-braces.mjs",
+    "security:verify": "node scripts/guard-braces.mjs --check",
+    "security:audit": "node scripts/audit-dependencies.mjs",
+    "predev": "npm run security:verify",
     "dev": "vite dev",
+    "prebuild": "npm run security:verify",
     "build": "vite build",
     "start": "vinext start",
     "test": "npm run catalogue:verify && npm run contracts:verify && npm run build && node scripts/run-tests.mjs",
     "typecheck": "tsc --noEmit",
+    "prelint": "npm run security:verify",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next --ignore-pattern work --ignore-pattern video",
     "db:generate": "drizzle-kit generate",
     "catalogue:verify": "node scripts/verify-catalogue.mjs",
@@ -42,6 +48,10 @@
     "wrangler": "4.149.0"
   },
   "overrides": {
+    "@esbuild-kit/core-utils": {
+      "esbuild": "0.25.12"
+    },
+    "fflate": "0.7.5",
     "sharp": "0.35.5",
     "undici": "7.29.1"
   },
