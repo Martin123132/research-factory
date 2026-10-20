@@ -79,13 +79,19 @@ flags and report hash on the server. The downloadable contract is
 Node.js 22.13 or newer is required.
 
 ```powershell
-npm.cmd ci --ignore-scripts --prefer-offline --no-audit --no-fund
+npm.cmd ci
+npm.cmd run security:audit
 npm.cmd run dev
 ```
 
 The project uses a Sites/Vinext Cloudflare Worker and a project-local D1 database.
 The application performs an idempotent schema bootstrap for local development;
 the tracked Drizzle migration is the deployment schema.
+
+If installing with `--ignore-scripts`, explicitly run `npm run postinstall`
+before using the tools. Development, build and lint refuse an unguarded install.
+See [dependency security](DEPENDENCY_SECURITY.md) for the temporary, hash-checked
+`braces` mitigation and the distinction between a mitigation and an upstream fix.
 
 ## Verification
 
