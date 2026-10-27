@@ -29,8 +29,8 @@
     "react-dom": "19.3.0"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "1.63.1",
-    "@cloudflare/workers-types": "5.20261011.1",
+    "@cloudflare/vite-plugin": "1.65.0",
+    "@cloudflare/workers-types": "5.20261024.1",
     "@tailwindcss/postcss": "4.3.3",
     "@types/node": "26.6.4",
     "@types/react": "19.3.0",
@@ -45,7 +45,7 @@
     "typescript": "6.0.3",
     "vinext": "1.0.1",
     "vite": "8.3.4",
-    "wrangler": "4.149.0"
+    "wrangler": "4.152.0"
   },
   "overrides": {
     "@esbuild-kit/core-utils": {
