@@ -44,7 +44,7 @@
     "tailwindcss": "4.3.3",
     "typescript": "6.0.3",
     "vinext": "1.0.1",
-    "vite": "8.3.4",
+    "vite": "8.3.5",
     "wrangler": "4.149.0"
   },
   "overrides": {
