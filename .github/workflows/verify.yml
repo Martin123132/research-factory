@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: "3.13"
       - name: Install pinned licensing and schema tools
@@ -38,7 +38,7 @@ jobs:
           python .github/scripts/verify_dco.py
           --base ${{ github.event.pull_request.base.sha }}
           --head ${{ github.event.pull_request.head.sha }}
-      - name: Reject rewrites of existing environment versions
+      - name: Reject rewrites of historical locks, rounds and environment versions
         if: github.event_name == 'pull_request'
         run: >-
           python .github/scripts/verify_python_lock.py
@@ -52,19 +52,19 @@ jobs:
         working-directory: factory
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: "3.13"
           cache: pip
-          cache-dependency-path: factory/requirements.lock
+          cache-dependency-path: factory/environments/versions/wb001-pilot-002-v1/requirements.lock
       - name: Verify Python manifest and lock agree
         run: python ../.github/scripts/verify_python_lock.py
       - name: Install locked Python dependencies
-        run: python -m pip install -r requirements.lock
+        run: python -m pip install -r environments/versions/wb001-pilot-002-v1/requirements.lock
       - name: Audit locked Python dependencies
         run: |
           python -m pip install pip-audit==2.10.1
-          python -m pip_audit -r requirements.lock --progress-spinner off
+          python -m pip_audit -r environments/versions/wb001-pilot-002-v1/requirements.lock --progress-spinner off
       - name: Verify append-only shift-report contract
         run: |
           python shift_reports/validate_shift_reports.py shift_reports/examples
@@ -116,6 +116,7 @@ jobs:
       - name: Verify clean-checkout worker entry gate
         run: >-
           python control_plane/scripts/run_entry_gate.py
+          --round rounds/WB001-PILOT-002/round.json
           --operator ci:github-actions
           --acknowledge-rules
           --output state/ci-entry.json
@@ -138,20 +139,20 @@ jobs:
         working-directory: factory
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: "3.13"
-      - name: Create separate frozen and maintenance environments
+      - name: Create separate patched research and maintenance environments
         run: |
-          python -m venv state/environment-ci/legacy/.venv
+          python -m venv state/environment-ci/research/.venv
           python -m venv state/environment-ci/engine/.venv
-          state/environment-ci/legacy/.venv/bin/python -m pip install -r requirements.lock
-          state/environment-ci/engine/.venv/bin/python -m pip install -r environments/versions/engine-v1/requirements.lock
+          state/environment-ci/research/.venv/bin/python -m pip install -r environments/versions/wb001-pilot-002-v1/requirements.lock
+          state/environment-ci/engine/.venv/bin/python -m pip install -r environments/versions/engine-v2/requirements.lock
       - name: Verify and audit maintenance pins
         run: |
           python ../.github/scripts/verify_python_lock.py
           python -m pip install pip-audit==2.10.1
-          python -m pip_audit -r environments/versions/engine-v1/requirements.lock --progress-spinner off
+          python -m pip_audit -r environments/versions/engine-v2/requirements.lock --progress-spinner off
       - name: Test maintenance environment and local engine commands
         run: |
           state/environment-ci/engine/.venv/bin/python -m unittest engine.tests.test_environments engine.tests.test_cli.LocalCliTests -v
@@ -159,7 +160,7 @@ jobs:
       - name: Rehearse both profiles and reject the wrong interpreter
         run: >-
           python environments/run_synthetic_drill.py
-          --legacy-python state/environment-ci/legacy/.venv/bin/python
+          --research-python state/environment-ci/research/.venv/bin/python
           --engine-python state/environment-ci/engine/.venv/bin/python
           --output state/environment-ci/evidence
 
@@ -199,11 +200,11 @@ jobs:
         working-directory: factory
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: "3.13"
-      - name: Install the frozen fixture environment (no website or model)
-        run: python -m pip install -r requirements.lock
+      - name: Install the patched fixture environment (no website or model)
+        run: python -m pip install -r environments/versions/wb001-pilot-002-v1/requirements.lock
       - name: Test complete engine-only shifts and handovers
         run: python -m unittest engine.tests.test_shifts -v
 

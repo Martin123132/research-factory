@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "environment_id": "wb001-pilot-002-v1",
+  "role": "FROZEN_ROUND",
+  "python_minimum": [
+    3,
+    11
+  ],
+  "lock": {
+    "path": "environments/versions/wb001-pilot-002-v1/requirements.lock",
+    "sha256": "21e9d7b90e49c084019be95b6dc3620f33963c6ec94e78dd51460a8a42368912"
+  },
+  "round_binding": {
+    "round_id": "WB001-PILOT-002",
+    "path": "rounds/WB001-PILOT-002/round.json",
+    "sha256": "05c736a52b459ebad006bc09a8b11fdb54f0faba5ab4257922f126ec4ba9a471"
+  }
+}

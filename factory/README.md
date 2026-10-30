@@ -46,6 +46,11 @@ Pilot Round 1 is frozen in
 four-hour worker shift in
 [`rounds/WB001-PILOT-001/STARTER_PACK.md`](rounds/WB001-PILOT-001/STARTER_PACK.md).
 
+The patched successor is [`WB001-PILOT-002`](rounds/WB001-PILOT-002/round.json).
+Use [the versioned environment instructions](environments/README.md) for new
+construction work. The original round and its state are retained; no scientific
+standing transfers to the successor.
+
 ## Factory rule
 
 A result is not promoted because it looks promising. It is promoted only when:

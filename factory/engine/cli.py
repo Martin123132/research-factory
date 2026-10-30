@@ -38,9 +38,10 @@ from quality.verify_quality import verify as verify_factory_quality
 from .catalogue import PROFILES, STAGES, StationCatalogue, doctor
 from .fixture_packets import FixturePacketController
 from .environments import (
-    LEGACY_PROFILE, EnvironmentProfileError, check_runtime,
+    RESEARCH_PROFILE, EnvironmentProfileError, check_runtime,
     inspect_profiles, rehearse, require_runtime,
 )
+from .research_runtime import guard_round, prepare_governed
 from .negative_results import search_ledger
 from .portable import EVIDENCE_KINDS, OPERATING_MODES, PortableEvidencePackage
 from .shifts import OUTCOMES as SHIFT_OUTCOMES, ShiftWorkflow, display as display_shift
@@ -1122,10 +1123,13 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     if command not in LOCAL_COMMANDS:
         try:
-            if not any(item in {"-h", "--help"} for item in actual):
-                require_runtime(FACTORY_ROOT, LEGACY_PROFILE)
-            return governed_cli.main(actual)
-        except EnvironmentProfileError as exc:
+            parser = governed_cli.build_parser()
+            prepare_governed(parser, FACTORY_ROOT)
+            args = parser.parse_args(actual)
+            require_runtime(FACTORY_ROOT, RESEARCH_PROFILE)
+            guard_round(args, FACTORY_ROOT)
+            return governed_cli.run(args)
+        except (ControlPlaneError, EnvironmentProfileError, OSError) as exc:
             print(f"factoryctl: {exc}", file=sys.stderr)
             return 2
     parser = build_local_parser()

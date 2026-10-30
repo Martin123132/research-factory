@@ -47,26 +47,25 @@ ledger.
 
 ## Start from a clean clone
 
-The examples below retain the frozen pilot environment for compatibility.
-Updated engine maintenance has its own versioned dependency profile; follow
-[`environments/README.md`](environments/README.md) to set up separate interpreters.
-Do not update `factory/requirements.lock` in place. The engine checks the frozen
-profile before governed workflow or existing fixture execution; maintenance
-updates do not silently change a round's environment.
+The examples below use the patched successor pilot. Follow
+[`environments/README.md`](environments/README.md) for the separate research and
+maintenance interpreters, state locations and historical inspection rules.
+The old `factory/requirements.lock` and pilot remain unchanged. The engine checks
+the successor profile before governed workflow or fixture execution.
 
 From the repository root on Windows PowerShell:
 
 ```powershell
-python -m venv factory\.venv
-factory\.venv\Scripts\python.exe -m pip install -r factory\requirements.lock
-factory\.venv\Scripts\python.exe factory\enginectl.py doctor
-factory\.venv\Scripts\python.exe factory\enginectl.py quality
-factory\.venv\Scripts\python.exe factory\enginectl.py list --entry-ready
-factory\.venv\Scripts\python.exe factory\enginectl.py inspect WB-013
+python -m venv factory\state\environments\pilot-002\.venv
+factory\state\environments\pilot-002\.venv\Scripts\python.exe -m pip install -r factory\environments\versions\wb001-pilot-002-v1\requirements.lock
+factory\state\environments\pilot-002\.venv\Scripts\python.exe factory\enginectl.py doctor
+factory\state\environments\pilot-002\.venv\Scripts\python.exe factory\enginectl.py quality
+factory\state\environments\pilot-002\.venv\Scripts\python.exe factory\enginectl.py list --entry-ready
+factory\state\environments\pilot-002\.venv\Scripts\python.exe factory\enginectl.py inspect WB-013
 ```
 
-On Linux or macOS, replace `factory\.venv\Scripts\python.exe` with
-`factory/.venv/bin/python` and use `/` in paths.
+On Linux or macOS, replace `factory\state\environments\pilot-002\.venv\Scripts\python.exe` with
+`factory/state/environments/pilot-002/.venv/bin/python` and use `/` in paths.
 
 `doctor` verifies the source catalogue commitment, root station manifest, all
 100 contract commitments, their closed JSON Schema and every generated kit file.
@@ -77,7 +76,7 @@ These discovery commands do not create local state. To verify a ledger as part
 of the same diagnostic, pass it explicitly:
 
 ```powershell
-factory\.venv\Scripts\python.exe factory\enginectl.py doctor `
+factory\state\environments\pilot-002\.venv\Scripts\python.exe factory\enginectl.py doctor `
   --ledger factory\state\pilot_events.jsonl
 ```
 
@@ -88,8 +87,8 @@ every cited evidence hash, derived outcome counts, current station readiness and
 certification prerequisites:
 
 ```powershell
-factory\.venv\Scripts\python.exe factory\enginectl.py quality
-factory\.venv\Scripts\python.exe factory\enginectl.py quality --json
+factory\state\environments\pilot-002\.venv\Scripts\python.exe factory\enginectl.py quality
+factory\state\environments\pilot-002\.venv\Scripts\python.exe factory\enginectl.py quality --json
 ```
 
 The current result is `FOUNDATION_ONLY`: 21 controls meet their declared
@@ -104,7 +103,7 @@ are useful factory output. Search their public metadata without opening private
 evidence or changing the append-only ledger:
 
 ```powershell
-factory\.venv\Scripts\python.exe factory\enginectl.py negative-results `
+factory\state\environments\pilot-002\.venv\Scripts\python.exe factory\enginectl.py negative-results `
   --ledger factory\state\pilot_events.jsonl `
   --query "small block header" `
   --classification HYPOTHESIS_REJECTED
@@ -127,14 +126,14 @@ different replacement bytes. Invalidations and retractions cannot carry a
 replacement, and terminal standing cannot be restored in v1.
 
 ```powershell
-factory\.venv\Scripts\python.exe factory\enginectl.py correction-append `
+factory\state\environments\pilot-002\.venv\Scripts\python.exe factory\enginectl.py correction-append `
   --ledger factory\state\public\corrections.jsonl `
   --draft factory\corrections\correction-draft.example.json
 
-factory\.venv\Scripts\python.exe factory\enginectl.py correction-verify `
+factory\state\environments\pilot-002\.venv\Scripts\python.exe factory\enginectl.py correction-verify `
   --ledger factory\state\public\corrections.jsonl
 
-factory\.venv\Scripts\python.exe factory\enginectl.py correction-history `
+factory\state\environments\pilot-002\.venv\Scripts\python.exe factory\enginectl.py correction-history `
   --ledger factory\state\public\corrections.jsonl
 ```
 
@@ -155,14 +154,14 @@ vote. A unanimous procedural uphold still requires a separate correction or
 remedy record.
 
 ```powershell
-factory\.venv\Scripts\python.exe factory\enginectl.py appeal-append `
+factory\state\environments\pilot-002\.venv\Scripts\python.exe factory\enginectl.py appeal-append `
   --ledger factory\state\public\appeals.jsonl `
   --draft factory\appeals\appeal-draft.example.json
 
-factory\.venv\Scripts\python.exe factory\enginectl.py appeal-verify `
+factory\state\environments\pilot-002\.venv\Scripts\python.exe factory\enginectl.py appeal-verify `
   --ledger factory\state\public\appeals.jsonl
 
-factory\.venv\Scripts\python.exe factory\enginectl.py appeal-history `
+factory\state\environments\pilot-002\.venv\Scripts\python.exe factory\enginectl.py appeal-history `
   --ledger factory\state\public\appeals.jsonl `
   --outcome RETURN_FOR_DIAGNOSIS
 ```
@@ -179,14 +178,14 @@ credits, provider subsidies, donated materials, institutional relationships or
 decision conflicts at a Factory, workbench or governance-decision scope.
 
 ```powershell
-factory\.venv\Scripts\python.exe factory\enginectl.py support-append `
+factory\state\environments\pilot-002\.venv\Scripts\python.exe factory\enginectl.py support-append `
   --ledger factory\state\public\support-disclosures.jsonl `
   --draft factory\disclosures\support-disclosure.example.json
 
-factory\.venv\Scripts\python.exe factory\enginectl.py support-verify `
+factory\state\environments\pilot-002\.venv\Scripts\python.exe factory\enginectl.py support-verify `
   --ledger factory\state\public\support-disclosures.jsonl
 
-factory\.venv\Scripts\python.exe factory\enginectl.py support-history `
+factory\state\environments\pilot-002\.venv\Scripts\python.exe factory\enginectl.py support-history `
   --ledger factory\state\public\support-disclosures.jsonl `
   --scope-id research-factory
 ```
@@ -205,18 +204,18 @@ cannot add tools, broaden paths, change network access, spend more, extend its
 shift or alter its evidence class.
 
 ```powershell
-factory\.venv\Scripts\python.exe factory\enginectl.py dispatch-profiles
+factory\state\environments\pilot-002\.venv\Scripts\python.exe factory\enginectl.py dispatch-profiles
 
-factory\.venv\Scripts\python.exe factory\enginectl.py dispatch-budget-verify `
+factory\state\environments\pilot-002\.venv\Scripts\python.exe factory\enginectl.py dispatch-budget-verify `
   --budget factory\dispatch\dispatch-budget.example.json
 
-factory\.venv\Scripts\python.exe factory\enginectl.py dispatch-preflight `
+factory\state\environments\pilot-002\.venv\Scripts\python.exe factory\enginectl.py dispatch-preflight `
   --budget factory\dispatch\dispatch-budget.example.json `
   --profile profile:no-execution-dry-run-v1 `
   --output factory\state\dispatch-dry-run-ticket.json `
   --require-authorized
 
-factory\.venv\Scripts\python.exe factory\enginectl.py dispatch-ticket-verify `
+factory\state\environments\pilot-002\.venv\Scripts\python.exe factory\enginectl.py dispatch-ticket-verify `
   --budget factory\dispatch\dispatch-budget.example.json `
   --ticket factory\state\dispatch-dry-run-ticket.json
 ```
@@ -246,29 +245,29 @@ only the fixed `build`, `verify` and `rehearse` command grammar, and it is still
 subject to normal source review.
 
 ```powershell
-factory\.venv\Scripts\python.exe factory\enginectl.py packet list
+factory\state\environments\pilot-002\.venv\Scripts\python.exe factory\enginectl.py packet list
 
 # Validates a prospective manifest; it neither registers nor runs it.
-factory\.venv\Scripts\python.exe factory\enginectl.py packet draft-check `
+factory\state\environments\pilot-002\.venv\Scripts\python.exe factory\enginectl.py packet draft-check `
   --adapter factory\fixture_packets\adapters\wb001-reference-fixture.json
 
 # After validating a new unregistered adapter, produce a registry entry only.
 # The planner refuses replacements and writes nothing.
-factory\.venv\Scripts\python.exe factory\enginectl.py packet registration-plan `
+factory\state\environments\pilot-002\.venv\Scripts\python.exe factory\enginectl.py packet registration-plan `
   --adapter factory\fixture_packets\adapters\wb002-proposed-fixture.json
 
 # Exercises every registered known-safe fixture. It is construction commissioning only.
-factory\.venv\Scripts\python.exe factory\enginectl.py packet commission-all `
+factory\state\environments\pilot-002\.venv\Scripts\python.exe factory\enginectl.py packet commission-all `
   --operator demo:local-commissioning `
   --output state\fixture-packet-commissioning
 
-factory\.venv\Scripts\python.exe factory\enginectl.py packet build `
+factory\state\environments\pilot-002\.venv\Scripts\python.exe factory\enginectl.py packet build `
   --workbench WB-001 `
   --output packages\wb001-reference-fixture
-factory\.venv\Scripts\python.exe factory\enginectl.py packet verify `
+factory\state\environments\pilot-002\.venv\Scripts\python.exe factory\enginectl.py packet verify `
   --workbench WB-001 `
   --package packages\wb001-reference-fixture
-factory\.venv\Scripts\python.exe factory\enginectl.py packet rehearse `
+factory\state\environments\pilot-002\.venv\Scripts\python.exe factory\enginectl.py packet rehearse `
   --workbench WB-001 `
   --package packages\wb001-reference-fixture `
   --operator demo:alice `
@@ -302,7 +301,7 @@ the current station contract and schema, a per-file manifest and top-level
 SHA-256 commitments.
 
 ```powershell
-factory\.venv\Scripts\python.exe factory\enginectl.py package `
+factory\state\environments\pilot-002\.venv\Scripts\python.exe factory\enginectl.py package `
   --workbench WB-013 `
   --attempt attempt:alice-first-fixture `
   --operator human:alice `
@@ -311,7 +310,7 @@ factory\.venv\Scripts\python.exe factory\enginectl.py package `
   --source work `
   --output packages\alice-first-fixture
 
-factory\.venv\Scripts\python.exe factory\enginectl.py verify `
+factory\state\environments\pilot-002\.venv\Scripts\python.exe factory\enginectl.py verify `
   packages\alice-first-fixture
 ```
 
@@ -340,9 +339,9 @@ Installing the project in editable mode exposes the combined command:
 
 ```powershell
 Push-Location factory
-.\.venv\Scripts\python.exe -m pip install --no-deps --editable .
-.\.venv\Scripts\factoryctl.exe doctor
-.\.venv\Scripts\factoryctl.exe status --round WB001-PILOT-001
+.\state\environments\pilot-002\.venv\Scripts\python.exe -m pip install --no-deps --editable .
+.\state\environments\pilot-002\.venv\Scripts\factoryctl.exe doctor
+.\state\environments\pilot-002\.venv\Scripts\factoryctl.exe status --round WB001-PILOT-002
 Pop-Location
 ```
 
@@ -350,7 +349,9 @@ The version-pinned `factory/factoryctl.py` wrapper and the files under
 `control_plane/` remain byte-for-byte compatible with frozen Pilot Round 1.
 `enginectl.py` is the new clean-clone front door: local commands are handled by
 the engine facade and all established lifecycle commands are passed to that same
-frozen control plane.
+frozen control plane, with the successor environment/round guard and separate
+state under `state/WB001-PILOT-002/`. Use the successor round document when
+opening new work; historical ledgers remain readable by explicit path.
 
 ## What survives loss of hosted services
 

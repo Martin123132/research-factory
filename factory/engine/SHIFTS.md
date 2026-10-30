@@ -13,13 +13,13 @@ research round, validator assignment or Hangar database.
 
 ## First shift (Windows)
 
-From the repository root, use the frozen fixture environment described in
+From the repository root, use the patched successor fixture environment described in
 [`../environments/README.md`](../environments/README.md). The maintenance
-environment can inspect/report/package, but cannot execute the old fixtures.
+environment can inspect/report/package, but cannot execute the research fixtures.
 Nothing silently installs packages or switches interpreters.
 
 ```powershell
-$shiftPython = 'factory/state/environments/pilot/.venv/Scripts/python.exe'
+$shiftPython = 'factory/state/environments/pilot-002/.venv/Scripts/python.exe'
 & $shiftPython factory/enginectl.py shift tasks
 & $shiftPython factory/enginectl.py shift start --workbench WB-013 --operator demo:alice --output factory/state/alice-shift-001
 & $shiftPython factory/enginectl.py shift inspect --session factory/state/alice-shift-001
@@ -37,7 +37,7 @@ Ctrl+C interrupts the run; inspect the retained files and clock out instead of
 restarting that directory.
 
 On Linux/macOS, use the same arguments with
-`factory/state/environments/pilot/.venv/bin/python` in place of `& $shiftPython`.
+`factory/state/environments/pilot-002/.venv/bin/python` in place of `& $shiftPython`.
 All actions support `--json`. CI tests Windows and Linux; macOS compatibility is
 not claimed as observed verification.
 
