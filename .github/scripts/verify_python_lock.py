@@ -56,12 +56,12 @@ def verify_append_only(base: str, head: str) -> None:
     if not all(re.fullmatch(r"[0-9a-f]{40}", ref) for ref in (base, head)):
         raise ValueError("history verification requires full commit SHAs")
     changes = subprocess.check_output(
-        ["git", "diff", "--name-status", "--no-renames", base, head, "--", "factory/environments/versions"],
+        ["git", "diff", "--name-status", "--no-renames", base, head, "--", "factory/environments/versions", "factory/requirements.lock", "factory/rounds"],
         cwd=FACTORY_ROOT.parent, text=True, encoding="utf-8",
     )
     for line in changes.splitlines():
         if line.split("\t", 1)[0] != "A":
-            raise ValueError(f"versioned environments are append-only; add a successor: {line}")
+            raise ValueError(f"versioned environments and frozen rounds are append-only; add a successor: {line}")
 
 
 def main() -> int:

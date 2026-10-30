@@ -28,9 +28,7 @@ class ProfileTests(unittest.TestCase):
         self.root = Path(self.temporary.name)
         shutil.copytree(ROOT / "environments", self.root / "environments")
         shutil.copyfile(ROOT / "requirements.lock", self.root / "requirements.lock")
-        destination = self.root / "rounds/WB001-PILOT-001"
-        destination.mkdir(parents=True)
-        shutil.copyfile(ROOT / "rounds/WB001-PILOT-001/round.json", destination / "round.json")
+        shutil.copytree(ROOT / "rounds", self.root / "rounds")
 
     def test_drill_preserves_the_virtual_environment_interpreter_path(self):
         python = Path("some-environment/.venv/bin/python")
@@ -155,7 +153,7 @@ class ProfileTests(unittest.TestCase):
                     env.rehearse(self.root, env.LEGACY_PROFILE)
 
     def test_governed_front_door_never_delegates_after_environment_rejection(self):
-        with patch("engine.cli.require_runtime", side_effect=env.EnvironmentProfileError("wrong environment")), patch("engine.cli.governed_cli.main") as delegated, redirect_stderr(StringIO()):
+        with patch("engine.cli.require_runtime", side_effect=env.EnvironmentProfileError("wrong environment")), patch("engine.cli.governed_cli.run") as delegated, redirect_stderr(StringIO()):
             self.assertEqual(2, main(["status", "--round", "WB001-PILOT-001"]))
             delegated.assert_not_called()
 
@@ -173,8 +171,8 @@ class ProfileTests(unittest.TestCase):
     def test_real_installed_environment_rehearses_without_changing_any_profile(self):
         index, loaded = env.profiles(ROOT)
         matching = [p for p in loaded if env.check_runtime(ROOT, p)["matches"]]
-        self.assertEqual(1, len(matching), "Run these tests in the frozen pilot or current maintenance environment")
-        self.assertIn(matching[0], (env.LEGACY_PROFILE, index["current_engine"]), "CI must test the current maintenance profile")
+        self.assertEqual(1, len(matching), "Run these tests in the replacement pilot or current maintenance environment")
+        self.assertIn(matching[0], (env.RESEARCH_PROFILE, index["current_engine"]), "CI must test the current maintenance profile")
         before = {entry["path"]: (ROOT / entry["path"]).read_bytes() for entry in index["profiles"]}
         report = env.rehearse(ROOT, matching[0])
         self.assertTrue(report["fixture"]["round_trip_exact"])

@@ -14,7 +14,7 @@ from engine.cli import main
 
 FACTORY_ROOT = Path(__file__).resolve().parents[2]
 ENGINECTL = FACTORY_ROOT / "enginectl.py"
-ROUND = FACTORY_ROOT / "rounds" / "WB001-PILOT-001" / "round.json"
+ROUND = FACTORY_ROOT / "rounds" / "WB001-PILOT-002" / "round.json"
 ENTRY_GATE = FACTORY_ROOT / "control_plane" / "scripts" / "run_entry_gate.py"
 ENVELOPE_POLICY = (
     FACTORY_ROOT / "control_plane" / "examples" / "wb001-synthetic-envelope-policy.json"
@@ -201,6 +201,8 @@ class GovernedCliSubprocessTests(unittest.TestCase):
             [
                 sys.executable,
                 str(ENTRY_GATE),
+                "--round",
+                str(ROUND),
                 "--operator",
                 "human:worker",
                 "--acknowledge-rules",
@@ -213,7 +215,7 @@ class GovernedCliSubprocessTests(unittest.TestCase):
             "--operator",
             "human:worker",
             "--round",
-            "WB001-PILOT-001",
+            "WB001-PILOT-002",
             "--evidence",
             str(entry_path),
         )
@@ -222,7 +224,7 @@ class GovernedCliSubprocessTests(unittest.TestCase):
             "--operator",
             "human:worker",
             "--round",
-            "WB001-PILOT-001",
+            "WB001-PILOT-002",
             "--work-unit",
             "wu:preprocess-integers",
         )
@@ -257,7 +259,7 @@ class GovernedCliSubprocessTests(unittest.TestCase):
             attempt["payload"]["attempt_id"],  # type: ignore[index]
         )
 
-        status = self.ctl("status", "--round", "WB001-PILOT-001", "--json")
+        status = self.ctl("status", "--round", "WB001-PILOT-002", "--json")
         self.assertIn(
             "attempt:cli-smoke",
             [row["attempt_id"] for row in status["attempts"]],  # type: ignore[index]

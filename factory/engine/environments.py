@@ -14,6 +14,8 @@ from typing import Any
 
 
 LEGACY_PROFILE = "wb001-pilot-001-v1"
+RESEARCH_PROFILE = "wb001-pilot-002-v1"
+RESEARCH_ROUND = "WB001-PILOT-002"
 PIN = re.compile(r"([A-Za-z0-9][A-Za-z0-9._-]*)==([A-Za-z0-9][A-Za-z0-9.!+_-]*)")
 BOUNDARY = {
     "scientific_evidence": False,
@@ -143,12 +145,15 @@ def profiles(root: Path) -> tuple[dict[str, Any], dict[str, dict[str, Any]]]:
     legacy = loaded.get(LEGACY_PROFILE, {})
     if legacy.get("role") != "FROZEN_ROUND" or legacy.get("round_binding", {}).get("round_id") != "WB001-PILOT-001":
         raise EnvironmentProfileError("the legacy pilot profile must remain registered")
+    current = loaded.get(RESEARCH_PROFILE, {})
+    if current.get("role") != "FROZEN_ROUND" or current.get("round_binding", {}).get("round_id") != RESEARCH_ROUND:
+        raise EnvironmentProfileError("the replacement pilot profile must be registered")
     return index, loaded
 
 
 def inspect_profiles(root: Path) -> dict[str, Any]:
     index, loaded = profiles(root)
-    return {"current_engine": index["current_engine"], "profiles": list(loaded.values()), "boundary": dict(BOUNDARY)}
+    return {"current_research": RESEARCH_PROFILE, "current_engine": index["current_engine"], "profiles": list(loaded.values()), "boundary": dict(BOUNDARY)}
 
 
 def check_runtime(root: Path, identity: str) -> dict[str, Any]:
@@ -187,6 +192,7 @@ def require_runtime(root: Path, identity: str) -> dict[str, Any]:
 def rehearse(root: Path, identity: str) -> dict[str, Any]:
     report = require_runtime(root, identity)
     import zlib
+    import brotli
     from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 
     # Public known-answer construction fixture, never a production signing key.
@@ -195,10 +201,15 @@ def rehearse(root: Path, identity: str) -> dict[str, Any]:
     compressed = zlib.compress(payload, level=9)
     if zlib.decompress(compressed) != payload:
         raise EnvironmentProfileError("synthetic fixture failed exact round-trip")
+    brotli_compressed = brotli.compress(payload)
+    if brotli.decompress(brotli_compressed) != payload:
+        raise EnvironmentProfileError("Brotli synthetic fixture failed exact round-trip")
     signature = key.sign(payload)
     key.public_key().verify(signature, payload)
     report["fixture"] = {
-        "fixture_id": "environment-smoke-v1",
+        "fixture_id": "environment-smoke-v2",
+        "brotli_compressed_sha256": hashlib.sha256(brotli_compressed).hexdigest(),
+        "brotli_round_trip_exact": True,
         "input_sha256": hashlib.sha256(payload).hexdigest(),
         "compressed_sha256": hashlib.sha256(compressed).hexdigest(),
         "signature_sha256": hashlib.sha256(signature).hexdigest(),

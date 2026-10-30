@@ -95,7 +95,9 @@ clock in, retain the outcome, and hand over a verifiable package. This does not
 open live research or replace two-person independent reproduction.
 
 ```powershell
-python -m pip install -r factory/requirements.lock
+python -m venv factory/state/environments/pilot-002/.venv
+& factory/state/environments/pilot-002/.venv/Scripts/Activate.ps1
+python -m pip install -r factory/environments/versions/wb001-pilot-002-v1/requirements.lock
 python -m pip install reuse==6.2.0
 reuse lint
 python -m unittest discover -s .github/scripts/tests -p "test_*.py" -v

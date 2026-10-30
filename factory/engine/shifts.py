@@ -17,7 +17,7 @@ import uuid
 
 from control_plane.common import ContractError, canonical_json_bytes, sha256_bytes, sha256_file
 from shift_reports.validate_shift_reports import canonical_report_hash, verify_reports
-from .environments import LEGACY_PROFILE, check_runtime
+from .environments import LEGACY_PROFILE, RESEARCH_PROFILE, check_runtime, profiles
 from .fixture_packets import FixturePacketController
 from .portable import PortableEvidencePackage, _is_link_like, _load_json_strict
 
@@ -145,7 +145,7 @@ class ShiftWorkflow:
     def tasks(self) -> dict:
         controller = FixturePacketController(self.factory_root)
         return {
-            "tasks": [{**row, "required_environment": LEGACY_PROFILE,
+            "tasks": [{**row, "required_environment": RESEARCH_PROFILE,
                        "actions": ["build", "verify", "rehearse"]} for row in controller.list()],
             "boundary": dict(BOUNDARY),
             "notice": "Available fixtures, not exclusive claims or live research jobs.",
@@ -166,6 +166,8 @@ class ShiftWorkflow:
                 raise ContractError("new shift must be outside its handover package")
             parent = self.verify_handover(previous)
             prior = parent["shift"]
+            if prior["session"]["environment"]["environment_id"] != RESEARCH_PROFILE:
+                raise ContractError("historical environment cannot be resumed; retain it and start a new task")
             if not parent["package"]["current_contract_match"] or not prior["current_adapter_match"]:
                 raise ContractError("historical handover differs from current contract/adapter; review before starting new work")
             if prior["report_count"] >= MAX_HISTORY:
@@ -181,7 +183,7 @@ class ShiftWorkflow:
             "work_order_id": prior["session"]["work_order_id"] if prior else "WO-" + uuid.uuid4().hex[:12].upper(),
             "operator": operator, "workbench": adapter.workbench_code, "started_at": now(),
             "adapter_sha256": adapter.adapter_sha256, "contract_sha256": row["contract_sha256"],
-            "environment": check_runtime(self.factory_root, LEGACY_PROFILE),
+            "environment": check_runtime(self.factory_root, RESEARCH_PROFILE),
             "previous_package_sha256": parent["package"]["package_sha256"] if parent else None,
             "boundary": dict(BOUNDARY),
         })
@@ -218,8 +220,13 @@ class ShiftWorkflow:
         if not re.fullmatch(r"demo:[A-Za-z0-9][A-Za-z0-9._:-]{0,149}", session["operator"]):
             raise ContractError("invalid demo operator")
         timestamp(session["started_at"])
-        if not isinstance(session["environment"], dict) or session["environment"].get("environment_id") != LEGACY_PROFILE:
+        if not isinstance(session["environment"], dict) or session["environment"].get("environment_id") not in {LEGACY_PROFILE, RESEARCH_PROFILE}:
             raise ContractError("shift environment profile differs")
+        _, registered = profiles(self.factory_root)
+        recorded = session["environment"]
+        profile = registered[recorded["environment_id"]]
+        if recorded.get("lock_sha256") != profile["lock"]["sha256"] or recorded.get("manifest_sha256") != profile["manifest_sha256"]:
+            raise ContractError("shift environment commitment differs")
         if type(session["environment"].get("matches")) is not bool:
             raise ContractError("invalid recorded environment match")
         for key in ("adapter_sha256", "contract_sha256"):
@@ -322,6 +329,8 @@ class ShiftWorkflow:
             if not view["current_contract_match"] or not view["current_adapter_match"]:
                 raise ContractError("locked work changed; review before running")
             session = view["session"]
+            if session["environment"]["environment_id"] != RESEARCH_PROFILE:
+                raise ContractError("historical environment cannot execute in the replacement")
             run = root / "run"
             run.mkdir()
             intent = sealed({"session_sha256": session["sha256"], "started_at": now()})
@@ -441,7 +450,7 @@ def display(view: dict) -> str:
     if "tasks" in view:
         return "\n".join(["AVAILABLE CONSTRUCTION FIXTURES (not exclusive claims)", *[
             f"{task['workbench_code']}  {task['title']}" for task in view["tasks"]],
-            f"Required execution environment: {LEGACY_PROFILE}", "Start with: shift start --workbench WB-013 --operator demo:you --output <new-directory>"])
+            f"Required execution environment: {RESEARCH_PROFILE}", "Start with: shift start --workbench WB-013 --operator demo:you --output <new-directory>"])
     if "shift" in view:
         return "HANDOVER VERIFIED\n" + display(view["shift"])
     if "session" not in view:
