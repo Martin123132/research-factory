@@ -42,7 +42,7 @@ def main() -> int:
     if args.output.exists():
         parser.error("output already exists; retain previous evidence and use a new directory")
     legacy = run_report(args.legacy_python, "wb001-pilot-001-v1")
-    engine = run_report(args.engine_python, "engine-v1")
+    engine = run_report(args.engine_python, "engine-v2")
     if legacy["lock_sha256"] == engine["lock_sha256"]:
         raise ValueError("transition must retain distinct dependency locks")
     if legacy["fixture"] != engine["fixture"]:

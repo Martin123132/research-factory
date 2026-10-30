@@ -15,7 +15,7 @@ dependencies = [
 factoryctl = "engine.cli:main"
 
 [tool.research-factory]
-python-lock = "environments/versions/engine-v1/requirements.lock"
+python-lock = "environments/versions/engine-v2/requirements.lock"
 
 [tool.setuptools]
 packages = ["control_plane", "engine"]

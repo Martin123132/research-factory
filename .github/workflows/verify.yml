@@ -146,12 +146,12 @@ jobs:
           python -m venv state/environment-ci/legacy/.venv
           python -m venv state/environment-ci/engine/.venv
           state/environment-ci/legacy/.venv/bin/python -m pip install -r requirements.lock
-          state/environment-ci/engine/.venv/bin/python -m pip install -r environments/versions/engine-v1/requirements.lock
+          state/environment-ci/engine/.venv/bin/python -m pip install -r environments/versions/engine-v2/requirements.lock
       - name: Verify and audit maintenance pins
         run: |
           python ../.github/scripts/verify_python_lock.py
           python -m pip install pip-audit==2.10.1
-          python -m pip_audit -r environments/versions/engine-v1/requirements.lock --progress-spinner off
+          python -m pip_audit -r environments/versions/engine-v2/requirements.lock --progress-spinner off
       - name: Test maintenance environment and local engine commands
         run: |
           state/environment-ci/engine/.venv/bin/python -m unittest engine.tests.test_environments engine.tests.test_cli.LocalCliTests -v

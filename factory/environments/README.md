@@ -6,13 +6,22 @@ Updating the engine must not rewrite a round's dependency commitment.
 | Profile | Purpose | Dependency lock | Cryptography |
 | --- | --- | --- | --- |
 | `wb001-pilot-001-v1` | Existing frozen pilot and fixture adapters | `factory/requirements.lock` (unchanged) | 50.0.0 |
-| `engine-v1` | Current engine maintenance | `factory/environments/versions/engine-v1/requirements.lock` | 50.0.2 |
+| `engine-v1` | Retained historical maintenance | `factory/environments/versions/engine-v1/requirements.lock` | 50.0.2 |
+| `engine-v2` | Current engine maintenance | `factory/environments/versions/engine-v2/requirements.lock` | 50.0.2 |
 
 `index.json` commits to each versioned manifest. Each manifest commits to its
 exact dependency-lock bytes. A frozen profile also commits to the unchanged
 round document and must match that round's existing dependency-lock entry.
 The project manifest selects the maintenance lock explicitly. CI rejects edits
 or deletions of existing files under `versions/`; upgrades add a new version.
+
+The current maintenance profile pins Brotli 1.2.1. Both historical profiles still
+record Brotli 1.2.0, which is affected by
+[CVE-2026-111497](https://github.com/advisories/GHSA-9v8h-qqgm-4m35).
+Their recorded bytes and scientific bindings are preserved; they must not be
+treated as security-approved environments or used on untrusted compressed input.
+The existing frozen-dependency audit remains a blocking gate. This maintenance
+update does not waive that finding or qualify a successor scientific round.
 
 ## Set up separate interpreters
 
@@ -22,11 +31,11 @@ From the repository root in PowerShell:
 python -m venv factory/state/environments/pilot/.venv
 factory/state/environments/pilot/.venv/Scripts/python.exe -m pip install -r factory/requirements.lock
 
-python -m venv factory/state/environments/engine-v1/.venv
-factory/state/environments/engine-v1/.venv/Scripts/python.exe -m pip install -r factory/environments/versions/engine-v1/requirements.lock
+python -m venv factory/state/environments/engine-v2/.venv
+factory/state/environments/engine-v2/.venv/Scripts/python.exe -m pip install -r factory/environments/versions/engine-v2/requirements.lock
 
-factory/state/environments/engine-v1/.venv/Scripts/python.exe factory/enginectl.py environment list --json
-factory/state/environments/engine-v1/.venv/Scripts/python.exe factory/enginectl.py environment check --profile engine-v1 --json
+factory/state/environments/engine-v2/.venv/Scripts/python.exe factory/enginectl.py environment list --json
+factory/state/environments/engine-v2/.venv/Scripts/python.exe factory/enginectl.py environment check --profile engine-v2 --json
 factory/state/environments/pilot/.venv/Scripts/python.exe factory/enginectl.py environment check --profile wb001-pilot-001-v1 --json
 ```
 
@@ -51,7 +60,7 @@ ordinary dependency-resolving installation uses the newer maintenance pins.
 ## Small synthetic transition drill
 
 ```powershell
-python factory/environments/run_synthetic_drill.py --legacy-python factory/state/environments/pilot/.venv/Scripts/python.exe --engine-python factory/state/environments/engine-v1/.venv/Scripts/python.exe --output factory/state/environment-drill-001
+python factory/environments/run_synthetic_drill.py --legacy-python factory/state/environments/pilot/.venv/Scripts/python.exe --engine-python factory/state/environments/engine-v2/.venv/Scripts/python.exe --output factory/state/environment-drill-001
 ```
 
 This runs a tiny public compression round-trip and deterministic test signature
